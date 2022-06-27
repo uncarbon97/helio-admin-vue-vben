@@ -8,6 +8,8 @@ export interface RouteItem {
   redirect?: string;
   caseSensitive?: boolean;
   children?: RouteItem[];
+  // Helio: 增加 父级ID 字段
+  parentId: string;
 }
 
 /**

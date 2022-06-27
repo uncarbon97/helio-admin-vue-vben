@@ -37,7 +37,9 @@ export function checkStatus(
       }
       break;
     case 403:
-      errMessage = t('sys.api.errMsg403');
+    case 406:
+      // Helio: 增加对 406 状态码的处理；并直接使用后端返回的文案
+      errMessage = `${msg}`;
       break;
     // 404请求不存在
     case 404:
@@ -50,7 +52,8 @@ export function checkStatus(
       errMessage = t('sys.api.errMsg408');
       break;
     case 500:
-      errMessage = t('sys.api.errMsg500');
+      // Helio: 如果存在后端返回的文案，则使用；否则用默认文案
+      errMessage = msg || t('sys.api.errMsg500');
       break;
     case 501:
       errMessage = t('sys.api.errMsg501');
