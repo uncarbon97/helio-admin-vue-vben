@@ -22,8 +22,11 @@ export function checkStatus(
 
   switch (status) {
     case 400:
-      errMessage = `${msg}`;
-      break;
+    case 403:
+    case 406:
+      // Helio: 增加对 406 状态码的处理；弹出后端返回的文案后，直接返回
+      error(`${msg}`);
+      return;
     // 401: Not logged in
     // Jump to the login page if not logged in, and carry the path of the current page
     // Return to the current page after successful login. This step needs to be operated on the login page.
@@ -35,11 +38,6 @@ export function checkStatus(
       } else {
         userStore.logout(true);
       }
-      break;
-    case 403:
-    case 406:
-      // Helio: 增加对 406 状态码的处理；并直接使用后端返回的文案
-      errMessage = `${msg}`;
       break;
     // 404请求不存在
     case 404:

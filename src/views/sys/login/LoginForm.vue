@@ -149,12 +149,7 @@
           duration: 3,
         });
       }
-    } catch (error) {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
-        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-      });
+      // Helio: 去除默认的 catch 代码块，由默认请求异常处理接管
     } finally {
       loading.value = false;
     }

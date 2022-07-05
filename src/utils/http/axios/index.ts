@@ -16,7 +16,6 @@ import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
-import { useUserStoreWithOut } from '/@/store/modules/user';
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry';
 
 const globSetting = useGlobSetting();
@@ -45,7 +44,7 @@ const transform: AxiosTransform = {
     // 错误的时候返回
 
     /*
-    feature/helio: `data` 与后端返回字段名冲突，映射为`responseBody`
+    Helio: `data` 与后端返回字段名冲突，映射为`responseBody`
      */
     const { data: responseBody } = res;
     if (!responseBody) {
@@ -57,7 +56,7 @@ const transform: AxiosTransform = {
     const { code, data, msg } = responseBody;
 
     // 这里逻辑可以根据项目进行修改
-    // Helio: 因后端成功返回 code 为 200，而 Vben 默认成功 code 为 0，造成冲突，以实际为准
+    // Helio: 这边实际上是处理访问成功，但 `code` 字段的值不符合“操作成功”定义（Helio 中默认为 200）
     switch (code) {
       case ResultEnum.OK:
         // 200 OK，直接返回结果
@@ -74,6 +73,8 @@ const transform: AxiosTransform = {
 
     // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
     // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
+    // Helio: 指定兜底异常提示文案
+    const timeoutMsg = t('sys.api.apiRequestFailed');
     if (options.errorMessageMode === 'modal') {
       createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
     } else if (options.errorMessageMode === 'message') {
@@ -163,7 +164,7 @@ const transform: AxiosTransform = {
     errorLogStore.addAjaxErrorInfo(error);
     const { response, code, message, config } = error || {};
     const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
-    // Helio: 适配业务失败文案返回、入参校验失败文案返回
+    // Helio: 适配业务失败文案返回、入参校验失败文案返回字段名
     const msg: string = response?.data?.data?.message || response?.data?.msg || '';
     const err: string = error?.toString?.() ?? '';
     let errMessage = '';

@@ -34,7 +34,7 @@ export interface RetryRequest {
 }
 export interface Result<T = any> {
   /*
-  feature/helio: 修改为对应后端字段名
+  Helio: 修改为对应后端字段名
    */
   code: number;
   type: 'success' | 'error' | 'warning';

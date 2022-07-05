@@ -14,7 +14,7 @@ enum Api {
  * Helio: 菜单项 array 转 tree
  * @param items 菜单项 array
  */
-function menu2Tree(items: getMenuListResultModel): getMenuListResultModel {
+export function menu2Tree(items: getMenuListResultModel): getMenuListResultModel {
   const data = JSON.parse(JSON.stringify(items)); // 浅拷贝不改变源数据
   const result = [];
   if (!Array.isArray(data)) {

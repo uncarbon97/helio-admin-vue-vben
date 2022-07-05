@@ -4,6 +4,8 @@
 export interface LoginParams {
   username: string;
   password: string;
+  // Helio: 增加"记住我"参数
+  rememberMe: boolean;
 }
 
 // Helio: 去除 RoleInfo 结构体
