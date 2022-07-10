@@ -237,7 +237,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {},
-    show: ({ values }) => isMenu(values.type),
+    // Helio: 只在选择“菜单”时显示
+    ifShow: ({ values }) => isMenu(values.type),
   },
   {
     field: 'externalLink',
@@ -245,6 +246,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {},
-    show: ({ values }) => isExternalLink(values.type),
+    // Helio: 只在选择“外链”时显示
+    ifShow: ({ values }) => isExternalLink(values.type),
   },
 ];

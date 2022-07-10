@@ -177,7 +177,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: '建议使用强密码',
     },
-    show: ({ values }) => !isUpdateView(values.id),
+    // Helio: 只在新增时显示
+    ifShow: ({ values }) => !isUpdateView(values.id),
   },
   {
     field: 'nickname',

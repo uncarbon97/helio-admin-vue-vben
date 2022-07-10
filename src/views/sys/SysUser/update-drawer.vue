@@ -83,10 +83,6 @@
 
       async function handleSubmit() {
         try {
-          let fieldKeys = Object.keys(getFieldsValue());
-          console.log('helio: fieldKeys', fieldKeys);
-          console.log('helio: validateFields', await validateFields(fieldKeys));
-
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
 

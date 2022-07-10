@@ -168,7 +168,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {},
-    show: ({ values }) => !isUpdateView(values.id),
+    // Helio: 只在新增时显示
+    ifShow: ({ values }) => !isUpdateView(values.id),
   },
   {
     field: 'tenantAdminPassword',
@@ -178,7 +179,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: '建议使用强密码',
     },
-    show: ({ values }) => !isUpdateView(values.id),
+    // Helio: 只在新增时显示
+    ifShow: ({ values }) => !isUpdateView(values.id),
   },
   {
     field: 'tenantAdminEmail',
@@ -186,7 +188,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {},
-    show: ({ values }) => !isUpdateView(values.id),
+    // Helio: 只在新增时显示
+    ifShow: ({ values }) => !isUpdateView(values.id),
   },
   {
     field: 'tenantAdminPhoneNo',
@@ -194,6 +197,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {},
-    show: ({ values }) => !isUpdateView(values.id),
+    // Helio: 只在新增时显示
+    ifShow: ({ values }) => !isUpdateView(values.id),
   },
 ];
