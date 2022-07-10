@@ -230,24 +230,14 @@ export function useFormEvents({
     }
 
     const obj: Recordable = {};
+    const currentFieldsValue = getFieldsValue();
     schemas.forEach((item) => {
       if (
-        /*
-        // Helio:
-        fix(useFormEvents): 部分组件(已知: Divider RadioButtonGroup)
-        在 schema 设置了 defaultValue 属性后，经过本方法时，不会根据`实际 value`渲染
-        在这里特别处理（前端我只是半吊子，也许有更好的办法）
-        e.g. 实际 value = 1, defaultValue = 0
-             执行
-             setFieldsValue({
-                ...data.record,
-              });
-             后，RadioButtonGroup 组件还是高亮 0 位置的 RadioButton
-         */
-        ['Divider', 'RadioButtonGroup'].indexOf(item.component) === -1 &&
+        item.component != 'Divider' &&
         Reflect.has(item, 'field') &&
         item.field &&
-        !isNullOrUnDef(item.defaultValue)
+        !isNullOrUnDef(item.defaultValue) &&
+        !(item.field in currentFieldsValue)
       ) {
         obj[item.field] = item.defaultValue;
       }

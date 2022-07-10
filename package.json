@@ -1,10 +1,9 @@
 {
-  "name": "vben-admin",
-  "version": "2.8.0",
+  "name": "helio-admin-vue-vben",
+  "version": "1.6.0-vben2.8.0",
   "author": {
-    "name": "vben",
-    "email": "anncwb@126.com",
-    "url": "https://github.com/anncwb"
+    "name": "vben & Uncarbon",
+    "url": "https://github.com/uncarbon97"
   },
   "scripts": {
     "bootstrap": "pnpm install",
