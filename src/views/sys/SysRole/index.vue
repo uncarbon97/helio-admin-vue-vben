@@ -73,7 +73,7 @@
       // 绑定角色
       const [registerBindMenuDrawer, { openDrawer: openBindMenuDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
-        title: '后台角色【需要退出后重新登录，才能看到新授权的菜单】',
+        title: '后台角色',
         api: listSysRoleApi,
         columns,
         formConfig: {

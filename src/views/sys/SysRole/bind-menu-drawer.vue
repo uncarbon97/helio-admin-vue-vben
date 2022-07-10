@@ -7,6 +7,7 @@
     width="40%"
     @ok="handleSubmit"
   >
+    <p class="text-warning text-center">新授予的权限需要重新登录后才显示；收回的权限立即生效</p>
     <BasicForm @register="registerForm">
       <template #menu>
         <!-- Helio: https://github.com/vbenjs/vue-vben-admin/issues/1420 -->
@@ -27,10 +28,11 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { bindMenusApi } from '/@/api/sys/SysRoleApi';
   import { BasicTree, TreeItem } from '/@/components/Tree';
+  import Step1 from "/@/views/demo/page/form/step/Step1.vue";
 
   export default defineComponent({
     name: 'BindMenuDrawer',
-    components: { BasicDrawer, BasicForm, BasicTree },
+    components: {Step1, BasicDrawer, BasicForm, BasicTree },
     emits: ['success', 'register'],
     setup: function (_, { emit }) {
       let recordId: string;
@@ -103,3 +105,9 @@
     },
   });
 </script>
+<style scoped>
+.text-warning {
+  font-size: 20px;
+  color: red;
+}
+</style>

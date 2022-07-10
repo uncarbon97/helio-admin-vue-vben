@@ -7,6 +7,7 @@
     width="40%"
     @ok="handleSubmit"
   >
+    <p class="text-warning text-center">注意：保存成功后，该用户会被强制踢下线</p>
     <BasicForm @register="registerForm">
       <template #menu="{ model, field }">
         <!-- Helio: https://github.com/vbenjs/vue-vben-admin/issues/1420 -->
@@ -97,3 +98,9 @@
     },
   });
 </script>
+<style scoped>
+.text-warning {
+  font-size: 20px;
+  color: red;
+}
+</style>
