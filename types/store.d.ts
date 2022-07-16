@@ -1,6 +1,5 @@
 import { ErrorTypeEnum } from '/@/enums/exceptionEnum';
 import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
-import { RoleInfo } from '/@/api/sys/model/userModel';
 
 // Lock screen information
 export interface LockInfo {
@@ -30,14 +29,15 @@ export interface ErrorLogInfo {
   time?: string;
 }
 
+// Helio: 去除类型 UserInfo
 export interface UserInfo {
   userId: string | number;
   username: string;
-  realName: string;
+  nickname: string;
   avatar: string;
   desc?: string;
   homePath?: string;
-  roles: RoleInfo[];
+  // Helio: 去除 roles 字段
 }
 
 export interface BeforeMiniState {

@@ -4,10 +4,10 @@ import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userMod
 import { ErrorMessageMode } from '/#/axios';
 
 enum Api {
-  Login = '/login',
-  Logout = '/logout',
-  GetUserInfo = '/getUserInfo',
-  GetPermCode = '/getPermCode',
+  Login = '/api/v1/auth/login',
+  Logout = '/api/v1/auth/logout',
+  GetUserInfo = '/api/v1/sys/users/info',
+  // Helio: 去除 GetPermCode 接口调用
   TestRetry = '/testRetry',
 }
 
@@ -33,12 +33,11 @@ export function getUserInfo() {
   return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
 }
 
-export function getPermCode() {
-  return defHttp.get<string[]>({ url: Api.GetPermCode });
-}
+// Helio: 去除 getPermCode 方法
 
 export function doLogout() {
-  return defHttp.get({ url: Api.Logout });
+  // Helio: 登出方法改为 POST 请求
+  return defHttp.post({ url: Api.Logout });
 }
 
 export function testRetry() {

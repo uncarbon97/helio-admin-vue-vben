@@ -13,6 +13,7 @@ import {
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
   MULTIPLE_TABS_KEY,
+  PERMISSIONS_KEY,
 } from '/@/enums/cacheEnum';
 import { DEFAULT_CACHE_TIME } from '/@/settings/encryptionSetting';
 import { toRaw } from 'vue';
@@ -25,6 +26,8 @@ interface BasicStore {
   [LOCK_INFO_KEY]: LockInfo;
   [PROJ_CFG_KEY]: ProjectConfig;
   [MULTIPLE_TABS_KEY]: RouteLocationNormalized[];
+  // Helio: 增加权限字符串缓存在持久层的定义
+  [PERMISSIONS_KEY]: string[];
 }
 
 type LocalStore = BasicStore;
