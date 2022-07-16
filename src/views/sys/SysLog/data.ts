@@ -84,6 +84,7 @@ export const queryFormSchema: FormSchema[] = [
     component: 'RangePicker',
     componentProps: {
       valueFormat: 'YYYY-MM-DD HH:mm:ss',
+      // 显示时间部分
       'show-time': true,
     },
     colProps: { span: 8 },
