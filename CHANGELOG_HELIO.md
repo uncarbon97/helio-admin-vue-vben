@@ -2,12 +2,12 @@
   - .github
   - .husky
   - mock
-  - src/api/demo
   - src/api/model
 
 ### 删除文件
   - .gitpod.yml
   - README.zh-CN.md
+  - build/vite/plugin/mock.ts 
 
 ### 编辑文件
   - .env
@@ -21,3 +21,5 @@
   - husky
   
 > 较原代码修改的部分会添加注释 `// Helio:` 方便比较
+
+> `src/api/demo`、`src/views/demo` 两个目录是源项目自带的演示用 API、页面，供参考，实际开发时可以删除
