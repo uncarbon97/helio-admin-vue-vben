@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import {PERMISSIONS_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY} from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
@@ -14,7 +14,6 @@ import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
@@ -61,10 +60,7 @@ export const useUserStore = defineStore({
       this.token = info ? info : ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
     },
-    setRoleList(roleList: RoleEnum[]) {
-      this.roleList = roleList;
-      setAuthCache(ROLES_KEY, roleList);
-    },
+    // Helio: 去除 setRoleList 方法
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
       this.lastUpdateTime = new Date().getTime();
@@ -91,10 +87,13 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        const { tokenValue, roles, permissions } = data;
 
         // save token
-        this.setToken(token);
+        this.setToken(tokenValue);
+        // Helio: 记录角色和权限值
+        setAuthCache(ROLES_KEY, roles);
+        setAuthCache(PERMISSIONS_KEY, permissions);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
@@ -125,14 +124,7 @@ export const useUserStore = defineStore({
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      const { roles = [] } = userInfo;
-      if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
-        this.setRoleList(roleList);
-      } else {
-        userInfo.roles = [];
-        this.setRoleList([]);
-      }
+      // Helio: 去除 role 相关
       this.setUserInfo(userInfo);
       return userInfo;
     },

@@ -9,11 +9,13 @@ export default {
     // support xxx.xxx.xxx
     fetchSetting: {
       // The field name of the current page passed to the background
-      pageField: 'page',
+      // Helio: 当前页码修改为后端字段 `pageNum`
+      pageField: 'pageNum',
       // The number field name of each page displayed in the background
       sizeField: 'pageSize',
       // Field name of the form data returned by the interface
-      listField: 'items',
+      // Helio: 页列表数据修改为后端字段 `records`
+      listField: 'records',
       // Total number of tables returned by the interface field name
       totalField: 'total',
     },

@@ -10,7 +10,7 @@
       <div :class="`${prefixCls}__header`">
         <img :src="avatar" :class="`${prefixCls}__header-img`" />
         <p :class="`${prefixCls}__header-name`">
-          {{ getRealName }}
+          {{ getNickname }}
         </p>
       </div>
 
@@ -44,7 +44,8 @@
       const userStore = useUserStore();
       const lockStore = useLockStore();
 
-      const getRealName = computed(() => userStore.getUserInfo?.realName);
+      // Helio: `realName` 修改为 `nickname`
+      const getNickname = computed(() => userStore.getUserInfo?.nickname);
       const [register, { closeModal }] = useModalInner();
 
       const [registerForm, { validateFields, resetFields }] = useForm({
@@ -82,7 +83,8 @@
       return {
         t,
         prefixCls,
-        getRealName,
+        // Helio: `realName` 修改为 `nickname`
+        getNickname,
         register,
         registerForm,
         handleLock,
