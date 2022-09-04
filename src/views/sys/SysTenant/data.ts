@@ -21,11 +21,17 @@ export const columns: BasicColumn[] = [
     title: '管理员账号',
     dataIndex: 'tenantAdminUser.username',
     width: 80,
+    customRender: ({ record }) => {
+      return record.tenantAdminUser.username;
+    },
   },
   {
     title: '管理员手机号',
     dataIndex: 'tenantAdminUser.phoneNo',
     width: 80,
+    customRender: ({ record }) => {
+      return record.tenantAdminUser.phoneNo;
+    },
   },
   {
     title: '状态',
@@ -92,14 +98,23 @@ export const retrieveDetailFormSchema: DescItem[] = [
   {
     field: 'tenantAdminUser.username',
     label: '管理员账号',
+    render: (_, record) => {
+      return record?.tenantAdminUser?.username;
+    },
   },
   {
     field: 'tenantAdminUser.phoneNo',
     label: '管理员手机号',
+    render: (_, record) => {
+      return record?.tenantAdminUser?.phoneNo;
+    },
   },
   {
     field: 'tenantAdminUser.email',
     label: '管理员邮箱',
+    render: (_, record) => {
+      return record?.tenantAdminUser?.email;
+    },
   },
   {
     field: 'createdAt',
