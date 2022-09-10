@@ -99,6 +99,7 @@ export const retrieveDetailFormSchema: DescItem[] = [
     field: 'tenantAdminUser.username',
     label: '管理员账号',
     render: (_, record) => {
+      // 因为查看详情有调用接口，存在网络延时，使用可选链避免报错
       return record?.tenantAdminUser?.username;
     },
   },
