@@ -16,6 +16,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { insertOrUpdateFormSchema } from '/@/views/sys/SysMenu/data';
   import { createSysMenuApi, listSysMenuApi, updateSysMenuApi } from '/@/api/sys/SysMenuApi';
+  import { DEFAULT_TREE_SELECT_FIELD_NAMES } from '/@/helio/constants/fieldNamesConstant';
 
   export default defineComponent({
     name: 'SysMenuUpdateDrawer',
@@ -53,16 +54,12 @@
         recordId = data.record?.id || null;
 
         // 更新上级菜单树状数据
-        const parentIdTreeData = await listSysMenuApi({});
+        const parentIdTreeData = await listSysMenuApi();
         await updateSchema({
           field: 'parentId',
           componentProps: {
             treeData: parentIdTreeData,
-            replaceFields: {
-              title: 'title',
-              key: 'id',
-              value: 'id',
-            },
+            fieldNames: DEFAULT_TREE_SELECT_FIELD_NAMES,
           },
         });
       });
@@ -71,6 +68,7 @@
 
       async function handleSubmit() {
         try {
+          // values 的字段定义见 ./data.ts 的 insertOrUpdateFormSchema
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
 

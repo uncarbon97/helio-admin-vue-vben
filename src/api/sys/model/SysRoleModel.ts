@@ -21,14 +21,6 @@ export interface SysRoleInsertOrUpdateForm {
   value: string;
 }
 
-/**
- * 后台角色-绑定菜单请求体
- */
-export interface SysRoleBindMenusForm {
-  roleId: string;
-  menuIds: string[];
-}
-
 /*
  ---- RESPONSE ----
  */

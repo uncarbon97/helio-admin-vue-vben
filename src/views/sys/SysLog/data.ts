@@ -79,13 +79,14 @@ export const queryFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'timeRangePicker',
+    field: '[beginAt, endAt]',
     label: '操作时间区间',
     component: 'RangePicker',
     componentProps: {
-      valueFormat: 'YYYY-MM-DD HH:mm:ss',
-      // 显示时间部分
-      'show-time': true,
+      valueFormat: 'YYYY-MM-DD',
+      placeholder: ['开始时间', '结束时间'],
+      // 不显示时分秒部分
+      showTime: false,
     },
     colProps: { span: 8 },
   },

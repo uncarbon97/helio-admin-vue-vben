@@ -2,30 +2,36 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
+        <!--    新增按钮    -->
         <a-button v-if="hasPermission('SysRole:create')" type="primary" @click="handleInsert">
           新增
         </a-button>
       </template>
       <template #action="{ record }">
+        <!--   每行最右侧一列的工具栏   -->
         <TableAction
           :actions="[
             {
-              show: hasPermission('SysRole:retrieve'),
+              tooltip: '详情',
+              ifShow: hasPermission('SysRole:retrieve'),
               icon: 'ant-design:eye-outlined',
               onClick: handleRetrieveDetail.bind(null, record),
             },
             {
-              show: hasPermission('SysRole:update'),
+              tooltip: '编辑',
+              ifShow: hasPermission('SysRole:update'),
               icon: 'clarity:note-edit-line',
               onClick: handleUpdate.bind(null, record),
             },
             {
-              show: hasPermission('SysRole:bindMenus'),
+              tooltip: '绑定菜单',
+              ifShow: hasPermission('SysRole:bindMenus'),
               icon: 'ant-design:setting-outlined',
               onClick: handleBindMenus.bind(null, record),
             },
             {
-              show: hasPermission('SysRole:delete'),
+              tooltip: '删除',
+              ifShow: hasPermission('SysRole:delete'),
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -37,8 +43,11 @@
         />
       </template>
     </BasicTable>
+    <!--  详情侧边抽屉  -->
     <SysRoleDetailDrawer @register="registerDetailDrawer" />
+    <!--  编辑侧边抽屉  -->
     <SysRoleUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
+    <!--  绑定菜单侧边抽屉  -->
     <BindMenuDrawer @register="registerBindMenuDrawer" @success="handleSuccess" />
   </div>
 </template>
@@ -52,7 +61,7 @@
   import SysRoleDetailDrawer from './detail-drawer.vue';
   import SysRoleUpdateDrawer from './update-drawer.vue';
   import BindMenuDrawer from './bind-menu-drawer.vue';
-  import { listAllMenu } from '/@/api/sys/SysMenuApi';
+  import { listAllMenuApi } from '/@/api/sys/SysMenuApi';
   import { TreeItem } from '/@/components/Tree';
   import { notification } from 'ant-design-vue';
 
@@ -77,7 +86,7 @@
         api: listSysRoleApi,
         columns,
         formConfig: {
-          labelWidth: 80,
+          labelWidth: 120,
           schemas: queryFormSchema,
         },
         useSearchForm: true,
@@ -93,20 +102,34 @@
         },
       });
 
-      // 提前拉取菜单树状数据
+      /*
+      预加载：菜单树状数据
+       */
       const menuTreeData = ref<TreeItem[]>([]);
-      const didMenuTreeDataLoaded = ref<boolean>(false);
-      listAllMenu().then((ret: any) => {
-        menuTreeData.value = ret as TreeItem[];
-        didMenuTreeDataLoaded.value = true;
+      let menuTreeDataLoadedFlag = false;
+      listAllMenuApi().then((apiResult: any) => {
+        menuTreeData.value = apiResult as TreeItem[];
+        menuTreeDataLoadedFlag = true;
       });
+      function checkMenuTreeDataLoaded(): boolean {
+        if (!menuTreeDataLoadedFlag) {
+          notification.warn({
+            message: '加载中',
+            description: '数据准备中，请5秒后再试',
+            duration: 2,
+          });
+          return false;
+        }
+
+        return true;
+      }
 
       function handleRetrieveDetail(record: Recordable) {
         openDetailDrawer(true, { record });
       }
 
       function handleInsert() {
-        if (!isMenuTreeDataLoaded()) {
+        if (!checkMenuTreeDataLoaded()) {
           return;
         }
         openUpdateDrawer(true, {
@@ -130,21 +153,8 @@
         reload();
       }
 
-      function isMenuTreeDataLoaded(): boolean {
-        if (!didMenuTreeDataLoaded.value) {
-          notification.warn({
-            message: '加载中',
-            description: '数据准备中，请5秒后再试',
-            duration: 2,
-          });
-          return false;
-        }
-
-        return true;
-      }
-
       function handleBindMenus(record: Recordable) {
-        if (!isMenuTreeDataLoaded()) {
+        if (!checkMenuTreeDataLoaded()) {
           return;
         }
         openBindMenuDrawer(true, {

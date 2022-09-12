@@ -18,7 +18,7 @@
         api: listSysLogApi,
         columns,
         formConfig: {
-          labelWidth: 80,
+          labelWidth: 120,
           schemas: queryFormSchema,
         },
         useSearchForm: true,

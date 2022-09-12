@@ -1,5 +1,4 @@
 import { defHttp } from '/@/utils/http/axios';
-import { ErrorMessageMode } from '/#/axios';
 import { SysDataDictApiResult, SysDataDictInsertOrUpdateForm } from './model/SysDataDictModel';
 
 enum Api {
@@ -9,87 +8,50 @@ enum Api {
 /**
  * 数据字典-分页列表
  */
-export const listSysDataDictApi = (queryForm: any, mode: ErrorMessageMode = 'modal') => {
-  if (queryForm.timeRangePicker) {
-    queryForm['beginAt'] = queryForm.timeRangePicker[0];
-    queryForm['endAt'] = queryForm.timeRangePicker[1];
-  }
-
-  return defHttp.get<SysDataDictApiResult[]>(
-    {
-      url: Api.REST,
-      params: queryForm,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const listSysDataDictApi = (queryForm: any) => {
+  return defHttp.get<SysDataDictApiResult[]>({
+    url: Api.REST,
+    params: queryForm,
+  });
 };
 
 /**
  * 数据字典-详情
  */
-export const retrieveSysDataDictApi = (id: string, mode: ErrorMessageMode = 'modal') => {
-  return defHttp.get<SysDataDictApiResult>(
-    {
-      url: Api.REST + '/' + id,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const retrieveSysDataDictApi = (id: string) => {
+  return defHttp.get<SysDataDictApiResult>({
+    url: `${Api.REST}/${id}`,
+  });
 };
 
 /**
  * 数据字典-新增
  */
-export const createSysDataDictApi = (
-  insertForm: SysDataDictInsertOrUpdateForm,
-  mode: ErrorMessageMode = 'modal',
-) => {
-  return defHttp.post<void>(
-    {
-      url: Api.REST,
-      params: insertForm,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const createSysDataDictApi = (insertForm: SysDataDictInsertOrUpdateForm) => {
+  return defHttp.post<void>({
+    url: Api.REST,
+    params: insertForm,
+  });
 };
 
 /**
  * 数据字典-编辑
  */
-export const updateSysDataDictApi = (
-  id: string,
-  updateForm: SysDataDictInsertOrUpdateForm,
-  mode: ErrorMessageMode = 'modal',
-) => {
-  return defHttp.put<void>(
-    {
-      url: Api.REST + '/' + id,
-      params: updateForm,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const updateSysDataDictApi = (id: string, updateForm: SysDataDictInsertOrUpdateForm) => {
+  return defHttp.put<void>({
+    url: `${Api.REST}/${id}`,
+    params: updateForm,
+  });
 };
 
 /**
  * 数据字典-删除
  */
-export const deleteSysDataDictApi = (ids: string[], mode: ErrorMessageMode = 'modal') => {
-  return defHttp.delete<void>(
-    {
-      url: Api.REST,
-      params: {
-        ids: ids,
-      },
+export const deleteSysDataDictApi = (ids: string[]) => {
+  return defHttp.delete<void>({
+    url: Api.REST,
+    params: {
+      ids: ids,
     },
-    {
-      errorMessageMode: mode,
-    },
-  );
+  });
 };

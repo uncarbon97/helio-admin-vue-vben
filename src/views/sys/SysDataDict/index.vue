@@ -2,25 +2,30 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
+        <!--    新增按钮    -->
         <a-button v-if="hasPermission('SysDataDict:create')" type="primary" @click="handleInsert">
           新增
         </a-button>
       </template>
       <template #action="{ record }">
+        <!--   每行最右侧一列的工具栏   -->
         <TableAction
           :actions="[
             {
-              show: hasPermission('SysDataDict:retrieve'),
+              tooltip: '详情',
+              ifShow: hasPermission('SysDataDict:retrieve'),
               icon: 'ant-design:eye-outlined',
               onClick: handleRetrieveDetail.bind(null, record),
             },
             {
-              show: hasPermission('SysDataDict:update'),
+              tooltip: '编辑',
+              ifShow: hasPermission('SysDataDict:update'),
               icon: 'clarity:note-edit-line',
               onClick: handleUpdate.bind(null, record),
             },
             {
-              show: hasPermission('SysDataDict:delete'),
+              tooltip: '删除',
+              ifShow: hasPermission('SysDataDict:delete'),
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -32,7 +37,9 @@
         />
       </template>
     </BasicTable>
+    <!--  详情侧边抽屉  -->
     <SysDataDictDetailDrawer @register="registerDetailDrawer" />
+    <!--  编辑侧边抽屉  -->
     <SysDataDictUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
   </div>
 </template>
@@ -59,7 +66,7 @@
         api: listSysDataDictApi,
         columns,
         formConfig: {
-          labelWidth: 80,
+          labelWidth: 120,
           schemas: queryFormSchema,
         },
         useSearchForm: true,

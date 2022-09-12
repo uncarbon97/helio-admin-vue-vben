@@ -17,6 +17,7 @@
   import { insertOrUpdateFormSchema } from '/@/views/sys/SysUser/data';
   import { createSysUserApi, updateSysUserApi } from '/@/api/sys/SysUserApi';
   import { listSysDeptApi } from '/@/api/sys/SysDeptApi';
+  import { DEFAULT_TREE_SELECT_FIELD_NAMES } from '/@/helio/constants/fieldNamesConstant';
 
   export default defineComponent({
     name: 'SysUserUpdateDrawer',
@@ -26,18 +27,7 @@
       const isUpdateView = ref(true);
       let recordId: string;
 
-      const [
-        registerForm,
-        {
-          resetFields,
-          setFieldsValue,
-          updateSchema,
-          validate,
-          getFieldsValue,
-          clearValidate,
-          validateFields,
-        },
-      ] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelCol: {
           span: 4,
         },
@@ -65,16 +55,12 @@
         recordId = data.record?.id || null;
 
         // 更新部门树状数据
-        const deptIdTreeData = await listSysDeptApi({});
+        const deptIdTreeData = await listSysDeptApi();
         await updateSchema({
           field: 'deptId',
           componentProps: {
             treeData: deptIdTreeData,
-            replaceFields: {
-              title: 'title',
-              key: 'id',
-              value: 'id',
-            },
+            fieldNames: DEFAULT_TREE_SELECT_FIELD_NAMES,
           },
         });
       });
@@ -83,6 +69,7 @@
 
       async function handleSubmit() {
         try {
+          // values 的字段定义见 ./data.ts 的 insertOrUpdateFormSchema
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
 

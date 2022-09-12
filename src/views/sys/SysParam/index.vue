@@ -2,25 +2,30 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
+        <!--    新增按钮    -->
         <a-button v-if="hasPermission('SysParam:create')" type="primary" @click="handleInsert">
           新增
         </a-button>
       </template>
       <template #action="{ record }">
+        <!--   每行最右侧一列的工具栏   -->
         <TableAction
           :actions="[
             {
-              show: hasPermission('SysParam:retrieve'),
+              tooltip: '详情',
+              ifShow: hasPermission('SysParam:retrieve'),
               icon: 'ant-design:eye-outlined',
               onClick: handleRetrieveDetail.bind(null, record),
             },
             {
-              show: hasPermission('SysParam:update'),
+              tooltip: '编辑',
+              ifShow: hasPermission('SysParam:update'),
               icon: 'clarity:note-edit-line',
               onClick: handleUpdate.bind(null, record),
             },
             {
-              show: hasPermission('SysParam:delete'),
+              tooltip: '删除',
+              ifShow: hasPermission('SysParam:delete'),
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -32,7 +37,9 @@
         />
       </template>
     </BasicTable>
+    <!--  详情侧边抽屉  -->
     <SysParamDetailDrawer @register="registerDetailDrawer" />
+    <!--  编辑侧边抽屉  -->
     <SysParamUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
   </div>
 </template>
@@ -59,7 +66,7 @@
         api: listSysParamApi,
         columns,
         formConfig: {
-          labelWidth: 80,
+          labelWidth: 120,
           schemas: queryFormSchema,
         },
         useSearchForm: true,

@@ -1,5 +1,4 @@
 import { defHttp } from '/@/utils/http/axios';
-import { ErrorMessageMode } from '/#/axios';
 import { SysTenantApiResult, SysTenantInsertOrUpdateForm } from './model/SysTenantModel';
 
 enum Api {
@@ -9,87 +8,50 @@ enum Api {
 /**
  * 系统租户-分页列表
  */
-export const listSysTenantApi = (queryForm: any, mode: ErrorMessageMode = 'modal') => {
-  if (queryForm.timeRangePicker) {
-    queryForm['beginAt'] = queryForm.timeRangePicker[0];
-    queryForm['endAt'] = queryForm.timeRangePicker[1];
-  }
-
-  return defHttp.get<SysTenantApiResult[]>(
-    {
-      url: Api.REST,
-      params: queryForm,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const listSysTenantApi = (queryForm: any) => {
+  return defHttp.get<SysTenantApiResult[]>({
+    url: Api.REST,
+    params: queryForm,
+  });
 };
 
 /**
  * 系统租户-详情
  */
-export const retrieveSysTenantApi = (id: string, mode: ErrorMessageMode = 'modal') => {
-  return defHttp.get<SysTenantApiResult>(
-    {
-      url: Api.REST + '/' + id,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const retrieveSysTenantApi = (id: string) => {
+  return defHttp.get<SysTenantApiResult>({
+    url: `${Api.REST}/${id}`,
+  });
 };
 
 /**
  * 系统租户-新增
  */
-export const createSysTenantApi = (
-  insertForm: SysTenantInsertOrUpdateForm,
-  mode: ErrorMessageMode = 'modal',
-) => {
-  return defHttp.post<void>(
-    {
-      url: Api.REST,
-      params: insertForm,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const createSysTenantApi = (insertForm: SysTenantInsertOrUpdateForm) => {
+  return defHttp.post<void>({
+    url: Api.REST,
+    params: insertForm,
+  });
 };
 
 /**
  * 系统租户-编辑
  */
-export const updateSysTenantApi = (
-  id: string,
-  updateForm: SysTenantInsertOrUpdateForm,
-  mode: ErrorMessageMode = 'modal',
-) => {
-  return defHttp.put<void>(
-    {
-      url: Api.REST + '/' + id,
-      params: updateForm,
-    },
-    {
-      errorMessageMode: mode,
-    },
-  );
+export const updateSysTenantApi = (id: string, updateForm: SysTenantInsertOrUpdateForm) => {
+  return defHttp.put<void>({
+    url: `${Api.REST}/${id}`,
+    params: updateForm,
+  });
 };
 
 /**
  * 系统租户-删除
  */
-export const deleteSysTenantApi = (ids: string[], mode: ErrorMessageMode = 'modal') => {
-  return defHttp.delete<void>(
-    {
-      url: Api.REST,
-      params: {
-        ids: ids,
-      },
+export const deleteSysTenantApi = (ids: string[]) => {
+  return defHttp.delete<void>({
+    url: Api.REST,
+    params: {
+      ids: ids,
     },
-    {
-      errorMessageMode: mode,
-    },
-  );
+  });
 };

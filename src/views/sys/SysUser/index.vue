@@ -2,9 +2,11 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
+        <!--    新增按钮    -->
         <a-button v-if="hasPermission('SysUser:create')" type="primary" @click="handleInsert">
           新增
         </a-button>
+        <!--    重置密码按钮    -->
         <a-button
           v-if="hasPermission('SysUser:resetPassword')"
           type="primary"
@@ -14,24 +16,29 @@
         </a-button>
       </template>
       <template #action="{ record }">
+        <!--   每行最右侧一列的工具栏   -->
         <TableAction
           :actions="[
             {
+              tooltip: '详情',
               show: hasPermission('SysUser:retrieve'),
               icon: 'ant-design:eye-outlined',
               onClick: handleRetrieveDetail.bind(null, record),
             },
             {
+              tooltip: '编辑',
               show: hasPermission('SysUser:update'),
               icon: 'clarity:note-edit-line',
               onClick: handleUpdate.bind(null, record),
             },
             {
+              tooltip: '绑定角色',
               show: hasPermission('SysUser:bindRoles'),
               icon: 'ant-design:setting-outlined',
               onClick: handleBindRole.bind(null, record),
             },
             {
+              tooltip: '删除',
               show: hasPermission('SysUser:delete'),
               icon: 'ant-design:delete-outlined',
               color: 'error',
@@ -41,11 +48,12 @@
               },
             },
             {
+              tooltip: '强制踢下线',
               show: hasPermission('SysUser:kickOut'),
               icon: 'ant-design:disconnect-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否强制踢下线',
+                title: '是否确认强制踢下线',
                 confirm: handleKickOut.bind(null, record),
               },
             },
@@ -53,27 +61,31 @@
         />
       </template>
     </BasicTable>
+    <!--  详情侧边抽屉  -->
     <SysUserDetailDrawer @register="registerDetailDrawer" />
+    <!--  编辑侧边抽屉  -->
     <SysUserUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
+    <!--  绑定角色侧边抽屉  -->
     <BindRoleDrawer @register="registerBindRoleDrawer" @success="handleSuccess" />
+    <!--  重置密码确认弹窗  -->
+    <ResetPasswordConfirmModal @register="registerResetPasswordConfirmModal" />
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { BasicTable, TableAction, useTable } from '/@/components/Table';
   import { useDrawer } from '/@/components/Drawer';
   import { hasPermission } from '/@/utils/auth';
   import { columns, queryFormSchema } from './data';
-  import {
-    deleteSysUserApi,
-    kickOutSysUserApi,
-    listSysUserApi,
-    resetSysUserPasswordApi,
-  } from '/@/api/sys/SysUserApi';
+  import { kickOutSysUserApi, deleteSysUserApi, listSysUserApi } from '/@/api/sys/SysUserApi';
   import SysUserDetailDrawer from './detail-drawer.vue';
   import SysUserUpdateDrawer from './update-drawer.vue';
   import BindRoleDrawer from './bind-role-drawer.vue';
+  import ResetPasswordConfirmModal from './reset-password/confirm-modal.vue';
   import { notification } from 'ant-design-vue';
+  import { useModal } from '/@/components/Modal';
+  import { TreeItem } from '/@/components/Tree';
+  import { listSysRoleApi } from '/@/api/sys/SysRoleApi';
 
   export default defineComponent({
     name: 'SysUserIndex',
@@ -83,6 +95,7 @@
       SysUserDetailDrawer,
       SysUserUpdateDrawer,
       BindRoleDrawer,
+      ResetPasswordConfirmModal,
     },
     setup() {
       // 查看详情
@@ -91,12 +104,16 @@
       const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
       // 绑定角色
       const [registerBindRoleDrawer, { openDrawer: openBindRoleDrawer }] = useDrawer();
+      // 重置密码确认弹窗
+      const [registerResetPasswordConfirmModal, { openModal: openResetPasswordConfirmModal }] =
+        useModal();
+
       const [registerTable, { reload, getSelectRows }] = useTable({
         title: '后台用户',
         api: listSysUserApi,
         columns,
         formConfig: {
-          labelWidth: 80,
+          labelWidth: 120,
           schemas: queryFormSchema,
         },
         useSearchForm: true,
@@ -114,6 +131,28 @@
           type: 'checkbox',
         },
       });
+
+      /*
+      预加载：角色下拉数据
+       */
+      const roleData = ref<TreeItem[]>([]);
+      let roleDataLoadedFlag = false;
+      listSysRoleApi({ pageNum: 1, pageSize: 10000 }).then((apiResult: any) => {
+        roleData.value = apiResult.records as TreeItem[];
+        roleDataLoadedFlag = true;
+      });
+      function checkRoleDataLoaded(): boolean {
+        if (!roleDataLoadedFlag) {
+          notification.warn({
+            message: '加载中',
+            description: '数据准备中，请5秒后再试',
+            duration: 2,
+          });
+          return false;
+        }
+
+        return true;
+      }
 
       function handleRetrieveDetail(record: Recordable) {
         openDetailDrawer(true, { record });
@@ -141,7 +180,7 @@
         reload();
       }
 
-      function handleResetPassword() {
+      async function handleResetPassword() {
         const records = getSelectRows();
         if (records.length < 1) {
           notification.error({
@@ -149,7 +188,6 @@
             description: '请选择一条数据',
             duration: 2,
           });
-
           return;
         }
 
@@ -159,40 +197,24 @@
             description: '只能选一条数据',
             duration: 2,
           });
-
           return;
         }
 
-        function randomString(length) {
-          length = length || 32;
-          const str = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678',
-            a = str.length;
-          let ret = '';
-          for (let i = 0; i < length; i++) {
-            ret += str.charAt(Math.floor(Math.random() * a));
-          }
-
-          return ret;
-        }
-
-        const randomPassword = randomString(20);
-
-        resetSysUserPasswordApi({
-          userId: records[0].id,
-          randomPassword: randomPassword,
-        });
-
-        notification.success({
-          message: '重置成功',
-          description: '新密码:' + randomPassword,
-          duration: 10,
+        // 将选中行数据传入模态框
+        const record = records[0];
+        openResetPasswordConfirmModal(true, {
+          record,
         });
       }
 
       function handleBindRole(record: Recordable) {
+        if (!checkRoleDataLoaded()) {
+          return;
+        }
         openBindRoleDrawer(true, {
           record,
           isUpdateView: true,
+          roleData,
         });
       }
 
@@ -211,6 +233,7 @@
         registerDetailDrawer,
         registerUpdateDrawer,
         registerBindRoleDrawer,
+        registerResetPasswordConfirmModal,
         handleRetrieveDetail,
         handleInsert,
         handleUpdate,

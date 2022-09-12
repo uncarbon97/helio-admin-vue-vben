@@ -163,7 +163,8 @@ const transform: AxiosTransform = {
     const errorLogStore = useErrorLogStoreWithOut();
     errorLogStore.addAjaxErrorInfo(error);
     const { response, code, message, config } = error || {};
-    const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
+    // Helio: 将默认的请求失败提示方式改为 modal 模态框
+    const errorMessageMode = config?.requestOptions?.errorMessageMode || 'modal';
     // Helio: 适配业务失败文案返回、入参校验失败文案返回字段名
     const msg: string = response?.data?.data?.message || response?.data?.msg || '';
     const err: string = error?.toString?.() ?? '';
@@ -245,7 +246,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 是否携带token
           withToken: true,
           retryRequest: {
-            isOpenRetry: true,
+            // Helio: 关闭自动重试
+            isOpenRetry: false,
             count: 5,
             waitTime: 100,
           },

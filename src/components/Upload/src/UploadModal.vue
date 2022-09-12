@@ -251,7 +251,8 @@
         for (const item of fileListRef.value) {
           const { status, responseData } = item;
           if (status === UploadResultStatus.SUCCESS && responseData) {
-            fileList.push(responseData.url);
+            // Helio: 实际 url 放在结果的 data.url 字段中
+            fileList.push(responseData.data.url);
           }
         }
         // 存在一个上传成功的即可保存

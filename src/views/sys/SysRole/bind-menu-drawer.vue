@@ -28,15 +28,14 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { bindMenusApi } from '/@/api/sys/SysRoleApi';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-  import Step1 from "/@/views/demo/page/form/step/Step1.vue";
 
   export default defineComponent({
     name: 'BindMenuDrawer',
-    components: {Step1, BasicDrawer, BasicForm, BasicTree },
+    components: { BasicDrawer, BasicForm, BasicTree },
     emits: ['success', 'register'],
     setup: function (_, { emit }) {
       let recordId: string;
-      // 树状菜单数据
+      // 菜单树状数据
       const menuTreeData = ref<TreeItem[]>([]);
       // 被选中的菜单ID
       const selectedMenuIds = ref<string[]>([]);
@@ -53,7 +52,7 @@
         schemas: [
           {
             label: '菜单列表',
-            field: 'selectedMenuIds',
+            field: '',
             slot: 'menu',
             component: 'Input',
           },
@@ -68,8 +67,8 @@
         // 主键ID
         recordId = data.record.id || null;
 
-        // 从列表页带来的树状菜单、已选中菜单ID
-        menuTreeData.value = data?.menuTreeData || [];
+        // 从列表页带来的菜单树状数据、已选中菜单ID
+        menuTreeData.value = data.menuTreeData;
         selectedMenuIds.value = data.record.menuIds;
 
         setFieldsValue({
@@ -83,10 +82,7 @@
 
           setDrawerProps({ confirmLoading: true });
 
-          await bindMenusApi({
-            roleId: recordId,
-            menuIds: selectedMenuIds.value,
-          });
+          await bindMenusApi(recordId, selectedMenuIds.value);
 
           closeDrawer();
           emit('success');
@@ -106,8 +102,8 @@
   });
 </script>
 <style scoped>
-.text-warning {
-  font-size: 20px;
-  color: red;
-}
+  .text-warning {
+    font-size: 20px;
+    color: red;
+  }
 </style>
