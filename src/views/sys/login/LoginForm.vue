@@ -119,8 +119,9 @@
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    // Helio: 默认账号密码修改为 `admin`
+    account: 'admin',
+    password: 'admin',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -138,20 +139,17 @@
         password: data.password,
         username: data.account,
         mode: 'none', //不要默认的错误提示
+        // Helio: 增加"记住我"参数
+        rememberMe: rememberMe.value,
       });
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
-          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.nickname}`,
           duration: 3,
         });
       }
-    } catch (error) {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
-        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-      });
+      // Helio: 去除默认的 catch 代码块，由默认请求异常处理接管
     } finally {
       loading.value = false;
     }

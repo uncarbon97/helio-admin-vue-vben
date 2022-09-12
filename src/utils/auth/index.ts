@@ -1,5 +1,5 @@
 import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
-import { CacheTypeEnum } from '/@/enums/cacheEnum';
+import {CacheTypeEnum, PERMISSIONS_KEY} from '/@/enums/cacheEnum';
 import projectSetting from '/@/settings/projectSetting';
 import { TOKEN_KEY } from '/@/enums/cacheEnum';
 
@@ -23,4 +23,16 @@ export function setAuthCache(key: BasicKeys, value) {
 export function clearAuthCache(immediate = true) {
   const fn = isLocal ? Persistent.clearLocal : Persistent.clearSession;
   return fn(immediate);
+}
+
+/**
+ * @description Helio: 前端判断当前用户是否具有特定权限字符串
+ * @param permission 权限字符串
+ */
+export function hasPermission(permission: string): boolean {
+  const ownedPermissions = getAuthCache<string[]>(PERMISSIONS_KEY);
+  if (!ownedPermissions) {
+    return false;
+  }
+  return ownedPermissions.indexOf(permission) > -1;
 }

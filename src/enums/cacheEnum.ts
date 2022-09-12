@@ -29,3 +29,6 @@ export enum CacheTypeEnum {
   SESSION,
   LOCAL,
 }
+
+// Helio: permission info key
+export const PERMISSIONS_KEY = 'PERMISSIONS__KEY__';
