@@ -19,19 +19,13 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '管理员账号',
-    dataIndex: 'tenantAdminUser.username',
+    dataIndex: ['tenantAdminUser', 'username'],
     width: 80,
-    customRender: ({ record }) => {
-      return record.tenantAdminUser.username;
-    },
   },
   {
     title: '管理员手机号',
-    dataIndex: 'tenantAdminUser.phoneNo',
+    dataIndex: ['tenantAdminUser', 'phoneNo'],
     width: 80,
-    customRender: ({ record }) => {
-      return record.tenantAdminUser.phoneNo;
-    },
   },
   {
     title: '状态',
