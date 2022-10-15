@@ -144,6 +144,17 @@ export class VAxios {
       });
     }
 
+    /*
+      Helio: 将 params.data 的数据同时包装成 JSON 字符串，作为二进制数据一并上传，字段名为 'attr'
+             这样后端接口可以兼容地使用类似
+             `@RequestPart(required = false) @Valid UploadFileAttributeDTO attr`
+             的方式收参，既避免写一行行的`@RequestParam`，也方便入参校验
+       */
+    formData.append(
+      'attr',
+      new Blob([JSON.stringify(params.data || {})], { type: 'application/json' }),
+    );
+
     return this.axiosInstance.request<T>({
       ...config,
       method: 'POST',
