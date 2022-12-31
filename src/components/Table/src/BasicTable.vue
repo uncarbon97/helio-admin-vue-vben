@@ -75,6 +75,7 @@
   import { warn } from '/@/utils/log';
 
   export default defineComponent({
+    name:'BasicTable',
     components: {
       Table,
       BasicForm,
@@ -136,6 +137,7 @@
         getRowSelection,
         getRowSelectionRef,
         getSelectRows,
+        setSelectedRows,
         clearSelectedRowKeys,
         getSelectRowKeys,
         deleteSelectRowByKey,
@@ -288,6 +290,7 @@
       const tableAction: TableActionType = {
         reload,
         getSelectRows,
+        setSelectedRows,
         clearSelectedRowKeys,
         getSelectRowKeys,
         deleteSelectRowByKey,
