@@ -37,12 +37,16 @@ export const columns: BasicColumn[] = [
 
       switch (value) {
         case 0:
-          color = 'red';
+          color = 'yellow';
           text = '未执行';
           break;
         case 1:
           color = 'green';
           text = '成功';
+          break;
+        case 2:
+          color = 'red';
+          text = '失败';
           break;
       }
       return h(Tag, { color: color }, () => text);
@@ -74,6 +78,7 @@ export const queryFormSchema: FormSchema[] = [
       options: [
         { label: '未执行', value: 0 },
         { label: '成功', value: 1 },
+        { label: '失败', value: 2 },
       ],
     },
     colProps: { span: 8 },
