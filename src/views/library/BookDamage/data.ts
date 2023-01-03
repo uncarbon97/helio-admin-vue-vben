@@ -56,8 +56,13 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: '创建时间',
+    title: '报损时间',
     dataIndex: 'createdAt',
+    width: 80,
+  },
+  {
+    title: '报损人',
+    dataIndex: 'createdBy',
     width: 80,
   },
 ];
@@ -93,11 +98,11 @@ export const retrieveDetailFormSchema: DescItem[] = [
   },
   {
     field: 'createdAt',
-    label: '创建时间',
+    label: '报损时间',
   },
   {
-    field: 'updatedAt',
-    label: '更新时间',
+    field: 'createdBy',
+    label: '报损人',
   },
 ];
 
