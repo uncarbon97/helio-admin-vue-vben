@@ -69,6 +69,7 @@
           dataIndex: 'action',
           // slots: { customRender: 'action' },
         },
+        scroll: { y: '100%' },
         pagination: false,
       });
 
