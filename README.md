@@ -5,7 +5,7 @@
 
 自 `1.6.0` 版本起，可跟随源项目 `main` 分支更新
 
-[源项目官方文档](https://vvbin.cn/doc-next/)
+[源项目官方文档](https://doc.vvbin.cn/)
 [相较于源项目的变更](CHANGELOG_HELIO.md)
 
 
@@ -13,8 +13,11 @@
 
 1. 从 GitHub 或 Gitee 克隆项目源码，到自己的电脑上
 2. 自行安装 `Node.js`14.x 或以上版本（建议通过 [nvm](https://www.runoob.com/w3cnote/nvm-manager-node-versions.html) 进行）
-    > 本人使用 Node.js 15.14.0 版本，对应 nvm 安装命令：`nvm install 15.14.0 && nvm use 15.14.0`
-3. 找到根目录下的`.env.development`，根据后端程序的类型（单体版or微服务版），修改`VITE_GLOB_API_URL`（全局API_BASE_URL）
+    > 本人使用 Node.js 18.12.1 版本，对应 nvm 安装命令：`nvm install 18.12.1 && nvm use 18.12.1`
+3. 找到根目录下的`.env.development`，根据后端程序的类型（单体版or微服务版），修改:
+    - `VITE_GLOB_API_URL`（全局API_BASE_URL）
+    - `VITE_GLOB_UPLOAD_URL`（全局通用文件上传接口）
+    - `VITE_GLOB_API_URL_PREFIX`（全局API路由前缀）
 4. 在根目录依次执行命令行命令：
     ```
     npm install -g pnpm
