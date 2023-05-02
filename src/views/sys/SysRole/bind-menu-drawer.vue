@@ -11,12 +11,16 @@
     <BasicForm @register="registerForm">
       <template #menu>
         <!-- Helio: https://github.com/vbenjs/vue-vben-admin/issues/1420 -->
+        <!-- Helio: 三个菜单（父菜单A、子菜单A1、子菜单A2），都被角色1关联的情况下，如果新增了一个子菜单A3 -->
+        <!-- Helio: 由于父菜单A的缘故，未授权的子菜单A3会被错误地勾选 -->
         <BasicTree
           v-model:value="selectedMenuIds"
           :treeData="menuTreeData"
-          :fieldNames="{ key: 'idStr' }"
+          :fieldNames="{ key: 'id' }"
+          :checkStrictly="true"
           checkable
           toolbar
+          @check="handleMenuTreeCheck"
         />
       </template>
     </BasicForm>
@@ -91,12 +95,17 @@
         }
       }
 
+      function handleMenuTreeCheck(rawVal, event) {
+        console.error(rawVal, event);
+      }
+
       return {
         registerDrawer,
         registerForm,
         handleSubmit,
         menuTreeData,
         selectedMenuIds,
+        handleMenuTreeCheck,
       };
     },
   });

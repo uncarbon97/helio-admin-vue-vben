@@ -1,5 +1,8 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { DescItem } from '/@/components/Description';
+import {ref} from "vue";
+import {TreeItem} from "/@/components/Tree";
+import {listAllMenuApi} from "/@/api/sys/SysMenuApi";
 
 /**
  * 表格列
@@ -89,3 +92,16 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     componentProps: {},
   },
 ];
+
+/*
+预加载：菜单树状数据
+ */
+const menuTreeData = ref<TreeItem[]>([]);
+export function refreshMenuTreeData() {
+  listAllMenuApi().then((apiResult: any) => {
+    menuTreeData.value = apiResult as TreeItem[];
+  });
+}
+export function getMenuTreeData(): TreeItem[] {
+  return menuTreeData.value;
+}

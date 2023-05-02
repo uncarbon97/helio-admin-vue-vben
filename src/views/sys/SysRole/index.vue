@@ -52,18 +52,15 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent } from 'vue';
   import { BasicTable, TableAction, useTable } from '/@/components/Table';
   import { useDrawer } from '/@/components/Drawer';
   import { hasPermission } from '/@/utils/auth';
-  import { columns, queryFormSchema } from './data';
+  import {columns, getMenuTreeData, queryFormSchema, refreshMenuTreeData} from './data';
   import { deleteSysRoleApi, listSysRoleApi } from '/@/api/sys/SysRoleApi';
   import SysRoleDetailDrawer from './detail-drawer.vue';
   import SysRoleUpdateDrawer from './update-drawer.vue';
   import BindMenuDrawer from './bind-menu-drawer.vue';
-  import { listAllMenuApi } from '/@/api/sys/SysMenuApi';
-  import { TreeItem } from '/@/components/Tree';
-  import { notification } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'SysRoleIndex',
@@ -102,36 +99,11 @@
         },
       });
 
-      /*
-      预加载：菜单树状数据
-       */
-      const menuTreeData = ref<TreeItem[]>([]);
-      let menuTreeDataLoadedFlag = false;
-      listAllMenuApi().then((apiResult: any) => {
-        menuTreeData.value = apiResult as TreeItem[];
-        menuTreeDataLoadedFlag = true;
-      });
-      function checkMenuTreeDataLoaded(): boolean {
-        if (!menuTreeDataLoadedFlag) {
-          notification.warn({
-            message: '加载中',
-            description: '数据准备中，请5秒后再试',
-            duration: 2,
-          });
-          return false;
-        }
-
-        return true;
-      }
-
       function handleRetrieveDetail(record: Recordable) {
         openDetailDrawer(true, { record });
       }
 
       function handleInsert() {
-        if (!checkMenuTreeDataLoaded()) {
-          return;
-        }
         openUpdateDrawer(true, {
           isUpdateView: false,
         });
@@ -154,12 +126,9 @@
       }
 
       function handleBindMenus(record: Recordable) {
-        if (!checkMenuTreeDataLoaded()) {
-          return;
-        }
         openBindMenuDrawer(true, {
           record,
-          menuTreeData,
+          menuTreeData: getMenuTreeData(),
         });
       }
 
@@ -173,10 +142,12 @@
         handleUpdate,
         handleDelete,
         handleSuccess,
-        menuTreeData,
         registerBindMenuDrawer,
         handleBindMenus,
       };
     },
+    mounted() {
+      refreshMenuTreeData();
+    }
   });
 </script>
