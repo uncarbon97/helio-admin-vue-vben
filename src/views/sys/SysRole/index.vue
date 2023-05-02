@@ -56,7 +56,7 @@
   import { BasicTable, TableAction, useTable } from '/@/components/Table';
   import { useDrawer } from '/@/components/Drawer';
   import { hasPermission } from '/@/utils/auth';
-  import {columns, getMenuTreeData, queryFormSchema, refreshMenuTreeData} from './data';
+  import { columns, getMenuTreeData, queryFormSchema, refreshMenuTreeData } from './data';
   import { deleteSysRoleApi, listSysRoleApi } from '/@/api/sys/SysRoleApi';
   import SysRoleDetailDrawer from './detail-drawer.vue';
   import SysRoleUpdateDrawer from './update-drawer.vue';
@@ -148,6 +148,6 @@
     },
     mounted() {
       refreshMenuTreeData();
-    }
+    },
   });
 </script>
