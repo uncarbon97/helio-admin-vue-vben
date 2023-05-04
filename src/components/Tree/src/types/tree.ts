@@ -180,6 +180,8 @@ export interface TreeActionType {
   getSelectedKeys: () => KeyType[];
   setCheckedKeys: (keys: CheckKeys) => void;
   getCheckedKeys: () => CheckKeys;
+  // Helio: 新增半选中节点键getter
+  getHalfCheckedKeys: () => CheckKeys;
   filterByLevel: (level: number) => void;
   insertNodeByKey: (opt: InsertNodeParams) => void;
   insertNodesByKey: (opt: InsertNodeParams) => void;
@@ -192,4 +194,6 @@ export interface TreeActionType {
     treeList?: TreeItem[],
     selectNode?: TreeItem | null,
   ) => TreeItem | null;
+  // Helio: 新增是否发生过勾选事件
+  isEverChecked: () => boolean;
 }
