@@ -15,3 +15,4 @@ export function formatToDate(date?: dayjs.ConfigType, format = DATE_FORMAT): str
 }
 
 export const dateUtil = dayjs;
+
