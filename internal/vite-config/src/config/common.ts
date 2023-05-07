@@ -20,6 +20,8 @@ const commonConfig: UserConfig = {
   plugins: [
     UnoCSS({
       presets: [presetUno(), presetTypography()],
+      // Helio: 避免在较低版本Chrome(如v87)下开发时，无限转圈，无法到达登录页的问题
+      hmrTopLevelAwait: false,
     }),
   ],
 };

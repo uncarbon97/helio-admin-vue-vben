@@ -18,7 +18,6 @@
           :fieldNames="{ key: 'id' }"
           checkable
           toolbar
-
         />
       </template>
     </BasicForm>
