@@ -146,12 +146,12 @@
     &__hour,
     &__minute {
       display: flex;
-      font-weight: 700;
-      color: #bababa;
-      background-color: #141313;
-      border-radius: 30px;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      background-color: #141313;
+      color: #bababa;
+      font-weight: 700;
 
       @media screen and (max-width: @screen-md) {
         span:not(.meridiem) {
@@ -170,6 +170,7 @@
           font-size: 90px;
         }
       }
+
       @media screen and (min-width: @screen-lg) {
         span:not(.meridiem) {
           font-size: 220px;
@@ -181,6 +182,7 @@
           font-size: 260px;
         }
       }
+
       @media screen and (min-width: @screen-2xl) {
         span:not(.meridiem) {
           font-size: 320px;
@@ -189,16 +191,16 @@
     }
 
     &-entry {
+      display: flex;
       position: absolute;
       top: 0;
       left: 0;
-      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       height: 100%;
       background-color: rgb(0 0 0 / 50%);
       backdrop-filter: blur(8px);
-      justify-content: center;
-      align-items: center;
 
       &-content {
         width: 260px;
@@ -215,8 +217,8 @@
 
         &-name {
           margin-top: 5px;
-          font-weight: 500;
           color: #bababa;
+          font-weight: 500;
         }
       }
 
