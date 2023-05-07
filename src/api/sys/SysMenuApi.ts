@@ -11,8 +11,7 @@ enum Api {
  * 取所有菜单
  */
 export const listAllMenuApi = async () => {
-  const res = await defHttp.get<RouteItem[]>({ url: `${Api.REST}/all` });
-  return menu2Tree(res);
+  return await defHttp.get<RouteItem[]>({ url: `${Api.REST}/all` });
 };
 
 /**

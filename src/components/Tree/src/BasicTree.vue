@@ -69,6 +69,11 @@
         };
       });
 
+      // Helio: 半选中节点键
+      let halfCheckedKeys = [];
+      // Helio: 是否发生过勾选事件
+      let everChecked = false;
+
       const getBindValues = computed(() => {
         let propsData = {
           blockNode: true,
@@ -88,6 +93,10 @@
             emit('update:selectedKeys', v);
           },
           onCheck: (v: CheckKeys, e) => {
+            // Helio: 更新半选中节点键
+            halfCheckedKeys = e.halfCheckedKeys;
+            everChecked = true;
+
             let currentValue = toRaw(state.checkedKeys) as KeyType[];
             if (isArray(currentValue) && searchState.startSearch) {
               const value = e.node.eventKey;
@@ -180,6 +189,16 @@
         return state.checkedKeys;
       }
 
+      /**
+       * Helio: 新增半选中节点键getter
+       * 注意：受限于Ant-design React版本身就没有直接提供获取halfCheckedKeys的方法（但是elementUI却有，真的奇怪）
+       * 所以这里的值实际上是通过onCheck回调拿到的
+       * 只有点击过选择框，拿到的值才一定是最新的
+       */
+      function getHalfCheckedKeys() {
+        return halfCheckedKeys;
+      }
+
       function checkAll(checkAll: boolean) {
         state.checkedKeys = checkAll ? getEnabledKeys() : ([] as KeyType[]);
       }
@@ -190,6 +209,16 @@
 
       function onStrictlyChange(strictly: boolean) {
         state.checkStrictly = strictly;
+      }
+
+      function isEverChecked() {
+        return everChecked;
+      }
+
+      // Helio: 重置半选中节点键和是否发生过勾选事件
+      function resetEverChecked() {
+        halfCheckedKeys = [];
+        everChecked = false;
       }
 
       watch(
@@ -325,6 +354,8 @@
         getSelectedKeys,
         setCheckedKeys,
         getCheckedKeys,
+        // Helio: 新增半选中节点键getter
+        getHalfCheckedKeys,
         insertNodeByKey,
         insertNodesByKey,
         deleteNodeByKey,
@@ -341,6 +372,8 @@
         getSearchValue: () => {
           return searchState.searchText;
         },
+        isEverChecked,
+        resetEverChecked,
       };
 
       function renderAction(node: TreeItem) {

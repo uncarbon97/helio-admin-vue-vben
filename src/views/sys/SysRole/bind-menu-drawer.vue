@@ -12,9 +12,10 @@
       <template #menu>
         <!-- Helio: https://github.com/vbenjs/vue-vben-admin/issues/1420 -->
         <BasicTree
-          v-model:value="selectedMenuIds"
+          ref="menuTreeRef"
+          v-model:checkedKeys="checkedMenuIds"
           :treeData="menuTreeData"
-          :fieldNames="{ key: 'idStr' }"
+          :fieldNames="{ key: 'id' }"
           checkable
           toolbar
         />
@@ -28,6 +29,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { bindMenusApi } from '/@/api/sys/SysRoleApi';
   import { BasicTree, TreeItem } from '/@/components/Tree';
+  import { getHasChildMenuMap } from '/@/views/sys/SysRole/data';
 
   export default defineComponent({
     name: 'BindMenuDrawer',
@@ -38,7 +40,9 @@
       // 菜单树状数据
       const menuTreeData = ref<TreeItem[]>([]);
       // 被选中的菜单ID
-      const selectedMenuIds = ref<string[]>([]);
+      const checkedMenuIds = ref<string[]>([]);
+      // 树组件Ref
+      const menuTreeRef = ref();
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelCol: {
@@ -65,11 +69,17 @@
         setDrawerProps({ confirmLoading: false });
 
         // 主键ID
-        recordId = data.record.id || null;
+        recordId = data.record.id ?? null;
 
-        // 从列表页带来的菜单树状数据、已选中菜单ID
+        // 从列表页带来的菜单树状数据
         menuTreeData.value = data.menuTreeData;
-        selectedMenuIds.value = data.record.menuIds;
+
+        // 从列表页带来的已选中菜单ID
+        // 三个菜单（父菜单A、子菜单A1、子菜单A2），都被角色1关联的情况下，如果新增了一个子菜单A
+        // 由于父菜单A的缘故，未授权的子菜单A3会被错误地勾选，所以前端显示时剔除存在子项的菜单，由父子联动自动勾选
+        const hasChildMenuMap = getHasChildMenuMap().value;
+        checkedMenuIds.value = data.record.menuIds.filter(item => !hasChildMenuMap.has(item));
+        menuTreeRef.value.resetEverChecked();
 
         setFieldsValue({
           ...data.record,
@@ -82,10 +92,20 @@
 
           setDrawerProps({ confirmLoading: true });
 
-          await bindMenusApi(recordId, selectedMenuIds.value);
+          const everChecked = menuTreeRef.value.isEverChecked();
+          if (everChecked) {
+            // 发生过勾选事件，才请求接口更新
+            const newestMenuIds = [
+              ...checkedMenuIds.value,
+              ...menuTreeRef.value.getHalfCheckedKeys(),
+            ]
+            await bindMenusApi(recordId, newestMenuIds);
+          }
 
           closeDrawer();
-          emit('success');
+          if (everChecked) {
+            emit('success');
+          }
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
@@ -96,7 +116,8 @@
         registerForm,
         handleSubmit,
         menuTreeData,
-        selectedMenuIds,
+        checkedMenuIds,
+        menuTreeRef,
       };
     },
   });
