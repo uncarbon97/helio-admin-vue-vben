@@ -60,7 +60,7 @@ export const deleteSysRoleApi = (ids: string[]) => {
  * 后台角色-绑定角色与菜单关联关系
  */
 export const bindMenusApi = (roleId: string, menuIds: string[]) => {
-  return defHttp.post<void>({
+  return defHttp.put<void>({
     url: `${Api.REST}/${roleId}/menus`,
     params: {
       menuIds: menuIds,

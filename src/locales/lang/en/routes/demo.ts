@@ -29,10 +29,6 @@ export default {
     drawer: 'Drawer',
     desc: 'Desc',
 
-    lazy: 'Lazy',
-    lazyBasic: 'Basic',
-    lazyTransition: 'Animation',
-
     verify: 'Verify',
     verifyDrag: 'Drag ',
     verifyRotate: 'Picture Restore',
@@ -198,5 +194,6 @@ export default {
     editRowTable: 'Editable row',
     authColumn: 'Auth column',
     resizeParentHeightTable: 'resizeParentHeightTable',
+    vxeTable: 'VxeTable',
   },
 };

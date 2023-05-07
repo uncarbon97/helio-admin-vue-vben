@@ -81,11 +81,6 @@ export type SysMenuApiResult = SysMenuInsertOrUpdateForm & {
   updatedAt: string;
 
   /**
-   * 主键ID字符串
-   */
-  idStr: string;
-
-  /**
    * 子级
    */
   children: SysMenuApiResult[];
