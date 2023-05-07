@@ -69,7 +69,7 @@
         setDrawerProps({ confirmLoading: false });
 
         // 主键ID
-        recordId = data.record.id || null;
+        recordId = data.record.id ?? null;
 
         // 从列表页带来的菜单树状数据
         menuTreeData.value = data.menuTreeData;
@@ -79,6 +79,7 @@
         // 由于父菜单A的缘故，未授权的子菜单A3会被错误地勾选，所以前端显示时剔除存在子项的菜单，由父子联动自动勾选
         const hasChildMenuMap = getHasChildMenuMap().value;
         checkedMenuIds.value = data.record.menuIds.filter(item => !hasChildMenuMap.has(item));
+        menuTreeRef.value.resetEverChecked();
 
         setFieldsValue({
           ...data.record,

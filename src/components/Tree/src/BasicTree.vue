@@ -215,6 +215,12 @@
         return everChecked;
       }
 
+      // Helio: 重置半选中节点键和是否发生过勾选事件
+      function resetEverChecked() {
+        halfCheckedKeys = [];
+        everChecked = false;
+      }
+
       watch(
         () => props.searchValue,
         (val) => {
@@ -367,6 +373,7 @@
           return searchState.searchText;
         },
         isEverChecked,
+        resetEverChecked,
       };
 
       function renderAction(node: TreeItem) {

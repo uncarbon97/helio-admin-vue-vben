@@ -196,4 +196,6 @@ export interface TreeActionType {
   ) => TreeItem | null;
   // Helio: 新增是否发生过勾选事件
   isEverChecked: () => boolean;
+  // Helio: 重置是否发生过勾选事件
+  resetEverChecked: () => void;
 }
