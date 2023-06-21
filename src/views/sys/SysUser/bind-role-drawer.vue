@@ -53,7 +53,7 @@
         schemas: [
           {
             label: '角色列表',
-            field: '',
+            field: 'roles',
             slot: 'menu',
             component: 'Input',
           },
