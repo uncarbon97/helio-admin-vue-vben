@@ -24,7 +24,7 @@
     pnpm install
     npm run dev
     ```
-5. 浏览器访问http://127.0.0.1:3100 ，就能看到后台管理页面了，默认账户密码`admin admin`
+5. 浏览器访问http://127.0.0.1:5173 ，就能看到后台管理页面了，默认账户密码`admin admin`
 
 
 ## License
@@ -37,4 +37,4 @@
 ![](.readme_static/helio-admin-vue-vben-3.JPG)
 
 ## 代码分支
-分支`feature/oss_support`：支持对象存储（文件上传、下载）
+分支`demo/library`：图书管理系统
