@@ -1,5 +1,4 @@
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 
@@ -28,6 +27,21 @@ export const columns: BasicColumn[] = [
     width: 50,
   },
   {
+    title: '国家或地区',
+    dataIndex: 'ipLocationRegionName',
+    width: 50,
+  },
+  {
+    title: '省份',
+    dataIndex: 'ipLocationProvinceName',
+    width: 50,
+  },
+  {
+    title: '城市',
+    dataIndex: 'ipLocationCityName',
+    width: 50,
+  },
+  {
     title: '状态',
     dataIndex: 'status',
     width: 80,
@@ -51,6 +65,11 @@ export const columns: BasicColumn[] = [
       }
       return h(Tag, { color: color }, () => text);
     },
+  },
+  {
+    title: 'User-Agent',
+    dataIndex: 'userAgent',
+    width: 50,
   },
 ];
 

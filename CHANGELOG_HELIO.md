@@ -8,6 +8,7 @@
   - .gitpod.yml
   - README.zh-CN.md
   - build/vite/plugin/mock.ts
+  - CNAME
 
 ### 修改文件
   - .env
@@ -23,6 +24,7 @@
 
 ### 增加文件
   - CHANGELOG_HELIO.md
+  - Dockerfile
 
 ### 删除包依赖
   - husky

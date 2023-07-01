@@ -69,16 +69,16 @@
         setDrawerProps({ confirmLoading: false });
 
         // 主键ID
-        recordId = data.record.id ?? null;
+        recordId = data.record?.id || null;
 
         // 从列表页带来的菜单树状数据
         menuTreeData.value = data.menuTreeData;
 
         // 从列表页带来的已选中菜单ID
-        // 三个菜单（父菜单A、子菜单A1、子菜单A2），都被角色1关联的情况下，如果新增了一个子菜单A
-        // 由于父菜单A的缘故，未授权的子菜单A3会被错误地勾选，所以前端显示时剔除存在子项的菜单，由父子联动自动勾选
+        // 三个菜单（父菜单A、子菜单A1、子菜单A2），都被角色1关联的情况下，如果新增了一个子菜单A3
+        // 由于父菜单A的缘故，未授权的子菜单A3会被错误地勾选，所以前端显示时剔除存在子项的父菜单，由父子联动自动勾选
         const hasChildMenuMap = getHasChildMenuMap().value;
-        checkedMenuIds.value = data.record.menuIds.filter(item => !hasChildMenuMap.has(item));
+        checkedMenuIds.value = data.record.menuIds.filter((item) => !hasChildMenuMap.has(item));
         menuTreeRef.value.resetEverChecked();
 
         setFieldsValue({
@@ -98,7 +98,7 @@
             const newestMenuIds = [
               ...checkedMenuIds.value,
               ...menuTreeRef.value.getHalfCheckedKeys(),
-            ]
+            ];
             await bindMenusApi(recordId, newestMenuIds);
           }
 
