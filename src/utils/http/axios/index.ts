@@ -16,6 +16,7 @@ import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
+import { useUserStoreWithOut } from '/@/store/modules/user';
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry';
 import axios from 'axios';
 
@@ -62,7 +63,12 @@ const transform: AxiosTransform = {
       case ResultEnum.OK:
         // 200 OK，直接返回结果
         return data;
-
+      case ResultEnum.TIMEOUT:
+        timeoutMsg = t('sys.api.timeoutMessage');
+        const userStore = useUserStoreWithOut();
+        userStore.setToken(undefined);
+        userStore.logout(true);
+        break;
       default:
         // 其他所有错误, 必须要有msg
         if (msg) {
