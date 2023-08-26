@@ -86,11 +86,6 @@ export const useAppStore = defineStore({
       this.projectConfig!.menuSetting = deepMerge(this.projectConfig!.menuSetting, setting);
       Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
     },
-    setMenuSetting(setting: Partial<MenuSetting>): void {
-      this.projectConfig.menuSetting = deepMerge(this.projectConfig.menuSetting, setting);
-      Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig);
-    },
-
     async resetAllState() {
       resetRouter();
       Persistent.clearAll();
