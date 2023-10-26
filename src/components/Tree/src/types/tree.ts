@@ -46,7 +46,7 @@ export const treeProps = buildProps({
   },
 
   renderIcon: {
-    type: Function as PropType<(params: Recordable) => string>,
+    type: Function as PropType<(...params: any[]) => string>,
   },
 
   helpMessage: {
@@ -91,7 +91,6 @@ export const treeProps = buildProps({
 
   expandedKeys: {
     type: Array as PropType<KeyType[]>,
-    default: () => [],
   },
 
   selectedKeys: {

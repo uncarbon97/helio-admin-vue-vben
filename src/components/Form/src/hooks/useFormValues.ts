@@ -1,9 +1,9 @@
-import { isArray, isFunction, isObject, isString, isNullOrUnDef } from '/@/utils/is';
+import { isArray, isFunction, isNotEmpty, isObject, isString, isNullOrUnDef } from '/@/utils/is';
 import { dateUtil } from '/@/utils/dateUtil';
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
-import type { FormProps, FormSchema } from '../types/form';
-import { cloneDeep, set } from 'lodash-es';
+import type { FormProps, FormSchemaInner as FormSchema } from '../types/form';
+import { cloneDeep, get, set, unset } from 'lodash-es';
 
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>;
@@ -106,21 +106,34 @@ export function useFormValues({
         continue;
       }
       // If the value to be converted is empty, remove the field
-      if (!values[field]) {
-        Reflect.deleteProperty(values, field);
+      if (!get(values, field)) {
+        unset(values, field);
         continue;
       }
 
-      const [startTime, endTime]: string[] = values[field];
+      const [startTime, endTime]: string[] = get(values, field);
 
       const [startTimeFormat, endTimeFormat] = Array.isArray(format) ? format : [format, format];
 
-      values[startTimeKey] = dateUtil(startTime).format(startTimeFormat);
-      values[endTimeKey] = dateUtil(endTime).format(endTimeFormat);
-      Reflect.deleteProperty(values, field);
+      if (isNotEmpty(startTime)) {
+        set(values, startTimeKey, formatTime(startTime, startTimeFormat));
+      }
+      if (isNotEmpty(endTime)) {
+        set(values, endTimeKey, formatTime(endTime, endTimeFormat));
+      }
+      unset(values, field);
     }
 
     return values;
+  }
+
+  function formatTime(time: string, format: string) {
+    if (format === 'timestamp') {
+      return dateUtil(time).unix();
+    } else if (format === 'timestampStartDay') {
+      return dateUtil(time).startOf('day').unix();
+    }
+    return dateUtil(time).format(format);
   }
 
   function initDefault() {
