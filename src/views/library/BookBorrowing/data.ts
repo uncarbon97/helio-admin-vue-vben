@@ -1,6 +1,6 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { DescItem } from '/@/components/Description';
-import { ref } from '@vue/runtime-core';
+import { ref } from 'vue';
 import { listBookOptionApi } from '/@/api/library/BookApi';
 import { DEFAULT_SELECT_FIELD_NAMES } from '/@/helio/constants/fieldNamesConstant';
 import { listMemberOptionApi } from '/@/api/library/MemberApi';
