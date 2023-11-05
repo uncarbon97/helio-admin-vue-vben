@@ -14,17 +14,18 @@
             <!--     处理数组属性，placeholder       -->
 
             <div v-if="item.children">
-              <component
-                v-for="(child, index) of item.children"
-                :key="index"
-                v-bind="child.componentProps"
-                :is="child.component"
-                v-model:value="formConfig.currentItem.componentProps[item.name][index]"
-              />
+              <template v-for="(child, index) of item.children" :key="index">
+                <component
+                  v-if="child.component"
+                  v-bind="child.componentProps"
+                  v-model:value="formConfig.currentItem.componentProps[item.name][index]"
+                  :is="child.component"
+                />
+              </template>
             </div>
             <!--     如果不是数组，则正常处理属性值       -->
             <component
-              v-else
+              v-else-if="item.component"
               class="component-prop"
               v-bind="item.componentProps"
               :is="item.component"
@@ -85,9 +86,10 @@
     Select,
     InputNumber,
     RadioGroup,
+    Col,
+    Row,
   } from 'ant-design-vue';
   import RadioButtonGroup from '/@/components/Form/src/components/RadioButtonGroup.vue';
-  import { Col, Row } from 'ant-design-vue';
   import { computed, defineComponent, ref, watch } from 'vue';
   import { useFormDesignState } from '../../../hooks/useFormDesignState';
   import {

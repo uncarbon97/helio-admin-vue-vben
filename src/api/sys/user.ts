@@ -15,6 +15,8 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
+  // Helio: mode参数竟然丢失了……手动指定一下
+  mode = 'modal';
   return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
