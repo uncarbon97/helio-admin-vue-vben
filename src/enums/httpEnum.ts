@@ -2,7 +2,7 @@
  * @description: Request result set
  */
 export enum ResultEnum {
-  // Helio: 去除所有原定义枚举值；增加 OK
+  // Helio: 去除所有原定义枚举值；换成OK
   OK = 200,
 }
 

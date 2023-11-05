@@ -61,6 +61,7 @@
   import { BasicTable, useTable, BasicColumn, TableAction } from '/@/components/Table';
 
   import { demoListApi } from '/@/api/demo/table';
+
   const columns: BasicColumn[] = [
     {
       title: '编号',
@@ -70,32 +71,38 @@
     {
       title: '姓名',
       dataIndex: 'name',
-      width: 200,
+      minWidth: 200,
       auth: 'test', // 根据权限控制是否显示: 无权限，不显示
     },
     {
       title: '状态',
       dataIndex: 'status',
+      width: 100,
     },
     {
       title: '状态1',
       dataIndex: 'status1',
+      width: 100,
     },
     {
       title: '状态2',
       dataIndex: 'status2',
+      width: 100,
     },
     {
       title: '状态3',
       dataIndex: 'status3',
+      width: 100,
     },
     {
       title: '状态4',
       dataIndex: 'status4',
+      width: 100,
     },
     {
       title: '状态5',
       dataIndex: 'status5',
+      width: 100,
     },
     {
       title: '地址',

@@ -42,10 +42,10 @@
       </FormItem>
       <div v-if="formConfig.labelLayout === 'Grid'">
         <FormItem label="labelCol">
-          <Slider v-model:value="formConfig.labelCol!.span" :max="24" />
+          <Slider v-model:value="sliderSpan" :max="24" />
         </FormItem>
         <FormItem label="wrapperCol">
-          <Slider v-model:value="formConfig.wrapperCol!.span" :max="24" />
+          <Slider v-model:value="sliderSpan" :max="24" />
         </FormItem>
 
         <FormItem label="标签对齐">
@@ -75,39 +75,36 @@
     </Form>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="ts" setup name="FormProps">
+  import { computed } from 'vue';
   import { useFormDesignState } from '../../../hooks/useFormDesignState';
-  import { InputNumber, Slider, Checkbox, Col, RadioChangeEvent } from 'ant-design-vue';
-  // import RadioButtonGroup from '/@/components/RadioButtonGroup.vue';
-  import { Form, FormItem, Radio } from 'ant-design-vue';
-  export default defineComponent({
-    name: 'FormProps',
-    components: {
-      InputNumber,
-      Slider,
-      Checkbox,
-      RadioGroup: Radio.Group,
-      RadioButton: Radio.Button,
-      Form,
-      FormItem,
-      Col,
-    },
-    setup() {
-      const { formConfig } = useFormDesignState();
+  import {
+    InputNumber,
+    Slider,
+    Checkbox,
+    Col,
+    RadioChangeEvent,
+    Form,
+    FormItem,
+  } from 'ant-design-vue';
 
-      formConfig.value = formConfig.value || {
-        labelCol: { span: 24 },
-        wrapperCol: { span: 24 },
-      };
+  const { formConfig } = useFormDesignState();
 
-      const lableLayoutChange = (e: RadioChangeEvent) => {
-        if (e.target.value === 'Grid') {
-          formConfig.value.layout = 'horizontal';
-        }
-      };
+  formConfig.value = formConfig.value || {
+    labelCol: { span: 24 },
+    wrapperCol: { span: 24 },
+  };
 
-      return { formConfig, lableLayoutChange };
-    },
+  const lableLayoutChange = (e: RadioChangeEvent) => {
+    if (e.target.value === 'Grid') {
+      formConfig.value.layout = 'horizontal';
+    }
+  };
+
+  const sliderSpan = computed(() => {
+    if (formConfig.value.labelLayout) {
+      return Number(formConfig.value.labelCol!.span);
+    }
+    return 0;
   });
 </script>
