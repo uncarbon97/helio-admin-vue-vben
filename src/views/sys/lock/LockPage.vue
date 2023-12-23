@@ -28,10 +28,10 @@
       <div :class="`${prefixCls}-entry`" v-show="!showDate">
         <div :class="`${prefixCls}-entry-content`">
           <div :class="`${prefixCls}-entry__header enter-x`">
-            <img :src="userinfo.avatar || headerImg" :class="`${prefixCls}-entry__header-img`" />
+            <img :src="userInfo.avatar || headerImg" :class="`${prefixCls}-entry__header-img`" />
             <p :class="`${prefixCls}-entry__header-name`">
               <!-- Helio: `realName` 修改为 `nickname` -->
-              {{ userinfo.nickname }}
+              {{ userInfo.nickname }}
             </p>
           </div>
           <InputPassword
@@ -80,13 +80,13 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
   import { Input } from 'ant-design-vue';
-  import { useUserStore } from '/@/store/modules/user';
-  import { useLockStore } from '/@/store/modules/lock';
-  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useUserStore } from '@/store/modules/user';
+  import { useLockStore } from '@/store/modules/lock';
+  import { useI18n } from '@/hooks/web/useI18n';
   import { useNow } from './useNow';
-  import { useDesign } from '/@/hooks/web/useDesign';
+  import { useDesign } from '@/hooks/web/useDesign';
   import { LockOutlined } from '@ant-design/icons-vue';
-  import headerImg from '/@/assets/images/header.jpg';
+  import headerImg from '@/assets/images/header.jpg';
 
   const InputPassword = Input.Password;
 
@@ -103,7 +103,7 @@
 
   const { t } = useI18n();
 
-  const userinfo = computed(() => {
+  const userInfo = computed(() => {
     return userStore.getUserInfo || {};
   });
 
@@ -134,6 +134,7 @@
   }
 </script>
 <style lang="less" scoped>
+  /* stylelint-disable media-query-no-invalid */
   @prefix-cls: ~'@{namespace}-lock-page';
 
   .@{prefix-cls} {

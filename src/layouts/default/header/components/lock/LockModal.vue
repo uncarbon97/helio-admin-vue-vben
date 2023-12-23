@@ -10,6 +10,7 @@
       <div :class="`${prefixCls}__header`">
         <img :src="avatar" :class="`${prefixCls}__header-img`" />
         <p :class="`${prefixCls}__header-name`">
+          <!-- Helio: getRealName👉getNickname -->
           {{ getNickname }}
         </p>
       </div>
@@ -24,77 +25,61 @@
     </div>
   </BasicModal>
 </template>
-<script lang="ts">
-  import { defineComponent, computed } from 'vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { BasicModal, useModalInner } from '/@/components/Modal/index';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+<script lang="ts" setup>
+  import { computed } from 'vue';
+  import { useI18n } from '@/hooks/web/useI18n';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicForm, useForm } from '@/components/Form';
 
-  import { useUserStore } from '/@/store/modules/user';
-  import { useLockStore } from '/@/store/modules/lock';
-  import headerImg from '/@/assets/images/header.jpg';
+  import { useUserStore } from '@/store/modules/user';
+  import { useLockStore } from '@/store/modules/lock';
+  import headerImg from '@/assets/images/header.jpg';
 
-  export default defineComponent({
-    name: 'LockModal',
-    components: { BasicModal, BasicForm },
+  defineOptions({ name: 'LockModal' });
 
-    setup() {
-      const { t } = useI18n();
-      const { prefixCls } = useDesign('header-lock-modal');
-      const userStore = useUserStore();
-      const lockStore = useLockStore();
+  const { t } = useI18n();
+  const { prefixCls } = useDesign('header-lock-modal');
+  const userStore = useUserStore();
+  const lockStore = useLockStore();
 
-      // Helio: `realName` 修改为 `nickname`
-      const getNickname = computed(() => userStore.getUserInfo?.nickname);
-      const [register, { closeModal }] = useModalInner();
+  // Helio: `realName` 修改为 `nickname`
+  const getNickname = computed(() => userStore.getUserInfo?.nickname);
+  const [register, { closeModal }] = useModalInner();
 
-      const [registerForm, { validate, resetFields }] = useForm({
-        showActionButtonGroup: false,
-        schemas: [
-          {
-            field: 'password',
-            label: t('layout.header.lockScreenPassword'),
-            colProps: {
-              span: 24,
-            },
-            component: 'InputPassword',
-            required: true,
-          },
-        ],
-      });
+  const [registerForm, { validate, resetFields }] = useForm({
+    showActionButtonGroup: false,
+    schemas: [
+      {
+        field: 'password',
+        label: t('layout.header.lockScreenPassword'),
+        colProps: {
+          span: 24,
+        },
+        component: 'InputPassword',
+        required: true,
+      },
+    ],
+  });
 
-      const handleLock = async () => {
-        const { password = '' } = await validate<{
-          password: string;
-        }>();
+  const handleLock = async () => {
+    const { password = '' } = await validate<{
+      password: string;
+    }>();
 
-        closeModal();
+    closeModal();
 
-        lockStore.setLockInfo({
-          isLock: true,
-          pwd: password,
-        });
+    lockStore.setLockInfo({
+      isLock: true,
+      pwd: password,
+    });
 
-        await resetFields();
-      };
+    await resetFields();
+  };
 
-      const avatar = computed(() => {
-        const { avatar } = userStore.getUserInfo;
-        return avatar || headerImg;
-      });
-
-      return {
-        t,
-        prefixCls,
-        // Helio: `realName` 修改为 `nickname`
-        getNickname,
-        register,
-        registerForm,
-        handleLock,
-        avatar,
-      };
-    },
+  const avatar = computed(() => {
+    const { avatar } = userStore.getUserInfo;
+    return avatar || headerImg;
   });
 </script>
 <style lang="less">
