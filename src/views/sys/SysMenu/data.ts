@@ -1,8 +1,8 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import Icon from "@/components/Icon/Icon.vue";
-import { DescItem } from '/@/components/Description';
+import Icon from '@/components/Icon/Icon.vue';
+import { DescItem } from '@/components/Description';
 
 /**
  * 表格列
@@ -152,11 +152,9 @@ export const retrieveDetailFormSchema: DescItem[] = [
 /**
  * 新增/编辑表单
  */
-// const isDir = (type: number) => {return type == 0};
 const isMenu = (type: number) => {
   return type == 1;
 };
-// const isButton = (type: number) => {return type == 2};
 const isExternalLink = (type: number) => {
   return type == 3;
 };

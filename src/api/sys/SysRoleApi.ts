@@ -1,4 +1,4 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { SysRoleApiResult, SysRoleInsertOrUpdateForm } from './model/SysRoleModel';
 
 enum Api {

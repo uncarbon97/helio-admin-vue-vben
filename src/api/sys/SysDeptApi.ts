@@ -1,6 +1,6 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { SysDeptApiResult, SysDeptInsertOrUpdateForm } from './model/SysDeptModel';
-import { list2Tree } from '/@/helio/converter/bizDataStructConverter';
+import { list2Tree } from '@/helio/converter/bizDataStructConverter';
 
 enum Api {
   REST = '/api/v1/sys/depts',

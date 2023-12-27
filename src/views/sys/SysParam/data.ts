@@ -1,5 +1,5 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
-import { DescItem } from '/@/components/Description';
+import { BasicColumn, FormSchema } from '@/components/Table';
+import { DescItem } from '@/components/Description';
 
 /**
  * 表格列

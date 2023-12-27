@@ -14,7 +14,6 @@ import { router } from '@/router';
 import { usePermissionStore } from '@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
-import { isArray } from '@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
@@ -41,10 +40,10 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getUserInfo(state): UserInfo {
-      return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+      return (state.userInfo ?? getAuthCache<UserInfo>(USER_INFO_KEY)) || {};
     },
     getToken(state): string {
-      return state.token || getAuthCache<string>(TOKEN_KEY);
+      return state.token ?? getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(state): RoleEnum[] {
       return state.roleList.length > 0 ? state.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
@@ -58,7 +57,7 @@ export const useUserStore = defineStore({
   },
   actions: {
     setToken(info: string | undefined) {
-      this.token = info ? info : ''; // for null or undefined value
+      this.token = info ?? ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
     },
     // Helio: 去除 setRoleList 方法
@@ -118,7 +117,7 @@ export const useUserStore = defineStore({
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
-        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
+        goHome && (await router.replace(userInfo?.homePath ?? PageEnum.BASE_HOME));
       }
       return userInfo;
     },

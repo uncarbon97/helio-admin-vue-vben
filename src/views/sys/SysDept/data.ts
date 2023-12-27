@@ -1,7 +1,7 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { DescItem } from '/@/components/Description';
+import { DescItem } from '@/components/Description';
 
 /**
  * 表格列

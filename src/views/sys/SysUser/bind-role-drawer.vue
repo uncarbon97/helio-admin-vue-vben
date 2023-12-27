@@ -24,10 +24,10 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, unref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form/index';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { bindRolesApi, listRelatedRoleIdsApi } from '/@/api/sys/SysUserApi';
+  import { BasicForm, useForm } from '@/components/Form/index';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicTree, TreeItem } from '@/components/Tree';
+  import { bindRolesApi, listRelatedRoleIdsApi } from '@/api/sys/SysUserApi';
 
   export default defineComponent({
     name: 'BindRoleDrawer',

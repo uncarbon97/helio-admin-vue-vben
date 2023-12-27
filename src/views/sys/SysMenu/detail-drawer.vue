@@ -12,10 +12,10 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { Description } from '/@/components/Description';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { Description } from '@/components/Description';
   import { retrieveDetailFormSchema } from './data';
-  import { retrieveSysMenuApi } from '/@/api/sys/SysMenuApi';
+  import { retrieveSysMenuApi } from '@/api/sys/SysMenuApi';
 
   const record = ref({});
 
