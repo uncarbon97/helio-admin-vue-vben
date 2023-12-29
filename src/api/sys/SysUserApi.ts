@@ -79,7 +79,7 @@ export const resetSysUserPasswordApi = async (userId: string, randomPassword: st
  */
 export const updateCurrentSysUserPasswordApi = (form: SysUserUpdatePasswordForm) => {
   return defHttp.post<void>({
-    url: `${Api.REST}/updatePassword`,
+    url: `${Api.REST}/me/password:update`,
     params: form,
   });
 };
@@ -101,7 +101,7 @@ export const bindRolesApi = (userId: string, roleIds: string[]) => {
  */
 export const kickOutSysUserApi = (userId: string) => {
   return defHttp.post<void>({
-    url: `${Api.REST}/${userId}/kickOut`,
+    url: `${Api.REST}/${userId}:kick-out`,
   });
 };
 
@@ -110,6 +110,6 @@ export const kickOutSysUserApi = (userId: string) => {
  */
 export const listRelatedRoleIdsApi = (userId: string) => {
   return defHttp.get<string[]>({
-    url: `${Api.REST}/${userId}/relatedRoleIds`,
+    url: `${Api.REST}/${userId}/roles`,
   });
 };
