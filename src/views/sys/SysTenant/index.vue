@@ -45,11 +45,11 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { BasicTable, TableAction, useTable } from '/@/components/Table';
-  import { useDrawer } from '/@/components/Drawer';
-  import { hasPermission } from '/@/utils/auth';
+  import { BasicTable, TableAction, useTable } from '@/components/Table';
+  import { useDrawer } from '@/components/Drawer';
+  import { hasPermission } from '@/utils/auth';
   import { columns, queryFormSchema } from './data';
-  import { deleteSysTenantApi, listSysTenantApi } from '/@/api/sys/SysTenantApi';
+  import { deleteSysTenantApi, listSysTenantApi } from '@/api/sys/SysTenantApi';
   import SysTenantDetailDrawer from './detail-drawer.vue';
   import SysTenantUpdateDrawer from './update-drawer.vue';
 

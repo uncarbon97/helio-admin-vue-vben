@@ -5,9 +5,9 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { columns, queryFormSchema } from './data';
-  import { listSysLogApi } from '/@/api/sys/SysLogApi';
+  import { listSysLogApi } from '@/api/sys/SysLogApi';
 
   export default defineComponent({
     name: 'SysLogIndex',

@@ -25,11 +25,11 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form/index';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { bindMenusApi } from '/@/api/sys/SysRoleApi';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { getHasChildMenuMap } from '/@/views/sys/SysRole/data';
+  import { BasicForm, useForm } from '@/components/Form/index';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { bindMenusApi } from '@/api/sys/SysRoleApi';
+  import { BasicTree, TreeItem } from '@/components/Tree';
+  import { getHasChildMenuMap } from '@/views/sys/SysRole/data';
 
   export default defineComponent({
     name: 'BindMenuDrawer',

@@ -1,7 +1,7 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { OssFileInfoApiResult } from './model/OssFileInfoModel';
-import { getToken } from '/@/utils/auth';
-import { getAppEnvConfig } from '/@/utils/env';
+import { getToken } from '@/utils/auth';
+import { getAppEnvConfig } from '@/utils/env';
 
 enum Api {
   REST = '/api/v1/oss/file/infos',

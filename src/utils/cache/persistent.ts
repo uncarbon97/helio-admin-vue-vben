@@ -1,8 +1,8 @@
-import type { LockInfo, UserInfo } from '/#/store';
-import type { ProjectConfig } from '/#/config';
+import type { LockInfo, UserInfo, TableSetting } from '#/store';
+import type { ProjectConfig } from '#/config';
 import type { RouteLocationNormalized } from 'vue-router';
 
-import { createLocalStorage, createSessionStorage } from '/@/utils/cache';
+import { createLocalStorage, createSessionStorage } from '@/utils/cache';
 import { Memory } from './memory';
 import {
   TOKEN_KEY,
@@ -13,9 +13,11 @@ import {
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
   MULTIPLE_TABS_KEY,
+  // Helio: 增加权限字符串缓存在持久层的定义
   PERMISSIONS_KEY,
-} from '/@/enums/cacheEnum';
-import { DEFAULT_CACHE_TIME } from '/@/settings/encryptionSetting';
+  TABLE_SETTING_KEY,
+} from '@/enums/cacheEnum';
+import { DEFAULT_CACHE_TIME } from '@/settings/encryptionSetting';
 import { toRaw } from 'vue';
 import { pick, omit } from 'lodash-es';
 
@@ -28,6 +30,7 @@ interface BasicStore {
   [MULTIPLE_TABS_KEY]: RouteLocationNormalized[];
   // Helio: 增加权限字符串缓存在持久层的定义
   [PERMISSIONS_KEY]: string[];
+  [TABLE_SETTING_KEY]: Partial<TableSetting>;
 }
 
 type LocalStore = BasicStore;

@@ -73,19 +73,19 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { BasicTable, TableAction, useTable } from '/@/components/Table';
-  import { useDrawer } from '/@/components/Drawer';
-  import { hasPermission } from '/@/utils/auth';
+  import { BasicTable, TableAction, useTable } from '@/components/Table';
+  import { useDrawer } from '@/components/Drawer';
+  import { hasPermission } from '@/utils/auth';
   import { columns, queryFormSchema } from './data';
-  import { kickOutSysUserApi, deleteSysUserApi, listSysUserApi } from '/@/api/sys/SysUserApi';
+  import { kickOutSysUserApi, deleteSysUserApi, listSysUserApi } from '@/api/sys/SysUserApi';
   import SysUserDetailDrawer from './detail-drawer.vue';
   import SysUserUpdateDrawer from './update-drawer.vue';
   import BindRoleDrawer from './bind-role-drawer.vue';
   import ResetPasswordConfirmModal from './reset-password/confirm-modal.vue';
   import { notification } from 'ant-design-vue';
-  import { useModal } from '/@/components/Modal';
-  import { TreeItem } from '/@/components/Tree';
-  import { listSysRoleApi } from '/@/api/sys/SysRoleApi';
+  import { useModal } from '@/components/Modal';
+  import { TreeItem } from '@/components/Tree';
+  import { listSysRoleApi } from '@/api/sys/SysRoleApi';
 
   export default defineComponent({
     name: 'SysUserIndex',

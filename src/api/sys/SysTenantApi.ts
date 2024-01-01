@@ -1,4 +1,4 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { SysTenantApiResult, SysTenantInsertOrUpdateForm } from './model/SysTenantModel';
 
 enum Api {

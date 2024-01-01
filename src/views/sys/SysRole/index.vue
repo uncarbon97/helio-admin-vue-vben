@@ -53,11 +53,11 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { BasicTable, TableAction, useTable } from '/@/components/Table';
-  import { useDrawer } from '/@/components/Drawer';
-  import { hasPermission } from '/@/utils/auth';
+  import { BasicTable, TableAction, useTable } from '@/components/Table';
+  import { useDrawer } from '@/components/Drawer';
+  import { hasPermission } from '@/utils/auth';
   import { columns, getMenuTreeData, queryFormSchema, refreshMenuTreeData } from './data';
-  import { deleteSysRoleApi, listSysRoleApi } from '/@/api/sys/SysRoleApi';
+  import { deleteSysRoleApi, listSysRoleApi } from '@/api/sys/SysRoleApi';
   import SysRoleDetailDrawer from './detail-drawer.vue';
   import SysRoleUpdateDrawer from './update-drawer.vue';
   import BindMenuDrawer from './bind-menu-drawer.vue';

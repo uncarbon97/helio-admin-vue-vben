@@ -12,9 +12,9 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { BasicModal, useModalInner } from '/@/components/Modal';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { Alert, notification } from 'ant-design-vue';
-  import { resetSysUserPasswordApi } from '/@/api/sys/SysUserApi';
+  import { resetSysUserPasswordApi } from '@/api/sys/SysUserApi';
 
   export default defineComponent({
     name: 'ResetPasswordConfirmModal',

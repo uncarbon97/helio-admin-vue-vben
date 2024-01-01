@@ -41,15 +41,15 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { BasicTable, TableAction, useTable } from '/@/components/Table';
-  import { useDrawer } from '/@/components/Drawer';
-  import { hasPermission } from '/@/utils/auth';
+  import { BasicTable, TableAction, useTable } from '@/components/Table';
+  import { useDrawer } from '@/components/Drawer';
+  import { hasPermission } from '@/utils/auth';
   import { columns, queryFormSchema } from './data';
   import {
     deleteOssFileInfoApi,
     downloadOssFileApi,
     listOssFileInfoApi,
-  } from '/@/api/oss/OssFileInfoApi';
+  } from '@/api/oss/OssFileInfoApi';
   import OssFileInfoDetailDrawer from './detail-drawer.vue';
 
   export default defineComponent({

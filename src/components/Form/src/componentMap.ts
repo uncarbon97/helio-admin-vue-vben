@@ -1,5 +1,5 @@
 import type { Component } from 'vue';
-import type { ComponentType } from './types/index';
+import type { ComponentType } from './types';
 
 /**
  * Component list, register here to setting it in the form
@@ -19,6 +19,7 @@ import {
   Switch,
   TimePicker,
   TreeSelect,
+  Transfer,
 } from 'ant-design-vue';
 import ApiRadioGroup from './components/ApiRadioGroup.vue';
 import RadioButtonGroup from './components/RadioButtonGroup.vue';
@@ -27,11 +28,12 @@ import ApiTree from './components/ApiTree.vue';
 import ApiTreeSelect from './components/ApiTreeSelect.vue';
 import ApiCascader from './components/ApiCascader.vue';
 import ApiTransfer from './components/ApiTransfer.vue';
-import ImageUpload from './components/ImageUpload.vue';
-import { BasicUpload } from '/@/components/Upload';
-import { StrengthMeter } from '/@/components/StrengthMeter';
-import { IconPicker } from '/@/components/Icon';
-import { CountdownInput } from '/@/components/CountDown';
+import { BasicUpload, ImageUpload } from '@/components/Upload';
+import { StrengthMeter } from '@/components/StrengthMeter';
+import { IconPicker } from '@/components/Icon';
+import { CountdownInput } from '@/components/CountDown';
+import { BasicTitle } from '@/components/Basic';
+import { CropperAvatar } from '@/components/Cropper';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -58,6 +60,7 @@ componentMap.set('ApiCascader', ApiCascader);
 componentMap.set('Cascader', Cascader);
 componentMap.set('Slider', Slider);
 componentMap.set('Rate', Rate);
+componentMap.set('Transfer', Transfer);
 componentMap.set('ApiTransfer', ApiTransfer);
 
 componentMap.set('DatePicker', DatePicker);
@@ -72,6 +75,9 @@ componentMap.set('InputCountDown', CountdownInput);
 
 componentMap.set('Upload', BasicUpload);
 componentMap.set('Divider', Divider);
+componentMap.set('CropperAvatar', CropperAvatar);
+
+componentMap.set('BasicTitle', BasicTitle);
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component);

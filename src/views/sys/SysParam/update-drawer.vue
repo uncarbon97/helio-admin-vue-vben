@@ -12,10 +12,10 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form/index';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { insertOrUpdateFormSchema } from '/@/views/sys/SysParam/data';
-  import { createSysParamApi, updateSysParamApi } from '/@/api/sys/SysParamApi';
+  import { BasicForm, useForm } from '@/components/Form/index';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { insertOrUpdateFormSchema } from '@/views/sys/SysParam/data';
+  import { createSysParamApi, updateSysParamApi } from '@/api/sys/SysParamApi';
 
   export default defineComponent({
     name: 'SysParamUpdateDrawer',

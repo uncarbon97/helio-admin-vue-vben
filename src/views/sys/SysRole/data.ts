@@ -1,10 +1,10 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
-import { DescItem } from '/@/components/Description';
+import { BasicColumn, FormSchema } from '@/components/Table';
+import { DescItem } from '@/components/Description';
 import { Ref, ref } from 'vue';
-import { TreeItem } from '/@/components/Tree';
-import { listAllMenuApi } from '/@/api/sys/SysMenuApi';
-import { menu2Tree } from '/@/api/sys/menu';
-import { RouteItem } from '/@/api/sys/model/menuModel';
+import { TreeItem } from '@/components/Tree';
+import { listAllMenuApi } from '@/api/sys/SysMenuApi';
+import { menu2Tree } from '@/api/sys/menu';
+import { RouteItem } from '@/api/sys/model/menuModel';
 
 /**
  * 表格列

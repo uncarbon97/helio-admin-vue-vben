@@ -1,7 +1,7 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { getMenuListResultModel } from './model/menuModel';
-import { SysMenuApiResult } from '/@/api/sys/model/SysMenuModel';
-import { list2Tree } from '/@/helio/converter/bizDataStructConverter';
+import { SysMenuApiResult } from '@/api/sys/model/SysMenuModel';
+import { list2Tree } from '@/helio/converter/bizDataStructConverter';
 
 enum Api {
   // Helio: 修改为取侧边菜单接口地址

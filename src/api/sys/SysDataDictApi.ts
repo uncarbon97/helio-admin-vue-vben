@@ -1,8 +1,8 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { SysDataDictApiResult, SysDataDictInsertOrUpdateForm } from './model/SysDataDictModel';
 
 enum Api {
-  REST = '/api/v1/sys/dataDicts',
+  REST = '/api/v1/sys/data-dicts',
 }
 
 /**

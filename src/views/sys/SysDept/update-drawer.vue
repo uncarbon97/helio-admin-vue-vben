@@ -12,11 +12,11 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { insertOrUpdateFormSchema } from '/@/views/sys/SysDept/data';
-  import { createSysDeptApi, listSysDeptApi, updateSysDeptApi } from '/@/api/sys/SysDeptApi';
-  import { DEFAULT_TREE_SELECT_FIELD_NAMES } from '/@/helio/constants/fieldNamesConstant';
+  import { BasicForm, useForm } from '@/components/Form';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { insertOrUpdateFormSchema } from '@/views/sys/SysDept/data';
+  import { createSysDeptApi, listSysDeptApi, updateSysDeptApi } from '@/api/sys/SysDeptApi';
+  import { DEFAULT_TREE_SELECT_FIELD_NAMES } from '@/helio/constants/fieldNamesConstant';
 
   export default defineComponent({
     name: 'SysDeptUpdateDrawer',

@@ -1,7 +1,7 @@
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import { SysMenuApiResult, SysMenuInsertOrUpdateForm } from './model/SysMenuModel';
-import { menu2Tree } from '/@/api/sys/menu';
-import { RouteItem } from '/@/api/sys/model/menuModel';
+import { menu2Tree } from '@/api/sys/menu';
+import { RouteItem } from '@/api/sys/model/menuModel';
 
 enum Api {
   REST = '/api/v1/sys/menus',

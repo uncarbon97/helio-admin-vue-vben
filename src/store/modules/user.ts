@@ -1,19 +1,19 @@
-import type { UserInfo } from '/#/store';
-import type { ErrorMessageMode } from '/#/axios';
+import type { UserInfo } from '#/store';
+import type { ErrorMessageMode } from '#/axios';
 import { defineStore } from 'pinia';
-import { store } from '/@/store';
-import { RoleEnum } from '/@/enums/roleEnum';
-import { PageEnum } from '/@/enums/pageEnum';
-import {PERMISSIONS_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY} from '/@/enums/cacheEnum';
-import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { router } from '/@/router';
-import { usePermissionStore } from '/@/store/modules/permission';
+import { store } from '@/store';
+import { RoleEnum } from '@/enums/roleEnum';
+import { PageEnum } from '@/enums/pageEnum';
+import { PERMISSIONS_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '@/enums/cacheEnum';
+import { getAuthCache, setAuthCache } from '@/utils/auth';
+import { GetUserInfoModel, LoginParams } from '@/api/sys/model/userModel';
+import { doLogout, getUserInfo, loginApi } from '@/api/sys/user';
+import { useI18n } from '@/hooks/web/useI18n';
+import { useMessage } from '@/hooks/web/useMessage';
+import { router } from '@/router';
+import { usePermissionStore } from '@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
-import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
+import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 import { h } from 'vue';
 
 interface UserState {
@@ -40,10 +40,10 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getUserInfo(state): UserInfo {
-      return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+      return (state.userInfo ?? getAuthCache<UserInfo>(USER_INFO_KEY)) || {};
     },
     getToken(state): string {
-      return state.token || getAuthCache<string>(TOKEN_KEY);
+      return state.token ?? getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(state): RoleEnum[] {
       return state.roleList.length > 0 ? state.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
@@ -57,7 +57,7 @@ export const useUserStore = defineStore({
   },
   actions: {
     setToken(info: string | undefined) {
-      this.token = info ? info : ''; // for null or undefined value
+      this.token = info ?? ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
     },
     // Helio: 去除 setRoleList 方法
@@ -117,7 +117,7 @@ export const useUserStore = defineStore({
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
-        goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
+        goHome && (await router.replace(userInfo?.homePath ?? PageEnum.BASE_HOME));
       }
       return userInfo;
     },

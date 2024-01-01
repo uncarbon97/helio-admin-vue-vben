@@ -12,12 +12,12 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form/index';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { insertOrUpdateFormSchema } from '/@/views/sys/SysUser/data';
-  import { createSysUserApi, updateSysUserApi } from '/@/api/sys/SysUserApi';
-  import { listSysDeptApi } from '/@/api/sys/SysDeptApi';
-  import { DEFAULT_TREE_SELECT_FIELD_NAMES } from '/@/helio/constants/fieldNamesConstant';
+  import { BasicForm, useForm } from '@/components/Form/index';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { insertOrUpdateFormSchema } from '@/views/sys/SysUser/data';
+  import { createSysUserApi, updateSysUserApi } from '@/api/sys/SysUserApi';
+  import { listSysDeptApi } from '@/api/sys/SysDeptApi';
+  import { DEFAULT_TREE_SELECT_FIELD_NAMES } from '@/helio/constants/fieldNamesConstant';
 
   export default defineComponent({
     name: 'SysUserUpdateDrawer',

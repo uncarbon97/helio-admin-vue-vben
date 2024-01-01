@@ -12,10 +12,10 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form/index';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { insertOrUpdateFormSchema } from '/@/views/sys/SysRole/data';
-  import { createSysRoleApi, updateSysRoleApi } from '/@/api/sys/SysRoleApi';
+  import { BasicForm, useForm } from '@/components/Form/index';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { insertOrUpdateFormSchema } from '@/views/sys/SysRole/data';
+  import { createSysRoleApi, updateSysRoleApi } from '@/api/sys/SysRoleApi';
 
   export default defineComponent({
     name: 'SysRoleUpdateDrawer',
