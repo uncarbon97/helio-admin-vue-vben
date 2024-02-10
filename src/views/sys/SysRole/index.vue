@@ -79,7 +79,7 @@
       // 绑定角色
       const [registerBindMenuDrawer, { openDrawer: openBindMenuDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
-        title: '后台角色',
+        title: '角色管理',
         api: listSysRoleApi,
         columns,
         formConfig: {

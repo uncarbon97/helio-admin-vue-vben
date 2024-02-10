@@ -21,25 +21,25 @@
           :actions="[
             {
               tooltip: '详情',
-              show: hasPermission('SysUser:retrieve'),
+              ifShow: hasPermission('SysUser:retrieve'),
               icon: 'ant-design:eye-outlined',
               onClick: handleRetrieveDetail.bind(null, record),
             },
             {
               tooltip: '编辑',
-              show: hasPermission('SysUser:update'),
+              ifShow: hasPermission('SysUser:update'),
               icon: 'clarity:note-edit-line',
               onClick: handleUpdate.bind(null, record),
             },
             {
               tooltip: '绑定角色',
-              show: hasPermission('SysUser:bindRoles'),
+              ifShow: hasPermission('SysUser:bindRoles'),
               icon: 'ant-design:setting-outlined',
               onClick: handleBindRole.bind(null, record),
             },
             {
               tooltip: '删除',
-              show: hasPermission('SysUser:delete'),
+              ifShow: hasPermission('SysUser:delete'),
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -49,7 +49,7 @@
             },
             {
               tooltip: '强制踢下线',
-              show: hasPermission('SysUser:kickOut'),
+              ifShow: hasPermission('SysUser:kickOut'),
               icon: 'ant-design:disconnect-outlined',
               color: 'error',
               popConfirm: {
@@ -84,8 +84,7 @@
   import ResetPasswordConfirmModal from './reset-password/confirm-modal.vue';
   import { notification } from 'ant-design-vue';
   import { useModal } from '@/components/Modal';
-  import { TreeItem } from '@/components/Tree';
-  import { listSysRoleApi } from '@/api/sys/SysRoleApi';
+  import { useSysRoleSelectOptions } from '@/hooks/api/useSelectOptions';
 
   export default defineComponent({
     name: 'SysUserIndex',
@@ -132,27 +131,9 @@
         },
       });
 
-      /*
-      预加载：角色下拉数据
-       */
-      const roleData = ref<TreeItem[]>([]);
-      let roleDataLoadedFlag = false;
-      listSysRoleApi({ pageNum: 1, pageSize: 10000 }).then((apiResult: any) => {
-        roleData.value = apiResult.records as TreeItem[];
-        roleDataLoadedFlag = true;
-      });
-      function checkRoleDataLoaded(): boolean {
-        if (!roleDataLoadedFlag) {
-          notification.warn({
-            message: '加载中',
-            description: '数据准备中，请5秒后再试',
-            duration: 2,
-          });
-          return false;
-        }
-
-        return true;
-      }
+      // 预加载：角色下拉框数据
+      const { sysRoleSelectOptions, getSysRoleSelectOptions } = useSysRoleSelectOptions();
+      getSysRoleSelectOptions();
 
       function handleRetrieveDetail(record: Recordable) {
         openDetailDrawer(true, { record });
@@ -208,13 +189,10 @@
       }
 
       function handleBindRole(record: Recordable) {
-        if (!checkRoleDataLoaded()) {
-          return;
-        }
         openBindRoleDrawer(true, {
           record,
           isUpdateView: true,
-          roleData,
+          sysRoleSelectOptions,
         });
       }
 

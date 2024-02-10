@@ -29,7 +29,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: '是否确认删除？ 将同步删除关联的租户管理员角色',
                 confirm: handleDelete.bind(null, record),
               },
             },

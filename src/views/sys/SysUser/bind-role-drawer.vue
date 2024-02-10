@@ -13,8 +13,8 @@
         <!-- Helio: https://github.com/vbenjs/vue-vben-admin/issues/1420 -->
         <BasicTree
           v-model:value="selectedRoleIds"
-          :treeData="roleData"
-          :fieldNames="{ key: 'id' }"
+          :treeData="sysRoleSelectOptions"
+          :fieldNames="{ key: 'id', title: 'name' }"
           checkable
           toolbar
         />
@@ -26,7 +26,7 @@
   import { defineComponent, ref, unref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form/index';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
-  import { BasicTree, TreeItem } from '@/components/Tree';
+  import { BasicTree } from '@/components/Tree';
   import { bindRolesApi, listRelatedRoleIdsApi } from '@/api/sys/SysUserApi';
 
   export default defineComponent({
@@ -36,8 +36,8 @@
     setup(_, { emit }) {
       const isUpdateView = ref(true);
       let userId: string;
-      // 角色数据
-      const roleData = ref<TreeItem[]>([]);
+      // 角色下拉框数据
+      const sysRoleSelectOptions = ref([]);
       // 被选中的角色ID
       const selectedRoleIds = ref<string[]>([]);
 
@@ -75,8 +75,8 @@
         // 用户ID
         userId = data.record?.id || null;
 
-        // 从列表页带来的角色下拉数据
-        roleData.value = data.roleData;
+        // 从列表页带来的角色下拉框数据
+        sysRoleSelectOptions.value = data.sysRoleSelectOptions;
 
         // 更新当前用户关联角色
         listRelatedRoleIdsApi(userId).then((apiResult: string[]) => {
@@ -100,7 +100,7 @@
         }
       }
 
-      return { registerDrawer, registerForm, handleSubmit, roleData, selectedRoleIds };
+      return { registerDrawer, registerForm, handleSubmit, sysRoleSelectOptions, selectedRoleIds };
     },
   });
 </script>
