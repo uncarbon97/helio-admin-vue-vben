@@ -1,8 +1,8 @@
-import { BasicColumn, FormSchema } from '@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
+import {BasicColumn, FormSchema} from '@/components/Table';
+import {h} from 'vue';
+import {Tag} from 'ant-design-vue';
 import Icon from '@/components/Icon/Icon.vue';
-import { DescItem } from '@/components/Description';
+import {DescItem} from '@/components/Description';
 
 /**
  * 表格列
@@ -18,8 +18,8 @@ export const columns: BasicColumn[] = [
     title: '图标',
     dataIndex: 'icon',
     width: 80,
-    customRender: ({ record }) => {
-      return h(Icon, { icon: record.icon });
+    customRender: ({record}) => {
+      return h(Icon, {icon: record.icon});
     },
   },
   {
@@ -31,7 +31,7 @@ export const columns: BasicColumn[] = [
     title: '组件/外链',
     dataIndex: 'component',
     width: 240,
-    customRender: ({ record }) => {
+    customRender: ({record}) => {
       const value = record.component;
       return 'LAYOUT' == value ? '' : value;
     },
@@ -40,7 +40,7 @@ export const columns: BasicColumn[] = [
     title: '菜单类型',
     dataIndex: 'type',
     width: 50,
-    customRender: ({ record }) => {
+    customRender: ({record}) => {
       const value = record.type;
       let color, text;
 
@@ -62,14 +62,14 @@ export const columns: BasicColumn[] = [
           text = '外链';
           break;
       }
-      return h(Tag, { color: color }, () => text);
+      return h(Tag, {color: color}, () => text);
     },
   },
   {
     title: '状态',
     dataIndex: 'status',
     width: 80,
-    customRender: ({ record }) => {
+    customRender: ({record}) => {
       const value = record.status;
       let color, text;
 
@@ -83,7 +83,7 @@ export const columns: BasicColumn[] = [
           text = '启用';
           break;
       }
-      return h(Tag, { color: color }, () => text);
+      return h(Tag, {color: color}, () => text);
     },
   },
   {
@@ -187,10 +187,10 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     defaultValue: 0,
     componentProps: {
       options: [
-        { label: '目录', value: 0 },
-        { label: '菜单', value: 1 },
-        { label: '按钮', value: 2 },
-        { label: '外链', value: 3 },
+        {label: '目录', value: 0},
+        {label: '菜单', value: 1},
+        {label: '按钮', value: 2},
+        {label: '外链', value: 3},
       ],
     },
   },
@@ -224,8 +224,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     defaultValue: 0,
     componentProps: {
       options: [
-        { label: '禁用', value: 0 },
-        { label: '启用', value: 1 },
+        {label: '禁用', value: 0},
+        {label: '启用', value: 1},
       ],
     },
   },
@@ -236,7 +236,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     component: 'Input',
     componentProps: {},
     // Helio: 只在选择“菜单”时显示
-    ifShow: ({ values }) => isMenu(values.type),
+    ifShow: ({values}) => isMenu(values.type),
   },
   {
     field: 'externalLink',
@@ -245,6 +245,6 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     component: 'Input',
     componentProps: {},
     // Helio: 只在选择“外链”时显示
-    ifShow: ({ values }) => isExternalLink(values.type),
+    ifShow: ({values}) => isExternalLink(values.type),
   },
 ];

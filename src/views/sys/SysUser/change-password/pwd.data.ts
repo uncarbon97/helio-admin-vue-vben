@@ -1,4 +1,4 @@
-import { FormSchema } from '@/components/Form';
+import {FormSchema} from '@/components/Form';
 
 export const formSchema: FormSchema[] = [
   {
@@ -26,7 +26,7 @@ export const formSchema: FormSchema[] = [
     label: '确认密码',
     component: 'InputPassword',
 
-    dynamicRules: ({ values }) => {
+    dynamicRules: ({values}) => {
       return [
         {
           required: true,

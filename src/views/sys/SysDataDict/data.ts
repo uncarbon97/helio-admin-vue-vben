@@ -1,5 +1,5 @@
-import { BasicColumn, FormSchema } from '@/components/Table';
-import { DescItem } from '@/components/Description';
+import {BasicColumn, FormSchema} from '@/components/Table';
+import {DescItem} from '@/components/Description';
 
 /**
  * 表格列
@@ -61,7 +61,7 @@ export const queryFormSchema: FormSchema[] = [
     label: '描述',
     component: 'Input',
     componentProps: {},
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
 ];
 

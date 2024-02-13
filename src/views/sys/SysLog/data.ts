@@ -1,6 +1,6 @@
-import { BasicColumn, FormSchema } from '@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
+import {BasicColumn, FormSchema} from '@/components/Table';
+import {h} from 'vue';
+import {Tag} from 'ant-design-vue';
 
 /**
  * 表格列
@@ -45,7 +45,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 80,
-    customRender: ({ record }) => {
+    customRender: ({record}) => {
       const value = record.status;
       let color, text;
 
@@ -63,7 +63,7 @@ export const columns: BasicColumn[] = [
           text = '失败';
           break;
       }
-      return h(Tag, { color: color }, () => text);
+      return h(Tag, {color: color}, () => text);
     },
   },
   {
@@ -81,13 +81,13 @@ export const queryFormSchema: FormSchema[] = [
     field: 'username',
     label: '用户账号',
     component: 'Input',
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
   {
     field: 'operation',
     label: '操作内容',
     component: 'Input',
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
   {
     field: 'status',
@@ -95,12 +95,12 @@ export const queryFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { label: '未执行', value: 0 },
-        { label: '成功', value: 1 },
-        { label: '失败', value: 2 },
+        {label: '未执行', value: 0},
+        {label: '成功', value: 1},
+        {label: '失败', value: 2},
       ],
     },
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
   {
     field: '[beginAt, endAt]',
@@ -112,6 +112,6 @@ export const queryFormSchema: FormSchema[] = [
       // 不显示时分秒部分
       showTime: false,
     },
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
 ];

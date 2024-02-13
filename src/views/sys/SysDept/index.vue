@@ -10,7 +10,7 @@
       <template #action="{ record }">
         <!--   每行最右侧一列的工具栏   -->
         <TableAction
-          :actions="[
+            :actions="[
             {
               tooltip: '详情',
               ifShow: hasPermission('SysDept:retrieve'),
@@ -38,89 +38,70 @@
       </template>
     </BasicTable>
     <!--  详情侧边抽屉  -->
-    <SysDeptDetailDrawer @register="registerDetailDrawer" />
+    <SysDeptDetailDrawer @register="registerDetailDrawer"/>
     <!--  编辑侧边抽屉  -->
-    <SysDeptUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
+    <SysDeptUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess"/>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { useDrawer } from '@/components/Drawer';
-  import { hasPermission } from '@/utils/auth';
-  import { columns, queryFormSchema } from './data';
-  import { deleteSysDeptApi, listSysDeptApi } from '@/api/sys/SysDeptApi';
-  import SysDeptDetailDrawer from './detail-drawer.vue';
-  import SysDeptUpdateDrawer from './update-drawer.vue';
+<script lang="ts" setup>
+import {BasicTable, useTable, TableAction} from '@/components/Table';
+import {useDrawer} from '@/components/Drawer';
+import {hasPermission} from '@/utils/auth';
+import {columns, queryFormSchema} from './data';
+import {deleteSysDeptApi, listSysDeptApi} from '@/api/sys/SysDeptApi';
+import SysDeptDetailDrawer from './detail-drawer.vue';
+import SysDeptUpdateDrawer from './update-drawer.vue';
 
-  export default defineComponent({
-    name: 'SysDeptIndex',
-    components: { BasicTable, TableAction, SysDeptDetailDrawer, SysDeptUpdateDrawer },
-    setup() {
-      // 查看详情
-      const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
-      // 新增/编辑
-      const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
-        title: '部门',
-        api: listSysDeptApi,
-        columns,
-        formConfig: {
-          labelWidth: 120,
-          schemas: queryFormSchema,
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        showIndexColumn: false,
-        actionColumn: {
-          width: 80,
-          title: '操作',
-          dataIndex: 'action',
-          slots: { customRender: 'action' },
-          fixed: undefined,
-        },
-        pagination: false,
-        striped: false,
-      });
+// 查看详情
+const [registerDetailDrawer, {openDrawer: openDetailDrawer}] = useDrawer();
+// 新增/编辑
+const [registerUpdateDrawer, {openDrawer: openUpdateDrawer}] = useDrawer();
+const [registerTable, {reload}] = useTable({
+  title: '部门',
+  api: listSysDeptApi,
+  columns,
+  formConfig: {
+    labelWidth: 120,
+    schemas: queryFormSchema,
+  },
+  useSearchForm: true,
+  showTableSetting: true,
+  bordered: true,
+  showIndexColumn: false,
+  actionColumn: {
+    width: 80,
+    title: '操作',
+    dataIndex: 'action',
+    slots: {customRender: 'action'},
+    fixed: undefined,
+  },
+  pagination: false,
+  striped: false,
+});
 
-      function handleRetrieveDetail(record: Recordable) {
-        openDetailDrawer(true, { record });
-      }
+function handleRetrieveDetail(record: Recordable) {
+  openDetailDrawer(true, {record});
+}
 
-      function handleInsert() {
-        openUpdateDrawer(true, {
-          isUpdateView: false,
-        });
-      }
-
-      function handleUpdate(record: Recordable) {
-        openUpdateDrawer(true, {
-          record,
-          isUpdateView: true,
-        });
-      }
-
-      async function handleDelete(record: Recordable) {
-        await deleteSysDeptApi([record.id]);
-        await reload();
-      }
-
-      function handleSuccess() {
-        reload();
-      }
-
-      return {
-        hasPermission,
-        registerTable,
-        registerDetailDrawer,
-        registerUpdateDrawer,
-        handleRetrieveDetail,
-        handleInsert,
-        handleUpdate,
-        handleDelete,
-        handleSuccess,
-      };
-    },
+function handleInsert() {
+  openUpdateDrawer(true, {
+    isUpdateView: false,
   });
+}
+
+function handleUpdate(record: Recordable) {
+  openUpdateDrawer(true, {
+    record,
+    isUpdateView: true,
+  });
+}
+
+async function handleDelete(record: Recordable) {
+  await deleteSysDeptApi([record.id]);
+  await reload();
+}
+
+function handleSuccess() {
+  reload();
+}
 </script>

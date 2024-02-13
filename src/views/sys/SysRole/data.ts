@@ -1,10 +1,5 @@
-import { BasicColumn, FormSchema } from '@/components/Table';
-import { DescItem } from '@/components/Description';
-import { Ref, ref } from 'vue';
-import { TreeItem } from '@/components/Tree';
-import { listAllMenuApi } from '@/api/sys/SysMenuApi';
-import { menu2Tree } from '@/api/sys/menu';
-import { RouteItem } from '@/api/sys/model/menuModel';
+import {BasicColumn, FormSchema} from '@/components/Table';
+import {DescItem} from '@/components/Description';
 
 /**
  * 表格列
@@ -36,14 +31,14 @@ export const queryFormSchema: FormSchema[] = [
     label: '名称',
     component: 'Input',
     componentProps: {},
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
   {
     field: 'value',
     label: '值',
     component: 'Input',
     componentProps: {},
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
 ];
 
@@ -94,25 +89,3 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     componentProps: {},
   },
 ];
-
-// 预加载：菜单树状数据
-const menuTreeData = ref<TreeItem[]>([]);
-const hasChildMenuMap = ref<Map<string, boolean>>(new Map<string, boolean>());
-export function refreshMenuTreeData() {
-  listAllMenuApi().then((apiResult: RouteItem[]) => {
-    // @ts-ignore
-    menuTreeData.value = menu2Tree(apiResult) as TreeItem[];
-
-    const newHasChildMenuMap = new Map<string, boolean>();
-    apiResult.forEach((item) => {
-      newHasChildMenuMap.set(item.parentId, true);
-    });
-    hasChildMenuMap.value = newHasChildMenuMap;
-  });
-}
-export function getMenuTreeData(): Ref<TreeItem[]> {
-  return menuTreeData;
-}
-export function getHasChildMenuMap(): Ref<Map<string, boolean>> {
-  return hasChildMenuMap;
-}

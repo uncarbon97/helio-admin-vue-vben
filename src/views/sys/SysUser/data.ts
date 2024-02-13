@@ -1,7 +1,7 @@
-import { BasicColumn, FormSchema } from '@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
-import { DescItem } from '@/components/Description';
+import {BasicColumn, FormSchema} from '@/components/Table';
+import {h} from 'vue';
+import {Tag} from 'ant-design-vue';
+import {DescItem} from '@/components/Description';
 
 /**
  * 表格列
@@ -21,7 +21,7 @@ export const columns: BasicColumn[] = [
     title: '性别',
     dataIndex: 'gender',
     width: 50,
-    customRender: ({ record }) => {
+    customRender: ({record}) => {
       const value = record.gender;
       let color, text;
 
@@ -39,7 +39,7 @@ export const columns: BasicColumn[] = [
           text = '女';
           break;
       }
-      return h(Tag, { color: color }, () => text);
+      return h(Tag, {color: color}, () => text);
     },
   },
   {
@@ -66,7 +66,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 50,
-    customRender: ({ record }) => {
+    customRender: ({record}) => {
       const value = record.status;
       let color, text;
 
@@ -80,7 +80,7 @@ export const columns: BasicColumn[] = [
           text = '正常';
           break;
       }
-      return h(Tag, { color: color }, () => text);
+      return h(Tag, {color: color}, () => text);
     },
   },
   {
@@ -99,7 +99,7 @@ export const queryFormSchema: FormSchema[] = [
     label: '手机号',
     component: 'Input',
     componentProps: {},
-    colProps: { span: 8 },
+    colProps: {span: 8},
   },
 ];
 
@@ -178,7 +178,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
       placeholder: '建议使用强密码',
     },
     // Helio: 只在新增时显示
-    ifShow: ({ values }) => !isUpdateView(values.id),
+    ifShow: ({values}) => !isUpdateView(values.id),
   },
   {
     field: 'nickname',
@@ -195,8 +195,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     defaultValue: 0,
     componentProps: {
       options: [
-        { label: '封禁', value: 0 },
-        { label: '正常', value: 1 },
+        {label: '封禁', value: 0},
+        {label: '正常', value: 1},
       ],
     },
   },
@@ -208,9 +208,9 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     defaultValue: 0,
     componentProps: {
       options: [
-        { label: '未知', value: 0 },
-        { label: '男', value: 1 },
-        { label: '女', value: 2 },
+        {label: '未知', value: 0},
+        {label: '男', value: 1},
+        {label: '女', value: 2},
       ],
     },
   },
@@ -233,6 +233,5 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     label: '所属部门',
     required: false,
     component: 'TreeSelect',
-    // 拉取树状数据放在 update-drawer.vue 中
   },
 ];

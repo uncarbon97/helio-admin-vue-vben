@@ -56,7 +56,7 @@ export interface OssFileInfoInsertOrUpdateForm {
   classified: string;
 
   /**
-   * 云存储直链
+   * 对象存储直链
    */
   directUrl: string;
 }
