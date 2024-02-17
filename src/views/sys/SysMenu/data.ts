@@ -162,9 +162,10 @@ const isExternalLink = (type: number) => {
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    label: '主键ID(只是为了带过来)',
+    // 只是为了带过来
+    label: '主键ID',
     component: 'Render',
-    show: false,
+    ifShow: false,
   },
   {
     field: 'title',

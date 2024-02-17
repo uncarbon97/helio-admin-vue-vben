@@ -152,15 +152,16 @@ export const retrieveDetailFormSchema: DescItem[] = [
 /**
  * 新增/编辑表单
  */
-const isUpdateView = (id: string) => {
-  return !!id;
+const isUpdateView = (values: Recordable) => {
+  return !!values.id;
 };
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    label: '主键ID(只是为了带过来)',
+    // 只是为了带过来
+    label: '主键ID',
     component: 'Render',
-    show: false,
+    ifShow: false,
   },
   {
     field: 'username',
@@ -178,7 +179,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
       placeholder: '建议使用强密码',
     },
     // Helio: 只在新增时显示
-    ifShow: ({values}) => !isUpdateView(values.id),
+    ifShow: ({values}) => !isUpdateView(values),
   },
   {
     field: 'nickname',
