@@ -1,14 +1,31 @@
 import { defHttp } from '@/utils/http/axios';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+import {
+  LoginParams,
+  LoginResultModel,
+  GetUserInfoModel,
+  CaptchaResultModel,
+} from './model/userModel';
 
 import { ErrorMessageMode } from '#/axios';
 
 enum Api {
+  Captcha = '/api/v1/auth/captcha',
   Login = '/api/v1/auth/login',
   Logout = '/api/v1/auth/logout',
   GetUserInfo = '/api/v1/sys/users/info',
   // Helio: 去除 GetPermCode 接口调用
   TestRetry = '/testRetry',
+}
+
+export function fetchCaptchaApi() {
+  return defHttp.get<CaptchaResultModel>(
+    {
+      url: Api.Captcha,
+    },
+    {
+      errorMessageMode: 'modal',
+    },
+  );
 }
 
 /**

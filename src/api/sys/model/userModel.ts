@@ -6,9 +6,27 @@ export interface LoginParams {
   password: string;
   // Helio: 增加"记住我"参数
   rememberMe: boolean;
+  // Helio: 登录验证码（可选）
+  captchaId?: string;
+  captchaAnswer?: string;
 }
 
 // Helio: 去除 RoleInfo 结构体
+
+/**
+ * 验证码接口返回体
+ */
+export interface CaptchaResultModel {
+  /**
+   * 验证码图片Base64
+   */
+  captchaImage: string;
+
+  /**
+   * 验证码唯一标识
+   */
+  captchaId: string;
+}
 
 /**
  * @description: Login interface return value

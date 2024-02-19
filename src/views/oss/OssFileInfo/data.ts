@@ -1,5 +1,5 @@
-import {BasicColumn, FormSchema} from '@/components/Table';
-import {DescItem} from '@/components/Description';
+import { BasicColumn, FormSchema } from '@/components/Table';
+import { DescItem } from '@/components/Description';
 
 /**
  * 表格列
@@ -39,7 +39,7 @@ export const columns: BasicColumn[] = [
     title: '文件大小',
     dataIndex: 'fileSize',
     width: 80,
-    customRender: ({record}) => {
+    customRender: ({ record }) => {
       return (record.fileSize / 1024 / 1024).toFixed(2) + ' MB';
     },
   },
@@ -74,21 +74,21 @@ export const queryFormSchema: FormSchema[] = [
     label: '原始文件名',
     component: 'Input',
     componentProps: {},
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
   {
     field: 'extendName',
     label: '扩展名',
     component: 'Input',
     componentProps: {},
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
   {
     field: 'classified',
     label: '文件类别',
     component: 'Input',
     componentProps: {},
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
   {
     field: '[beginAt, endAt]',
@@ -100,7 +100,7 @@ export const queryFormSchema: FormSchema[] = [
       // 不显示时分秒部分
       showTime: false,
     },
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
 ];
 

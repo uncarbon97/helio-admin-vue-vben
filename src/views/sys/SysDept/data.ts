@@ -1,7 +1,7 @@
-import {BasicColumn, FormSchema} from '@/components/Table';
-import {h} from 'vue';
-import {Tag} from 'ant-design-vue';
-import {DescItem} from '@/components/Description';
+import { BasicColumn, FormSchema } from '@/components/Table';
+import { h } from 'vue';
+import { Tag } from 'ant-design-vue';
+import { DescItem } from '@/components/Description';
 
 /**
  * 表格列
@@ -21,7 +21,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'status',
     width: 50,
-    customRender: ({record}) => {
+    customRender: ({ record }) => {
       const value = record.status;
       let color, text;
 
@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
           text = '启用';
           break;
       }
-      return h(Tag, {color: color}, () => text);
+      return h(Tag, { color: color }, () => text);
     },
   },
   {
@@ -59,7 +59,7 @@ export const queryFormSchema: FormSchema[] = [
     label: '部门名称',
     component: 'Input',
     componentProps: {},
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
 ];
 
@@ -105,7 +105,9 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     label: '部门名称',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 50,
+    },
   },
   {
     field: 'parentId',
@@ -129,8 +131,8 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     defaultValue: 0,
     componentProps: {
       options: [
-        {label: '禁用', value: 0},
-        {label: '启用', value: 1},
+        { label: '禁用', value: 0 },
+        { label: '启用', value: 1 },
       ],
     },
   },

@@ -1,7 +1,10 @@
-import {SelectOptionsApiResult} from '@/api/select-options/model/SelectOptionsModel';
-import {ref} from 'vue';
-import {sysDeptSelectOptionsApi, sysRoleSelectOptionsApi} from '@/api/select-options/SelectOptionsApi';
-import {list2Tree} from "@/helio/converter/bizDataStructConverter";
+import { SelectOptionsApiResult } from '@/api/select-options/model/SelectOptionsModel';
+import { ref } from 'vue';
+import {
+  sysDeptSelectOptionsApi,
+  sysRoleSelectOptionsApi,
+} from '@/api/select-options/SelectOptionsApi';
+import { list2Tree } from '@/helio/converter/bizDataStructConverter';
 
 /**
  * 后台角色下拉框

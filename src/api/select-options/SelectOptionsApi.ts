@@ -1,5 +1,5 @@
-import {defHttp} from '@/utils/http/axios';
-import {SelectOptionsApiResult} from '@/api/select-options/model/SelectOptionsModel';
+import { defHttp } from '@/utils/http/axios';
+import { SelectOptionsApiResult } from '@/api/select-options/model/SelectOptionsModel';
 
 enum Api {
   REST = '/api/v1/select-options',

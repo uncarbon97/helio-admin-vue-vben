@@ -1,17 +1,17 @@
-import {BasicColumn, FormSchema} from '@/components/Table';
-import {DescItem} from '@/components/Description';
+import { BasicColumn, FormSchema } from '@/components/Table';
+import { DescItem } from '@/components/Description';
 
 /**
  * 表格列
  */
 export const columns: BasicColumn[] = [
   {
-    title: '名称',
+    title: '角色名',
     dataIndex: 'title',
     width: 80,
   },
   {
-    title: '值',
+    title: '角色编码',
     dataIndex: 'value',
     width: 80,
   },
@@ -28,17 +28,17 @@ export const columns: BasicColumn[] = [
 export const queryFormSchema: FormSchema[] = [
   {
     field: 'title',
-    label: '名称',
+    label: '角色名',
     component: 'Input',
     componentProps: {},
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
   {
     field: 'value',
-    label: '值',
+    label: '角色编码',
     component: 'Input',
     componentProps: {},
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
 ];
 
@@ -48,11 +48,11 @@ export const queryFormSchema: FormSchema[] = [
 export const retrieveDetailFormSchema: DescItem[] = [
   {
     field: 'title',
-    label: '名称',
+    label: '角色名',
   },
   {
     field: 'value',
-    label: '值',
+    label: '角色编码',
   },
   {
     field: 'createdAt',
@@ -77,16 +77,20 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
   },
   {
     field: 'title',
-    label: '名称',
+    label: '角色名',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 50,
+    },
   },
   {
     field: 'value',
-    label: '值',
+    label: '角色编码',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 100,
+    },
   },
 ];
