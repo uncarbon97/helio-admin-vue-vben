@@ -128,31 +128,37 @@ export const retrieveDetailFormSchema: DescItem[] = [
 /**
  * 新增/编辑表单
  */
-const isUpdateView = (id: string) => {
-  return !!id;
+const isUpdateView = (values: Recordable) => {
+  return !!values.id;
 };
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    label: '主键ID(只是为了带过来)',
+    // 只是为了带过来
+    label: '主键ID',
     component: 'Render',
-    show: false,
+    ifShow: false,
   },
   {
     field: 'tenantName',
     label: '租户名',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 50,
+    },
   },
   {
     field: 'tenantId',
     label: '租户ID',
     required: true,
-    component: 'Input',
+    component: 'InputNumber',
     componentProps: {
-      placeholder: '纯数字',
+      placeholder: '须为正整数',
+      min: 1,
     },
+    // Helio: 只在新增时显示
+    ifShow: ({ values }) => !isUpdateView(values),
   },
   {
     field: 'status',
@@ -170,16 +176,28 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     field: 'remark',
     label: '备注',
     component: 'InputTextArea',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
   },
   {
     field: 'tenantAdminUsername',
     label: '管理员账号',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      placeholder: '最短6位，最长16位',
+      maxlength: 16,
+    },
+    rules: [
+      // 最短6位
+      {
+        trigger: 'blur',
+        min: 6,
+      },
+    ],
     // Helio: 只在新增时显示
-    ifShow: ({ values }) => !isUpdateView(values.id),
+    ifShow: ({ values }) => !isUpdateView(values),
   },
   {
     field: 'tenantAdminPassword',
@@ -187,27 +205,39 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     required: true,
     component: 'InputPassword',
     componentProps: {
-      placeholder: '建议使用强密码',
+      placeholder: '最短8位，最长20位；建议使用复杂密码',
+      maxlength: 20,
     },
+    rules: [
+      // 最短8位
+      {
+        trigger: 'blur',
+        min: 8,
+      },
+    ],
     // Helio: 只在新增时显示
-    ifShow: ({ values }) => !isUpdateView(values.id),
+    ifShow: ({ values }) => !isUpdateView(values),
   },
   {
     field: 'tenantAdminEmail',
     label: '管理员邮箱',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
     // Helio: 只在新增时显示
-    ifShow: ({ values }) => !isUpdateView(values.id),
+    ifShow: ({ values }) => !isUpdateView(values),
   },
   {
     field: 'tenantAdminPhoneNo',
     label: '管理员手机号',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 20,
+    },
     // Helio: 只在新增时显示
-    ifShow: ({ values }) => !isUpdateView(values.id),
+    ifShow: ({ values }) => !isUpdateView(values),
   },
 ];

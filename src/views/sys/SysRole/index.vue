@@ -51,103 +51,119 @@
     <BindMenuDrawer @register="registerBindMenuDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="ts" setup>
+  import { ref } from 'vue';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { useDrawer } from '@/components/Drawer';
   import { hasPermission } from '@/utils/auth';
-  import { columns, getMenuTreeData, queryFormSchema, refreshMenuTreeData } from './data';
+  import { columns, queryFormSchema } from './data';
   import { deleteSysRoleApi, listSysRoleApi } from '@/api/sys/SysRoleApi';
   import SysRoleDetailDrawer from './detail-drawer.vue';
   import SysRoleUpdateDrawer from './update-drawer.vue';
   import BindMenuDrawer from './bind-menu-drawer.vue';
+  import { TreeItem } from '@/components/Tree';
+  import { listAllMenuApi } from '@/api/sys/SysMenuApi';
+  import { RouteItem } from '@/api/sys/model/menuModel';
+  import { menu2Tree } from '@/api/sys/menu';
 
-  export default defineComponent({
-    name: 'SysRoleIndex',
-    components: {
-      BasicTable,
-      TableAction,
-      SysRoleDetailDrawer,
-      SysRoleUpdateDrawer,
-      BindMenuDrawer,
+  // 查看详情
+  const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
+  // 新增/编辑
+  const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
+  // 绑定角色
+  const [registerBindMenuDrawer, { openDrawer: openBindMenuDrawer }] = useDrawer();
+  const [registerTable, { reload }] = useTable({
+    title: '角色管理',
+    api: listSysRoleApi,
+    columns,
+    formConfig: {
+      /*
+      列表查询条件
+       */
+      // 输入框左侧标题的宽度
+      labelWidth: 120,
+      // 查询条件配置
+      schemas: queryFormSchema,
     },
-    setup() {
-      // 查看详情
-      const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
-      // 新增/编辑
-      const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
-      // 绑定角色
-      const [registerBindMenuDrawer, { openDrawer: openBindMenuDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
-        title: '后台角色',
-        api: listSysRoleApi,
-        columns,
-        formConfig: {
-          labelWidth: 120,
-          schemas: queryFormSchema,
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        showIndexColumn: false,
-        actionColumn: {
-          width: 80,
-          title: '操作',
-          dataIndex: 'action',
-          slots: { customRender: 'action' },
-          fixed: undefined,
-        },
-      });
-
-      function handleRetrieveDetail(record: Recordable) {
-        openDetailDrawer(true, { record });
-      }
-
-      function handleInsert() {
-        openUpdateDrawer(true, {
-          isUpdateView: false,
-        });
-      }
-
-      function handleUpdate(record: Recordable) {
-        openUpdateDrawer(true, {
-          record,
-          isUpdateView: true,
-        });
-      }
-
-      async function handleDelete(record: Recordable) {
-        await deleteSysRoleApi([record.id]);
-        await reload();
-      }
-
-      function handleSuccess() {
-        reload();
-      }
-
-      function handleBindMenus(record: Recordable) {
-        openBindMenuDrawer(true, {
-          record,
-          menuTreeData: getMenuTreeData(),
-        });
-      }
-
-      return {
-        hasPermission,
-        registerTable,
-        registerDetailDrawer,
-        registerUpdateDrawer,
-        handleRetrieveDetail,
-        handleInsert,
-        handleUpdate,
-        handleDelete,
-        handleSuccess,
-        registerBindMenuDrawer,
-        handleBindMenus,
-      };
-    },
-    mounted() {
-      refreshMenuTreeData();
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    showIndexColumn: false,
+    actionColumn: {
+      width: 80,
+      title: '操作',
+      dataIndex: 'action',
+      slots: { customRender: 'action' },
+      fixed: undefined,
     },
   });
+
+  // 预加载：菜单树形框
+  const menuTreeData = ref<TreeItem[]>([]);
+  const hasChildMenuMap = ref<Map<string, boolean>>(new Map<string, boolean>());
+
+  async function fetchMenuTreeData() {
+    const apiResult: RouteItem[] = await listAllMenuApi();
+    menuTreeData.value = menu2Tree(apiResult) as unknown as TreeItem[];
+
+    const newHasChildMenuMap = new Map<string, boolean>();
+    apiResult.forEach((item) => {
+      newHasChildMenuMap.set(item.parentId, true);
+    });
+    hasChildMenuMap.value = newHasChildMenuMap;
+  }
+
+  fetchMenuTreeData();
+
+  /**
+   * 单击详情按钮事件
+   */
+  function handleRetrieveDetail(record: Recordable) {
+    openDetailDrawer(true, { record });
+  }
+
+  /**
+   * 单击新增按钮事件
+   */
+  function handleInsert() {
+    openUpdateDrawer(true, {
+      isUpdateView: false,
+    });
+  }
+
+  /**
+   * 单击编辑按钮事件
+   */
+  function handleUpdate(record: Recordable) {
+    openUpdateDrawer(true, {
+      record,
+      isUpdateView: true,
+    });
+  }
+
+  /**
+   * 单击删除按钮事件
+   */
+  async function handleDelete(record: Recordable) {
+    await deleteSysRoleApi([record.id]);
+    await reload();
+  }
+
+  /**
+   * 编辑成功后事件
+   */
+  function handleSuccess() {
+    reload();
+  }
+
+  /**
+   * 单击绑定菜单按钮事件
+   */
+  function handleBindMenus(record: Recordable) {
+    openBindMenuDrawer(true, {
+      record,
+      menuTreeData,
+      hasChildMenuMap,
+    });
+  }
 </script>

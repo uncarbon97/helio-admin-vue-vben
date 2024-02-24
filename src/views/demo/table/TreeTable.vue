@@ -17,6 +17,7 @@
   const [register, { expandAll, collapseAll, expandRows, collapseRows }] = useTable({
     title: '树形表格',
     isTreeTable: true,
+    accordion: true, // 手风琴效果
     rowSelection: {
       type: 'checkbox',
       getCheckboxProps(record: Recordable) {
@@ -32,5 +33,6 @@
     columns: getBasicColumns(),
     dataSource: getTreeTableData(),
     rowKey: 'id',
+    showSelectionBar: true, // 显示多选状态栏
   });
 </script>

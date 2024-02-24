@@ -22,6 +22,7 @@
       v-show="getEmptyDataIsShowTable"
       @change="handleTableChange"
       @resize-column="setColumnWidth"
+      @expand="handleTableExpand"
     >
       <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
         <slot :name="item" v-bind="data || {}"></slot>
@@ -53,7 +54,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { PageWrapperFixedHeightKey } from '@/enums/pageEnum';
   import HeaderCell from './components/HeaderCell.vue';
-  import { InnerHandlers } from './types/table';
+  import { InnerHandlers, InnerMethods } from './types/table';
   import { usePagination } from './hooks/usePagination';
   import { useColumns } from './hooks/useColumns';
   import { useDataSource } from './hooks/useDataSource';
@@ -207,11 +208,8 @@
 
   const { getRowClassName } = useTableStyle(getProps, prefixCls);
 
-  const { getExpandOption, expandAll, expandRows, collapseRows, collapseAll } = useTableExpand(
-    getProps,
-    tableData,
-    emit,
-  );
+  const { getExpandOption, expandAll, expandRows, collapseRows, collapseAll, handleTableExpand } =
+    useTableExpand(getProps, tableData, emit);
 
   const handlers: InnerHandlers = {
     onColumnsChange: (data: ColumnChangeParam[]) => {
@@ -221,7 +219,12 @@
     },
   };
 
-  const { getHeaderProps } = useTableHeader(getProps, slots, handlers);
+  const methods: InnerMethods = {
+    clearSelectedRowKeys,
+    getSelectRowKeys,
+  };
+
+  const { getHeaderProps } = useTableHeader(getProps, slots, handlers, methods);
 
   const { getFooterProps } = useTableFooter(getProps, getScrollRef, tableElRef, getDataSourceRef);
 

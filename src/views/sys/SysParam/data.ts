@@ -74,29 +74,36 @@ export const retrieveDetailFormSchema: DescItem[] = [
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    label: '主键ID(只是为了带过来)',
+    // 只是为了带过来
+    label: '主键ID',
     component: 'Render',
-    show: false,
+    ifShow: false,
   },
   {
     field: 'name',
     label: '键名',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 50,
+    },
   },
   {
     field: 'value',
     label: '键值',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
   },
   {
     field: 'description',
     label: '描述',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
   },
 ];

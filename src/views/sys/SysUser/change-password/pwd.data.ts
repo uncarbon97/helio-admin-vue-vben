@@ -4,20 +4,23 @@ export const formSchema: FormSchema[] = [
   {
     field: 'oldPassword',
     label: '当前密码',
-    component: 'InputPassword',
     required: true,
+    component: 'InputPassword',
   },
   {
     field: 'newPassword',
     label: '新密码',
+    required: true,
     component: 'StrengthMeter',
     componentProps: {
-      placeholder: '新密码',
+      placeholder: '新密码，最短8位，最长20位；建议使用复杂密码',
+      maxlength: 20,
     },
     rules: [
+      // 最短8位
       {
-        required: true,
-        message: '请输入新密码',
+        trigger: 'blur',
+        min: 8,
       },
     ],
   },
@@ -25,7 +28,6 @@ export const formSchema: FormSchema[] = [
     field: 'confirmNewPassword',
     label: '确认密码',
     component: 'InputPassword',
-
     dynamicRules: ({ values }) => {
       return [
         {

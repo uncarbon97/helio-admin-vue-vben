@@ -84,6 +84,7 @@
     'ok',
     'register',
     'update:open',
+    'fullscreen',
   ]);
 
   const attrs = useAttrs();
@@ -119,7 +120,11 @@
     };
   });
 
-  const { handleFullScreen, getWrapClassName, fullScreenRef } = useFullScreen({
+  const {
+    handleFullScreen: handleFullScreenInner,
+    getWrapClassName,
+    fullScreenRef,
+  } = useFullScreen({
     modalWrapperRef,
     extHeightRef,
     wrapClassName: toRef(getMergeProps.value, 'wrapClassName'),
@@ -169,7 +174,9 @@
     (v) => {
       emit('open-change', v);
       emit('update:open', v);
-      instance && modalMethods.emitOpen?.(v, instance.uid);
+      if (instance && modalMethods.emitOpen) {
+        modalMethods.emitOpen(v, instance.uid);
+      }
       nextTick(() => {
         if (props.scrollTop && v && unref(modalWrapperRef)) {
           (unref(modalWrapperRef) as any).scrollTop();
@@ -226,5 +233,11 @@
     if (!props.canFullscreen) return;
     e.stopPropagation();
     handleFullScreen(e);
+  }
+
+  // 事件传递
+  function handleFullScreen(e) {
+    handleFullScreenInner(e);
+    emit('fullscreen');
   }
 </script>

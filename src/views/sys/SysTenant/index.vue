@@ -29,7 +29,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: '是否确认删除？ 将同步删除关联的租户管理员角色',
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -43,8 +43,7 @@
     <SysTenantUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="ts" setup>
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { useDrawer } from '@/components/Drawer';
   import { hasPermission } from '@/utils/auth';
@@ -53,72 +52,74 @@
   import SysTenantDetailDrawer from './detail-drawer.vue';
   import SysTenantUpdateDrawer from './update-drawer.vue';
 
-  export default defineComponent({
-    name: 'SysTenantIndex',
-    components: { BasicTable, TableAction, SysTenantDetailDrawer, SysTenantUpdateDrawer },
-    setup() {
-      // 查看详情
-      const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
-      // 新增/编辑
-      const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
-        title: '系统租户',
-        api: listSysTenantApi,
-        columns,
-        formConfig: {
-          labelWidth: 120,
-          schemas: queryFormSchema,
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        showIndexColumn: false,
-        actionColumn: {
-          width: 80,
-          title: '操作',
-          dataIndex: 'action',
-          slots: { customRender: 'action' },
-          fixed: undefined,
-        },
-      });
-
-      function handleRetrieveDetail(record: Recordable) {
-        openDetailDrawer(true, { record });
-      }
-
-      function handleInsert() {
-        openUpdateDrawer(true, {
-          isUpdateView: false,
-        });
-      }
-
-      function handleUpdate(record: Recordable) {
-        openUpdateDrawer(true, {
-          record,
-          isUpdateView: true,
-        });
-      }
-
-      async function handleDelete(record: Recordable) {
-        await deleteSysTenantApi([record.id]);
-        await reload();
-      }
-
-      function handleSuccess() {
-        reload();
-      }
-
-      return {
-        hasPermission,
-        registerTable,
-        registerDetailDrawer,
-        registerUpdateDrawer,
-        handleRetrieveDetail,
-        handleInsert,
-        handleUpdate,
-        handleDelete,
-        handleSuccess,
-      };
+  // 查看详情
+  const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
+  // 新增/编辑
+  const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
+  const [registerTable, { reload }] = useTable({
+    title: '系统租户',
+    api: listSysTenantApi,
+    columns,
+    formConfig: {
+      /*
+      列表查询条件
+       */
+      // 输入框左侧标题的宽度
+      labelWidth: 120,
+      // 查询条件配置
+      schemas: queryFormSchema,
+    },
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    showIndexColumn: false,
+    actionColumn: {
+      width: 80,
+      title: '操作',
+      dataIndex: 'action',
+      slots: { customRender: 'action' },
+      fixed: undefined,
     },
   });
+
+  /**
+   * 单击详情按钮事件
+   */
+  function handleRetrieveDetail(record: Recordable) {
+    openDetailDrawer(true, { record });
+  }
+
+  /**
+   * 单击新增按钮事件
+   */
+  function handleInsert() {
+    openUpdateDrawer(true, {
+      isUpdateView: false,
+    });
+  }
+
+  /**
+   * 单击编辑按钮事件
+   */
+  function handleUpdate(record: Recordable) {
+    openUpdateDrawer(true, {
+      record,
+      isUpdateView: true,
+    });
+  }
+
+  /**
+   * 单击删除按钮事件
+   */
+  async function handleDelete(record: Recordable) {
+    await deleteSysTenantApi([record.id]);
+    await reload();
+  }
+
+  /**
+   * 编辑成功后事件
+   */
+  function handleSuccess() {
+    reload();
+  }
 </script>

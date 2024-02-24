@@ -162,16 +162,19 @@ const isExternalLink = (type: number) => {
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    label: '主键ID(只是为了带过来)',
+    // 只是为了带过来
+    label: '主键ID',
     component: 'Render',
-    show: false,
+    ifShow: false,
   },
   {
     field: 'title',
     label: '菜单名称',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 50,
+    },
   },
   {
     field: 'parentId',
@@ -201,6 +204,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     component: 'Input',
     componentProps: {
       placeholder: '不要求权限就留空；需与后端接口注解value一致',
+      maxlength: 255,
     },
   },
   {
@@ -234,7 +238,9 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     label: '组件',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 50,
+    },
     // Helio: 只在选择“菜单”时显示
     ifShow: ({ values }) => isMenu(values.type),
   },
@@ -243,7 +249,9 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     label: '外链',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
     // Helio: 只在选择“外链”时显示
     ifShow: ({ values }) => isExternalLink(values.type),
   },

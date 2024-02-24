@@ -54,7 +54,7 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: '云存储直链',
+    title: '对象存储直链',
     dataIndex: 'directUrl',
     width: 80,
   },
@@ -149,93 +149,10 @@ export const retrieveDetailFormSchema: DescItem[] = [
   },
   {
     field: 'directUrl',
-    label: '云存储直链',
+    label: '对象存储直链',
   },
   {
     field: 'createdAt',
     label: '上传时间',
-  },
-];
-
-/**
- * 新增/编辑表单
- */
-export const insertOrUpdateFormSchema: FormSchema[] = [
-  {
-    field: 'id',
-    // 只是为了把ID带过来
-    label: '主键ID',
-    component: 'Render',
-    show: false,
-  },
-  {
-    field: 'storagePlatform',
-    label: '存储平台',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'storageBasePath',
-    label: '基础存储路径',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'storagePath',
-    label: '存储路径',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'storageFilename',
-    label: '存储文件名',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'originalFilename',
-    label: '原始文件名',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'extendName',
-    label: '扩展名',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'fileSize',
-    label: '文件大小',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'md5',
-    label: 'MD5',
-    required: true,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'classified',
-    label: '文件类别',
-    required: false,
-    component: 'Input',
-    componentProps: {},
-  },
-  {
-    field: 'directUrl',
-    label: '云存储直链',
-    required: false,
-    component: 'Input',
-    componentProps: {},
   },
 ];

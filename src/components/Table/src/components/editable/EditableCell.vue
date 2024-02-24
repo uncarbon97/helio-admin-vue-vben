@@ -16,6 +16,7 @@
   import { pick, set } from 'lodash-es';
   import { treeToList } from '@/utils/helper/treeHelper';
   import { Spin } from 'ant-design-vue';
+  import { parseRowKey } from '../../helper';
 
   export default defineComponent({
     name: 'EditableCell',
@@ -179,7 +180,8 @@
         }
       });
 
-      function handleEdit() {
+      function handleEdit(e) {
+        e.stopPropagation();
         if (unref(getRowEditable) || unref(props.column?.editRow) || unref(getDisable)) return;
         ruleMessage.value = '';
         isEdit.value = true;
@@ -259,7 +261,8 @@
           const { getBindValues } = table;
 
           const { beforeEditSubmit, columns, rowKey } = unref(getBindValues);
-          const rowKeyValue = typeof rowKey === 'string' ? rowKey : rowKey ? rowKey(record) : '';
+
+          const rowKeyParsed = parseRowKey(rowKey, record);
 
           if (beforeEditSubmit && isFunction(beforeEditSubmit)) {
             spinning.value = true;
@@ -270,7 +273,7 @@
             let result: any = true;
             try {
               result = await beforeEditSubmit({
-                record: pick(record, [rowKeyValue, ...keys]),
+                record: pick(record, [rowKeyParsed, ...keys]),
                 index,
                 key: dataKey as string,
                 value,
@@ -430,8 +433,12 @@
             )}
           </div>
           {this.isEdit && (
-            <Spin spinning={this.spinning}>
-              <div class={`${this.prefixCls}__wrapper`} v-click-outside={this.onClickOutside}>
+            <Spin spinning={this.spinning} onClick={(e) => e.stopPropagation()}>
+              <div
+                class={`${this.prefixCls}__wrapper`}
+                v-click-outside={this.onClickOutside}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <CellComponent
                   {...this.getComponentProps}
                   component={this.getComponent}

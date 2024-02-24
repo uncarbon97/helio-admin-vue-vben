@@ -39,8 +39,7 @@
     <OssFileInfoDetailDrawer @register="registerDetailDrawer" />
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="ts" setup>
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { useDrawer } from '@/components/Drawer';
   import { hasPermission } from '@/utils/auth';
@@ -52,68 +51,53 @@
   } from '@/api/oss/OssFileInfoApi';
   import OssFileInfoDetailDrawer from './detail-drawer.vue';
 
-  export default defineComponent({
-    name: 'OssFileInfoIndex',
-    components: { BasicTable, TableAction, OssFileInfoDetailDrawer },
-    setup() {
-      // 查看详情
-      const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
-        title: '上传文件信息',
-        api: listOssFileInfoApi,
-        columns,
-        formConfig: {
-          /*
-          列表查询条件
-           */
-          // 输入框左侧标题的宽度
-          labelWidth: 100,
-          // 查询条件配置
-          schemas: queryFormSchema,
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        showIndexColumn: false,
-        actionColumn: {
-          width: 80,
-          title: '操作',
-          dataIndex: 'action',
-          slots: { customRender: 'action' },
-          fixed: undefined,
-        },
-      });
-
-      /**
-       * 单击详情按钮事件
-       */
-      function handleRetrieveDetail(record: Recordable) {
-        openDetailDrawer(true, { record });
-      }
-
-      /**
-       * 单击删除按钮事件
-       */
-      async function handleDelete(record: Recordable) {
-        await deleteOssFileInfoApi([record.id]);
-        await reload();
-      }
-
-      /**
-       * 单击下载按钮事件
-       */
-      function handleDownload(record: Recordable) {
-        downloadOssFileApi(record.id);
-      }
-
-      return {
-        hasPermission,
-        registerTable,
-        registerDetailDrawer,
-        handleRetrieveDetail,
-        handleDelete,
-        handleDownload,
-      };
+  // 查看详情
+  const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
+  const [registerTable, { reload }] = useTable({
+    title: '上传文件信息',
+    api: listOssFileInfoApi,
+    columns,
+    formConfig: {
+      /*
+    列表查询条件
+     */
+      // 输入框左侧标题的宽度
+      labelWidth: 100,
+      // 查询条件配置
+      schemas: queryFormSchema,
+    },
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    showIndexColumn: false,
+    actionColumn: {
+      width: 80,
+      title: '操作',
+      dataIndex: 'action',
+      slots: { customRender: 'action' },
+      fixed: undefined,
     },
   });
+
+  /**
+   * 单击详情按钮事件
+   */
+  function handleRetrieveDetail(record: Recordable) {
+    openDetailDrawer(true, { record });
+  }
+
+  /**
+   * 单击删除按钮事件
+   */
+  async function handleDelete(record: Recordable) {
+    await deleteOssFileInfoApi([record.id]);
+    await reload();
+  }
+
+  /**
+   * 单击下载按钮事件
+   */
+  function handleDownload(record: Recordable) {
+    downloadOssFileApi(record.id);
+  }
 </script>

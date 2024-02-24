@@ -21,7 +21,7 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: '键值',
+    title: '数据值',
     dataIndex: 'value',
     width: 80,
   },
@@ -83,7 +83,7 @@ export const retrieveDetailFormSchema: DescItem[] = [
   },
   {
     field: 'value',
-    label: '键值',
+    label: '数据值',
   },
   {
     field: 'description',
@@ -117,64 +117,81 @@ export const retrieveDetailFormSchema: DescItem[] = [
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    label: '主键ID(只是为了带过来)',
+    // 只是为了带过来
+    label: '主键ID',
     component: 'Render',
-    show: false,
+    ifShow: false,
   },
   {
     field: 'camelCaseKey',
     label: '驼峰式键名',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 100,
+    },
   },
   {
     field: 'underCaseKey',
     label: '下划线式键名',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 100,
+    },
   },
   {
     field: 'pascalCaseKey',
     label: '帕斯卡式键名',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 100,
+    },
   },
   {
     field: 'value',
-    label: '键值',
+    label: '数据值',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
   },
   {
     field: 'description',
     label: '描述',
     required: true,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
   },
   {
     field: 'unit',
     label: '单位',
     required: false,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 30,
+    },
   },
   {
     field: 'valueRange',
     label: '取值范围',
     required: false,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 255,
+    },
   },
   {
     field: 'aliasKey',
     label: '别称键名',
     required: false,
     component: 'Input',
-    componentProps: {},
+    componentProps: {
+      maxlength: 100,
+    },
   },
 ];
