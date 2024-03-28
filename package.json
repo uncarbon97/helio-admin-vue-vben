@@ -1,21 +1,10 @@
 {
-  "name": "vben-admin",
-  "version": "2.10.1",
-  "homepage": "https://github.com/vbenjs/vue-vben-admin",
-  "bugs": {
-    "url": "https://github.com/vbenjs/vue-vben-admin/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vbenjs/vue-vben-admin.git"
-  },
-  "license": "MIT",
+  "name": "helio-admin-vue-vben",
+  "version": "2.0.0",
   "author": {
-    "name": "vben",
-    "email": "anncwb@126.com",
-    "url": "https://github.com/anncwb"
+    "name": "vben & Uncarbon",
+    "url": "https://github.com/uncarbon97"
   },
-  "type": "module",
   "scripts": {
     "bootstrap": "pnpm install",
     "build": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=8192 pnpm vite build",
