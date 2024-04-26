@@ -12,8 +12,9 @@
 ## 如何使用
 
 1. 从 GitHub 或 Gitee 克隆项目源码，到自己的电脑上
-2. 自行安装 `Node.js`20.11.0 或以上版本（建议通过 [nvm](https://www.runoob.com/w3cnote/nvm-manager-node-versions.html) 进行）
-    > 对应 nvm 安装命令：`nvm install 20.11.0 && nvm use 20.11.0`
+2. 自行安装 `Node.js`18.12.0 或以上版本（建议通过 [nvm](https://www.runoob.com/w3cnote/nvm-manager-node-versions.html) 进行）
+    > 对应 nvm 安装命令：`nvm install 18.12.0 && nvm use 18.12.0`
+    > 笔者版本：node@18.16.0 pnpm@8.15.3
 3. 找到根目录下的`.env.development`，根据后端程序的类型（单体版or微服务版），修改:
     - `VITE_GLOB_API_URL`（全局API_BASE_URL）
     - `VITE_GLOB_UPLOAD_URL`（全局通用文件上传接口）
