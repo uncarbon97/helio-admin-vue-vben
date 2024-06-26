@@ -66,11 +66,12 @@
   import { warn } from '@/utils/log';
   import FileList from './FileList.vue';
   import { useI18n } from '@/hooks/web/useI18n';
+  import { get } from 'lodash-es';
 
   const props = defineProps({
     ...basicProps,
     previewFileList: {
-      type: Array as PropType<string[]>,
+      type: Array as PropType<string[] | any[]>,
       default: () => [],
     },
   });
@@ -163,6 +164,9 @@
   function handleRemove(record: FileItem) {
     const index = fileListRef.value.findIndex((item) => item.uuid === record.uuid);
     index !== -1 && fileListRef.value.splice(index, 1);
+    isUploadingRef.value = fileListRef.value.some(
+      (item) => item.status === UploadResultStatus.UPLOADING,
+    );
     emit('delete', record);
   }
 
@@ -190,6 +194,14 @@
       const { data } = ret;
       item.status = UploadResultStatus.SUCCESS;
       item.response = data;
+      if (props.resultField) {
+        // 适配预览组件而进行封装
+        item.response = {
+          code: 0,
+          message: 'upload Success!',
+          url: get(ret, props.resultField),
+        };
+      }
       return {
         success: true,
         error: null,
@@ -207,7 +219,7 @@
   // 点击开始上传
   async function handleStartUpload() {
     const { maxNumber } = props;
-    if ((fileListRef.value.length + props.previewFileList?.length ?? 0) > maxNumber) {
+    if (fileListRef.value.length + props.previewFileList.length > maxNumber) {
       return createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
     }
     try {
