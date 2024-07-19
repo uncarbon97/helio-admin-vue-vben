@@ -12,19 +12,19 @@
         <TableAction
           :actions="[
             {
-              tooltip: '详情',
+              tooltip: '管理字典项',
               ifShow: hasPermission('SysDataDict:retrieve'),
               icon: 'ant-design:eye-outlined',
               onClick: handleRetrieveDetail.bind(null, record),
             },
             {
-              tooltip: '编辑',
+              tooltip: '编辑分类',
               ifShow: hasPermission('SysDataDict:update'),
               icon: 'clarity:note-edit-line',
               onClick: handleUpdate.bind(null, record),
             },
             {
-              tooltip: '删除',
+              tooltip: '删除分类',
               ifShow: hasPermission('SysDataDict:delete'),
               icon: 'ant-design:delete-outlined',
               color: 'error',
@@ -38,7 +38,7 @@
       </template>
     </BasicTable>
     <!--  详情侧边抽屉  -->
-    <SysDataDictDetailDrawer @register="registerDetailDrawer" />
+    <SysDataDictItemIndex @register="registerItemDrawer" />
     <!--  编辑侧边抽屉  -->
     <SysDataDictUpdateDrawer @register="registerUpdateDrawer" @success="handleSuccess" />
   </div>
@@ -49,11 +49,11 @@
   import { hasPermission } from '@/utils/auth';
   import { columns, queryFormSchema } from './data';
   import { deleteSysDataDictApi, listSysDataDictApi } from '@/api/sys/SysDataDictApi';
-  import SysDataDictDetailDrawer from './detail-drawer.vue';
+  import SysDataDictItemIndex from './item/index.vue';
   import SysDataDictUpdateDrawer from './update-drawer.vue';
 
   // 查看详情
-  const [registerDetailDrawer, { openDrawer: openDetailDrawer }] = useDrawer();
+  const [registerItemDrawer, { openDrawer: openItemDrawer }] = useDrawer();
   // 新增/编辑
   const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
   const [registerTable, { reload }] = useTable({
@@ -86,7 +86,7 @@
    * 单击详情按钮事件
    */
   function handleRetrieveDetail(record: Recordable) {
-    openDetailDrawer(true, { record });
+    openItemDrawer(true, { record });
   }
 
   /**
