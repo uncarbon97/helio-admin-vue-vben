@@ -48,7 +48,10 @@
   import { useDrawer } from '@/components/Drawer';
   import { hasPermission } from '@/utils/auth';
   import { columns, queryFormSchema } from './data';
-  import { deleteSysDataDictApi, listSysDataDictApi } from '@/api/sys/SysDataDictApi';
+  import {
+    deleteSysDataDictClassifiedApi,
+    listSysDataDictClassifiedApi,
+  } from '@/api/sys/SysDataDictApi';
   import SysDataDictItemIndex from './item/index.vue';
   import SysDataDictUpdateDrawer from './update-drawer.vue';
 
@@ -58,7 +61,7 @@
   const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
   const [registerTable, { reload }] = useTable({
     title: '数据字典',
-    api: listSysDataDictApi,
+    api: listSysDataDictClassifiedApi,
     columns,
     formConfig: {
       /*
@@ -112,7 +115,7 @@
    * 单击删除按钮事件
    */
   async function handleDelete(record: Recordable) {
-    await deleteSysDataDictApi([record.id]);
+    await deleteSysDataDictClassifiedApi([record.id]);
     await reload();
   }
 

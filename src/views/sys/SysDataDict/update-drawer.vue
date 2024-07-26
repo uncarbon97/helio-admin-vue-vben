@@ -15,7 +15,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { insertOrUpdateFormSchema } from '@/views/sys/SysDataDict/data';
-  import { createSysDataDictApi, updateSysDataDictApi } from '@/api/sys/SysDataDictApi';
+  import { createSysDataDictClassifiedApi, updateSysDataDictClassifiedApi } from '@/api/sys/SysDataDictApi';
 
   const isUpdateView = ref(true);
   let recordId: string;
@@ -58,9 +58,9 @@
       setDrawerProps({ confirmLoading: true });
 
       if (recordId) {
-        await updateSysDataDictApi(recordId, values);
+        await updateSysDataDictClassifiedApi(recordId, values);
       } else {
-        await createSysDataDictApi(values);
+        await createSysDataDictClassifiedApi(values);
       }
 
       closeDrawer();

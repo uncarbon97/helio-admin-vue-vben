@@ -96,14 +96,19 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'status',
     label: '状态',
-    required: true,
-    component: 'Input',
-    componentProps: {},
+    component: 'RadioButtonGroup',
+    defaultValue: 1,
+    componentProps: {
+      options: [
+        { label: '禁用', value: 0 },
+        { label: '启用', value: 1 },
+      ],
+    },
   },
   {
     field: 'description',
     label: '分类描述',
-    required: true,
+    required: false,
     component: 'Input',
     componentProps: {},
   },

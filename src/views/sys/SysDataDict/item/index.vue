@@ -4,7 +4,7 @@
       v-bind="$attrs"
       @register="registerDrawer"
       showFooter
-      title="管理字典项"
+      :title="classifiedName"
       width="70%"
     >
       <BasicTable @register="registerTable">
@@ -48,19 +48,28 @@
   import { BasicDrawer, useDrawer, useDrawerInner } from '@/components/Drawer';
   import { hasPermission } from '@/utils/auth';
   import { columns } from './data';
-  import { deleteSysDataDictApi, listSysDataDictApi } from '@/api/sys/SysDataDictApi';
+  import { deleteSysDataDictItemApi, listSysDataDictItemApi } from '@/api/sys/SysDataDictApi';
   import SysDataDictUpdateDrawer from './update-drawer.vue';
+  import { ref } from 'vue';
 
-  let classifiedId: string;
-  let classifiedName: string = '';
+  const classifiedId = ref<string>('');
+  const classifiedName = ref<string>();
+  const [registerDrawer] = useDrawerInner((data) => {
+    // 外部传入的数据
+    const changed = classifiedId.value != data.record?.id;
+    classifiedId.value = data.record?.id;
+    classifiedName.value = data.record?.name;
+    if (changed) {
+      reload();
+    }
+  });
 
   // 新增/编辑
   const [registerUpdateDrawer, { openDrawer: openUpdateDrawer }] = useDrawer();
   const [registerTable, { reload }] = useTable({
-    title: classifiedName,
+    title: '',
     api: (queryForm) => {
-      console.log(classifiedId);
-      return listSysDataDictApi(queryForm);
+      return listSysDataDictItemApi(classifiedId.value, queryForm);
     },
     columns,
     formConfig: {},
@@ -77,18 +86,13 @@
     },
   });
 
-  const [registerDrawer] = useDrawerInner((data) => {
-    // 外部传入的数据
-    classifiedId = data.id;
-    classifiedName = data.name;
-  });
-
   /**
    * 单击新增按钮事件
    */
   function handleInsert() {
     openUpdateDrawer(true, {
       isUpdateView: false,
+      classifiedId,
     });
   }
 
@@ -99,6 +103,7 @@
     openUpdateDrawer(true, {
       record,
       isUpdateView: true,
+      classifiedId,
     });
   }
 
@@ -106,7 +111,7 @@
    * 单击删除按钮事件
    */
   async function handleDelete(record: Recordable) {
-    await deleteSysDataDictApi([record.id]);
+    await deleteSysDataDictItemApi(classifiedId.value, [record.id]);
     await reload();
   }
 

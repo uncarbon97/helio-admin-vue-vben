@@ -15,11 +15,12 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { insertOrUpdateFormSchema } from './data';
-  import { createSysDataDictApi, updateSysDataDictApi } from '@/api/sys/SysDataDictApi';
+  import { createSysDataDictItemApi, updateSysDataDictItemApi } from '@/api/sys/SysDataDictApi';
 
   const isUpdateView = ref(true);
   let recordId: string;
   const getTitle = computed(() => (!unref(isUpdateView) ? '新增' : '编辑'));
+  let classifiedId: string;
 
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelCol: {
@@ -47,6 +48,8 @@
 
     // 主键ID
     recordId = data.record?.id || null;
+    // 分类ID
+    classifiedId = data.classifiedId || null;
   });
 
   const emit = defineEmits(['success']);
@@ -58,9 +61,9 @@
       setDrawerProps({ confirmLoading: true });
 
       if (recordId) {
-        await updateSysDataDictApi(recordId, values);
+        await updateSysDataDictItemApi(classifiedId, recordId, values);
       } else {
-        await createSysDataDictApi(values);
+        await createSysDataDictItemApi(classifiedId, values);
       }
 
       closeDrawer();

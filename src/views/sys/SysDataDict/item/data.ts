@@ -1,4 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import {h} from "vue";
+import {Tag} from "ant-design-vue";
 
 /**
  * 表格列
@@ -10,7 +12,7 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: '字典项名',
+    title: '字典项标签',
     dataIndex: 'label',
     width: 80,
   },
@@ -22,7 +24,23 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
-    width: 80,
+    width: 50,
+    customRender: ({ record }) => {
+      const value = record.status;
+      let color, text;
+
+      switch (value) {
+        case 0:
+          color = 'red';
+          text = '禁用';
+          break;
+        case 1:
+          color = 'green';
+          text = '启用';
+          break;
+      }
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: '排序',
@@ -61,7 +79,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
   },
   {
     field: 'label',
-    label: '字典项名',
+    label: '字典项标签',
     required: true,
     component: 'Input',
     componentProps: {},
@@ -78,7 +96,7 @@ export const insertOrUpdateFormSchema: FormSchema[] = [
     label: '状态',
     required: false,
     component: 'RadioButtonGroup',
-    defaultValue: 0,
+    defaultValue: 1,
     componentProps: {
       options: [
         { label: '禁用', value: 0 },

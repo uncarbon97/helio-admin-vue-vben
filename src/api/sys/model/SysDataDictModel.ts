@@ -7,41 +7,68 @@
  */
 
 /**
- * 数据字典-新增/编辑请求体
+ * 数据字典分类-新增/编辑请求体
  */
-export interface SysDataDictInsertOrUpdateForm {
+export interface SysDataDictClassifiedInsertOrUpdateForm {
   /**
-   * 驼峰式键名
+   * 分类编码
    */
-  camelCaseKey: string;
+  code: string;
+
   /**
-   * 下划线式键名
+   * 分类名称
    */
-  underCaseKey: string;
+  name: string;
+
   /**
-   * 帕斯卡式键名
+   * 状态
    */
-  pascalCaseKey: string;
+  status: string;
+
   /**
-   * 键值
+   * 分类描述
+   */
+  description: string;
+}
+
+/**
+ * 数据字典项-新增/编辑请求体
+ */
+export interface SysDataDictItemInsertOrUpdateForm {
+  /**
+   * 所属分类ID
+   */
+  classifiedId: string;
+
+  /**
+   * 字典项编码
+   */
+  code: string;
+
+  /**
+   * 字典项标签
+   */
+  label: string;
+
+  /**
+   * 字典项值
    */
   value: string;
+
+  /**
+   * 状态
+   */
+  status: string;
+
+  /**
+   * 排序
+   */
+  sort: string;
+
   /**
    * 描述
    */
   description: string;
-  /**
-   * 单位
-   */
-  unit: string;
-  /**
-   * 取值范围
-   */
-  valueRange: string;
-  /**
-   * 别称键名
-   */
-  aliasKey: string;
 }
 
 /*
@@ -49,9 +76,29 @@ export interface SysDataDictInsertOrUpdateForm {
  */
 
 /**
- * 数据字典-通用响应体
+ * 数据字典分类-通用响应体
  */
-export type SysDataDictApiResult = SysDataDictInsertOrUpdateForm & {
+export type SysDataDictClassifiedApiResult = SysDataDictClassifiedInsertOrUpdateForm & {
+  /**
+   * 主键ID
+   */
+  id: string;
+
+  /**
+   * 创建时刻
+   */
+  createdAt: string;
+
+  /**
+   * 更新时刻
+   */
+  updatedAt: string;
+};
+
+/**
+ * 数据字典项-通用响应体
+ */
+export type SysDataDictItemApiResult = SysDataDictItemInsertOrUpdateForm & {
   /**
    * 主键ID
    */
