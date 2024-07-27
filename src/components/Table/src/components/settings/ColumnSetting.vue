@@ -149,6 +149,12 @@
     return isFunction(attrs.getPopupContainer) ? attrs.getPopupContainer() : getParentContainer();
   };
 
+  // 默认值
+  let defaultIsIndexColumnShow: boolean = false;
+  let defaultIsRowSelectionShow: boolean = false;
+  let defaultRowSelection: TableRowSelection<Recordable<any>>;
+  let defaultColumnOptions: ColumnOptionsType[] = [];
+
   // 是否已经从缓存恢复
   let isRestored = false;
   let isInnerChange = false;
@@ -518,12 +524,6 @@
     tableColumnsUpdate();
   };
 
-  // 默认值
-  let defaultIsIndexColumnShow: boolean = false;
-  let defaultIsRowSelectionShow: boolean = false;
-  let defaultRowSelection: TableRowSelection<Recordable<any>>;
-  let defaultColumnOptions: ColumnOptionsType[] = [];
-
   const init = async () => {
     if (!isRestored) {
       // 获取数据列
@@ -540,13 +540,13 @@
           label:
             typeof col.title === 'string'
               ? col.title
-              : col.customTitle === 'string'
+              : typeof col.customTitle === 'string'
                 ? col.customTitle
                 : '',
           value:
             typeof col.dataIndex === 'string'
               ? col.dataIndex
-              : col.title === 'string'
+              : typeof col.title === 'string'
                 ? col.title
                 : '',
           column: {

@@ -1,48 +1,46 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { DescItem } from '@/components/Description';
+import { h } from 'vue';
+import { Tag } from 'ant-design-vue';
 
 /**
  * 表格列
  */
 export const columns: BasicColumn[] = [
   {
-    title: '驼峰式键名',
-    dataIndex: 'camelCaseKey',
+    title: '分类编码',
+    dataIndex: 'code',
     width: 80,
   },
   {
-    title: '下划线式键名',
-    dataIndex: 'underCaseKey',
+    title: '分类名称',
+    dataIndex: 'name',
     width: 80,
   },
   {
-    title: '帕斯卡式键名',
-    dataIndex: 'pascalCaseKey',
-    width: 80,
-  },
-  {
-    title: '数据值',
-    dataIndex: 'value',
-    width: 80,
+    title: '状态',
+    dataIndex: 'status',
+    width: 50,
+    customRender: ({ record }) => {
+      const value = record.status;
+      let color, text;
+
+      switch (value) {
+        case 0:
+          color = 'red';
+          text = '禁用';
+          break;
+        case 1:
+          color = 'green';
+          text = '启用';
+          break;
+      }
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: '描述',
     dataIndex: 'description',
-    width: 80,
-  },
-  {
-    title: '单位',
-    dataIndex: 'unit',
-    width: 80,
-  },
-  {
-    title: '取值范围',
-    dataIndex: 'valueRange',
-    width: 80,
-  },
-  {
-    title: '别称键名',
-    dataIndex: 'aliasKey',
     width: 80,
   },
   {
@@ -57,8 +55,8 @@ export const columns: BasicColumn[] = [
  */
 export const queryFormSchema: FormSchema[] = [
   {
-    field: 'description',
-    label: '描述',
+    field: 'code',
+    label: '分类编码',
     component: 'Input',
     componentProps: {},
     colProps: { span: 8 },
@@ -68,48 +66,7 @@ export const queryFormSchema: FormSchema[] = [
 /**
  * 查看详情表单
  */
-export const retrieveDetailFormSchema: DescItem[] = [
-  {
-    field: 'camelCaseKey',
-    label: '驼峰式键名',
-  },
-  {
-    field: 'underCaseKey',
-    label: '下划线式键名',
-  },
-  {
-    field: 'pascalCaseKey',
-    label: '帕斯卡式键名',
-  },
-  {
-    field: 'value',
-    label: '数据值',
-  },
-  {
-    field: 'description',
-    label: '描述',
-  },
-  {
-    field: 'unit',
-    label: '单位',
-  },
-  {
-    field: 'valueRange',
-    label: '取值范围',
-  },
-  {
-    field: 'aliasKey',
-    label: '别称键名',
-  },
-  {
-    field: 'createdAt',
-    label: '创建时间',
-  },
-  {
-    field: 'updatedAt',
-    label: '更新时间',
-  },
-];
+export const retrieveDetailFormSchema: DescItem[] = [];
 
 /**
  * 新增/编辑表单
@@ -117,81 +74,42 @@ export const retrieveDetailFormSchema: DescItem[] = [
 export const insertOrUpdateFormSchema: FormSchema[] = [
   {
     field: 'id',
-    // 只是为了带过来
+    // 只是为了把ID带过来
     label: '主键ID',
     component: 'Render',
     ifShow: false,
   },
   {
-    field: 'camelCaseKey',
-    label: '驼峰式键名',
+    field: 'code',
+    label: '分类编码',
     required: true,
     component: 'Input',
-    componentProps: {
-      maxlength: 100,
-    },
+    componentProps: {},
   },
   {
-    field: 'underCaseKey',
-    label: '下划线式键名',
+    field: 'name',
+    label: '分类名称',
     required: true,
     component: 'Input',
-    componentProps: {
-      maxlength: 100,
-    },
+    componentProps: {},
   },
   {
-    field: 'pascalCaseKey',
-    label: '帕斯卡式键名',
-    required: true,
-    component: 'Input',
+    field: 'status',
+    label: '状态',
+    component: 'RadioButtonGroup',
+    defaultValue: 1,
     componentProps: {
-      maxlength: 100,
-    },
-  },
-  {
-    field: 'value',
-    label: '数据值',
-    required: true,
-    component: 'Input',
-    componentProps: {
-      maxlength: 255,
+      options: [
+        { label: '禁用', value: 0 },
+        { label: '启用', value: 1 },
+      ],
     },
   },
   {
     field: 'description',
-    label: '描述',
-    required: true,
-    component: 'Input',
-    componentProps: {
-      maxlength: 255,
-    },
-  },
-  {
-    field: 'unit',
-    label: '单位',
+    label: '分类描述',
     required: false,
     component: 'Input',
-    componentProps: {
-      maxlength: 30,
-    },
-  },
-  {
-    field: 'valueRange',
-    label: '取值范围',
-    required: false,
-    component: 'Input',
-    componentProps: {
-      maxlength: 255,
-    },
-  },
-  {
-    field: 'aliasKey',
-    label: '别称键名',
-    required: false,
-    component: 'Input',
-    componentProps: {
-      maxlength: 100,
-    },
+    componentProps: {},
   },
 ];

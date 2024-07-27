@@ -34,7 +34,6 @@ export interface ErrorLogInfo {
   time?: string;
 }
 
-// Helio: 去除类型 UserInfo
 export interface UserInfo {
   userId: string | number;
   username: string;

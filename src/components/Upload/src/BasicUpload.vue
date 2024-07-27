@@ -1,7 +1,12 @@
 <template>
   <div>
     <Space>
-      <a-button type="primary" @click="openUploadModal" preIcon="carbon:cloud-upload">
+      <a-button
+        type="primary"
+        @click="openUploadModal"
+        preIcon="carbon:cloud-upload"
+        :disabled="disabled"
+      >
         {{ t('component.upload.upload') }}
       </a-button>
       <Tooltip placement="bottom" v-if="showPreview">
@@ -31,9 +36,12 @@
 
     <UploadPreviewModal
       :value="fileList"
+      :max-number="bindValue.maxNumber"
       @register="registerPreviewModal"
       @list-change="handlePreviewChange"
       @delete="handlePreviewDelete"
+      :preview-columns="props.previewColumns"
+      :before-preview-data="props.beforePreviewData"
     />
   </div>
 </template>
@@ -46,10 +54,11 @@
   import { uploadContainerProps } from './props';
   import { omit } from 'lodash-es';
   import { useI18n } from '@/hooks/web/useI18n';
-  import { isArray } from '@/utils/is';
+  import { isArray, isObject, isString } from '@/utils/is';
   import UploadModal from './components/UploadModal.vue';
   import UploadPreviewModal from './components/UploadPreviewModal.vue';
-
+  import { BaseFileItem } from './types/typing';
+  import { buildUUID } from '@/utils/uuid';
   defineOptions({ name: 'BasicUpload' });
 
   const props = defineProps(uploadContainerProps);
@@ -64,7 +73,7 @@
   //   预览modal
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
 
-  const fileList = ref<string[]>([]);
+  const fileList = ref<BaseFileItem[] | any[]>([]);
 
   const showPreview = computed(() => {
     const { emptyHidePreview } = props;
@@ -77,26 +86,72 @@
     return omit(value, 'onChange');
   });
 
+  const isFirstRender = ref<boolean>(true)
+
+  function getValue(valueKey="url") {
+    const list = (fileList.value || []).map((item: any) => {
+      return item[valueKey];
+    });
+    return list;
+  }
+  function genFileListByUrls(urls: string[]) {
+    const list = urls.map((e) => {
+      return {
+        uid: buildUUID(),
+        url: e,
+      };
+    });
+    return list;
+  }
   watch(
     () => props.value,
-    (value = []) => {
-      fileList.value = isArray(value) ? value : [];
+    (v = []) => {
+      let values: string[] = [];
+      if (v) {
+        if (isArray(v)) {
+          values = v;
+        } else if (typeof v == 'string') {
+          values.push(v);
+        }
+        fileList.value = values.map((item,i) => {
+          if (item && isString(item)) {
+            return {
+              uid: buildUUID(),
+              url: item,
+            };
+          } else if (item && isObject(item)) {
+            return item;
+          } else {
+            return;
+          }
+        }) as any;
+      }
+      emit('update:value', values);
+      if(!isFirstRender.value){
+        emit('change', values);
+        isFirstRender.value = false
+      }
     },
-    { immediate: true },
+    { 
+      immediate: true, 
+      deep: true,
+    },
   );
 
   // 上传modal保存操作
-  function handleChange(urls: string[]) {
-    fileList.value = [...unref(fileList), ...(urls || [])];
-    emit('update:value', fileList.value);
-    emit('change', fileList.value);
+  function handleChange(urls: string[],valueKey:string) {
+    fileList.value = [...unref(fileList), ...(genFileListByUrls(urls) || [])];
+    const values = getValue(valueKey);
+    emit('update:value', values);
+    emit('change', values);
   }
 
   // 预览modal保存操作
-  function handlePreviewChange(urls: string[]) {
-    fileList.value = [...(urls || [])];
-    emit('update:value', fileList.value);
-    emit('change', fileList.value);
+  function handlePreviewChange(fileItems: string[],valueKey:string) {
+    fileList.value = [...(fileItems || [])];
+    const values = getValue(valueKey);
+    emit('update:value', values);
+    emit('change', values);
   }
 
   function handleDelete(record: Recordable<any>) {
