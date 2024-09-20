@@ -106,7 +106,8 @@ const setting: ProjectConfig = {
     // Menu type
     type: MenuTypeEnum.SIDEBAR,
     // Menu theme
-    theme: ThemeEnum.DARK,
+    // Helio: 回退默认主题为浅色
+    theme: ThemeEnum.LIGHT,
     // Split menu
     split: false,
     // Top menu layout

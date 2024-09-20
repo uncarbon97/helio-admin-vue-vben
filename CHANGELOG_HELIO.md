@@ -9,6 +9,8 @@
   - README.zh-CN.md
   - build/vite/plugin/mock.ts
   - CNAME
+  - .env.test
+  - .env.production
 
 ### 修改文件
   - .env
