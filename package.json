@@ -1,13 +1,26 @@
 {
-  "name": "helio-admin-vue-vben",
-  "version": "2.2.0",
-  "author": {
-    "name": "vben & Uncarbon",
-    "url": "https://github.com/uncarbon97"
+  "name": "vben-admin",
+  "version": "2.11.5",
+  "homepage": "https://github.com/vbenjs/vue-vben-admin",
+  "bugs": {
+    "url": "https://github.com/vbenjs/vue-vben-admin/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbenjs/vue-vben-admin.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "vben",
+    "email": "anncwb@126.com",
+    "url": "https://github.com/anncwb"
+  },
+  "type": "module",
   "scripts": {
     "bootstrap": "pnpm install",
     "build": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=8192 pnpm vite build",
+    "build:analyze": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm vite build --mode analyze",
+    "build:docker": "vite build --mode docker",
     "build:no-cache": "pnpm store prune && npm run build",
     "build:test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm vite build --mode test",
     "commit": "czg",
@@ -19,6 +32,7 @@
     "lint:prettier": "prettier --write .",
     "lint:stylelint": "stylelint \"**/*.{vue,css,less,scss}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "prepare": "husky install",
     "preview": "npm run build && vite preview",
     "reinstall": "rimraf pnpm-lock.yaml && rimraf package.lock.json && rimraf node_modules && npm run bootstrap",
     "serve": "npm run dev",
@@ -124,6 +138,7 @@
     "cross-env": "^7.0.3",
     "cz-git": "^1.9.1",
     "czg": "^1.9.1",
+    "husky": "^9.0.11",
     "lint-staged": "15.2.2",
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.5.0",
