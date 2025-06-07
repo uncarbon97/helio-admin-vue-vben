@@ -17,6 +17,8 @@ export function uploadApi(
     {
       url: uploadUrl,
       onUploadProgress,
+      // Helio: 默认上传超时时长100分钟
+      timeout: 100 * 60 * 1000,
     },
     params,
   );
