@@ -27,3 +27,15 @@ export const DEFAULT_SELECT_FIELD_NAMES = {
   // 组件options字段：对应数据源的options字段
   options: 'options',
 };
+
+/**
+ * admin-api  /select-options/**  Select 组件字段映射规则
+ */
+export const SELECT_OPTIONS_API_FIELD_NAMES = {
+  // 组件label字段，对应数据源的name字段
+  label: 'name',
+  // 组件value字段：对应数据源的id字段
+  value: 'id',
+  // 组件options字段：对应数据源的options字段
+  options: 'options',
+};
