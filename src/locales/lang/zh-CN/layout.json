@@ -16,11 +16,7 @@
     "lockScreen": "锁定屏幕",
     "lockScreenBtn": "锁定",
     "home": "首页",
-    "upgrade-prompt": {
-      "title": "新版本发布",
-      "content": "Vben Admin v5.0.0 预览版本已发布",
-      "ok-text": "前往体验新版"
-    }
+    "dropdownItemMyProfile": "个人资料"
   },
   "multipleTab": {
     "reload": "重新加载",

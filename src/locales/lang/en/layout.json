@@ -16,11 +16,7 @@
     "lockScreen": "Lock screen",
     "lockScreenBtn": "Locking",
     "home": "Home",
-    "upgrade-prompt": {
-      "title": "New version released",
-      "content": "Vben Admin v5.0.0 preview version has been released",
-      "ok-text": "Go to new version"
-    }
+    "dropdownItemMyProfile": "My Profile"
   },
   "multipleTab": {
     "reload": "Refresh current",
