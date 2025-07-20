@@ -3,18 +3,19 @@ import {
   LoginParams,
   LoginResultModel,
   GetUserInfoModel,
-  CaptchaResultModel,
+  CaptchaResultModel, AdminUpdateCurrentSysUserInfoForm,
 } from './model/userModel';
-
-import { ErrorMessageMode } from '#/axios';
+import { ErrorMessageMode, UploadFileParams } from '#/axios';
+import { uploadApi } from "@/api/sys/upload";
 
 enum Api {
   Captcha = '/api/v1/auth/captcha',
   Login = '/api/v1/auth/login',
   Logout = '/api/v1/auth/logout',
-  GetUserInfo = '/api/v1/sys/users/info',
+  GetUserInfo = '/api/v1/sys/users/me/info',
   // Helio: 去除 GetPermCode 接口调用
   TestRetry = '/testRetry',
+  updateMyInfo = '/api/v1/sys/users/me/info',
 }
 
 export function fetchCaptchaApi() {
@@ -70,4 +71,25 @@ export function testRetry() {
       },
     },
   );
+}
+
+
+/**
+ * 更新当前用户信息资料
+ */
+export function updateMyInfoApi(params: AdminUpdateCurrentSysUserInfoForm) {
+  return defHttp.put<void>({ url: Api.updateMyInfo, params });
+}
+
+/**
+ * 上传头像
+ */
+export function uploadAvatarApi(params: UploadFileParams) {
+  if (params) {
+    params.data = {
+      classified: 'sys_user_avatar',
+    }
+    return uploadApi(params);
+  }
+  throw new Error('Failed to upload avatar');
 }

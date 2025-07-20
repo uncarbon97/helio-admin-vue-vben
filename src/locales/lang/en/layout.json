@@ -16,7 +16,7 @@
     "lockScreen": "Lock screen",
     "lockScreenBtn": "Locking",
     "home": "Home",
-    "dropdownItemMyProfile": "My Profile"
+    "dropdownItemAccountSetting": "Account Setting"
   },
   "multipleTab": {
     "reload": "Refresh current",

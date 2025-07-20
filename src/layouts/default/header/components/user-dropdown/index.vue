@@ -25,10 +25,10 @@
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
         />
-        <!-- Helio: 增加"个人资料"页面 -->
+        <!-- Helio: 增加"个人设置"页面 -->
         <MenuItem
-          key="my-profile"
-          :text="t('layout.header.dropdownItemMyProfile')"
+          key="account-setting"
+          :text="t('layout.header.dropdownItemAccountSetting')"
           icon="ion:person-circle-outline"
         />
         <MenuItem
@@ -56,10 +56,10 @@
   import { openWindow } from '@/utils';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
   import { useRouter } from 'vue-router';
-  import { MY_PROFILE_FULL_PATH } from '@/router/routes/myProfile';
+  import { ACCOUNT_SETTING_FULL_PATH } from '@/router/routes/accountSetting';
 
-  // Helio: 增加"个人资料"页面
-  type MenuEvent = 'logout' | 'doc' | 'lock' | 'my-profile';
+  // Helio: 增加"个人设置"页面
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'account-setting';
 
   const MenuItem = createAsyncComponent(() => import('./DropMenuItem.vue'));
   const LockAction = createAsyncComponent(() => import('../lock/LockModal.vue'));
@@ -99,8 +99,8 @@
     openWindow(DOC_URL);
   }
 
-  function handleMyProfile() {
-    router.push(MY_PROFILE_FULL_PATH);
+  function handleAccountSetting() {
+    router.push(ACCOUNT_SETTING_FULL_PATH);
   }
 
   function handleMenuClick(e: MenuInfo) {
@@ -114,9 +114,9 @@
       case 'lock':
         handleLock();
         break;
-      // Helio: 增加"个人资料"页面
-      case 'my-profile':
-        handleMyProfile();
+      // Helio: 增加"个人设置"页面
+      case 'account-setting':
+        handleAccountSetting();
         break;
     }
   }

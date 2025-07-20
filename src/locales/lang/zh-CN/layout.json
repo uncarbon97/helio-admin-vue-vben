@@ -16,7 +16,7 @@
     "lockScreen": "锁定屏幕",
     "lockScreenBtn": "锁定",
     "home": "首页",
-    "dropdownItemMyProfile": "个人资料"
+    "dropdownItemAccountSetting": "个人设置"
   },
   "multipleTab": {
     "reload": "重新加载",
