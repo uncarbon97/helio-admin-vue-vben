@@ -57,7 +57,7 @@ export interface GetUserInfoModel {
 }
 
 /**
- * 后台管理-编辑当前后台用户信息资料
+ * 后台管理-更新当前后台用户信息资料
  */
 export interface AdminUpdateCurrentSysUserInfoForm {
 
@@ -81,9 +81,16 @@ export interface AdminUpdateCurrentSysUserInfoForm {
    */
   phoneNo: string;
 
+}
+
+/**
+ * 后台管理-更新当前后台用户头像
+ */
+export interface AdminUpdateCurrentSysUserAvatarForm {
+
   /**
    * 头像URL
    */
-  avatar: string;
+  avatarUrl: string;
 
 }

@@ -3,10 +3,11 @@ import {
   LoginParams,
   LoginResultModel,
   GetUserInfoModel,
-  CaptchaResultModel, AdminUpdateCurrentSysUserInfoForm,
+  CaptchaResultModel, AdminUpdateCurrentSysUserInfoForm, AdminUpdateCurrentSysUserAvatarForm,
 } from './model/userModel';
 import { ErrorMessageMode, UploadFileParams } from '#/axios';
 import { uploadApi } from "@/api/sys/upload";
+import {AxiosProgressEvent} from "axios";
 
 enum Api {
   Captcha = '/api/v1/auth/captcha',
@@ -16,6 +17,7 @@ enum Api {
   // Helio: 去除 GetPermCode 接口调用
   TestRetry = '/testRetry',
   updateMyInfo = '/api/v1/sys/users/me/info',
+  updateMyAvatar = '/api/v1/sys/users/me/avatar',
 }
 
 export function fetchCaptchaApi() {
@@ -92,4 +94,11 @@ export function uploadAvatarApi(params: UploadFileParams) {
     return uploadApi(params);
   }
   throw new Error('Failed to upload avatar');
+}
+
+/**
+ * 更新当前用户头像
+ */
+export function updateMyAvatarApi(params: AdminUpdateCurrentSysUserAvatarForm) {
+  return defHttp.put<void>({ url: Api.updateMyAvatar, params });
 }

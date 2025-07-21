@@ -5,7 +5,7 @@
       <Col :span="14">
         <BasicForm @register="register" ref="formRef" />
       </Col>
-      <Col :span="10" v-if="false">
+      <Col :span="10">
         <div class="change-avatar">
           <div class="mb-2">头像</div>
           <CropperAvatar
@@ -34,7 +34,7 @@
   import headerImg from '@/assets/images/header.jpg';
   import { useUserStore } from '@/store/modules/user';
   import { baseSetschemas } from './data';
-  import { getUserInfo, updateMyInfoApi, uploadAvatarApi } from "@/api/sys/user";
+  import {getUserInfo, updateMyAvatarApi, updateMyInfoApi, uploadAvatarApi} from "@/api/sys/user";
   import { Loading } from "@/components/Loading";
 
   const { createMessage } = useMessage();
@@ -59,9 +59,13 @@
     return avatar || headerImg;
   });
 
-  function updateAvatar({ src, data }) {
+  async function updateAvatar({ src, data }) {
+    await updateMyAvatarApi({
+      avatarUrl: data,
+    });
+
     const userinfo = userStore.getUserInfo;
-    userinfo.avatar = src;
+    userinfo.avatar = data;
     userStore.setUserInfo(userinfo);
   }
 
