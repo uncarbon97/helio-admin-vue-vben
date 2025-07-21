@@ -34,7 +34,7 @@
   import headerImg from '@/assets/images/header.jpg';
   import { useUserStore } from '@/store/modules/user';
   import { baseSetschemas } from './data';
-  import {getUserInfo, updateMyAvatarApi, updateMyInfoApi, uploadAvatarApi} from "@/api/sys/user";
+  import { getUserInfo, updateMyAvatarApi, updateMyInfoApi, uploadAvatarApi } from "@/api/sys/user";
   import { Loading } from "@/components/Loading";
 
   const { createMessage } = useMessage();
@@ -49,9 +49,12 @@
 
   onMounted(async () => {
     loadingFlag.value = true;
-    const data = await getUserInfo();
-    await setFieldsValue(data);
-    loadingFlag.value = false;
+    try {
+      const data = await getUserInfo();
+      await setFieldsValue(data);
+    } finally {
+      loadingFlag.value = false;
+    }
   });
 
   const avatar = computed(() => {
@@ -71,15 +74,19 @@
 
   async function handleSubmit() {
     loadingFlag.value = true;
-    const form = await validate();
-    await updateMyInfoApi(form);
 
-    const userinfo = userStore.getUserInfo;
-    userinfo.nickname = form.nickname;
-    userStore.setUserInfo(userinfo);
+    try {
+      const form = await validate();
+      await updateMyInfoApi(form);
 
-    createMessage.success('更新成功！');
-    loadingFlag.value = false;
+      const userinfo = userStore.getUserInfo;
+      userinfo.nickname = form.nickname;
+      userStore.setUserInfo(userinfo);
+
+      createMessage.success('更新成功！');
+    } finally {
+      loadingFlag.value = false;
+    }
   }
 </script>
 

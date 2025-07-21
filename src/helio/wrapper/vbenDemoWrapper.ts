@@ -24,4 +24,12 @@ export function wrapVbenDemoRoutes(asyncRoutes: AppRouteRecordRaw[]) {
   return wrappedRoute;
 }
 
-export const mergeVbenDemoRoutesFlag = ref<boolean>(false);
+const STORAGE_KEYS = {
+  showVbenDemoFlag: 'showVbenDemoFlag',
+}
+export function saveShowVbenDemoFlag(val: boolean) {
+  localStorage.setItem(STORAGE_KEYS.showVbenDemoFlag, val);
+}
+export function getShowVbenDemoFlag(): boolean {
+  return JSON.parse(localStorage.getItem(STORAGE_KEYS.showVbenDemoFlag));
+}
