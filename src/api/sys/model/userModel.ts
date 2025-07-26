@@ -55,3 +55,42 @@ export interface GetUserInfoModel {
   // 介绍
   desc?: string;
 }
+
+/**
+ * 后台管理-更新当前后台用户信息资料
+ */
+export interface AdminUpdateCurrentSysUserInfoForm {
+
+  /**
+   * 昵称
+   */
+  nickname: string;
+
+  /**
+   * 性别
+   */
+  gender: string;
+
+  /**
+   * 邮箱
+   */
+  email: string;
+
+  /**
+   * 手机号
+   */
+  phoneNo: string;
+
+}
+
+/**
+ * 后台管理-更新当前后台用户头像
+ */
+export interface AdminUpdateCurrentSysUserAvatarForm {
+
+  /**
+   * 头像URL
+   */
+  avatarUrl: string;
+
+}

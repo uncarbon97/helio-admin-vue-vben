@@ -23,6 +23,10 @@ import { getMenuList } from '@/api/sys/menu';
 
 import { useMessage } from '@/hooks/web/useMessage';
 import { PageEnum } from '@/enums/pageEnum';
+import {
+  getShowVbenDemoFlag,
+  wrapVbenDemoRoutes
+} from "@/helio/wrapper/vbenDemoWrapper";
 
 interface PermissionState {
   // Permission code list
@@ -242,6 +246,11 @@ export const usePermissionStore = defineStore({
           // Dynamically introduce components
           // 动态引入组件
           routeList = transformObjToRoute(routeList);
+
+          // Helio: 展示Vben内置Demo
+          if (getShowVbenDemoFlag()) {
+            routeList.push(wrapVbenDemoRoutes(asyncRoutes));
+          }
 
           //  Background routing to menu structure
           //  后台路由到菜单结构

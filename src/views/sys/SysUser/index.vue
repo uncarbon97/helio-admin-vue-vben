@@ -102,7 +102,7 @@
   const [registerResetPasswordConfirmModal, { openModal: openResetPasswordConfirmModal }] =
     useModal();
 
-  const [registerTable, { reload, getSelectRows }] = useTable({
+  const [registerTable, { reload, getSelectRows, setSelectedRows }] = useTable({
     title: '后台用户',
     api: listSysUserApi,
     columns,
@@ -221,6 +221,8 @@
   }
 
   function handleDeptTreeSelected(deptId = '') {
+    // 重置当前选中行
+    setSelectedRows([]);
     searchInfo.selectedDeptId = deptId;
     reload();
   }

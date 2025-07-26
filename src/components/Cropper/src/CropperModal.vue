@@ -190,7 +190,9 @@
       try {
         setModalProps({ confirmLoading: true });
         const result = await uploadApi({ name: 'file', file: blob, filename });
-        emit('uploadSuccess', { source: previewSource.value, data: result.url });
+        emit('uploadSuccess', { source: previewSource.value,
+          // Helio: POST /api/v1/oss/files 上传文件接口默认返回的URL是 result.data.data.url
+          data: result.data.data.url || result.url });
         closeModal();
       } finally {
         setModalProps({ confirmLoading: false });

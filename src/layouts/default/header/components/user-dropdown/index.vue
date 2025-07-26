@@ -25,6 +25,12 @@
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
         />
+        <!-- Helio: 增加"个人设置"页面 -->
+        <MenuItem
+          key="account-setting"
+          :text="t('layout.header.dropdownItemAccountSetting')"
+          icon="ion:person-circle-outline"
+        />
         <MenuItem
           key="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
@@ -49,12 +55,14 @@
   import { propTypes } from '@/utils/propTypes';
   import { openWindow } from '@/utils';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
+  import { useRouter } from 'vue-router';
+  import { ACCOUNT_SETTING_FULL_PATH } from '@/router/routes/accountSetting';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  // Helio: 增加"个人设置"页面
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'account-setting';
 
   const MenuItem = createAsyncComponent(() => import('./DropMenuItem.vue'));
   const LockAction = createAsyncComponent(() => import('../lock/LockModal.vue'));
-  const ChangeApi = createAsyncComponent(() => import('../ChangeApi/index.vue'));
 
   defineOptions({ name: 'UserDropdown' });
 
@@ -64,8 +72,10 @@
 
   const { prefixCls } = useDesign('header-user-dropdown');
   const { t } = useI18n();
-  const { getShowDoc, getUseLockPage, getShowApi } = useHeaderSetting();
+  // Helio: 剔除不必要的 getShowApi
+  const { getShowDoc, getUseLockPage } = useHeaderSetting();
   const userStore = useUserStore();
+  const router = useRouter();
 
   const getUserInfo = computed(() => {
     // Helio: `realName` 修改为 `nickname`
@@ -89,6 +99,10 @@
     openWindow(DOC_URL);
   }
 
+  function handleAccountSetting() {
+    router.push(ACCOUNT_SETTING_FULL_PATH);
+  }
+
   function handleMenuClick(e: MenuInfo) {
     switch (e.key as MenuEvent) {
       case 'logout':
@@ -99,6 +113,10 @@
         break;
       case 'lock':
         handleLock();
+        break;
+      // Helio: 增加"个人设置"页面
+      case 'account-setting':
+        handleAccountSetting();
         break;
     }
   }

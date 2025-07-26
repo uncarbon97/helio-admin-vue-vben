@@ -59,6 +59,13 @@
           </Button>
         </FormItem>
       </ACol>
+      <ACol>
+        <FormItem v-if="!isProdMode()">
+          <Checkbox v-model:checked="showVbenDemoFlag" size="small">
+            展示Vben内置Demo（本选项在生产打包时自动隐藏）
+          </Checkbox>
+        </FormItem>
+      </ACol>
     </ARow>
 
     <FormItem class="enter-x">
@@ -120,6 +127,8 @@
   import { CaptchaResultModel } from '@/api/sys/model/userModel';
   import { fetchCaptchaApi } from '@/api/sys/user';
   import { isEmpty } from '@/utils/is';
+  import { saveShowVbenDemoFlag} from "@/helio/wrapper/vbenDemoWrapper";
+  import { isProdMode } from "@/utils/env";
   //import { onKeyStroke } from '@vueuse/core';
 
   const ACol = Col;
@@ -140,6 +149,12 @@
 
   // Helio: 增加"记住我"参数
   const rememberMe = ref(false);
+
+  // Helio: 增加"展示Vben内置Demo"参数；因Vben 2.x官方演示站已经关闭，为了方便看内置Demo，增加一个选项，减少学习成本
+  const showVbenDemoFlag = ref(false);
+  function processShowVbenDemoFlag() {
+    saveShowVbenDemoFlag(showVbenDemoFlag.value);
+  }
 
   // Helio: 登录验证码（可选，默认不启用）
   const usingCaptcha = ref(false);
@@ -192,6 +207,7 @@
     const data = await validForm();
     if (!data) return;
     if (!validateCaptchaInput()) return;
+    processShowVbenDemoFlag();
     try {
       loading.value = true;
       const userInfo = await userStore.login({
