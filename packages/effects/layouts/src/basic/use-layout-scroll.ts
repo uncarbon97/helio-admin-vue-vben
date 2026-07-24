@@ -16,18 +16,18 @@ function getHistoryPosition() {
   return typeof position === 'number' ? position : undefined;
 }
 
-function getHashTarget(hash: string) {
-  if (typeof document === 'undefined' || !hash.startsWith('#')) {
+function getHashTarget(scrollElement: HTMLElement, hash: string) {
+  if (!hash.startsWith('#')) {
     return null;
   }
 
   const id = hash.slice(1);
   try {
-    return document.querySelector<HTMLElement>(
+    return scrollElement.querySelector<HTMLElement>(
       `#${CSS.escape(decodeURIComponent(id))}`,
     );
   } catch {
-    return document.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
+    return scrollElement.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
   }
 }
 
@@ -62,7 +62,7 @@ export function useLayoutScroll(router: LayoutScrollRouter = useRouter()) {
             : undefined;
 
         if (savedPosition === undefined) {
-          const hashTarget = getHashTarget(to.hash);
+          const hashTarget = getHashTarget(scrollElement, to.hash);
           if (hashTarget) {
             hashTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
           } else {

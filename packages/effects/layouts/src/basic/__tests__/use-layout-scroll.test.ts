@@ -116,6 +116,31 @@ describe('useLayoutScroll', () => {
     expect(element.scrollTo).not.toHaveBeenCalled();
   });
 
+  it('should ignore matching hash targets outside the layout', async () => {
+    window.history.replaceState({ position: 0 }, '');
+    const hostTarget = document.createElement('div');
+    hostTarget.id = 'section';
+    hostTarget.scrollIntoView = vi.fn();
+    document.body.append(hostTarget);
+    const element = createScrollElement();
+    const layoutTarget = document.createElement('div');
+    layoutTarget.id = 'section';
+    layoutTarget.scrollIntoView = vi.fn();
+    element.append(layoutTarget);
+    const routerMock = createRouterMock();
+    mountLayoutScroll(routerMock.router);
+    const { afterHook } = routerMock.getHooks();
+
+    window.history.replaceState({ position: 1 }, '');
+    await runAfterHook(afterHook, '#section');
+
+    expect(layoutTarget.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'start',
+    });
+    expect(hostTarget.scrollIntoView).not.toHaveBeenCalled();
+  });
+
   it('should restore a saved position on history navigation', async () => {
     window.history.replaceState({ position: 0 }, '');
     const element = createScrollElement();
