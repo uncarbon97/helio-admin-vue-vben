@@ -1,0 +1,4789 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "OpenAPI definition", "version": "v0" },
+  "servers": [
+    { "url": "http://127.0.0.1:7003", "description": "Generated server url" }
+  ],
+  "security": [{ "AUTH_HEADER_NAME": [] }],
+  "paths": {
+    "/app/v1/auth/login": {
+      "post": {
+        "tags": ["APP-鉴权接口"],
+        "summary": "登录",
+        "operationId": "login",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/ucenter/profile/update": {
+      "post": {
+        "tags": ["后台管理-用户中心"],
+        "summary": "修改当前用户资料",
+        "operationId": "profileUpdate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateMyProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/ucenter/profile/get": {
+      "post": {
+        "tags": ["后台管理-用户中心"],
+        "summary": "取当前用户资料",
+        "operationId": "profileGet",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultMyProfileDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/ucenter/password/update": {
+      "post": {
+        "tags": ["后台管理-用户中心"],
+        "summary": "修改当前用户密码",
+        "operationId": "passwordUpdate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateMyPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/ucenter/avatar/update": {
+      "post": {
+        "tags": ["后台管理-用户中心"],
+        "summary": "修改当前用户头像",
+        "operationId": "avatarUpdate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FileUploadResultVO" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/update": {
+      "post": {
+        "tags": ["租户管理-租户管理"],
+        "summary": "修改",
+        "operationId": "update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantMetaUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["Tenant:update"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/package/update": {
+      "post": {
+        "tags": ["租户管理-租户套餐"],
+        "summary": "修改",
+        "operationId": "update_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantPackageUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["TenantPackage:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/package/list": {
+      "post": {
+        "tags": ["租户管理-租户套餐"],
+        "summary": "分页查询",
+        "operationId": "list",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantPackageListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultTenantPackageDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["TenantPackage:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/package/detail": {
+      "post": {
+        "tags": ["租户管理-租户套餐"],
+        "summary": "详情",
+        "operationId": "detail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultTenantPackageDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["TenantPackage:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/package/delete": {
+      "post": {
+        "tags": ["租户管理-租户套餐"],
+        "summary": "删除",
+        "operationId": "delete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["TenantPackage:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/package/create": {
+      "post": {
+        "tags": ["租户管理-租户套餐"],
+        "summary": "新增",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantPackageUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["TenantPackage:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/package/bind-menu": {
+      "post": {
+        "tags": ["租户管理-租户套餐"],
+        "summary": "绑定租户套餐菜单",
+        "operationId": "bindMenu",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantPackageBindMenuRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["TenantPackage:bindMenu"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/list": {
+      "post": {
+        "tags": ["租户管理-租户管理"],
+        "summary": "分页查询",
+        "operationId": "list_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantMetaListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultTenantMetaDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["Tenant:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/detail": {
+      "post": {
+        "tags": ["租户管理-租户管理"],
+        "summary": "详情",
+        "operationId": "detail_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultTenantMetaDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["Tenant:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/delete": {
+      "post": {
+        "tags": ["租户管理-租户管理"],
+        "summary": "删除",
+        "operationId": "delete_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["Tenant:delete"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/tenant/create": {
+      "post": {
+        "tags": ["租户管理-租户管理"],
+        "summary": "新增",
+        "operationId": "create_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["Tenant:create"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/update": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "修改",
+        "operationId": "update_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysUserUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/set-status": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "修改用户状态",
+        "operationId": "setStatus",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminBatchSetStatusRequestLongSysUserStatusEnum"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/reset-password": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "重置指定用户密码",
+        "operationId": "resetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysUserResetSpecifiedOnePasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:resetPassword"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/list": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "分页查询",
+        "operationId": "list_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminSysUserListQuery" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysUserDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/list-related-role": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "取指定用户关联角色ID",
+        "operationId": "listRelatedRole",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultListLong" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/kick-out": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "踢用户下线",
+        "operationId": "kickOut",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:kickOut"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/detail": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "详情",
+        "operationId": "detail_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultSysUserDTO" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/delete": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "删除",
+        "operationId": "delete_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/create": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "新增",
+        "operationId": "create_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysUserCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/bind-role": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "绑定用户角色",
+        "operationId": "bindRole",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysUserBindRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:bindRole"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/user/bind-dept": {
+      "post": {
+        "tags": ["后台管理-系统用户管理"],
+        "summary": "调整用户部门",
+        "operationId": "bindDept",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysUserBindDeptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysUser:bindDept"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/update": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "修改",
+        "operationId": "update_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysRoleUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysRole:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/list": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "分页查询",
+        "operationId": "list_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminSysRoleListQuery" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysRoleDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/detail": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "详情",
+        "operationId": "detail_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultSysRoleDTO" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/delete": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "删除",
+        "operationId": "delete_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysRole:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/create": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "新增",
+        "operationId": "create_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysRoleUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysRole:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/bind-menu": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "绑定角色菜单",
+        "operationId": "bindMenu_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysRoleBindMenuRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysRole:bindMenu"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/operate-log/list": {
+      "post": {
+        "tags": ["后台管理-系统操作日志管理"],
+        "summary": "分页查询",
+        "operationId": "list_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysOperateLogListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysOperateLogDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysOperateLog:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/operate-log/detail": {
+      "post": {
+        "tags": ["后台管理-系统操作日志管理"],
+        "summary": "详情",
+        "operationId": "detail_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultSysOperateLogDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysOperateLog:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/visible": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "取所有可见菜单",
+        "operationId": "visible",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListSysMenuDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/update": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "修改",
+        "operationId": "update_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysMenuUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysMenu:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/side": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "取侧边菜单",
+        "operationId": "side",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListSysMenuDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/list": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "列表查询",
+        "operationId": "list_5",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListSysMenuDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysMenu:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/detail": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "详情",
+        "operationId": "detail_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultSysMenuDTO" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysMenu:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/delete": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "删除",
+        "operationId": "delete_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysMenu:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/menu/create": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "新增",
+        "operationId": "create_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysMenuUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysMenu:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/login-log/list": {
+      "post": {
+        "tags": ["后台管理-系统登录日志管理"],
+        "summary": "分页查询",
+        "operationId": "list_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysLoginLogListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysLoginLogDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysLoginLog:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/login-log/detail": {
+      "post": {
+        "tags": ["后台管理-系统登录日志管理"],
+        "summary": "详情",
+        "operationId": "detail_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultSysLoginLogDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysLoginLog:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/item/update": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "修改字典项",
+        "operationId": "update_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDictItemUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDict:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/item/list": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "分页查询字典项",
+        "operationId": "list_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDictItemListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysDictItemDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/item/delete": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "删除字典项",
+        "operationId": "deleteItem",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDict:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/item/create": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "新增字典项",
+        "operationId": "create_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDictItemUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDict:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/category/update": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "修改字典分类",
+        "operationId": "update_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDictCategoryUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDict:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/category/list": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "分页查询字典分类",
+        "operationId": "list_8",
+        "parameters": [
+          {
+            "name": "pageParam.pageNum",
+            "in": "query",
+            "description": "当前页码",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "description": "当前页码"
+            }
+          },
+          {
+            "name": "pageParam.pageSize",
+            "in": "query",
+            "description": "当前页大小",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "description": "当前页大小"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "字典编码",
+            "required": false,
+            "schema": { "type": "string", "description": "字典编码" }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "字典名称",
+            "required": false,
+            "schema": { "type": "string", "description": "字典名称" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysDictCategoryDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/category/delete": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "删除字典分类",
+        "operationId": "deleteCategory",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDict:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/category/create": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "新增字典分类",
+        "operationId": "create_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDictCategoryUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDict:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/builtin/list": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "分页查询内置字典分类",
+        "operationId": "listBuiltin",
+        "parameters": [
+          {
+            "name": "pageParam.pageNum",
+            "in": "query",
+            "description": "当前页码",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "description": "当前页码"
+            }
+          },
+          {
+            "name": "pageParam.pageSize",
+            "in": "query",
+            "description": "当前页大小",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "description": "当前页大小"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "字典编码",
+            "required": false,
+            "schema": { "type": "string", "description": "字典编码" }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "字典名称",
+            "required": false,
+            "schema": { "type": "string", "description": "字典名称" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultSysDictBuiltinDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dept/update": {
+      "post": {
+        "tags": ["后台管理-部门管理"],
+        "summary": "修改",
+        "operationId": "update_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDeptUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDept:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dept/list": {
+      "post": {
+        "tags": ["后台管理-部门管理"],
+        "summary": "列表查询",
+        "operationId": "list_9",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListSysDeptDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysDept:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dept/detail": {
+      "post": {
+        "tags": ["后台管理-部门管理"],
+        "summary": "详情",
+        "operationId": "detail_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultSysDeptDTO" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["SysDept:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dept/delete": {
+      "post": {
+        "tags": ["后台管理-部门管理"],
+        "summary": "删除",
+        "operationId": "delete_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDept:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dept/create": {
+      "post": {
+        "tags": ["后台管理-部门管理"],
+        "summary": "新增",
+        "operationId": "create_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSysDeptUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["SysDept:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/select-option/sys/role": {
+      "post": {
+        "tags": ["后台管理--下拉框数据源接口"],
+        "summary": "系统角色下拉框数据",
+        "operationId": "role",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/select-option/sys/dept": {
+      "post": {
+        "tags": ["后台管理--下拉框数据源接口"],
+        "summary": "部门下拉框数据",
+        "operationId": "dept",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/select-option/dict/{categoryCode}": {
+      "post": {
+        "tags": ["后台管理--下拉框数据源接口"],
+        "summary": "字典数据",
+        "operationId": "dict",
+        "parameters": [
+          {
+            "name": "categoryCode",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/storage/update": {
+      "post": {
+        "tags": ["后台管理-文件存储点管理"],
+        "summary": "修改",
+        "operationId": "update_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminFileStorageUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["FileStorage:update"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/storage/list": {
+      "post": {
+        "tags": ["后台管理-文件存储点管理"],
+        "summary": "分页查询",
+        "operationId": "list_10",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminFileStorageListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultFileStorageDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["FileStorage:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/storage/detail": {
+      "post": {
+        "tags": ["后台管理-文件存储点管理"],
+        "summary": "详情",
+        "operationId": "detail_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultFileStorageDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["FileStorage:read"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/storage/delete": {
+      "post": {
+        "tags": ["后台管理-文件存储点管理"],
+        "summary": "删除",
+        "operationId": "delete_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["FileStorage:delete"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/storage/create": {
+      "post": {
+        "tags": ["后台管理-文件存储点管理"],
+        "summary": "新增",
+        "operationId": "create_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminFileStorageUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            {
+              "values": ["FileStorage:create"],
+              "mode": "AND",
+              "type": "ADMIN_USER"
+            }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/file/list": {
+      "post": {
+        "tags": ["后台管理-文件管理"],
+        "summary": "分页查询",
+        "operationId": "list_11",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminFileMetaListQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultPageResultFileMetaDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["File:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/file/detail": {
+      "post": {
+        "tags": ["后台管理-文件管理"],
+        "summary": "详情",
+        "operationId": "detail_9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultFileMetaDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["File:read"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/file/file/delete": {
+      "post": {
+        "tags": ["后台管理-文件管理"],
+        "summary": "删除",
+        "operationId": "delete_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [
+            { "values": ["File:delete"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/auth/password-login": {
+      "post": {
+        "tags": ["后台管理--鉴权接口"],
+        "summary": "登录",
+        "operationId": "login_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminAuthPasswordLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultSysUserLoginVO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/auth/logout": {
+      "post": {
+        "tags": ["后台管理--鉴权接口"],
+        "summary": "登出",
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/auth/challenge": {
+      "post": {
+        "tags": ["后台管理--鉴权接口"],
+        "summary": "获取验证码",
+        "operationId": "captcha",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultAdminAuthChallengeVO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/file/upload": {
+      "post": {
+        "tags": ["后台管理-文件上传、下载"],
+        "summary": "上传文件",
+        "operationId": "upload",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "arg0": { "type": "string", "format": "binary" },
+                  "arg1": {
+                    "$ref": "#/components/schemas/FileAttrExtraRequest"
+                  }
+                },
+                "required": ["arg0"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResultFileUploadResultVO"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/file/download/v1/{hashIds}/{tenantCode}": {
+      "get": {
+        "tags": ["后台管理-文件上传、下载"],
+        "summary": "下载文件V1",
+        "operationId": "downloadV1",
+        "parameters": [],
+        "responses": { "200": { "description": "OK" } },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResultVoid": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": { "description": "承载数据" }
+        }
+      },
+      "AdminUpdateMyProfileRequest": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "description": "昵称",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "gender": {
+            "type": "string",
+            "description": "性别",
+            "enum": ["UNKNOWN", "MALE", "FEMALE"]
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "手机号",
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "(?:0|86|\\+86)?1[3-9]\\d{9}"
+          }
+        },
+        "required": ["email", "gender", "nickname", "phoneNo"]
+      },
+      "ApiResultMyProfileDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/MyProfileDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "MyProfileDTO": {
+        "type": "object",
+        "properties": {
+          "pin": { "type": "string", "description": "账号" },
+          "nickname": { "type": "string", "description": "昵称" },
+          "lastLoginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "最后登录时刻"
+          },
+          "gender": {
+            "type": "string",
+            "description": "性别",
+            "enum": ["UNKNOWN", "MALE", "FEMALE"]
+          },
+          "email": { "type": "string", "description": "邮箱" },
+          "phoneNo": { "type": "string", "description": "手机号" },
+          "avatarUrl": { "type": "string", "description": "头像URL" },
+          "requireNewPwdFlag": {
+            "type": "string",
+            "description": "要求用户下次登录时修改密码",
+            "enum": ["NO", "YES"]
+          }
+        }
+      },
+      "AdminUpdateMyPasswordRequest": {
+        "type": "object",
+        "properties": {
+          "old": { "type": "string", "description": "原密码", "minLength": 1 },
+          "neo": {
+            "type": "string",
+            "description": "新密码",
+            "maxLength": 20,
+            "minLength": 8
+          },
+          "confirmNeo": {
+            "type": "string",
+            "description": "确认密码",
+            "maxLength": 20,
+            "minLength": 8
+          }
+        },
+        "required": ["confirmNeo", "neo", "old"]
+      },
+      "FileUploadResultVO": {
+        "type": "object",
+        "properties": {
+          "outFileId": { "type": "string", "description": "外显文件ID" },
+          "filename": { "type": "string", "description": "存储文件名" },
+          "url": { "type": "string", "description": "完整外链" },
+          "originalFilename": { "type": "string", "description": "原始文件名" }
+        }
+      },
+      "AdminTenantMetaUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "name": {
+            "type": "string",
+            "description": "租户名称",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "packageId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属租户套餐ID"
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        },
+        "required": ["name"]
+      },
+      "AdminTenantPackageUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "code": {
+            "type": "string",
+            "description": "套餐编码",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "name": {
+            "type": "string",
+            "description": "套餐名称",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "description": {
+            "type": "string",
+            "description": "套餐描述",
+            "maxLength": 255,
+            "minLength": 0
+          }
+        },
+        "required": ["code", "name"]
+      },
+      "AdminTenantPackageListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "code": { "type": "string", "description": "套餐编码(关键词)" },
+          "name": { "type": "string", "description": "套餐名称(关键词)" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        }
+      },
+      "PageParam": {
+        "type": "object",
+        "properties": {
+          "pageNum": {
+            "type": "integer",
+            "format": "int32",
+            "description": "当前页码"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "description": "当前页大小"
+          }
+        }
+      },
+      "ApiResultPageResultTenantPackageDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultTenantPackageDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultTenantPackageDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/TenantPackageDTO" }
+          }
+        }
+      },
+      "TenantPackageDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "code": { "type": "string", "description": "套餐编码" },
+          "name": { "type": "string", "description": "套餐名称" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "description": { "type": "string", "description": "套餐描述" },
+          "menuIds": {
+            "type": "array",
+            "description": "关联菜单Ids",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        }
+      },
+      "IdRequestLong": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64", "description": "ID" }
+        },
+        "required": ["id"]
+      },
+      "ApiResultTenantPackageDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/TenantPackageDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminTenantPackageBindMenuRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "menuIds": {
+            "type": "array",
+            "description": "菜单Ids(空=清理关联关系后不再绑定任何菜单)",
+            "items": { "type": "integer", "format": "int64" },
+            "uniqueItems": true
+          }
+        }
+      },
+      "AdminTenantMetaListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "code": { "type": "string", "description": "租户编码(关键词)" },
+          "name": { "type": "string", "description": "租户名称(关键词)" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        }
+      },
+      "ApiResultPageResultTenantMetaDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultTenantMetaDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultTenantMetaDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/TenantMetaDTO" }
+          }
+        }
+      },
+      "TenantMetaDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "code": { "type": "string", "description": "租户编码" },
+          "name": { "type": "string", "description": "租户名称" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "adminUserId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "租户管理员用户ID"
+          },
+          "packageId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属租户套餐ID"
+          },
+          "adminUserProfile": {
+            "$ref": "#/components/schemas/TenantUserBasicProfileDTO",
+            "description": "租户管理员用户资料"
+          }
+        }
+      },
+      "TenantUserBasicProfileDTO": {
+        "type": "object",
+        "properties": {
+          "pin": { "type": "string", "description": "账号" },
+          "nickname": { "type": "string", "description": "昵称" },
+          "gender": {
+            "type": "string",
+            "description": "性别",
+            "enum": ["UNKNOWN", "MALE", "FEMALE"]
+          },
+          "email": { "type": "string", "description": "邮箱" },
+          "phoneNo": { "type": "string", "description": "手机号" }
+        }
+      },
+      "ApiResultTenantMetaDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/TenantMetaDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminTenantCreateRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "租户编码",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "name": {
+            "type": "string",
+            "description": "租户名称",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "tenantAdminPin": {
+            "type": "string",
+            "description": "租户管理员账号",
+            "maxLength": 16,
+            "minLength": 5
+          },
+          "tenantAdminPwd": {
+            "type": "string",
+            "description": "租户管理员初始密码",
+            "maxLength": 20,
+            "minLength": 8
+          },
+          "tenantAdminEmail": {
+            "type": "string",
+            "description": "租户管理员邮箱",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])"
+          },
+          "tenantAdminPhoneNo": {
+            "type": "string",
+            "description": "租户管理员手机号",
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "(?:0|86|\\+86)?1[3-9]\\d{9}"
+          },
+          "packageId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属租户套餐ID"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "tenantAdminEmail",
+          "tenantAdminPhoneNo",
+          "tenantAdminPin",
+          "tenantAdminPwd"
+        ]
+      },
+      "AdminSysUserUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "pin": {
+            "type": "string",
+            "description": "账号",
+            "maxLength": 16,
+            "minLength": 5
+          },
+          "requireNewPwdFlag": {
+            "type": "string",
+            "description": "要求用户下次登录时修改密码",
+            "enum": ["NO", "YES"]
+          },
+          "nickname": {
+            "type": "string",
+            "description": "昵称",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "gender": {
+            "type": "string",
+            "description": "性别",
+            "enum": ["UNKNOWN", "MALE", "FEMALE"]
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "手机号",
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "(?:0|86|\\+86)?1[3-9]\\d{9}"
+          }
+        },
+        "required": [
+          "email",
+          "gender",
+          "nickname",
+          "phoneNo",
+          "pin",
+          "requireNewPwdFlag"
+        ]
+      },
+      "AdminBatchSetStatusRequestLongSysUserStatusEnum": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "description": "主键ID数组",
+            "items": { "type": "integer", "format": "int64" },
+            "minItems": 1
+          },
+          "newStatus": {
+            "type": "string",
+            "description": "新状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        },
+        "required": ["ids", "newStatus"]
+      },
+      "AdminSysUserResetSpecifiedOnePasswordRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID"
+          },
+          "randomPassword": {
+            "type": "string",
+            "description": "随机新密码",
+            "maxLength": 64,
+            "minLength": 16
+          }
+        },
+        "required": ["randomPassword"]
+      },
+      "AdminSysUserListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "phoneNo": { "type": "string", "description": "手机号(关键词)" },
+          "selectedDeptId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "手动选择的部门ID"
+          }
+        }
+      },
+      "ApiResultPageResultSysUserDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysUserDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysUserDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysUserDTO" }
+          }
+        }
+      },
+      "SysUserDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "pin": { "type": "string", "description": "账号" },
+          "nickname": { "type": "string", "description": "昵称" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "gender": {
+            "type": "string",
+            "description": "性别",
+            "enum": ["UNKNOWN", "MALE", "FEMALE"]
+          },
+          "email": { "type": "string", "description": "邮箱" },
+          "phoneNo": { "type": "string", "description": "手机号" },
+          "lastLoginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "最后登录时刻"
+          },
+          "deptId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属部门ID"
+          },
+          "deptName": { "type": "string", "description": "所属部门名称" },
+          "avatarUrl": { "type": "string", "description": "头像URL" }
+        }
+      },
+      "ApiResultListLong": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "type": "array",
+            "description": "承载数据",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        }
+      },
+      "ApiResultSysUserDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysUserDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminSysUserCreateRequest": {
+        "type": "object",
+        "properties": {
+          "pin": {
+            "type": "string",
+            "description": "账号",
+            "maxLength": 16,
+            "minLength": 5
+          },
+          "requireNewPwdFlag": {
+            "type": "string",
+            "description": "要求用户下次登录时修改密码",
+            "enum": ["NO", "YES"]
+          },
+          "nickname": {
+            "type": "string",
+            "description": "昵称",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "gender": {
+            "type": "string",
+            "description": "性别",
+            "enum": ["UNKNOWN", "MALE", "FEMALE"]
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])"
+          },
+          "phoneNo": {
+            "type": "string",
+            "description": "手机号",
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "(?:0|86|\\+86)?1[3-9]\\d{9}"
+          },
+          "initPwd": {
+            "type": "string",
+            "description": "初始密码明文",
+            "maxLength": 20,
+            "minLength": 5
+          },
+          "deptId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属部门ID"
+          }
+        },
+        "required": [
+          "email",
+          "gender",
+          "initPwd",
+          "nickname",
+          "phoneNo",
+          "pin",
+          "requireNewPwdFlag"
+        ]
+      },
+      "AdminSysUserBindRoleRequest": {
+        "type": "object",
+        "properties": {
+          "roleIds": {
+            "type": "array",
+            "description": "角色IDs；如果为空则视为解除所有绑定",
+            "items": { "type": "integer", "format": "int64" },
+            "uniqueItems": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID"
+          }
+        },
+        "required": ["userId"]
+      },
+      "AdminSysUserBindDeptRequest": {
+        "type": "object",
+        "properties": {
+          "deptId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "部门ID；如果为空则视为解除部门绑定"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID"
+          }
+        },
+        "required": ["userId"]
+      },
+      "AdminSysRoleUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "code": {
+            "type": "string",
+            "description": "角色编码",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "name": {
+            "type": "string",
+            "description": "角色名称",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "description": {
+            "type": "string",
+            "description": "角色描述",
+            "maxLength": 255,
+            "minLength": 0
+          }
+        },
+        "required": ["code", "description", "name"]
+      },
+      "AdminSysRoleListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "name": { "type": "string", "description": "角色名称(关键词)" },
+          "code": { "type": "string", "description": "角色编码(关键词)" }
+        }
+      },
+      "ApiResultPageResultSysRoleDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysRoleDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysRoleDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysRoleDTO" }
+          }
+        }
+      },
+      "SysRoleDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "code": { "type": "string", "description": "角色编码" },
+          "name": { "type": "string", "description": "角色名称" },
+          "description": { "type": "string", "description": "角色描述" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "flags": {
+            "type": "array",
+            "description": "角色特殊标记",
+            "items": { "type": "string", "enum": ["BUILTIN"] }
+          },
+          "menuIds": {
+            "type": "array",
+            "description": "可见菜单Ids",
+            "items": { "type": "integer", "format": "int64" }
+          }
+        }
+      },
+      "ApiResultSysRoleDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysRoleDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminSysRoleBindMenuRequest": {
+        "type": "object",
+        "properties": {
+          "menuIds": {
+            "type": "array",
+            "description": "菜单IDs；如果为空则视为解除所有绑定",
+            "items": { "type": "integer", "format": "int64" },
+            "uniqueItems": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "角色ID"
+          }
+        },
+        "required": ["roleId"]
+      },
+      "AdminSysOperateLogListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "beginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间起"
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间止"
+          },
+          "bizType": { "type": "string", "description": "业务类型" },
+          "behavior": { "type": "string", "description": "行为" },
+          "bizNo": { "type": "string", "description": "业务号" },
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID"
+          },
+          "resultStatus": {
+            "type": "string",
+            "description": "结果状态",
+            "enum": ["SUCCESS", "FAILED"]
+          }
+        }
+      },
+      "ApiResultPageResultSysOperateLogDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysOperateLogDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysOperateLogDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysOperateLogDTO" }
+          }
+        }
+      },
+      "SysOperateLogDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "bizType": { "type": "string", "description": "业务类型" },
+          "behavior": { "type": "string", "description": "行为" },
+          "bizNo": { "type": "string", "description": "业务号" },
+          "operation": { "type": "string", "description": "操作内容" },
+          "bizExtra": { "type": "string", "description": "额外业务信息" },
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID"
+          },
+          "userTypeCode": { "type": "string", "description": "用户类型编码" },
+          "requestMethod": { "type": "string", "description": "HTTP请求方法" },
+          "requestPath": { "type": "string", "description": "HTTP请求路径" },
+          "visitorIp": { "type": "string", "description": "来源IP地址" },
+          "visitorUserAgent": { "type": "string", "description": "来源UA" },
+          "visitorIpLocation": {
+            "type": "string",
+            "description": "IP地址归属地"
+          },
+          "resultStatus": {
+            "type": "string",
+            "description": "结果状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "failedMsg": { "type": "string", "description": "失败原因文本" }
+        }
+      },
+      "ApiResultSysOperateLogDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysOperateLogDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "ApiResultListSysMenuDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "type": "array",
+            "description": "承载数据",
+            "items": { "$ref": "#/components/schemas/SysMenuDTO" }
+          }
+        }
+      },
+      "SysMenuDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "name": { "type": "string", "description": "名称" },
+          "parentId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "上级菜单ID(根菜单设置为0)"
+          },
+          "menuType": {
+            "type": "string",
+            "description": "菜单类型",
+            "enum": ["DIR", "MENU", "BUTTON", "EXTERNAL_LINK"]
+          },
+          "permission": { "type": "string", "description": "授权标识" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "icon": { "type": "string", "description": "图标" },
+          "sort": {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序"
+          },
+          "component": { "type": "string", "description": "前端组件名称" },
+          "externalLink": { "type": "string", "description": "外链地址" }
+        }
+      },
+      "AdminSysMenuUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "name": {
+            "type": "string",
+            "description": "菜单名称",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "上级菜单ID(根菜单设置为0)"
+          },
+          "menuType": {
+            "type": "string",
+            "description": "菜单类型",
+            "enum": ["DIR", "MENU", "BUTTON", "EXTERNAL_LINK"]
+          },
+          "component": {
+            "type": "string",
+            "description": "前端组件名称",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "permission": {
+            "type": "string",
+            "description": "授权标识",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "icon": {
+            "type": "string",
+            "description": "图标",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "sort": {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序"
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "externalLink": {
+            "type": "string",
+            "description": "外链地址",
+            "maxLength": 255,
+            "minLength": 0
+          }
+        },
+        "required": ["menuType", "name"]
+      },
+      "ApiResultSysMenuDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysMenuDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminSysLoginLogListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "userPin": { "type": "string", "description": "用户账号" },
+          "resultStatus": {
+            "type": "string",
+            "description": "结果状态",
+            "enum": ["SUCCESS", "FAILED"]
+          },
+          "beginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间起"
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间止"
+          }
+        }
+      },
+      "ApiResultPageResultSysLoginLogDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysLoginLogDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysLoginLogDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysLoginLogDTO" }
+          }
+        }
+      },
+      "SysLoginLogDTO": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "loginLogType": {
+            "type": "string",
+            "description": "登录日志类型",
+            "enum": ["PASSWORD_LOGIN", "LOGOUT"]
+          },
+          "userPin": { "type": "string", "description": "用户账号" },
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "用户ID"
+          },
+          "userTypeCode": { "type": "string", "description": "用户类型编码" },
+          "visitorIp": { "type": "string", "description": "来源IP地址" },
+          "visitorBrowser": {
+            "type": "string",
+            "description": "来源浏览器+版本"
+          },
+          "visitorOs": { "type": "string", "description": "来源操作系统+版本" },
+          "visitorIpLocation": {
+            "type": "string",
+            "description": "IP地址归属地"
+          },
+          "resultStatus": {
+            "type": "string",
+            "description": "结果状态",
+            "enum": ["SUCCESS", "FAILED"]
+          },
+          "failedMsg": { "type": "string", "description": "失败原因文本" }
+        }
+      },
+      "ApiResultSysLoginLogDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysLoginLogDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminSysDictItemUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属分类ID"
+          },
+          "code": {
+            "type": "string",
+            "description": "字典项编码",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "value": {
+            "type": "string",
+            "description": "字典项值",
+            "maxLength": 10000,
+            "minLength": 0
+          },
+          "label": {
+            "type": "string",
+            "description": "字典项标签",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "sort": {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序"
+          },
+          "description": {
+            "type": "string",
+            "description": "字典项描述",
+            "maxLength": 255,
+            "minLength": 0
+          }
+        },
+        "required": ["categoryId", "code", "label", "sort", "status", "value"]
+      },
+      "AdminSysDictItemListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属分类ID"
+          }
+        },
+        "required": ["categoryId"]
+      },
+      "ApiResultPageResultSysDictItemDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysDictItemDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysDictItemDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysDictItemDTO" }
+          }
+        }
+      },
+      "SysDictItemDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "所属分类ID"
+          },
+          "code": { "type": "string", "description": "字典项编码" },
+          "value": { "type": "string", "description": "字典项值" },
+          "label": { "type": "string", "description": "字典项标签" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "sort": {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序"
+          },
+          "description": { "type": "string", "description": "字典项描述" }
+        }
+      },
+      "AdminSysDictCategoryUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "code": {
+            "type": "string",
+            "description": "字典编码",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "name": {
+            "type": "string",
+            "description": "字典名称",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "description": {
+            "type": "string",
+            "description": "字典描述",
+            "maxLength": 255,
+            "minLength": 0
+          }
+        },
+        "required": ["code", "name", "status"]
+      },
+      "ApiResultPageResultSysDictCategoryDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysDictCategoryDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysDictCategoryDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysDictCategoryDTO" }
+          }
+        }
+      },
+      "SysDictCategoryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "code": { "type": "string", "description": "字典编码" },
+          "name": { "type": "string", "description": "字典名称" },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          },
+          "description": { "type": "string", "description": "字典描述" }
+        }
+      },
+      "ApiResultPageResultSysDictBuiltinDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultSysDictBuiltinDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "PageResultSysDictBuiltinDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/SysDictBuiltinDTO" }
+          }
+        }
+      },
+      "SysDictBuiltinDTO": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string", "description": "字典编码" },
+          "name": { "type": "string", "description": "字典名称" },
+          "description": { "type": "string", "description": "字典描述" },
+          "items": {
+            "type": "array",
+            "description": "字典项集合",
+            "items": { "$ref": "#/components/schemas/SysDictItemDTO" }
+          }
+        }
+      },
+      "AdminSysDeptUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "name": {
+            "type": "string",
+            "description": "部门名称",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "上级部门ID(根部门设置为0)"
+          },
+          "sort": {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序"
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        },
+        "required": ["name"]
+      },
+      "ApiResultListSysDeptDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "type": "array",
+            "description": "承载数据",
+            "items": { "$ref": "#/components/schemas/SysDeptDTO" }
+          }
+        }
+      },
+      "SysDeptDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "name": { "type": "string", "description": "部门名称" },
+          "parentId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "上级部门ID(根部门设置为0)"
+          },
+          "sort": {
+            "type": "integer",
+            "format": "int32",
+            "description": "排序"
+          },
+          "status": {
+            "type": "string",
+            "description": "状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        }
+      },
+      "ApiResultSysDeptDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysDeptDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminSelectOptionItemVO": {
+        "type": "object",
+        "properties": {
+          "id": { "description": "ID" },
+          "name": { "type": "string", "description": "名称" },
+          "parentId": { "description": "上级ID" },
+          "value": { "description": "值" },
+          "label": { "type": "string", "description": "标签" },
+          "dictItemCode": { "type": "string", "description": "字典项编码" }
+        }
+      },
+      "ApiResultListAdminSelectOptionItemVO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "type": "array",
+            "description": "承载数据",
+            "items": { "$ref": "#/components/schemas/AdminSelectOptionItemVO" }
+          }
+        }
+      },
+      "AdminFileStorageUpsertRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID",
+            "title": "仅修改时使用"
+          },
+          "code": {
+            "type": "string",
+            "description": "存储点编码",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "name": {
+            "type": "string",
+            "description": "存储点名称",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "platformType": {
+            "type": "string",
+            "description": "存储平台类型",
+            "enum": ["LOCAL", "AMAZON_S3", "AMAZON_S3_V2", "ALIYUN_OSS"]
+          },
+          "settingBody": {
+            "type": "object",
+            "additionalProperties": {},
+            "description": "配置属性"
+          },
+          "primaryFlag": {
+            "type": "string",
+            "description": "主存储点标识",
+            "enum": ["NO", "YES"]
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "platformType",
+          "primaryFlag",
+          "settingBody"
+        ]
+      },
+      "AdminFileStorageListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "beginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间起"
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间止"
+          },
+          "code": { "type": "string", "description": "存储点编码" },
+          "name": { "type": "string", "description": "存储点名称" },
+          "platformType": {
+            "type": "string",
+            "description": "存储平台类型",
+            "enum": ["LOCAL", "AMAZON_S3", "AMAZON_S3_V2", "ALIYUN_OSS"]
+          },
+          "primaryFlag": {
+            "type": "string",
+            "description": "主存储点标识",
+            "enum": ["NO", "YES"]
+          }
+        }
+      },
+      "ApiResultPageResultFileStorageDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultFileStorageDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "FileStorageDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "code": { "type": "string", "description": "存储点编码" },
+          "name": { "type": "string", "description": "存储点名称" },
+          "platformType": {
+            "type": "string",
+            "description": "存储平台类型",
+            "enum": ["LOCAL", "AMAZON_S3", "AMAZON_S3_V2", "ALIYUN_OSS"]
+          },
+          "settingBody": {
+            "$ref": "#/components/schemas/FileStorageSetting",
+            "description": "配置属性"
+          },
+          "primaryFlag": {
+            "type": "string",
+            "description": "主存储点标识",
+            "enum": ["NO", "YES"]
+          }
+        }
+      },
+      "FileStorageSetting": {},
+      "PageResultFileStorageDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/FileStorageDTO" }
+          }
+        }
+      },
+      "ApiResultFileStorageDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/FileStorageDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminFileMetaListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": {
+            "$ref": "#/components/schemas/PageParam",
+            "description": "分页查询参数"
+          },
+          "beginAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间起"
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "时间区间止"
+          },
+          "periodBetween": {
+            "type": "array",
+            "description": "时间区间起止",
+            "items": { "type": "string", "format": "date-time" },
+            "maxLength": 2
+          },
+          "storageId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "原始存储点ID"
+          },
+          "storageCode": { "type": "string", "description": "存储点编码" },
+          "storageFilename": { "type": "string", "description": "存储文件名" },
+          "originalFilename": { "type": "string", "description": "原始文件名" },
+          "extendName": { "type": "string", "description": "扩展名" },
+          "category": { "type": "string", "description": "文件主分类" }
+        }
+      },
+      "ApiResultPageResultFileMetaDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/PageResultFileMetaDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "FileMetaDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "主键ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建时刻"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新时刻"
+          },
+          "storageId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "原始存储点ID"
+          },
+          "storageCode": { "type": "string", "description": "存储点编码" },
+          "storageBasePath": {
+            "type": "string",
+            "description": "存储点主目录路径"
+          },
+          "subDirPath": { "type": "string", "description": "子目录路径" },
+          "storageFilename": { "type": "string", "description": "存储文件名" },
+          "originalFilename": { "type": "string", "description": "原始文件名" },
+          "extendName": { "type": "string", "description": "扩展名" },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64",
+            "description": "文件大小"
+          },
+          "digestSha256": { "type": "string", "description": "SHA256" },
+          "category": { "type": "string", "description": "文件主分类" },
+          "directUrl": { "type": "string", "description": "对象存储直链" },
+          "storageFilenameFull": { "type": "string" },
+          "originalFilenameFull": { "type": "string" }
+        }
+      },
+      "PageResultFileMetaDTO": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "当前页数量"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64",
+            "description": "总量"
+          },
+          "records": {
+            "type": "array",
+            "description": "记录",
+            "items": { "$ref": "#/components/schemas/FileMetaDTO" }
+          }
+        }
+      },
+      "ApiResultFileMetaDTO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/FileMetaDTO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "AdminAuthPasswordLoginRequest": {
+        "type": "object",
+        "properties": {
+          "pin": {
+            "type": "string",
+            "description": "账号",
+            "maxLength": 16,
+            "minLength": 5
+          },
+          "pwd": {
+            "type": "string",
+            "description": "密码",
+            "maxLength": 20,
+            "minLength": 5
+          },
+          "tenantCode": { "type": "string", "description": "租户编码" },
+          "captchaId": { "type": "string", "description": "验证码唯一标识" },
+          "captchaAnswer": { "type": "string", "description": "验证码答案" }
+        },
+        "required": ["pin", "pwd"]
+      },
+      "ApiResultSysUserLoginVO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/SysUserLoginVO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "SysUserLoginVO": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string", "description": "token值" },
+          "roles": {
+            "type": "array",
+            "description": "对应角色",
+            "items": { "type": "string" }
+          },
+          "permissions": {
+            "type": "array",
+            "description": "拥有权限",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "AdminAuthChallengeVO": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "description": "挑战类型" },
+          "captchaImageEncoded": {
+            "type": "string",
+            "description": "验证码图片Base64"
+          },
+          "captchaId": { "type": "string", "description": "验证码唯一标识" },
+          "expiredAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "验证码失效时刻"
+          }
+        }
+      },
+      "ApiResultAdminAuthChallengeVO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/AdminAuthChallengeVO",
+            "description": "承载数据"
+          }
+        }
+      },
+      "FileAttrExtraRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "文件主分类",
+            "example": "id_card=身份证 driver_license=驾驶证"
+          }
+        }
+      },
+      "ApiResultFileUploadResultVO": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": {
+            "$ref": "#/components/schemas/FileUploadResultVO",
+            "description": "承载数据"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AUTH_HEADER_NAME": {
+        "type": "http",
+        "description": "请输入 Bearer Token，格式：Bearer {token}",
+        "name": "Authorization",
+        "in": "header",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "x-nextdoc4j": { "version": "1.4.0" }
+}

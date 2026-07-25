@@ -54,7 +54,7 @@ export async function node(): Promise<Linter.Config[]> {
       },
     },
     {
-      files: ['apps/backend-mock/**/**', 'docs/**/**'],
+      files: ['docs/**/**'],
       rules: {
         'n/no-extraneous-import': 'off',
         'n/prefer-global/buffer': 'off',

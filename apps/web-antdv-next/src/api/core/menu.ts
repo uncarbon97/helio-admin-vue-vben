@@ -2,9 +2,106 @@ import type { RouteRecordStringComponent } from '@vben/types';
 
 import { requestClient } from '#/api/request';
 
+export namespace MenuApi {
+  export type MenuType = 'BUTTON' | 'DIR' | 'EXTERNAL_LINK' | 'MENU';
+
+  /** 后端 SysMenuDTO */
+  export interface SysMenuDTO {
+    component?: string;
+    externalLink?: string;
+    icon?: string;
+    id: number;
+    menuType: MenuType;
+    name: string;
+    parentId: number;
+    permission?: string;
+    sort?: number;
+    status?: 'DISABLED' | 'ENABLED';
+  }
+}
+
+/** 树构建过程中的临时节点，附带原菜单 id/parentId/排序用于组装树 */
+interface TreeNode extends RouteRecordStringComponent {
+  _id: number;
+  _parentId: number;
+  _sort: number;
+  children?: TreeNode[];
+}
+
 /**
- * 获取用户所有菜单
+ * 获取侧边菜单（后端权限模式），并将扁平 SysMenuDTO 列表转换为路由树
  */
 export async function getAllMenusApi() {
-  return requestClient.get<RouteRecordStringComponent[]>('/menu/all');
+  const list = await requestClient.post<MenuApi.SysMenuDTO[]>(
+    '/admin/v1/sys/menu/side',
+  );
+  return transformMenus(list ?? []);
+}
+
+/**
+ * 将后端菜单 DTO 转换为路由树
+ *
+ * 字段映射约定（如与真实数据不符，按实际后端字段调整）：
+ * - BUTTON 仅作权限标识，不生成路由
+ * - 路由 path 由 component 派生（后端 DTO 无独立 path 字段），外链使用 externalLink
+ * - component 为空时（多为目录）使用 BasicLayout 作为容器
+ * - 外链使用 IFrameView 承载
+ * - parentId=0 视为根节点
+ */
+function transformMenus(
+  list: MenuApi.SysMenuDTO[],
+): RouteRecordStringComponent[] {
+  const nodes: TreeNode[] = list
+    .filter((m) => m.menuType !== 'BUTTON')
+    .map((m) => {
+      const slug = m.component
+        ? m.component.replaceAll(/[\\/]+/g, '-').replaceAll(/^-+|-+$/g, '')
+        : `menu-${m.id}`;
+      return {
+        _id: m.id,
+        _parentId: m.parentId ?? 0,
+        _sort: m.sort ?? 0,
+        component:
+          m.menuType === 'EXTERNAL_LINK'
+            ? 'IFrameView'
+            : m.component || 'BasicLayout',
+        meta: {
+          hideInMenu: m.status === 'DISABLED',
+          icon: m.icon,
+          link: m.externalLink,
+          order: m.sort ?? 0,
+          title: m.name,
+        },
+        name: slug,
+        path: m.externalLink || `/${(m.component || slug).replace(/^\/+/, '')}`,
+      };
+    });
+
+  const nodeMap = new Map<number, TreeNode>();
+  nodes.forEach((node) => nodeMap.set(node._id, node));
+
+  const roots: TreeNode[] = [];
+  nodes.forEach((node) => {
+    const parent = nodeMap.get(node._parentId);
+    if (parent) {
+      parent.children = parent.children ?? [];
+      parent.children.push(node);
+    } else {
+      roots.push(node);
+    }
+  });
+
+  const toRoutes = (items: TreeNode[]): RouteRecordStringComponent[] =>
+    items
+      .toSorted((a, b) => a._sort - b._sort)
+      .map(({ _id, _parentId, _sort, ...rest }) => {
+        const { children, ...route } = rest;
+        const result = route as RouteRecordStringComponent;
+        if (children?.length) {
+          result.children = toRoutes(children);
+        }
+        return result;
+      });
+
+  return toRoutes(roots);
 }

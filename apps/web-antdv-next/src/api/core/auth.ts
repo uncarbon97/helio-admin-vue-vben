@@ -3,18 +3,26 @@ import { baseRequestClient, requestClient } from '#/api/request';
 export namespace AuthApi {
   /** 登录接口参数 */
   export interface LoginParams {
-    password?: string;
-    username?: string;
+    /** 账号 */
+    pin: string;
+    /** 密码 */
+    pwd: string;
+    /** 租户编码 */
+    tenantCode?: string;
+    /** 验证码唯一标识 */
+    captchaId?: string;
+    /** 验证码答案 */
+    captchaAnswer?: string;
   }
 
   /** 登录接口返回值 */
   export interface LoginResult {
-    accessToken: string;
-  }
-
-  export interface RefreshTokenResult {
-    data: string;
-    status: number;
+    /** token值 */
+    token: string;
+    /** 对应角色 */
+    roles?: string[];
+    /** 拥有权限 */
+    permissions?: string[];
   }
 }
 
@@ -22,30 +30,15 @@ export namespace AuthApi {
  * 登录
  */
 export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/auth/login', data);
-}
-
-/**
- * 刷新accessToken
- */
-export async function refreshTokenApi() {
-  return baseRequestClient.post<AuthApi.RefreshTokenResult>('/auth/refresh', {
-    withCredentials: true,
-  });
+  return requestClient.post<AuthApi.LoginResult>(
+    '/admin/v1/auth/password-login',
+    data,
+  );
 }
 
 /**
  * 退出登录
  */
 export async function logoutApi() {
-  return baseRequestClient.post('/auth/logout', {
-    withCredentials: true,
-  });
-}
-
-/**
- * 获取用户权限码
- */
-export async function getAccessCodesApi() {
-  return requestClient.get<string[]>('/auth/codes');
+  return baseRequestClient.post('/admin/v1/auth/logout');
 }

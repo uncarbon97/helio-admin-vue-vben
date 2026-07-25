@@ -10,7 +10,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { getUserInfoApi, loginApi, logoutApi } from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -33,22 +33,31 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
+      const {
+        token,
+        roles = [],
+        permissions = [],
+      } = await loginApi({
+        captchaAnswer: params.captchaAnswer,
+        captchaId: params.captchaId,
+        pin: params.pin ?? params.username,
+        pwd: params.pwd ?? params.password,
+        tenantCode: params.tenantCode,
+      });
 
-      // 如果成功获取到 accessToken
-      if (accessToken) {
-        accessStore.setAccessToken(accessToken);
+      // 如果成功获取到 token
+      if (token) {
+        accessStore.setAccessToken(token);
+        accessStore.setAccessCodes(permissions);
+        userStore.setUserRoles(roles);
 
-        // 获取用户信息并存储到 accessStore 中
-        const [fetchUserInfoResult, accessCodes] = await Promise.all([
-          fetchUserInfo(),
-          getAccessCodesApi(),
-        ]);
-
-        userInfo = fetchUserInfoResult;
-
-        userStore.setUserInfo(userInfo);
-        accessStore.setAccessCodes(accessCodes);
+        // 拉取用户资料，失败不阻塞登录
+        try {
+          userInfo = await fetchUserInfo();
+          userStore.setUserRoles(roles);
+        } catch {
+          userInfo = null;
+        }
 
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);
@@ -56,7 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
           onSuccess
             ? await onSuccess?.()
             : await router.push(
-                userInfo.homePath || preferences.app.defaultHomePath,
+                userInfo?.homePath || preferences.app.defaultHomePath,
               );
         }
 
