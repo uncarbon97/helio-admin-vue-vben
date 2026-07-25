@@ -82,6 +82,7 @@ async function loadAndConvertEnv(
     VITE_COMPRESS,
     VITE_DEVTOOLS,
     VITE_INJECT_APP_LOADING,
+    // adapt to helium: 已移除 VITE_NITRO_MOCK 读取与返回的 nitroMock 字段（mock 服务废弃）
     VITE_PORT,
     VITE_PWA,
     VITE_VISUALIZER,

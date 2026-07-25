@@ -1,5 +1,6 @@
 import { baseRequestClient, requestClient } from '#/api/request';
 
+// adapt to helium: 登录/登出对接自研后端（POST /admin/v1/auth/password-login、/admin/v1/auth/logout）；入参改 pin/pwd（+tenantCode/captcha），返回 token/roles/permissions；移除 refreshTokenApi、getAccessCodesApi
 export namespace AuthApi {
   /** 登录接口参数 */
   export interface LoginParams {

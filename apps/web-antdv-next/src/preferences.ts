@@ -10,11 +10,13 @@ import {
  */
 export const overridesPreferences = defineOverridesPreferences({
   // overrides
+  // adapt to helium: 默认权限模式改 backend（菜单/权限取自后端）
   app: {
     accessMode: 'backend',
     name: import.meta.env.VITE_APP_TITLE,
   },
   copyright: appCopyrightPreferences,
+  // adapt to helium: 默认主题改 light
   theme: {
     mode: 'light',
   },

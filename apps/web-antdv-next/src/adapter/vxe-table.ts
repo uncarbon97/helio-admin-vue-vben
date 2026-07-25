@@ -50,7 +50,7 @@ setupVbenVxeTable({
     });
 
     /**
-     * 解决vxeTable在热更新时可能会出错的问题
+     * adapt to helium: 解决 vxeTable 热更新时自定义渲染器重复注册报错（清理已注册的 Cell* 渲染器）
      */
     vxeUI.renderer.forEach((_item, key) => {
       if (key.startsWith('Cell')) {
@@ -79,7 +79,7 @@ setupVbenVxeTable({
       },
     });
 
-    // 单元格渲染： Tag
+    // adapt to helium: 新增 CellTag 单元格渲染器（启用/禁用等状态标签）
     vxeUI.renderer.add('CellTag', {
       renderTableDefault({ options, props }, { column, row }) {
         const value = get(row, column.field);
@@ -100,7 +100,7 @@ setupVbenVxeTable({
     });
 
     /**
-     * 注册表格的操作按钮渲染器
+     * adapt to helium: 新增 CellOperation 操作列渲染器（编辑/详情/删除 + Popconfirm 二次确认）
      */
     vxeUI.renderer.add('CellOperation', {
       renderTableDefault({ attrs, options, props }, { column, row }) {
@@ -269,7 +269,7 @@ export const useVbenVxeGrid = <
   );
 
 /**
- * 表格操作按钮点击事件回调参数
+ * adapt to helium: 表格操作按钮点击事件回调类型（配合 CellOperation）
  */
 export type OnActionClickParams<T = Recordable<any>> = {
   code: string;

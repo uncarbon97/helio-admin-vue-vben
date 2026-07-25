@@ -25,6 +25,7 @@ import { viteImportMapPlugin } from './importmap';
 import { viteInjectAppLoadingPlugin } from './inject-app-loading';
 import { viteMetadataPlugin } from './inject-metadata';
 import { viteLicensePlugin } from './license';
+// adapt to helium: 移除 viteNitroMockPlugin 的 import / 选项字段 / 条件加载块（mock 服务废弃）
 import { vitePrintPlugin } from './print';
 import { viteTailwindReferencePlugin } from './tailwind-reference';
 import { viteVxeTableImportsPlugin } from './vxe-table';

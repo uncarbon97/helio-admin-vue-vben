@@ -40,6 +40,7 @@ function defineApplicationConfig(userConfigPromise?: DefineApplicationOptions) {
       isBuild,
       license: true,
       mode,
+      // adapt to helium: 已移除 nitroMock / nitroMockOptions（mock 服务废弃）
       print: !isBuild,
       printInfoMap: {
         'Vben Admin Docs': 'https://doc.vben.pro',

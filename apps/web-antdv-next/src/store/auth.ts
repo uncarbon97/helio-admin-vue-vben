@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
+      // adapt to helium: 消费后端登录返回的 token/roles/permissions，分别写入 accessStore 与 userStore；用户资料拉取改为容错（失败不阻塞登录）
       const {
         token,
         roles = [],

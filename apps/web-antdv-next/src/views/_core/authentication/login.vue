@@ -12,6 +12,7 @@ defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
+// adapt to helium: 移除上游 mock 账号下拉选择器（MOCK_USER_OPTIONS）及其自动填充逻辑，仅保留账号/密码表单
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {

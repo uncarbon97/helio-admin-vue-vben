@@ -30,6 +30,7 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    // adapt to helium: 移除 @vben/backend-mock#build 任务（mock 工程已删除）
     "test:e2e": {},
     "dev": {
       "dependsOn": [],

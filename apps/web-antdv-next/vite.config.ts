@@ -9,7 +9,7 @@ export default defineConfig(async () => {
           '/api': {
             changeOrigin: true,
             rewrite: (path) => path.replace(/^\/api/, ''),
-            // 后端接口地址
+            // adapt to helium: 开发代理指向自研后端（原 mock 为 http://localhost:5320/api）
             target: 'http://127.0.0.1:7003',
             ws: true,
           },

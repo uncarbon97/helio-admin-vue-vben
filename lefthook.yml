@@ -69,7 +69,8 @@ post-merge:
     install:
       run: pnpm install
 
-commit-msg:
-  commands:
-    commitlint:
-      run: pnpm exec commitlint --edit $1
+# adapt to helium: 已禁用 commit-msg 的 commitlint 校验（不再强制 conventional commit 格式）
+# commit-msg:
+#   commands:
+#     commitlint:
+#       run: pnpm exec commitlint --edit $1

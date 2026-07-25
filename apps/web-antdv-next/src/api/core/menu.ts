@@ -2,6 +2,7 @@ import type { RouteRecordStringComponent } from '@vben/types';
 
 import { requestClient } from '#/api/request';
 
+// adapt to helium: 菜单对接自研后端（后端权限模式），GET /menu/all 改为 POST /admin/v1/sys/menu/side，并新增 transformMenus 将扁平 SysMenuDTO 转为路由树
 export namespace MenuApi {
   export type MenuType = 'BUTTON' | 'DIR' | 'EXTERNAL_LINK' | 'MENU';
 
