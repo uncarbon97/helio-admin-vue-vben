@@ -1458,6 +1458,9 @@ importers:
       '@vben-core/tabs-ui':
         specifier: workspace:*
         version: link:../../@core/ui-kit/tabs-ui
+      '@vben-core/typings':
+        specifier: workspace:*
+        version: link:../../@core/base/typings
       '@vben/constants':
         specifier: workspace:*
         version: link:../../constants
