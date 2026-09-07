@@ -32,7 +32,7 @@ export namespace AuthApi {
  */
 export async function loginApi(data: AuthApi.LoginParams) {
   return requestClient.post<AuthApi.LoginResult>(
-    '/admin/v1/auth/password-login',
+    '/v1/auth/password-login',
     data,
   );
 }
@@ -41,5 +41,5 @@ export async function loginApi(data: AuthApi.LoginParams) {
  * 退出登录
  */
 export async function logoutApi() {
-  return baseRequestClient.post('/admin/v1/auth/logout');
+  return baseRequestClient.post('/v1/auth/logout');
 }

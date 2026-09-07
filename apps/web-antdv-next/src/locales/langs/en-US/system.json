@@ -1,0 +1,18 @@
+{
+  "role": {
+    "title": "Role Management",
+    "list": "Role List",
+    "name": "Role",
+    "roleName": "Role Name",
+    "roleCode": "Role Code",
+    "description": "Role Description",
+    "id": "Role ID",
+    "status": "Status",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "setPermissions": "Permissions",
+    "bindMenu": "Bind Menu",
+    "bindMenuTitle": "Bind Menu",
+    "confirmBindMenu": "Created successfully. Bind menus to this role now?"
+  }
+}

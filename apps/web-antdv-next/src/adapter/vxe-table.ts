@@ -36,9 +36,10 @@ setupVbenVxeTable({
         proxyConfig: {
           autoLoad: true,
           response: {
-            result: 'items',
+            // adapt to helium: 分页结果字段对齐后端 PageResult
+            result: 'records',
             total: 'total',
-            list: 'items',
+            list: 'records',
           },
           showActiveMsg: true,
           showResponseMsg: false,

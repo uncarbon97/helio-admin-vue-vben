@@ -33,9 +33,8 @@ interface TreeNode extends RouteRecordStringComponent {
  * 获取侧边菜单（后端权限模式），并将扁平 SysMenuDTO 列表转换为路由树
  */
 export async function getAllMenusApi() {
-  const list = await requestClient.post<MenuApi.SysMenuDTO[]>(
-    '/admin/v1/sys/menu/side',
-  );
+  const list =
+    await requestClient.post<MenuApi.SysMenuDTO[]>('/v1/sys/menu/side');
   return transformMenus(list ?? []);
 }
 

@@ -36,6 +36,9 @@
 - `apps/web-antdv-next/src/router/routes/modules/dashboard.ts` — `/dashboard` 加 `redirect: '/dashboard/workbench'`；新增极简首页 `Workbench` 子路由（首位、`affixTab`、`order:1`）；移除 `Analytics` 的 `affixTab`
 - `apps/web-antdv-next/src/locales/langs/zh-CN/page.json` — `page.dashboard.workbench.*` 中性文案（问候/引导/版本）
 - `apps/web-antdv-next/src/locales/langs/en-US/page.json` — 对应英文文案
+- `apps/web-antdv-next/src/api/core/auth.ts`、`user.ts`、`menu.ts` — 接口路径去掉重复的 `/admin` 前缀（baseURL `VITE_GLOB_API_URL` 已含 `/admin`，axios 拼接原会双前缀 `/admin/admin/v1/...`）
+- `apps/web-antdv-next/src/adapter/vxe-table.ts` — proxyConfig 分页结果字段 `items` → `records`（对齐后端 `PageResult`）
+- `apps/web-antdv-next/src/api/index.ts` — 新增 `export * from './system'`
 
 > 修改的文件中，相对源项目改动的位置会在上方添加注释 `// adapt to helium: <说明>`（配置文件用对应注释语法），方便与上游比较。
 
@@ -44,6 +47,10 @@
 - `swagger.json` — 后端 OpenAPI 定义，作为前端对接依据（非构建产物）
 - `CHANGED.MD` — 本变更说明
 - `apps/web-antdv-next/src/views/dashboard/workbench/index.vue` — 极简首页（问候+引导+版本，无 mock 数据），作为登录后默认落地页
+- `apps/web-antdv-next/src/api/system/role.ts` — 角色管理接口（`/v1/sys/role/*`：list/detail/create/update/delete/bind-menu，`pageParam` 嵌套分页，`PageResult` 返回）
+- `apps/web-antdv-next/src/api/system/menu.ts` — `getVisibleMenuList`（`/v1/sys/menu/visible`）+ `buildMenuTree`（扁平 `SysMenuDTO` 建 `parentId` 树）
+- `apps/web-antdv-next/src/views/system/role/` — 角色管理页面（自 playground 搬运）：`list.vue`（vxe 表格分页/搜索/删除）、`data.ts`（表单/列配置）、`modules/form.vue`（新增/编辑抽屉，编辑含授权树，保存走 update+bind-menu）、`modules/bind-menu.vue`（独立绑定菜单抽屉，新增成功后经确认弹窗打开）
+- `apps/web-antdv-next/src/locales/langs/zh-CN/system.json`、`en-US/system.json` — `system.role.*` 文案
 
 ### 删除包依赖
 
@@ -53,4 +60,6 @@
 > - 默认值变更（主题/权限模式）需清除浏览器 localStorage 缓存后才对已登录环境生效。
 > - `SysMenuDTO` 无独立 `path` 字段，当前由 `component` 派生 `path`、以 slug 作路由 `name`；若与真实数据不符，调整 `transformMenus` 字段映射即可。
 > - `playground/` 演示工程仍保留 mock 风格接口与指向 `localhost:5320` 的代理，未纳入本次真实后端改造。
+> - 角色管理「新增后绑定菜单」依赖后端 create 接口返回新记录 ID（后端改造中）；改造完成前新增成功不弹绑定引导。
+> - 角色页面路由由后端菜单下发（backend 权限模式），需后端菜单表存在 `component: /system/role/list` 的菜单记录。
 > - 更早的提交（`b0a9367f8` 清理不需要的文件、`2af53c1b6` 删除除 `web-antdv-next` 外的子工程）已先行精简仓库，此处不再展开。

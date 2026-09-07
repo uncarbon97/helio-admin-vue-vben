@@ -22,7 +22,7 @@ interface MyProfileDTO {
  */
 export async function getUserInfoApi() {
   const profile = await requestClient.post<MyProfileDTO>(
-    '/admin/v1/ucenter/profile/get',
+    '/v1/ucenter/profile/get',
   );
   return {
     avatar: profile.avatarUrl || preferences.app.defaultAvatar,
