@@ -2,8 +2,11 @@ import type { RouteRecordRaw } from 'vue-router';
 
 import { $t } from '#/locales';
 
+// adapt to helium: 固定注册 dashboard，不依赖后端菜单（backend 权限模式下 modules/ 目录不注册）
 const routes: RouteRecordRaw[] = [
   {
+    // 独立注册于 Root 之外，需自带布局容器
+    component: () => import('#/layouts/basic.vue'),
     meta: {
       icon: 'lucide:layout-dashboard',
       order: -1,
@@ -19,7 +22,7 @@ const routes: RouteRecordRaw[] = [
         path: 'workbench',
         component: () => import('#/views/dashboard/workbench/index.vue'),
         meta: {
-          affixTab: true,
+          affixTab: false,
           icon: 'lucide:layout-dashboard',
           order: 1,
           title: $t('page.dashboard.workbench.title'),

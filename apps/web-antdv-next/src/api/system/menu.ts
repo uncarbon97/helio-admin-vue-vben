@@ -1,5 +1,3 @@
-// adapt to helium: 对接自研后端菜单接口（POST /admin/v1/sys/menu/visible，见根目录 swagger.json）
-// baseURL 已含 /admin（VITE_GLOB_API_URL），此处路径以 /v1 开头
 import type { MenuApi } from '#/api';
 
 import { requestClient } from '#/api/request';

@@ -29,24 +29,24 @@ export namespace SystemRoleApi {
     /** 角色描述 */
     description: string;
     /** 主键ID（新增时不传） */
-    id?: number;
+    id?: string;
     /** 角色名称 */
     name: string;
   }
 
   /** 后端 SysRoleDTO */
   export interface SysRole {
+    id: string;
     createdAt: string;
+    updatedAt: string;
     code: string;
     description: string;
     /** 角色特殊标记 */
     flags: string[];
-    id: number;
     /** 可见菜单Ids */
     menuIds: number[];
     name: string;
     status: RoleStatus;
-    updatedAt: string;
   }
 
   /** 后端 PageResult */
@@ -76,7 +76,7 @@ async function getRoleList(data: SystemRoleApi.ListQuery) {
  * 角色详情
  * @param id 角色ID
  */
-async function getRoleDetail(id: number) {
+async function getRoleDetail(id: string) {
   return requestClient.post<SystemRoleApi.SysRole>('/v1/sys/role/detail', {
     id,
   });
@@ -88,7 +88,7 @@ async function getRoleDetail(id: number) {
  * @returns 新角色ID
  */
 async function createRole(data: SystemRoleApi.UpsertRequest) {
-  return requestClient.post<number>('/v1/sys/role/create', data);
+  return requestClient.post<string>('/v1/sys/role/create', data);
 }
 
 /**
@@ -103,7 +103,7 @@ async function updateRole(data: SystemRoleApi.UpsertRequest) {
  * 删除角色
  * @param id 角色ID
  */
-async function deleteRole(id: number) {
+async function deleteRole(id: string) {
   return requestClient.post('/v1/sys/role/delete', { id });
 }
 
@@ -112,7 +112,7 @@ async function deleteRole(id: number) {
  * @param roleId 角色ID
  * @param menuIds 菜单IDs；为空则解除所有绑定
  */
-async function bindRoleMenu(roleId: number, menuIds: number[]) {
+async function bindRoleMenu(roleId: string, menuIds: string[]) {
   return requestClient.post('/v1/sys/role/bind-menu', { menuIds, roleId });
 }
 

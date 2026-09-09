@@ -1,13 +1,14 @@
 {
   "role": {
     "title": "角色管理",
-    "list": "角色列表",
     "name": "角色",
     "roleName": "角色名称",
     "roleCode": "角色编码",
     "description": "角色描述",
     "id": "角色ID",
     "status": "状态",
+    "flags": "标识",
+    "flagBuiltin": "内置",
     "createTime": "创建时间",
     "operation": "操作",
     "setPermissions": "授权",

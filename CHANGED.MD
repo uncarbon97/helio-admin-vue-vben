@@ -23,7 +23,7 @@
 - `apps/web-antdv-next/src/store/auth.ts` — 登录流程改为消费后端返回的 `token/roles/permissions`，用户资料拉取容错
 - `apps/web-antdv-next/src/views/_core/authentication/login.vue` — 移除上游 mock 账号下拉选择器（`MOCK_USER_OPTIONS`）及其自动填充逻辑
 - `apps/web-antdv-next/src/preferences.ts` — 默认权限模式 `frontend` → `backend`，默认主题 `dark` → `light`
-- `apps/web-antdv-next/src/adapter/vxe-table.ts` — 新增 `CellTag` / `CellOperation` 单元格渲染器、操作按钮回调类型，及热更新渲染器清理
+- `apps/web-antdv-next/src/adapter/vxe-table.ts` — 新增 `CellTag` / `CellOperation` 单元格渲染器、操作按钮回调类型，及热更新渲染器清理；表格全局 `size` `small` → `medium`（字号加大一档，对老年用户更友好）
 - `internal/vite-config/src/config/application.ts` — 移除 `nitroMock` / `nitroMockOptions` 选项
 - `internal/vite-config/src/plugins/index.ts` — 移除 `viteNitroMockPlugin` 的 import / 选项 / 条件加载块
 - `internal/vite-config/src/typing.ts` — 移除 `NitroMockPluginOptions` 类型与选项字段
@@ -33,7 +33,9 @@
 - `turbo.json` — 移除 `@vben/backend-mock#build` 任务
 - `lefthook.yml` — 禁用 `commit-msg` 的 commitlint 校验（不再强制 conventional commit）
 - `pnpm-lock.yaml` — 重建（移除 mock 相关依赖）
-- `apps/web-antdv-next/src/router/routes/modules/dashboard.ts` — `/dashboard` 加 `redirect: '/dashboard/workbench'`；新增极简首页 `Workbench` 子路由（首位、`affixTab`、`order:1`）；移除 `Analytics` 的 `affixTab`
+- `apps/web-antdv-next/src/router/routes/modules/dashboard.ts` — `/dashboard` 加 `redirect: '/dashboard/workbench'`；新增极简首页 `Workbench` 子路由（首位、`affixTab`、`order:1`）；移除 `Analytics` 的 `affixTab`（后移至 `fixed/dashboard.ts`，见下）
+- `apps/web-antdv-next/src/router/routes/index.ts` — 新增 `fixed/` 固定路由目录：glob 合并后直接并入初始 `routes` 数组，始终注册、不受权限模式影响（backend 模式下 `modules/` 不注册导致 `/dashboard` 404）
+- `apps/web-antdv-next/src/router/guard.ts` — backend 模式菜单只来自后端，前端在侧边栏顶部注入固定「首页」入口（`/dashboard/workbench`，`order: -1`）
 - `apps/web-antdv-next/src/locales/langs/zh-CN/page.json` — `page.dashboard.workbench.*` 中性文案（问候/引导/版本）
 - `apps/web-antdv-next/src/locales/langs/en-US/page.json` — 对应英文文案
 - `apps/web-antdv-next/src/api/core/auth.ts`、`user.ts`、`menu.ts` — 接口路径去掉重复的 `/admin` 前缀（baseURL `VITE_GLOB_API_URL` 已含 `/admin`，axios 拼接原会双前缀 `/admin/admin/v1/...`）
@@ -44,6 +46,7 @@
 
 ### 增加文件
 
+- `apps/web-antdv-next/src/router/routes/fixed/dashboard.ts` — 原 `modules/dashboard.ts` 移入固定路由目录，顶层加 `BasicLayout` 容器；backend 权限模式下始终注册，修复 `/dashboard` 404
 - `swagger.json` — 后端 OpenAPI 定义，作为前端对接依据（非构建产物）
 - `CHANGED.MD` — 本变更说明
 - `apps/web-antdv-next/src/views/dashboard/workbench/index.vue` — 极简首页（问候+引导+版本，无 mock 数据），作为登录后默认落地页

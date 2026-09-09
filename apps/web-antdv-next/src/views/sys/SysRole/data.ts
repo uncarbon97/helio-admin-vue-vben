@@ -2,8 +2,6 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SystemRoleApi } from '#/api';
 
-import dayjs from 'dayjs';
-
 import { $t } from '#/locales';
 
 export function useFormSchema(): VbenFormSchema[] {
@@ -72,11 +70,10 @@ export function useColumns<T = SystemRoleApi.SysRole>(
     },
     {
       cellRender: {
-        // adapt to helium: 状态为 ENABLED/DISABLED 字符串枚举，仅展示不提供切换（后端无切换接口）
         name: 'CellTag',
         options: [
-          { color: 'success', label: $t('common.enabled'), value: 'ENABLED' },
-          { color: 'error', label: $t('common.disabled'), value: 'DISABLED' },
+          { color: 'success', label: $t('common.enabled'), value: 1 },
+          { color: 'error', label: $t('common.disabled'), value: 0 },
         ],
       },
       field: 'status',
@@ -84,9 +81,18 @@ export function useColumns<T = SystemRoleApi.SysRole>(
       width: 100,
     },
     {
+      cellRender: {
+        name: 'CellTag',
+        options: [
+          { color: 'warning', label: $t('system.role.flagBuiltin'), value: 'builtin' },
+        ],
+      },
+      field: 'flags',
+      title: $t('system.role.flags'),
+      width: 100,
+    },
+    {
       field: 'createdAt',
-      formatter: ({ cellValue }) =>
-        cellValue ? dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss') : '',
       title: $t('system.role.createTime'),
       width: 200,
     },

@@ -31,7 +31,7 @@ const [BindMenuDrawer, bindMenuDrawerApi] = useVbenDrawer({
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
-    submitOnChange: true,
+    submitOnChange: false,
   },
   gridOptions: {
     columns: useColumns(onActionClick),
@@ -107,7 +107,7 @@ function onDelete(row: SystemRoleApi.SysRole) {
  * adapt to helium: 新增成功后刷新列表，并询问是否立即为该角色绑定菜单
  * @param newId 新角色ID（依赖后端 create 返回新记录ID）
  */
-function onCreated(newId: number) {
+function onCreated(newId: string) {
   onRefresh();
   if (!newId) return;
   Modal.confirm({
@@ -131,7 +131,7 @@ function onCreate() {
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" @created="onCreated" />
     <BindMenuDrawer @success="onRefresh" />
-    <Grid :table-title="$t('system.role.list')">
+    <Grid>
       <template #toolbar-tools>
         <Button type="primary" @click="onCreate">
           <Plus class="size-5" />

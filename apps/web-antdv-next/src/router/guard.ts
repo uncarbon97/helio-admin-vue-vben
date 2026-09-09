@@ -104,7 +104,14 @@ function setupAccessGuard(router: Router) {
     });
 
     // 保存菜单信息和路由信息
-    accessStore.setAccessMenus(accessibleMenus);
+    // adapt to helium: 侧边栏顶部固定「首页」入口（backend 模式菜单只来自后端，需前端注入）
+    const HOME_MENU = {
+      icon: 'lucide:layout-dashboard',
+      name: '首页',
+      order: -1,
+      path: '/dashboard/workbench',
+    };
+    accessStore.setAccessMenus([HOME_MENU, ...accessibleMenus]);
     accessStore.setAccessRoutes(accessibleRoutes);
     accessStore.setIsAccessChecked(true);
     const redirectPath = (from.query.redirect ??

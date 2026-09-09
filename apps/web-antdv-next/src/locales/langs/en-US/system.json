@@ -1,13 +1,14 @@
 {
   "role": {
     "title": "Role Management",
-    "list": "Role List",
     "name": "Role",
     "roleName": "Role Name",
     "roleCode": "Role Code",
     "description": "Role Description",
     "id": "Role ID",
     "status": "Status",
+    "flags": "Flags",
+    "flagBuiltin": "Builtin",
     "createTime": "Creation Time",
     "operation": "Operation",
     "setPermissions": "Permissions",

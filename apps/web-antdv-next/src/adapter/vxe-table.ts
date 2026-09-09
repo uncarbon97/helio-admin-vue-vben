@@ -46,7 +46,8 @@ setupVbenVxeTable({
         },
         round: true,
         showOverflow: true,
-        size: 'small',
+        // adapt to helium: 表格字号加大
+        size: 'medium',
       } as VxeTableGridOptions,
     });
 
@@ -89,6 +90,22 @@ setupVbenVxeTable({
           { color: 'error', label: $t('common.disabled'), value: 0 },
         ];
         const tagItem = tagOptions.find((item) => item.value === value);
+        // adapt to helium: 值为数组时（如 flags），逐个匹配渲染多个标签
+        if (Array.isArray(value)) {
+          return value.map((item) => {
+            const matched = tagOptions.find(
+              (option) => option.value === item,
+            );
+            return h(
+              Tag,
+              {
+                ...props,
+                ...objectOmit(matched ?? {}, ['label']),
+              },
+              { default: () => matched?.label ?? item },
+            );
+          });
+        }
         return h(
           Tag,
           {
