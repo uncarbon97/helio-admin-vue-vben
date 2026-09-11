@@ -30,14 +30,15 @@ const [Form, formApi] = useVbenForm({
 const permissions = ref<MenuTreeNode[]>([]);
 const loadingPermissions = ref(false);
 
-const id = ref<number>();
+const id = ref<string>();
 const [Drawer, drawerApi] = useVbenDrawer<null | SystemRoleApi.SysRole>({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
-    if (id.value) {
+    const idVal = id.value;
+    if (idVal) {
       // 编辑：先保存基础信息，再同步菜单绑定
       updateRole({
         code: values.code,
@@ -45,7 +46,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SystemRoleApi.SysRole>({
         id: id.value,
         name: values.name,
       })
-        .then(() => bindRoleMenu(id.value!, values.permissions ?? []))
+        .then(() => bindRoleMenu(idVal, values.permissions ?? []))
         .then(() => {
           emits('success');
           drawerApi.close();
@@ -117,9 +118,7 @@ async function loadPermissions() {
 }
 
 const getDrawerTitle = computed(() => {
-  return formData.value?.id
-    ? $t('common.edit', [$t('system.role.name')])
-    : $t('common.create', [$t('system.role.name')]);
+  return formData.value?.id ? $t('common.edit') : $t('common.create');
 });
 
 function getNodeClass(node: Recordable<any>) {

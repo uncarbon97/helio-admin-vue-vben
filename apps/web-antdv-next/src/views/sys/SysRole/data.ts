@@ -4,36 +4,9 @@ import type { SystemRoleApi } from '#/api';
 
 import { $t } from '#/locales';
 
-export function useFormSchema(): VbenFormSchema[] {
-  return [
-    {
-      component: 'Input',
-      fieldName: 'name',
-      label: $t('system.role.roleName'),
-      rules: 'required',
-    },
-    {
-      component: 'Input',
-      fieldName: 'code',
-      label: $t('system.role.roleCode'),
-      rules: 'required',
-    },
-    {
-      component: 'Textarea',
-      fieldName: 'description',
-      label: $t('system.role.description'),
-      rules: 'required',
-    },
-    {
-      component: 'Input',
-      fieldName: 'permissions',
-      formItemClass: 'items-start',
-      label: $t('system.role.setPermissions'),
-      modelPropName: 'modelValue',
-    },
-  ];
-}
-
+/**
+ * 上方查询条件
+ */
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
@@ -49,6 +22,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
   ];
 }
 
+/**
+ * 表格列
+ * @param onActionClick
+ * @returns
+ */
 export function useColumns<T = SystemRoleApi.SysRole>(
   onActionClick: OnActionClickFn<T>,
 ): VxeTableGridColumns {
@@ -84,7 +62,11 @@ export function useColumns<T = SystemRoleApi.SysRole>(
       cellRender: {
         name: 'CellTag',
         options: [
-          { color: 'warning', label: $t('system.role.flagBuiltin'), value: 'builtin' },
+          {
+            color: 'warning',
+            label: $t('system.role.flagBuiltin'),
+            value: 'builtin',
+          },
         ],
       },
       field: 'flags',
@@ -111,6 +93,38 @@ export function useColumns<T = SystemRoleApi.SysRole>(
       fixed: 'right',
       title: $t('system.role.operation'),
       width: 130,
+    },
+  ];
+}
+
+/**
+ * 新增/修改表单
+ */
+export function useFormSchema(): VbenFormSchema[] {
+  return [
+    {
+      component: 'Input',
+      fieldName: 'name',
+      label: $t('system.role.roleName'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      fieldName: 'code',
+      label: $t('system.role.roleCode'),
+      rules: 'required',
+    },
+    {
+      component: 'Textarea',
+      fieldName: 'description',
+      label: $t('system.role.description'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'permissions',
+      formItemClass: 'items-start',
+      label: $t('system.role.setPermissions'),
+      modelPropName: 'modelValue',
     },
   ];
 }

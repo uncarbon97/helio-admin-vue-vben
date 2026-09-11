@@ -21,11 +21,13 @@ import Form from './modules/form.vue';
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
+  closeOnClickModal: false,
 });
 
 const [BindMenuDrawer, bindMenuDrawerApi] = useVbenDrawer({
   connectedComponent: BindMenu,
   destroyOnClose: true,
+  closeOnClickModal: false,
 });
 
 const [Grid, gridApi] = useVbenVxeGrid({
@@ -135,7 +137,7 @@ function onCreate() {
       <template #toolbar-tools>
         <Button type="primary" @click="onCreate">
           <Plus class="size-5" />
-          {{ $t('ui.actionTitle.create', [$t('system.role.name')]) }}
+          {{ $t('ui.actionTitle.create') }}
         </Button>
       </template>
     </Grid>

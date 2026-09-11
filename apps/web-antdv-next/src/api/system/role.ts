@@ -44,7 +44,7 @@ export namespace SystemRoleApi {
     /** 角色特殊标记 */
     flags: string[];
     /** 可见菜单Ids */
-    menuIds: number[];
+    menuIds: string[];
     name: string;
     status: RoleStatus;
   }

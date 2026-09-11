@@ -19,40 +19,38 @@ const emits = defineEmits(['success']);
 
 const permissions = ref<MenuTreeNode[]>([]);
 const loadingPermissions = ref(false);
-const checkedMenuIds = ref<number[]>([]);
+const checkedMenuIds = ref<string[]>([]);
 
-const roleId = ref<number>();
-const [Drawer, drawerApi] = useVbenDrawer<null | Pick<
-  SystemRoleApi.SysRole,
-  'id' | 'menuIds' | 'name'
->>({
-  async onConfirm() {
-    if (!roleId.value) return;
-    drawerApi.lock();
-    bindRoleMenu(roleId.value, checkedMenuIds.value)
-      .then(() => {
-        emits('success');
-        drawerApi.close();
-      })
-      .catch(() => {
-        drawerApi.unlock();
-      });
-  },
+const roleId = ref<string>();
+const [Drawer, drawerApi] =
+  useVbenDrawer<null | Partial<SystemRoleApi.SysRole>>({
+    async onConfirm() {
+      if (!roleId.value) return;
+      drawerApi.lock();
+      bindRoleMenu(roleId.value, checkedMenuIds.value)
+        .then(() => {
+          emits('success');
+          drawerApi.close();
+        })
+        .catch(() => {
+          drawerApi.unlock();
+        });
+    },
 
-  async onOpenChange(isOpen) {
-    if (isOpen) {
-      const data = drawerApi.getData();
-      roleId.value = data?.id;
+    async onOpenChange(isOpen) {
+      if (isOpen) {
+        const data = drawerApi.getData();
+        roleId.value = data?.id;
 
-      if (permissions.value.length === 0) {
-        await loadPermissions();
+        if (permissions.value.length === 0) {
+          await loadPermissions();
+        }
+        // Wait for Vue to flush DOM updates (tree mounted)
+        await nextTick();
+        checkedMenuIds.value = data?.menuIds ?? [];
       }
-      // Wait for Vue to flush DOM updates (tree mounted)
-      await nextTick();
-      checkedMenuIds.value = data?.menuIds ?? [];
-    }
-  },
-});
+    },
+  });
 
 defineExpose({ drawerApi });
 
