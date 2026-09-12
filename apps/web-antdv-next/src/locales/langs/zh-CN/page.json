@@ -15,8 +15,7 @@
       "title": "首页",
       "greeting": "欢迎回来，{name}",
       "welcome": "感谢使用本管理后台",
-      "hint": "请从左侧菜单开始导航。",
-      "version": "Vben Admin · v4.0.0"
+      "hint": "请从左侧菜单开始导航。"
     }
   }
 }

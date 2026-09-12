@@ -1,2 +1,3 @@
+export * from './dept';
 export * from './menu';
-export * from './SysRole';
+export * from './role';

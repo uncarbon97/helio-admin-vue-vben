@@ -79,18 +79,6 @@ async function updateRole(request: SysRoleApi.UpsertRequest) {
 }
 
 /**
- * 修改状态（启用/禁用）
- * @param ids 角色ID列表
- * @param newStatus 新状态
- */
-async function updateRoleStatus(ids: string[], newStatus: EnabledStatusEnum) {
-  return requestClient.post('/v1/sys/role/update-status', {
-    ids,
-    newStatus,
-  });
-}
-
-/**
  * 删除
  * @param id 角色ID
  */
@@ -107,12 +95,24 @@ async function bindRoleMenu(roleId: string, menuIds: string[]) {
   return requestClient.post('/v1/sys/role/bind-menu', { menuIds, roleId });
 }
 
+/**
+ * 修改状态（启用/禁用）
+ * @param ids 角色ID列表
+ * @param newStatus 新状态
+ */
+async function setRoleStatus(ids: string[], newStatus: EnabledStatusEnum) {
+  return requestClient.post('/v1/sys/role/set-status', {
+    ids,
+    newStatus,
+  });
+}
+
 export {
-  getRoleList,
-  getRoleDetail,
-  createRole,
-  updateRole,
-  deleteRole,
-  updateRoleStatus,
   bindRoleMenu,
+  createRole,
+  deleteRole,
+  getRoleDetail,
+  getRoleList,
+  updateRole,
+  setRoleStatus,
 };

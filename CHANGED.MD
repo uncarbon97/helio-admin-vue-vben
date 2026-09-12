@@ -50,10 +50,15 @@
 - `swagger.json` — 后端 OpenAPI 定义，作为前端对接依据（非构建产物）
 - `CHANGED.MD` — 本变更说明
 - `apps/web-antdv-next/src/views/dashboard/workbench/index.vue` — 极简首页（问候+引导+版本，无 mock 数据），作为登录后默认落地页
-- `apps/web-antdv-next/src/api/system/role.ts` — 角色管理接口（`/v1/sys/role/*`：list/detail/create/update/delete/bind-menu，`pageParam` 嵌套分页，`PageResult` 返回）
-- `apps/web-antdv-next/src/api/system/menu.ts` — `getVisibleMenuList`（`/v1/sys/menu/visible`）+ `buildMenuTree`（扁平 `SysMenuDTO` 建 `parentId` 树）
-- `apps/web-antdv-next/src/views/system/role/` — 角色管理页面（自 playground 搬运）：`list.vue`（vxe 表格分页/搜索/删除）、`data.ts`（表单/列配置）、`modules/form.vue`（新增/编辑抽屉，编辑含授权树，保存走 update+bind-menu）、`modules/bind-menu.vue`（独立绑定菜单抽屉，新增成功后经确认弹窗打开）
-- `apps/web-antdv-next/src/locales/langs/zh-CN/system.json`、`en-US/system.json` — `system.role.*` 文案
+- `apps/web-antdv-next/src/api/sys/SysRole.ts` — 角色管理接口（`/v1/sys/role/*`：list/detail/create/update/update-status/delete/bind-menu，`pageParam` 嵌套分页，`PageResult` 返回）
+- `apps/web-antdv-next/src/api/sys/menu.ts` — `getVisibleMenuList`（`/v1/sys/menu/visible`）+ `buildMenuTree`（扁平 `SysMenuDTO` 建 `parentId` 树）
+- `apps/web-antdv-next/src/api/common.ts` — 通用类型（`EnabledStatusEnum` / `PageParam` / `PageResult`）
+- `apps/web-antdv-next/src/views/sys/SysRole/` — 角色管理页面：`index.vue`（vxe 表格分页/搜索/删除，操作列含授权入口）、`data.ts`（表单/列配置）、`modules/form.vue`（纯基础信息新增/编辑抽屉）、`modules/bind-menu.vue`（授权抽屉：功能权限/角色用户 Tab、节点关联/独立、折叠/展开、刷新、树表格勾选列+菜单列+权限列内联按钮，底部确认=保存权限）
+- `apps/web-antdv-next/src/locales/langs/zh-CN/system.json`、`en-US/system.json` — `system.role.*` 文案（含授权抽屉 `grantTitle/savePermissions/tab*/node*/collapse/expand/menuCol/permCol`）
+
+### 增加包依赖
+
+- `vue3-tree-org@^4.2.2`（`apps/web-antdv-next`）— 部门管理「组织架构图」视图渲染
 
 ### 删除包依赖
 
@@ -65,4 +70,6 @@
 > - `playground/` 演示工程仍保留 mock 风格接口与指向 `localhost:5320` 的代理，未纳入本次真实后端改造。
 > - 角色管理「新增后绑定菜单」依赖后端 create 接口返回新记录 ID（后端改造中）；改造完成前新增成功不弹绑定引导。
 > - 角色页面路由由后端菜单下发（backend 权限模式），需后端菜单表存在 `component: /system/role/list` 的菜单记录。
+> - 2026-09-12：授权（绑定菜单）从新增/编辑表单剥离，改为列表操作列独立入口；授权抽屉按设计图重做（Tab/工具栏/树表格/底部保存），新增成功不再弹绑定引导，「角色用户」Tab 为空态占位（后端接口待建）。
+> - 2026-09-12：部门管理新增「列表视图 / 组织架构图」切换（`views/sys/dept/index.vue`）：切换按钮独立于表格工具栏外、页面左上（架构图视图下仍可切回）；架构图用 `vue3-tree-org` 渲染、仅查看（可折叠/缩放），跟随本地搜索过滤，与列表共享同一份树数据（proxy query 时同步），样式适配亮/暗主题；新增文案 `sys.dept.viewTable` / `viewTree`。
 > - 更早的提交（`b0a9367f8` 清理不需要的文件、`2af53c1b6` 删除除 `web-antdv-next` 外的子工程）已先行精简仓库，此处不再展开。

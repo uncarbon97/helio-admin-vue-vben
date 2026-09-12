@@ -4,7 +4,8 @@ import { requestClient } from '#/api/request';
 
 // adapt to helium: 菜单对接自研后端（后端权限模式），并新增 transformMenus 将扁平 SysMenuDTO 转为路由树
 export namespace MenuApi {
-  export type MenuType = 'BUTTON' | 'DIR' | 'EXTERNAL_LINK' | 'MENU';
+  // adapt to helium: 后端 BaseEnum 按枚举 value 序列化为数字（DIR=0, MENU=1, BUTTON=2, EXTERNAL_LINK=3）
+  export type MenuType = 0 | 1 | 2 | 3;
 
   /** 后端 SysMenuDTO */
   export interface SysMenuDTO {
@@ -17,9 +18,18 @@ export namespace MenuApi {
     parentId: string;
     permission?: string;
     sort?: number;
-    status?: 'DISABLED' | 'ENABLED';
+    /** 0=禁用, 1=启用 */
+    status?: 0 | 1;
   }
 }
+
+// adapt to helium: 菜单类型枚举值（与后端 MenuTypeEnum 一致）
+export const MenuTypeEnum = {
+  DIR: 0,
+  MENU: 1,
+  BUTTON: 2,
+  EXTERNAL_LINK: 3,
+} as const;
 
 /** 树构建过程中的临时节点，附带原菜单 id/parentId/排序用于组装树 */
 interface TreeNode extends RouteRecordStringComponent {
@@ -52,7 +62,7 @@ function transformMenus(
   list: MenuApi.SysMenuDTO[],
 ): RouteRecordStringComponent[] {
   const nodes: TreeNode[] = list
-    .filter((m) => m.menuType !== 'BUTTON')
+    .filter((m) => m.menuType !== MenuTypeEnum.BUTTON)
     .map((m) => {
       const slug = m.component
         ? m.component.replaceAll(/[\\/]+/g, '-').replaceAll(/^-+|-+$/g, '')
@@ -62,11 +72,11 @@ function transformMenus(
         _parentId: m.parentId ?? 0,
         _sort: m.sort ?? 0,
         component:
-          m.menuType === 'EXTERNAL_LINK'
+          m.menuType === MenuTypeEnum.EXTERNAL_LINK
             ? 'IFrameView'
             : m.component || 'BasicLayout',
         meta: {
-          hideInMenu: m.status === 'DISABLED',
+          hideInMenu: m.status === 0,
           icon: m.icon,
           link: m.externalLink,
           order: m.sort ?? 0,

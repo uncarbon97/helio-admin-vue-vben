@@ -15,8 +15,7 @@
       "title": "Home",
       "greeting": "Welcome back, {name}",
       "welcome": "Thanks for using this admin console",
-      "hint": "Use the sidebar menu to get started.",
-      "version": "Vben Admin · v4.0.0"
+      "hint": "Use the sidebar menu to get started."
     }
   }
 }

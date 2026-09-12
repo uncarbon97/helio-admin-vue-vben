@@ -670,6 +670,9 @@ importers:
       vue-router:
         specifier: 'catalog:'
         version: 5.2.0(@vue/compiler-sfc@3.5.40)(esbuild@0.28.1)(pinia@4.0.2(@vue/devtools-api@8.1.5)(typescript@6.0.3)(vue@3.5.40(typescript@6.0.3)))(rolldown@1.2.7)(rollup@4.62.2)(vite@8.2.2(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.8.0(supports-color@10.2.2))(sass-embedded@1.100.0)(sass@1.101.6)(terser@5.49.0)(yaml@2.9.0))(vue@3.5.40(typescript@6.0.3))
+      vue3-tree-org:
+        specifier: ^4.2.2
+        version: 4.2.2(vue@3.5.40(typescript@6.0.3))
 
   docs:
     dependencies:
@@ -6604,6 +6607,9 @@ packages:
   core-js-compat@3.49.0:
     resolution: {integrity: sha512-VQXt1jr9cBz03b331DFDCCP90b3fanciLkgiOoy8SBHy06gNf+vQ1A3WFLqG7I8TipYIKeYK9wxd0tUrvHcOZA==}
 
+  core-js@3.50.0:
+    resolution: {integrity: sha512-BRWgOLKkFeCgRudR6zrs8p9XJZcE14grzKMMssoYrk6krtuEZ7MTKPIY5RzOnqsEKIR9kst7wNzphttraT+Yqw==}
+
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -10695,9 +10701,6 @@ packages:
   vscode-languageserver-textdocument@1.0.14:
     resolution: {integrity: sha512-EQyqJMi552E4ZTf46izQ4Fj6XquqxCySR3J5ZSD1SisMf6RfpeOWHxGBE8Gr6V0/3GHIGdAzDn8F8+1nTGCnoQ==}
 
-  vscode-uri@3.1.0:
-    resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
-
   vscode-uri@3.2.0:
     resolution: {integrity: sha512-m2gXo3bn0G1kT9InzMf07fTbqMbGtyckj3bH5ktLO+1Ssv+yiATZ4dhwaQv9UZWxJh6E9IFGnQyjgWVDWVBDrg==}
 
@@ -10761,6 +10764,11 @@ packages:
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.0'
+
+  vue3-tree-org@4.2.2:
+    resolution: {integrity: sha512-AG2SykyD6dw0jIyqBm8iuF9j9GWli6KrwudxR1RjULCCBTDFsoNm7MmP/weKT7wowN/sPk+e2RsnvEJMw2OJMw==}
+    peerDependencies:
+      vue: ^3.5.40
 
   vue@3.5.40:
     resolution: {integrity: sha512-+8PJ4SJXdn/cHGImF4CKdxlWHIN5Dkt7DoufRREM6h6uVCx2m7QxgcEQmmzyOK8A9mcafg7sFbJFYsdFVubTig==}
@@ -12084,7 +12092,7 @@ snapshots:
   '@commitlint/ensure@21.2.0':
     dependencies:
       '@commitlint/types': 21.2.0
-      es-toolkit: 1.49.0
+      es-toolkit: 1.52.0
 
   '@commitlint/execute-rule@21.0.1': {}
 
@@ -13401,7 +13409,7 @@ snapshots:
       detect-libc: 2.1.2
       is-glob: 4.0.3
       node-addon-api: 7.1.1
-      picomatch: 4.0.5
+      picomatch: 4.0.7
     optionalDependencies:
       '@parcel/watcher-android-arm64': 2.6.0
       '@parcel/watcher-darwin-arm64': 2.6.0
@@ -14298,8 +14306,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.65.0(supports-color@10.2.2)(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.65.0(typescript@6.0.3)
-      '@typescript-eslint/types': 8.65.0
+      '@typescript-eslint/tsconfig-utils': 8.69.0(typescript@6.0.3)
+      '@typescript-eslint/types': 8.69.0
       debug: 4.4.3(supports-color@10.2.2)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -14752,7 +14760,7 @@ snapshots:
     dependencies:
       '@volar/language-core': 2.4.28
       path-browserify: 1.0.1
-      vscode-uri: 3.1.0
+      vscode-uri: 3.2.0
 
   '@vue-macros/common@3.1.4(vue@3.5.40(typescript@6.0.3))':
     dependencies:
@@ -14844,7 +14852,7 @@ snapshots:
       '@vue/shared': 3.5.40
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.22
+      postcss: 8.5.28
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.40':
@@ -14881,7 +14889,7 @@ snapshots:
       alien-signals: 3.2.1
       muggle-string: 0.4.1
       path-browserify: 1.0.1
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
   '@vue/reactivity@3.5.40':
     dependencies:
@@ -15711,6 +15719,8 @@ snapshots:
   core-js-compat@3.49.0:
     dependencies:
       browserslist: 4.28.7
+
+  core-js@3.50.0: {}
 
   core-util-is@1.0.3: {}
 
@@ -16586,6 +16596,10 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.5):
     optionalDependencies:
       picomatch: 4.0.5
+
+  fdir@6.5.0(picomatch@4.0.7):
+    optionalDependencies:
+      picomatch: 4.0.7
 
   fflate@0.8.3: {}
 
@@ -19549,8 +19563,8 @@ snapshots:
 
   tinyglobby@0.2.17:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.5)
-      picomatch: 4.0.5
+      fdir: 6.5.0(picomatch@4.0.7)
+      picomatch: 4.0.7
 
   tinypool@2.1.0: {}
 
@@ -19869,7 +19883,7 @@ snapshots:
   unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.7)(rollup@4.62.2)(vite@8.1.5(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.8.0(supports-color@10.2.2))(sass-embedded@1.100.0)(sass@1.101.6)(terser@5.49.0)(yaml@2.9.0)):
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       webpack-virtual-modules: 0.6.2
     optionalDependencies:
       esbuild: 0.28.1
@@ -19880,7 +19894,7 @@ snapshots:
   unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.7)(rollup@4.62.2)(vite@8.2.2(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.8.0(supports-color@10.2.2))(sass-embedded@1.100.0)(sass@1.101.6)(terser@5.49.0)(yaml@2.9.0)):
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       webpack-virtual-modules: 0.6.2
     optionalDependencies:
       esbuild: 0.28.1
@@ -20070,7 +20084,7 @@ snapshots:
   vite@8.2.2(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(less@4.8.0(supports-color@10.2.2))(sass-embedded@1.100.0)(sass@1.101.6)(terser@5.49.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       postcss: 8.5.28
       rolldown: 1.2.7
       tinyglobby: 0.2.17
@@ -20088,7 +20102,7 @@ snapshots:
   vite@8.2.2(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.8.0(supports-color@10.2.2))(sass-embedded@1.100.0)(sass@1.101.6)(terser@5.49.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       postcss: 8.5.28
       rolldown: 1.2.7
       tinyglobby: 0.2.17
@@ -20190,8 +20204,6 @@ snapshots:
 
   vscode-languageserver-textdocument@1.0.14: {}
 
-  vscode-uri@3.1.0: {}
-
   vscode-uri@3.2.0: {}
 
   vue-component-type-helpers@3.3.8: {}
@@ -20269,6 +20281,11 @@ snapshots:
       '@volar/typescript': 2.4.28
       '@vue/language-core': 3.3.11
       typescript: 6.0.3
+
+  vue3-tree-org@4.2.2(vue@3.5.40(typescript@6.0.3)):
+    dependencies:
+      core-js: 3.50.0
+      vue: 3.5.40(typescript@6.0.3)
 
   vue@3.5.40(typescript@6.0.3):
     dependencies:

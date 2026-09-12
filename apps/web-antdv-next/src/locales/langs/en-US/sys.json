@@ -1,0 +1,42 @@
+{
+  "role": {
+    "title": "Role Management",
+    "name": "Role",
+    "roleName": "Role Name",
+    "roleCode": "Role Code",
+    "description": "Role Description",
+    "id": "Role ID",
+    "status": "Status",
+    "flags": "Flags",
+    "flagBuiltin": "Builtin",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "setPermissions": "Permissions",
+    "grantTitle": "Grant - {0}",
+    "savePermissions": "Save Permissions",
+    "tabFunctionPerm": "Function Permissions",
+    "tabRoleUser": "Role Users",
+    "nodeLinked": "Node Linked",
+    "nodeIndependent": "Node Independent",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "menuCol": "Menu",
+    "permCol": "Permission"
+  },
+  "dept": {
+    "title": "Dept Management",
+    "name": "Dept",
+    "deptName": "Dept Name",
+    "parentId": "Parent Dept",
+    "rootDept": "Root Dept",
+    "sort": "Sort",
+    "sortTip": "The larger the number, the higher it ranks",
+    "status": "Status",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "createChild": "Add Child",
+    "searchPlaceholder": "Search by dept name",
+    "viewTable": "List view",
+    "viewTree": "Org chart"
+  }
+}

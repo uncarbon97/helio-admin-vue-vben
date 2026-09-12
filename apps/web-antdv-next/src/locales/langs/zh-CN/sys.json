@@ -1,0 +1,42 @@
+{
+  "role": {
+    "title": "角色管理",
+    "name": "角色",
+    "roleName": "角色名称",
+    "roleCode": "角色编码",
+    "description": "角色描述",
+    "id": "角色ID",
+    "status": "状态",
+    "flags": "标识",
+    "flagBuiltin": "内置",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "setPermissions": "授权",
+    "grantTitle": "授权 - {0}",
+    "savePermissions": "保存权限",
+    "tabFunctionPerm": "功能权限",
+    "tabRoleUser": "角色用户",
+    "nodeLinked": "节点关联",
+    "nodeIndependent": "节点独立",
+    "collapse": "折叠",
+    "expand": "展开",
+    "menuCol": "菜单",
+    "permCol": "权限"
+  },
+  "dept": {
+    "title": "部门管理",
+    "name": "部门",
+    "deptName": "部门名称",
+    "parentId": "上级部门",
+    "rootDept": "根部门",
+    "sort": "排序",
+    "sortTip": "数字越大越靠前",
+    "status": "状态",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "createChild": "新增下级",
+    "searchPlaceholder": "搜索部门名称",
+    "viewTable": "列表视图",
+    "viewTree": "组织架构图"
+  }
+}

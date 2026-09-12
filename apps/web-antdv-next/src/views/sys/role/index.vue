@@ -3,21 +3,16 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { EnabledStatusEnum } from '#/api/common';
 import type { SysRoleApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
-import { Button, message, Modal } from 'antdv-next';
+import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import {
-  deleteRole,
-  getRoleDetail,
-  getRoleList,
-  updateRoleStatus,
-} from '#/api';
+import { deleteRole, getRoleDetail, getRoleList, setRoleStatus } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -76,6 +71,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 function onActionClick(e: OnActionClickParams<SysRoleApi.SysRoleDTO>) {
   switch (e.code) {
+    case 'bindMenu': {
+      onBindMenu(e.row);
+      break;
+    }
     case 'delete': {
       onDelete(e.row);
       break;
@@ -88,9 +87,17 @@ function onActionClick(e: OnActionClickParams<SysRoleApi.SysRoleDTO>) {
 }
 
 async function onEdit(row: SysRoleApi.SysRoleDTO) {
-  // 修改前拉取详情，保证 menuIds（授权回显）为最新
+  // 修改前拉取详情，保证数据为最新
   const detail = await getRoleDetail(row.id);
   formDrawerApi.setData(detail).open();
+}
+
+/**
+ * 授权（绑定菜单）独立入口：拉取详情保证 menuIds 回显为最新
+ */
+async function onBindMenu(row: SysRoleApi.SysRoleDTO) {
+  const detail = await getRoleDetail(row.id);
+  bindMenuDrawerApi.setData(detail).open();
 }
 
 /**
@@ -100,7 +107,7 @@ async function onToggleStatus(
   row: SysRoleApi.SysRoleDTO,
   newStatus: EnabledStatusEnum,
 ) {
-  await updateRoleStatus([row.id], newStatus);
+  await setRoleStatus([row.id], newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }
 
@@ -122,22 +129,6 @@ async function onDelete(row: SysRoleApi.SysRoleDTO) {
   }
 }
 
-/**
- * 新增成功后刷新列表，并询问是否立即为该角色绑定菜单
- * @param newId 新角色ID（依赖后端 create 返回新记录ID）
- */
-function onCreated(newId: string) {
-  onRefresh();
-  if (!newId) return;
-  Modal.confirm({
-    content: $t('system.role.confirmBindMenu'),
-    onOk() {
-      bindMenuDrawerApi.setData({ id: newId }).open();
-    },
-    title: $t('system.role.bindMenuTitle'),
-  });
-}
-
 function onRefresh() {
   gridApi.query();
 }
@@ -148,7 +139,7 @@ function onCreate() {
 </script>
 <template>
   <Page auto-content-height>
-    <FormDrawer @success="onRefresh" @created="onCreated" />
+    <FormDrawer @success="onRefresh" />
     <BindMenuDrawer @success="onRefresh" />
     <Grid>
       <template #toolbar-tools>

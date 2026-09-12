@@ -1,7 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { EnabledStatusEnum } from '#/api/common';
 import type { SysRoleApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
 
 import { $t } from '#/locales';
 
@@ -13,12 +13,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: $t('system.role.roleName'),
+      label: $t('sys.role.roleName'),
     },
     {
       component: 'Input',
       fieldName: 'code',
-      label: $t('system.role.roleCode'),
+      label: $t('sys.role.roleCode'),
     },
   ];
 }
@@ -36,18 +36,18 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
   return [
     {
       field: 'name',
-      title: $t('system.role.roleName'),
+      title: $t('sys.role.roleName'),
       width: 200,
     },
     {
       field: 'code',
-      title: $t('system.role.roleCode'),
+      title: $t('sys.role.roleCode'),
       width: 200,
     },
     {
       field: 'description',
       minWidth: 200,
-      title: $t('system.role.description'),
+      title: $t('sys.role.description'),
     },
     {
       cellRender: {
@@ -60,7 +60,7 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
         name: 'CellSwitch',
       },
       field: 'status',
-      title: $t('system.role.status'),
+      title: $t('sys.role.status'),
       width: 100,
     },
     {
@@ -69,18 +69,18 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
         options: [
           {
             color: 'warning',
-            label: $t('system.role.flagBuiltin'),
+            label: $t('sys.role.flagBuiltin'),
             value: 'builtin',
           },
         ],
       },
       field: 'flags',
-      title: $t('system.role.flags'),
+      title: $t('sys.role.flags'),
       width: 100,
     },
     {
       field: 'createdAt',
-      title: $t('system.role.createTime'),
+      title: $t('sys.role.createTime'),
       width: 200,
     },
     {
@@ -88,16 +88,21 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
       cellRender: {
         attrs: {
           nameField: 'name',
-          nameTitle: $t('system.role.name'),
+          nameTitle: $t('sys.role.name'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
-        options: ['edit', 'delete'],
+        options: [
+          'edit',
+          // adapt to helium: 授权（绑定菜单）独立到操作列
+          { code: 'bindMenu', text: $t('sys.role.setPermissions') },
+          'delete',
+        ],
       },
       field: 'operation',
       fixed: 'right',
-      title: $t('system.role.operation'),
-      width: 130,
+      title: $t('sys.role.operation'),
+      width: 180,
     },
   ];
 }
@@ -110,26 +115,19 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'name',
-      label: $t('system.role.roleName'),
+      label: $t('sys.role.roleName'),
       rules: 'required',
     },
     {
       component: 'Input',
       fieldName: 'code',
-      label: $t('system.role.roleCode'),
+      label: $t('sys.role.roleCode'),
       rules: 'required',
     },
     {
       component: 'Textarea',
       fieldName: 'description',
-      label: $t('system.role.description'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'permissions',
-      formItemClass: 'items-start',
-      label: $t('system.role.setPermissions'),
-      modelPropName: 'modelValue',
+      label: $t('sys.role.description'),
     },
   ];
 }
