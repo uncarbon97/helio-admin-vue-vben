@@ -11,10 +11,10 @@ export namespace MenuApi {
     component?: string;
     externalLink?: string;
     icon?: string;
-    id: number;
+    id: string;
     menuType: MenuType;
     name: string;
-    parentId: number;
+    parentId: string;
     permission?: string;
     sort?: number;
     status?: 'DISABLED' | 'ENABLED';
@@ -23,8 +23,8 @@ export namespace MenuApi {
 
 /** 树构建过程中的临时节点，附带原菜单 id/parentId/排序用于组装树 */
 interface TreeNode extends RouteRecordStringComponent {
-  _id: number;
-  _parentId: number;
+  _id: string;
+  _parentId: string;
   _sort: number;
   children?: TreeNode[];
 }
@@ -77,7 +77,7 @@ function transformMenus(
       };
     });
 
-  const nodeMap = new Map<number, TreeNode>();
+  const nodeMap = new Map<string, TreeNode>();
   nodes.forEach((node) => nodeMap.set(node._id, node));
 
   const roots: TreeNode[] = [];

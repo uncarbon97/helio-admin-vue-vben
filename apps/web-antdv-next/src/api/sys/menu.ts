@@ -6,7 +6,7 @@ import { requestClient } from '#/api/request';
 export interface MenuTreeNode {
   children?: MenuTreeNode[];
   icon?: string;
-  id: number;
+  id: string;
   menuType: MenuApi.MenuType;
   name: string;
 }
@@ -27,7 +27,7 @@ interface SortableNode extends MenuTreeNode {
  * 将扁平菜单列表按 parentId（0 为根）构建为树，并按 sort 排序
  */
 function buildMenuTree(list: MenuApi.SysMenuDTO[]): MenuTreeNode[] {
-  const nodes = new Map<number, SortableNode>();
+  const nodes = new Map<string, SortableNode>();
   list.forEach((item) => {
     nodes.set(item.id, {
       _sort: item.sort ?? 0,

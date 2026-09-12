@@ -15,7 +15,7 @@ import {
 import { get, isFunction, isString } from '@vben/utils';
 
 import { objectOmit } from '@vueuse/core';
-import { Button, Image, Popconfirm, Tag } from 'antdv-next';
+import { Button, Image, Popconfirm, Switch, Tag } from 'antdv-next';
 
 import { useVbenForm } from './form';
 
@@ -114,6 +114,41 @@ setupVbenVxeTable({
           },
           { default: () => tagItem?.label ?? value },
         );
+      },
+    });
+
+    /**
+     * adapt to helium: 新增 CellSwitch 单元格渲染器（启用/禁用等状态行内切换）
+     * attrs: { checkedValue, unCheckedValue, checkedChildren, unCheckedChildren, onSwitch }
+     * onSwitch({ row, value }) 返回 Promise；成功（resolve）后行数据更新为 value，失败（reject）开关回弹
+     */
+    vxeUI.renderer.add('CellSwitch', {
+      renderTableDefault({ attrs, props }, { column, row }) {
+        const field = column.field as string;
+        const checkedValue = attrs?.checkedValue ?? 1;
+        const unCheckedValue = attrs?.unCheckedValue ?? 0;
+        const loadingField = '_cellSwitchLoading';
+        return h(Switch, {
+          checked: get(row, field) === checkedValue,
+          checkedChildren: attrs?.checkedChildren,
+          unCheckedChildren: attrs?.unCheckedChildren,
+          loading: row[loadingField] === field,
+          ...props,
+          onChange: async (checked: boolean) => {
+            row[loadingField] = field;
+            try {
+              await attrs?.onSwitch?.({
+                row,
+                value: checked ? checkedValue : unCheckedValue,
+              });
+              row[field] = checked ? checkedValue : unCheckedValue;
+            } catch {
+              // 失败不更新行数据，开关自动回弹
+            } finally {
+              row[loadingField] = undefined;
+            }
+          },
+        });
       },
     });
 

@@ -3,7 +3,8 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { SystemRoleApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
+import type { SysRoleApi } from '#/api';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
@@ -11,7 +12,12 @@ import { Plus } from '@vben/icons';
 import { Button, message, Modal } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteRole, getRoleDetail, getRoleList } from '#/api';
+import {
+  deleteRole,
+  getRoleDetail,
+  getRoleList,
+  updateRoleStatus,
+} from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -36,7 +42,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(onActionClick),
+    columns: useColumns(onActionClick, onToggleStatus),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -60,14 +66,15 @@ const [Grid, gridApi] = useVbenVxeGrid({
     toolbarConfig: {
       custom: true,
       export: false,
-      refresh: true,
+      // 刷新保持当前页码
+      refresh: { code: 'query' },
       search: true,
       zoom: true,
     },
-  } as VxeTableGridOptions<SystemRoleApi.SysRole>,
+  } as VxeTableGridOptions<SysRoleApi.SysRoleDTO>,
 });
 
-function onActionClick(e: OnActionClickParams<SystemRoleApi.SysRole>) {
+function onActionClick(e: OnActionClickParams<SysRoleApi.SysRoleDTO>) {
   switch (e.code) {
     case 'delete': {
       onDelete(e.row);
@@ -80,33 +87,43 @@ function onActionClick(e: OnActionClickParams<SystemRoleApi.SysRole>) {
   }
 }
 
-async function onEdit(row: SystemRoleApi.SysRole) {
-  // adapt to helium: 编辑前拉取详情，保证 menuIds（授权回显）为最新
+async function onEdit(row: SysRoleApi.SysRoleDTO) {
+  // 修改前拉取详情，保证 menuIds（授权回显）为最新
   const detail = await getRoleDetail(row.id);
   formDrawerApi.setData(detail).open();
 }
 
-function onDelete(row: SystemRoleApi.SysRole) {
+/**
+ * 状态开关切换（成功后由 CellSwitch 渲染器行内更新，失败回弹）
+ */
+async function onToggleStatus(
+  row: SysRoleApi.SysRoleDTO,
+  newStatus: EnabledStatusEnum,
+) {
+  await updateRoleStatus([row.id], newStatus);
+  message.success($t('ui.actionMessage.operationSuccess'));
+}
+
+async function onDelete(row: SysRoleApi.SysRoleDTO) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteRole(row.id)
-    .then(() => {
-      message.success({
-        content: $t('ui.actionMessage.deleteSuccess', [row.name]),
-        key: 'action_process_msg',
-      });
-      onRefresh();
-    })
-    .catch(() => {
-      hideLoading();
+  try {
+    await deleteRole(row.id);
+    message.success({
+      content: $t('ui.actionMessage.deleteSuccess', [row.name]),
+      key: 'action_process_msg',
     });
+    onRefresh();
+  } catch {
+    hideLoading();
+  }
 }
 
 /**
- * adapt to helium: 新增成功后刷新列表，并询问是否立即为该角色绑定菜单
+ * 新增成功后刷新列表，并询问是否立即为该角色绑定菜单
  * @param newId 新角色ID（依赖后端 create 返回新记录ID）
  */
 function onCreated(newId: string) {

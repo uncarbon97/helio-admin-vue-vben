@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { Recordable } from '@vben/types';
 
-import type { SystemRoleApi } from '#/api';
-import type { MenuTreeNode } from '#/api/system/menu';
+import type { SysRoleApi } from '#/api';
+import type { MenuTreeNode } from '#/api/sys/menu';
 
 import { computed, nextTick, ref } from 'vue';
 
@@ -12,15 +12,15 @@ import { IconifyIcon } from '@vben/icons';
 import { Spin } from 'antdv-next';
 
 import { useVbenForm } from '#/adapter/form';
-import { buildMenuTree, getVisibleMenuList } from '#/api/system/menu';
-import { bindRoleMenu, createRole, updateRole } from '#/api/system/role';
+import { buildMenuTree, getVisibleMenuList } from '#/api/sys/menu';
+import { bindRoleMenu, createRole, updateRole } from '#/api/sys/SysRole';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 
 const emits = defineEmits(['created', 'success']);
 
-const formData = ref<SystemRoleApi.SysRole>();
+const formData = ref<SysRoleApi.SysRoleDTO>();
 
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
@@ -31,44 +31,36 @@ const permissions = ref<MenuTreeNode[]>([]);
 const loadingPermissions = ref(false);
 
 const id = ref<string>();
-const [Drawer, drawerApi] = useVbenDrawer<null | SystemRoleApi.SysRole>({
+const [Drawer, drawerApi] = useVbenDrawer<null | SysRoleApi.SysRoleDTO>({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
-    const idVal = id.value;
-    if (idVal) {
-      // 编辑：先保存基础信息，再同步菜单绑定
-      updateRole({
-        code: values.code,
-        description: values.description,
-        id: id.value,
-        name: values.name,
-      })
-        .then(() => bindRoleMenu(idVal, values.permissions ?? []))
-        .then(() => {
-          emits('success');
-          drawerApi.close();
-        })
-        .catch(() => {
-          drawerApi.unlock();
+    try {
+      const idVal = id.value;
+      if (idVal) {
+        // 编辑：先保存基础信息，再同步菜单绑定
+        await updateRole({
+          id: idVal,
+          code: values.code,
+          description: values.description,
+          name: values.name,
         });
-    } else {
-      // adapt to helium: 后端 create 将返回新记录ID；新增不带菜单，成功后由父级引导单独绑定
-      createRole({
-        code: values.code,
-        description: values.description,
-        name: values.name,
-      })
-        .then((newId) => {
-          emits('created', newId);
-          emits('success');
-          drawerApi.close();
-        })
-        .catch(() => {
-          drawerApi.unlock();
+        await bindRoleMenu(idVal, values.permissions ?? []);
+      } else {
+        // 后端将返回新记录ID，另外引导授权
+        const newId = await createRole({
+          code: values.code,
+          description: values.description,
+          name: values.name,
         });
+        emits('created', newId);
+      }
+      emits('success');
+      drawerApi.close();
+    } catch {
+      drawerApi.unlock();
     }
   },
 

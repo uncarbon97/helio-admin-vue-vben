@@ -23,7 +23,7 @@
 - `apps/web-antdv-next/src/store/auth.ts` — 登录流程改为消费后端返回的 `token/roles/permissions`，用户资料拉取容错
 - `apps/web-antdv-next/src/views/_core/authentication/login.vue` — 移除上游 mock 账号下拉选择器（`MOCK_USER_OPTIONS`）及其自动填充逻辑
 - `apps/web-antdv-next/src/preferences.ts` — 默认权限模式 `frontend` → `backend`，默认主题 `dark` → `light`
-- `apps/web-antdv-next/src/adapter/vxe-table.ts` — 新增 `CellTag` / `CellOperation` 单元格渲染器、操作按钮回调类型，及热更新渲染器清理；表格全局 `size` `small` → `medium`（字号加大一档，对老年用户更友好）
+- `apps/web-antdv-next/src/adapter/vxe-table.ts` — 新增 `CellTag` / `CellSwitch` / `CellOperation` 单元格渲染器、操作按钮回调类型，及热更新渲染器清理；表格全局 `size` `small` → `medium`（字号加大一档，对老年用户更友好）
 - `internal/vite-config/src/config/application.ts` — 移除 `nitroMock` / `nitroMockOptions` 选项
 - `internal/vite-config/src/plugins/index.ts` — 移除 `viteNitroMockPlugin` 的 import / 选项 / 条件加载块
 - `internal/vite-config/src/typing.ts` — 移除 `NitroMockPluginOptions` 类型与选项字段

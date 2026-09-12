@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { Recordable } from '@vben/types';
 
-import type { SystemRoleApi } from '#/api';
-import type { MenuTreeNode } from '#/api/system/menu';
+import type { SysRoleApi } from '#/api';
+import type { MenuTreeNode } from '#/api/sys/menu';
 
 import { nextTick, ref } from 'vue';
 
@@ -11,8 +11,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Spin } from 'antdv-next';
 
-import { buildMenuTree, getVisibleMenuList } from '#/api/system/menu';
-import { bindRoleMenu } from '#/api/system/role';
+import { buildMenuTree, getVisibleMenuList } from '#/api/sys/menu';
+import { bindRoleMenu } from '#/api/sys/SysRole';
 import { $t } from '#/locales';
 
 const emits = defineEmits(['success']);
@@ -23,18 +23,17 @@ const checkedMenuIds = ref<string[]>([]);
 
 const roleId = ref<string>();
 const [Drawer, drawerApi] =
-  useVbenDrawer<null | Partial<SystemRoleApi.SysRole>>({
+  useVbenDrawer<null | Partial<SysRoleApi.SysRoleDTO>>({
     async onConfirm() {
       if (!roleId.value) return;
       drawerApi.lock();
-      bindRoleMenu(roleId.value, checkedMenuIds.value)
-        .then(() => {
-          emits('success');
-          drawerApi.close();
-        })
-        .catch(() => {
-          drawerApi.unlock();
-        });
+      try {
+        await bindRoleMenu(roleId.value, checkedMenuIds.value);
+        emits('success');
+        drawerApi.close();
+      } catch {
+        drawerApi.unlock();
+      }
     },
 
     async onOpenChange(isOpen) {
