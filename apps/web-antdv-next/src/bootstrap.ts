@@ -2,11 +2,13 @@ import { createApp, watchEffect } from 'vue';
 
 import { registerAccessDirective } from '@vben/access';
 import { registerLoadingDirective } from '@vben/common-ui/es/loading';
+import { addCollection } from '@vben/icons';
 import { preferences } from '@vben/preferences';
 import { initStores } from '@vben/stores';
 import '@vben/styles';
 import '@vben/styles/antdv-next';
 
+import antDesignIcons from '@iconify-json/ant-design/icons.json';
 import { useTitle } from '@vueuse/core';
 
 import { $t, setupI18n } from '#/locales';
@@ -17,6 +19,9 @@ import App from './app.vue';
 import { router } from './router';
 
 async function bootstrap(namespace: string) {
+  // adapt to helium: 注册离线图标集（ant-design），内网环境下图标渲染与选择不依赖 Iconify 在线 API
+  addCollection(antDesignIcons);
+
   // 初始化组件适配器
   await initComponentAdapter();
 

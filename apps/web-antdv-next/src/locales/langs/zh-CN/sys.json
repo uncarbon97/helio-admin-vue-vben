@@ -38,5 +38,32 @@
     "searchPlaceholder": "搜索部门名称",
     "viewTable": "列表视图",
     "viewTree": "组织架构图"
+  },
+  "menu": {
+    "title": "菜单管理",
+    "name": "菜单",
+    "menuName": "菜单名称",
+    "parentId": "上级菜单",
+    "rootMenu": "根菜单",
+    "menuType": "菜单类型",
+    "typeDir": "目录",
+    "typeMenu": "菜单",
+    "typeButton": "按钮",
+    "typeExternalLink": "外链",
+    "permission": "授权标识",
+    "permissionTip": "如 sys:menu:list",
+    "icon": "图标",
+    "component": "组件名称",
+    "componentTip": "views 下相对路径，如 sys/menu/index",
+    "externalLink": "外链地址",
+    "sort": "排序",
+    "sortTip": "数字越大越靠前",
+    "status": "状态",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "createChild": "新增下级",
+    "searchPlaceholder": "搜索菜单名称",
+    "expand": "展开",
+    "collapse": "折叠"
   }
 }

@@ -38,5 +38,32 @@
     "searchPlaceholder": "Search by dept name",
     "viewTable": "List view",
     "viewTree": "Org chart"
+  },
+  "menu": {
+    "title": "Menu Management",
+    "name": "Menu",
+    "menuName": "Menu Name",
+    "parentId": "Parent Menu",
+    "rootMenu": "Root Menu",
+    "menuType": "Menu Type",
+    "typeDir": "Directory",
+    "typeMenu": "Menu",
+    "typeButton": "Button",
+    "typeExternalLink": "External Link",
+    "permission": "Permission",
+    "permissionTip": "e.g. sys:menu:list",
+    "icon": "Icon",
+    "component": "Component",
+    "componentTip": "Relative path under views, e.g. sys/menu/index",
+    "externalLink": "External Link URL",
+    "sort": "Sort",
+    "sortTip": "The larger the number, the higher it ranks",
+    "status": "Status",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "createChild": "Add Child",
+    "searchPlaceholder": "Search by menu name",
+    "expand": "Expand",
+    "collapse": "Collapse"
   }
 }
