@@ -7,6 +7,7 @@
 ### 删除目录
 
 - `apps/backend-mock` — 上游内置的 Nitro Mock 后端工程（全部接口 mock）
+- `playground` — 上游演示工程（2026-09-13 删除；mock 接口不再保留）
 
 ### 删除文件
 
@@ -33,6 +34,10 @@
 - `turbo.json` — 移除 `@vben/backend-mock#build` 任务
 - `lefthook.yml` — 禁用 `commit-msg` 的 commitlint 校验（不再强制 conventional commit）
 - `pnpm-lock.yaml` — 重建（移除 mock 相关依赖）
+- `pnpm-workspace.yaml` — 移除 `playground` workspace 成员（工程已删除）
+- `scripts/deploy/Dockerfile` — 部署产物 `playground/dist` → `apps/web-antdv-next/dist`（原先镜像部署的是演示工程）
+- `internal/tailwind-config/src/theme.css` — 移除 Tailwind `@source '../../../playground/'` 扫描目录
+- `.changeset/fresh-tiptap-model.md` — 移除 `'@vben/playground': patch` 版本条目
 - `apps/web-antdv-next/src/router/routes/modules/dashboard.ts` — `/dashboard` 加 `redirect: '/dashboard/workbench'`；新增极简首页 `Workbench` 子路由（首位、`affixTab`、`order:1`）；移除 `Analytics` 的 `affixTab`（后移至 `fixed/dashboard.ts`，见下）
 - `apps/web-antdv-next/src/router/routes/index.ts` — 新增 `fixed/` 固定路由目录：glob 合并后直接并入初始 `routes` 数组，始终注册、不受权限模式影响（backend 模式下 `modules/` 不注册导致 `/dashboard` 404）
 - `apps/web-antdv-next/src/router/guard.ts` — backend 模式菜单只来自后端，前端在侧边栏顶部注入固定「首页」入口（`/dashboard/workbench`，`order: -1`）
@@ -60,6 +65,10 @@
 - `apps/web-antdv-next/src/views/sys/login-log/` — 登录日志只读页面（无增删改）：`index.vue`（分页列表）、`data.ts`（查询条件：账号/结果状态/时间区间；列：类型与结果状态标签、来源 IP/归属地/浏览器/OS、失败原因）
 - `apps/web-antdv-next/src/locales/langs/zh-CN/sys.json`、`en-US/sys.json` — `sys.loginLog.*` 文案
 
+- `apps/web-antdv-next/src/api/sys/dict.ts` — 数据字典管理 API（`/v1/sys/dict/category|item|builtin/*`）；后端无 detail / set-status 接口：编辑直接用行数据回显、状态开关走全量 update
+- `apps/web-antdv-next/src/views/sys/dict/` — 数据字典管理页面：`index.vue`（左 30% 字典分类 Card + 右 70% 字典项，Tabs 切「自定义分类/内置字典」复用同一左表，点行联动右表；内置字典项内嵌于 DTO 本地展示、只读、不分页）、`data.ts`（列/表单配置）、`modules/category-form.vue`、`modules/item-form.vue`（categoryId 由所选分类注入）
+- `apps/web-antdv-next/src/locales/langs/zh-CN/sys.json`、`en-US/sys.json` — `sys.dict.*` 文案
+
 ### 增加包依赖
 
 - `vue3-tree-org@^4.2.2`（`apps/web-antdv-next`）— 部门管理「组织架构图」视图渲染
@@ -71,10 +80,12 @@
 > 备注：
 > - 默认值变更（主题/权限模式）需清除浏览器 localStorage 缓存后才对已登录环境生效。
 > - `SysMenuDTO` 无独立 `path` 字段，当前由 `component` 派生 `path`、以 slug 作路由 `name`；若与真实数据不符，调整 `transformMenus` 字段映射即可。
-> - `playground/` 演示工程仍保留 mock 风格接口与指向 `localhost:5320` 的代理，未纳入本次真实后端改造。
+> - ~~`playground/` 演示工程仍保留 mock 风格接口~~（已于 2026-09-13 整体删除）。
 > - 角色管理「新增后绑定菜单」依赖后端 create 接口返回新记录 ID（后端改造中）；改造完成前新增成功不弹绑定引导。
 > - 角色页面路由由后端菜单下发（backend 权限模式），需后端菜单表存在 `component: /system/role/list` 的菜单记录。
 > - 2026-09-12：授权（绑定菜单）从新增/编辑表单剥离，改为列表操作列独立入口；授权抽屉按设计图重做（Tab/工具栏/树表格/底部保存），新增成功不再弹绑定引导，「角色用户」Tab 为空态占位（后端接口待建）。
 > - 2026-09-12：部门管理新增「列表视图 / 组织架构图」切换（`views/sys/dept/index.vue`）：切换按钮独立于表格工具栏外、页面左上（架构图视图下仍可切回）；架构图用 `vue3-tree-org` 渲染、仅查看（可折叠/缩放），跟随本地搜索过滤，与列表共享同一份树数据（proxy query 时同步），样式适配亮/暗主题；新增文案 `sys.dept.viewTable` / `viewTree`。
 > - 更早的提交（`b0a9367f8` 清理不需要的文件、`2af53c1b6` 删除除 `web-antdv-next` 外的子工程）已先行精简仓库，此处不再展开。
 > - 2026-09-13：新增登录日志页（`views/sys/login-log`，只读）；查询时间区间由 RangePicker 转 `beginAt`/`endAt` ISO 字符串；页面路由同样由后端菜单下发，需菜单表存在对应记录。
+> - 2026-09-13：安全删除 `playground/` 演示工程（git 可从上游恢复）：workspace/Dockerfile/tailwind `@source`/changeset 四处引用同步清理，`pnpm install` 重建锁文件。另：`pnpm install` 的 prepare 钩子会重新生成根目录 `lefthook.yml`（仓库已禁用 lefthook，属可删副产物）。
+> - 2026-09-13：新增数据字典管理页（`views/sys/dict`，左分类右字典项）；页面路由由后端菜单下发，需菜单表存在 `component: sys/dict/index` 的菜单记录（权限标识 `SysDict:read/create/update/delete`）。

@@ -1,6 +1,6 @@
 {
   "role": {
-    "title": "角色管理",
+    "title": "系统角色",
     "name": "角色",
     "roleName": "角色名称",
     "roleCode": "角色编码",
@@ -24,13 +24,13 @@
     "permCol": "权限"
   },
   "dept": {
-    "title": "部门管理",
+    "title": "部门架构",
     "name": "部门",
     "deptName": "部门名称",
     "parentId": "上级部门",
     "rootDept": "根部门",
     "sort": "排序",
-    "sortTip": "数字越大越靠前",
+    "sortTip": "数字越小越靠前",
     "status": "状态",
     "createTime": "创建时间",
     "operation": "操作",
@@ -40,7 +40,7 @@
     "viewTree": "组织架构图"
   },
   "menu": {
-    "title": "菜单管理",
+    "title": "系统菜单",
     "name": "菜单",
     "menuName": "菜单名称",
     "parentId": "上级菜单",
@@ -67,7 +67,7 @@
     "collapse": "折叠"
   },
   "user": {
-    "title": "用户管理",
+    "title": "系统用户",
     "name": "用户",
     "pin": "账号",
     "nickname": "昵称",
@@ -135,5 +135,23 @@
     "resultSuccess": "成功",
     "resultFailed": "失败",
     "failedMsg": "失败原因"
+  },
+  "dict": {
+    "title": "数据字典",
+    "name": "字典",
+    "categoryName": "字典名称",
+    "categoryCode": "字典编码",
+    "customTab": "自定义分类",
+    "builtinTab": "内置字典",
+    "itemTitle": "字典项",
+    "itemLabel": "标签",
+    "itemValue": "值",
+    "itemCode": "编码",
+    "sort": "排序",
+    "description": "描述",
+    "status": "状态",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "searchPlaceholder": "搜索字典名称"
   }
 }

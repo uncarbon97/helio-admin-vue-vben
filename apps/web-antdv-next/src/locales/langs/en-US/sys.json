@@ -57,7 +57,7 @@
     "componentTip": "Relative path under views, e.g. sys/menu/index",
     "externalLink": "External Link URL",
     "sort": "Sort",
-    "sortTip": "The larger the number, the higher it ranks",
+    "sortTip": "The smaller the number, the higher it ranks",
     "status": "Status",
     "createTime": "Creation Time",
     "operation": "Operation",
@@ -135,5 +135,23 @@
     "resultSuccess": "Success",
     "resultFailed": "Failed",
     "failedMsg": "Failure Reason"
+  },
+  "dict": {
+    "title": "Dict Management",
+    "name": "Dict",
+    "categoryName": "Dict Name",
+    "categoryCode": "Dict Code",
+    "customTab": "Custom Categories",
+    "builtinTab": "Builtin Dicts",
+    "itemTitle": "Dict Items",
+    "itemLabel": "Label",
+    "itemValue": "Value",
+    "itemCode": "Code",
+    "sort": "Sort",
+    "description": "Description",
+    "status": "Status",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "searchPlaceholder": "Search by dict name"
   }
 }
