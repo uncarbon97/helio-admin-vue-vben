@@ -57,7 +57,7 @@
     "componentTip": "views 下相对路径，如 sys/menu/index",
     "externalLink": "外链地址",
     "sort": "排序",
-    "sortTip": "数字越大越靠前",
+    "sortTip": "数字越小越靠前",
     "status": "状态",
     "createTime": "创建时间",
     "operation": "操作",

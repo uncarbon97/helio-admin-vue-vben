@@ -30,7 +30,7 @@
     "parentId": "Parent Dept",
     "rootDept": "Root Dept",
     "sort": "Sort",
-    "sortTip": "The larger the number, the higher it ranks",
+    "sortTip": "The smaller the number, the higher it ranks",
     "status": "Status",
     "createTime": "Creation Time",
     "operation": "Operation",

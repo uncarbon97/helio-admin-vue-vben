@@ -27,10 +27,6 @@ const realName = userStore.userInfo?.realName;
           {{ $t('page.dashboard.workbench.hint') }}
         </p>
       </div>
-
-      <p class="mt-4 text-center text-xs text-muted-foreground">
-        {{ $t('page.dashboard.workbench.version') }}
-      </p>
     </div>
   </Page>
 </template>
