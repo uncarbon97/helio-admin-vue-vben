@@ -99,5 +99,41 @@
     "nextLoginChangePwd": "下次登录改密",
     "kickOut": "踢下线",
     "kickOutConfirm": "确定将「{0}」踢下线吗？"
+  },
+  "loginLog": {
+    "title": "登录日志",
+    "createdAt": "登录时刻",
+    "loginLogType": "日志类型",
+    "typePasswordLogin": "密码登录",
+    "typeLogout": "登出",
+    "userPin": "用户账号",
+    "visitorIp": "来源IP",
+    "visitorBrowser": "来源浏览器",
+    "visitorOs": "来源操作系统",
+    "visitorIpLocation": "IP归属地",
+    "resultStatus": "结果状态",
+    "resultSuccess": "成功",
+    "resultFailed": "失败",
+    "failedMsg": "失败原因"
+  },
+  "operateLog": {
+    "title": "操作日志",
+    "createdAt": "操作时刻",
+    "bizType": "业务类型",
+    "behavior": "行为",
+    "bizNo": "业务号",
+    "operation": "操作内容",
+    "bizExtra": "额外业务信息",
+    "userId": "用户ID",
+    "userTypeCode": "用户类型",
+    "requestMethod": "请求方法",
+    "requestPath": "请求路径",
+    "visitorIp": "来源IP",
+    "visitorUserAgent": "来源UA",
+    "visitorIpLocation": "IP归属地",
+    "resultStatus": "结果状态",
+    "resultSuccess": "成功",
+    "resultFailed": "失败",
+    "failedMsg": "失败原因"
   }
 }

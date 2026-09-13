@@ -201,6 +201,7 @@ async function onToggleExpand() {
   await gridApi.grid?.setAllTreeExpand(expanded.value);
 }
 </script>
+
 <template>
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" />
@@ -221,7 +222,11 @@ async function onToggleExpand() {
           {{ $t('ui.actionTitle.create') }}
         </Button>
         <!-- 展开/折叠整棵菜单树（默认折叠） -->
-        <Button @click="onToggleExpand">
+        <Button class="ml-2" type="primary" ghost @click="onToggleExpand">
+          <IconifyIcon
+            :icon="expanded ? 'ant-design:vertical-align-top-outlined' : 'ant-design:partition-outlined'"
+            class="mr-1 size-4"
+          />
           {{ expanded ? $t('sys.menu.collapse') : $t('sys.menu.expand') }}
         </Button>
       </template>

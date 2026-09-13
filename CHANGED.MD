@@ -56,6 +56,10 @@
 - `apps/web-antdv-next/src/views/sys/SysRole/` — 角色管理页面：`index.vue`（vxe 表格分页/搜索/删除，操作列含授权入口）、`data.ts`（表单/列配置）、`modules/form.vue`（纯基础信息新增/编辑抽屉）、`modules/bind-menu.vue`（授权抽屉：功能权限/角色用户 Tab、节点关联/独立、折叠/展开、刷新、树表格勾选列+菜单列+权限列内联按钮，底部确认=保存权限）
 - `apps/web-antdv-next/src/locales/langs/zh-CN/system.json`、`en-US/system.json` — `system.role.*` 文案（含授权抽屉 `grantTitle/savePermissions/tab*/node*/collapse/expand/menuCol/permCol`）
 
+- `apps/web-antdv-next/src/api/sys/login-log.ts` — 登录日志 API（`/v1/sys/login-log/list`、`/detail`），`LoginLogTypeEnum`（1/2）、`LogResultStatusEnum`（200/400）按后端整数返回建模
+- `apps/web-antdv-next/src/views/sys/login-log/` — 登录日志只读页面（无增删改）：`index.vue`（分页列表）、`data.ts`（查询条件：账号/结果状态/时间区间；列：类型与结果状态标签、来源 IP/归属地/浏览器/OS、失败原因）
+- `apps/web-antdv-next/src/locales/langs/zh-CN/sys.json`、`en-US/sys.json` — `sys.loginLog.*` 文案
+
 ### 增加包依赖
 
 - `vue3-tree-org@^4.2.2`（`apps/web-antdv-next`）— 部门管理「组织架构图」视图渲染
@@ -73,3 +77,4 @@
 > - 2026-09-12：授权（绑定菜单）从新增/编辑表单剥离，改为列表操作列独立入口；授权抽屉按设计图重做（Tab/工具栏/树表格/底部保存），新增成功不再弹绑定引导，「角色用户」Tab 为空态占位（后端接口待建）。
 > - 2026-09-12：部门管理新增「列表视图 / 组织架构图」切换（`views/sys/dept/index.vue`）：切换按钮独立于表格工具栏外、页面左上（架构图视图下仍可切回）；架构图用 `vue3-tree-org` 渲染、仅查看（可折叠/缩放），跟随本地搜索过滤，与列表共享同一份树数据（proxy query 时同步），样式适配亮/暗主题；新增文案 `sys.dept.viewTable` / `viewTree`。
 > - 更早的提交（`b0a9367f8` 清理不需要的文件、`2af53c1b6` 删除除 `web-antdv-next` 外的子工程）已先行精简仓库，此处不再展开。
+> - 2026-09-13：新增登录日志页（`views/sys/login-log`，只读）；查询时间区间由 RangePicker 转 `beginAt`/`endAt` ISO 字符串；页面路由同样由后端菜单下发，需菜单表存在对应记录。

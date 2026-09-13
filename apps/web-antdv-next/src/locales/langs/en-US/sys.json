@@ -99,5 +99,41 @@
     "nextLoginChangePwd": "Change Pwd on Next Login",
     "kickOut": "Kick Out",
     "kickOutConfirm": "Kick out \"{0}\"?"
+  },
+  "loginLog": {
+    "title": "Login Log",
+    "createdAt": "Login Time",
+    "loginLogType": "Log Type",
+    "typePasswordLogin": "Password Login",
+    "typeLogout": "Logout",
+    "userPin": "Account",
+    "visitorIp": "Source IP",
+    "visitorBrowser": "Browser",
+    "visitorOs": "OS",
+    "visitorIpLocation": "IP Location",
+    "resultStatus": "Result",
+    "resultSuccess": "Success",
+    "resultFailed": "Failed",
+    "failedMsg": "Failure Reason"
+  },
+  "operateLog": {
+    "title": "Operate Log",
+    "createdAt": "Operate Time",
+    "bizType": "Biz Type",
+    "behavior": "Behavior",
+    "bizNo": "Biz No",
+    "operation": "Operation",
+    "bizExtra": "Biz Extra",
+    "userId": "User ID",
+    "userTypeCode": "User Type",
+    "requestMethod": "Request Method",
+    "requestPath": "Request Path",
+    "visitorIp": "Source IP",
+    "visitorUserAgent": "User Agent",
+    "visitorIpLocation": "IP Location",
+    "resultStatus": "Result",
+    "resultSuccess": "Success",
+    "resultFailed": "Failed",
+    "failedMsg": "Failure Reason"
   }
 }
