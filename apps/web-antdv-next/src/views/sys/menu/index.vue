@@ -152,7 +152,7 @@ async function onToggleStatus(
   row: MenuApi.SysMenuDTO,
   newStatus: EnabledStatusEnum,
 ) {
-  await setMenuStatus([row.id], newStatus);
+  await setMenuStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }
 

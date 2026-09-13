@@ -101,6 +101,8 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
       },
       field: 'operation',
       fixed: 'right',
+      // 关闭溢出 tooltip
+      showOverflow: false,
       title: $t('sys.role.operation'),
       width: 180,
     },

@@ -1,9 +1,9 @@
+import type { Ref } from 'vue';
+
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysDeptApi } from '#/api';
 import type { EnabledStatusEnum } from '#/api/common';
-
-import type { Ref } from 'vue';
 
 import { $t } from '#/locales';
 
@@ -72,6 +72,8 @@ export function useColumns<T = SysDeptApi.SysDeptDTO>(
       },
       field: 'operation',
       fixed: 'right',
+      // 关闭溢出 tooltip
+      showOverflow: false,
       title: $t('sys.dept.operation'),
       width: 200,
     },

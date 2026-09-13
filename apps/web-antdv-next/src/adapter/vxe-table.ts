@@ -4,7 +4,7 @@ import type { Recordable } from '@vben/types';
 
 import type { ComponentPropsMap, ComponentType } from './component';
 
-import { h } from 'vue';
+import { defineComponent, h, ref } from 'vue';
 
 import { IconifyIcon } from '@vben/icons';
 import { $t, $te } from '@vben/locales';
@@ -15,9 +15,52 @@ import {
 import { get, isFunction, isString } from '@vben/utils';
 
 import { objectOmit } from '@vueuse/core';
-import { Button, Image, Popconfirm, Switch, Tag } from 'antdv-next';
+import { Button, Dropdown, Image, Popconfirm, Switch, Tag } from 'antdv-next';
 
 import { useVbenForm } from './form';
+
+/**
+ * adapt to helium: CellOperation 的「其他操作」下拉容器
+ * 受控 open：面板内条目动作触发后由回调收起（delete 等 Popconfirm 确认后收起）
+ */
+const CellOperationDropdown = defineComponent({
+  name: 'CellOperationDropdown',
+  props: {
+    renderPanel: {
+      required: true,
+      type: Function,
+    },
+    renderTrigger: {
+      required: true,
+      type: Function,
+    },
+  },
+  setup(props) {
+    const open = ref(false);
+    const close = () => {
+      open.value = false;
+    };
+    return () =>
+      h(
+        Dropdown,
+        {
+          'onUpdate:open': (value: boolean) => {
+            open.value = value;
+          },
+          open: open.value,
+          placement: 'bottomRight',
+          popupRender: () =>
+            h(
+              'div',
+              { class: 'flex flex-col items-start gap-1 p-2' },
+              props.renderPanel(close),
+            ),
+          trigger: ['click'],
+        },
+        { default: () => props.renderTrigger() },
+      );
+  },
+});
 
 setupVbenVxeTable({
   configVxeTable: (vxeUI) => {
@@ -185,32 +228,45 @@ setupVbenVxeTable({
             text: $t('common.detail'),
           },
         };
-        const operations: Array<Recordable<any>> = (
-          options || ['edit', 'detail', 'delete']
-        )
-          .map((opt) => {
-            if (isString(opt)) {
-              return presets[opt]
-                ? { code: opt, ...presets[opt], ...defaultProps }
-                : {
-                    code: opt,
-                    text: $te(`common.${opt}`) ? $t(`common.${opt}`) : opt,
-                    ...defaultProps,
-                  };
-            } else {
-              return { ...defaultProps, ...presets[opt.code], ...opt };
-            }
-          })
-          .map((opt) => {
-            const optBtn: Recordable<any> = {};
-            Object.keys(opt).forEach((key) => {
-              optBtn[key] = isFunction(opt[key]) ? opt[key](row) : opt[key];
-            });
-            return optBtn;
-          })
-          .filter((opt) => opt.show !== false);
+        const operations: Array<Recordable<any>> = normalizeOperations(
+          options || ['edit', 'detail', 'delete'],
+        );
 
-        function renderBtn(opt: Recordable<any>, listen = true) {
+        function normalizeOperations(
+          opts: Array<Recordable<any> | string>,
+        ): Array<Recordable<any>> {
+          return opts
+            .map((opt) => {
+              if (isString(opt)) {
+                return presets[opt]
+                  ? { code: opt, ...presets[opt], ...defaultProps }
+                  : {
+                      code: opt,
+                      text: $te(`common.${opt}`) ? $t(`common.${opt}`) : opt,
+                      ...defaultProps,
+                    };
+              }
+              return { ...defaultProps, ...presets[opt.code], ...opt };
+            })
+            .map((opt) => {
+              const optBtn: Recordable<any> = {};
+              Object.keys(opt).forEach((key) => {
+                optBtn[key] = isFunction(opt[key]) ? opt[key](row) : opt[key];
+              });
+              // adapt to helium: children 递归归一化，支持「其他操作」下拉收纳
+              if (optBtn.children) {
+                optBtn.children = normalizeOperations(optBtn.children);
+              }
+              return optBtn;
+            })
+            .filter((opt) => opt.show !== false);
+        }
+
+        function renderBtn(
+          opt: Recordable<any>,
+          listen = true,
+          onAfterClick?: () => void,
+        ) {
           return h(
             Button,
             {
@@ -218,29 +274,31 @@ setupVbenVxeTable({
               ...opt,
               icon: undefined,
               onClick: listen
-                ? () =>
+                ? () => {
                     attrs?.onClick?.({
                       code: opt.code,
                       row,
-                    })
+                    });
+                    onAfterClick?.();
+                  }
                 : undefined,
             },
             {
               default: () => {
-                const content = [];
+                // adapt to helium: 文字在前、图标在后且调小
+                const content = [opt.text];
                 if (opt.icon) {
                   content.push(
-                    h(IconifyIcon, { class: 'size-5', icon: opt.icon }),
+                    h(IconifyIcon, { class: 'size-3.5', icon: opt.icon }),
                   );
                 }
-                content.push(opt.text);
                 return content;
               },
             },
           );
         }
 
-        function renderConfirm(opt: Recordable<any>) {
+        function renderConfirm(opt: Recordable<any>, onAfterConfirm?: () => void) {
           let viewportWrapper: HTMLElement | null = null;
           return h(
             Popconfirm,
@@ -266,6 +324,7 @@ setupVbenVxeTable({
                   code: opt.code,
                   row,
                 });
+                onAfterConfirm?.();
               },
             },
             {
@@ -282,9 +341,36 @@ setupVbenVxeTable({
           );
         }
 
-        const btns = operations.map((opt) =>
-          opt.code === 'delete' ? renderConfirm(opt) : renderBtn(opt),
-        );
+        /**
+         * adapt to helium: 带 children 的选项渲染为下拉收纳（如「其他操作」），
+         * 面板内条目复用 renderBtn/renderConfirm（delete 的 Popconfirm 照常生效），
+         * 条目动作触发后自动收起下拉
+         */
+        function renderDropdown(opt: Recordable<any>) {
+          return h(CellOperationDropdown, {
+            renderPanel: (close: () => void) =>
+              opt.children.map((child: Recordable<any>) =>
+                child.code === 'delete'
+                  ? renderConfirm(child, close)
+                  : renderBtn(child, true, close),
+              ),
+            renderTrigger: () =>
+              renderBtn(
+                {
+                  ...objectOmit(opt, ['children']),
+                  icon: opt.icon ?? 'ant-design:down-outlined',
+                },
+                false,
+              ),
+          });
+        }
+
+        const btns = operations.map((opt) => {
+          if (opt.children) {
+            return renderDropdown(opt);
+          }
+          return opt.code === 'delete' ? renderConfirm(opt) : renderBtn(opt);
+        });
         return h(
           'div',
           {

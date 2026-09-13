@@ -97,12 +97,12 @@ async function bindRoleMenu(roleId: string, menuIds: string[]) {
 
 /**
  * 修改状态（启用/禁用）
- * @param ids 角色ID列表
+ * @param id 角色ID
  * @param newStatus 新状态
  */
-async function setRoleStatus(ids: string[], newStatus: EnabledStatusEnum) {
+async function setRoleStatus(id: string, newStatus: EnabledStatusEnum) {
   return requestClient.post('/v1/sys/role/set-status', {
-    ids,
+    id,
     newStatus,
   });
 }

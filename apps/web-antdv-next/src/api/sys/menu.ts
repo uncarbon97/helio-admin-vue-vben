@@ -78,12 +78,12 @@ async function deleteMenu(id: string) {
 
 /**
  * 修改状态（启用/禁用）
- * @param ids 菜单ID列表
+ * @param id 菜单ID
  * @param newStatus 新状态
  */
-async function setMenuStatus(ids: string[], newStatus: EnabledStatusEnum) {
+async function setMenuStatus(id: string, newStatus: EnabledStatusEnum) {
   return requestClient.post('/v1/sys/menu/set-status', {
-    ids,
+    id,
     newStatus,
   });
 }

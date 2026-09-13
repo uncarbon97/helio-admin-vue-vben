@@ -107,7 +107,7 @@ async function onToggleStatus(
   row: SysRoleApi.SysRoleDTO,
   newStatus: EnabledStatusEnum,
 ) {
-  await setRoleStatus([row.id], newStatus);
+  await setRoleStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }
 

@@ -176,7 +176,7 @@ async function onToggleStatus(
   row: SysDeptApi.SysDeptDTO,
   newStatus: EnabledStatusEnum,
 ) {
-  await setDeptStatus([row.id], newStatus);
+  await setDeptStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }
 

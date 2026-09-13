@@ -1,9 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": { "title": "OpenAPI definition", "version": "v0" },
-  "servers": [
-    { "url": "http://127.0.0.1:7003", "description": "Generated server url" }
-  ],
+  "servers": [{ "url": "http://localhost:7003", "description": "Generated server url" }],
   "security": [{ "AUTH_HEADER_NAME": [] }],
   "paths": {
     "/app/v1/auth/login": {
@@ -14,19 +12,11 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/ucenter/profile/update": {
@@ -37,9 +27,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminUpdateMyProfileRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminUpdateMyProfileRequest" }
             }
           },
           "required": true
@@ -47,19 +35,11 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/ucenter/profile/get": {
@@ -71,20 +51,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultMyProfileDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultMyProfileDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/ucenter/password/update": {
@@ -95,9 +67,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminUpdateMyPasswordRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminUpdateMyPasswordRequest" }
             }
           },
           "required": true
@@ -105,19 +75,11 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/ucenter/avatar/update": {
@@ -127,28 +89,18 @@
         "operationId": "avatarUpdate",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/FileUploadResultVO" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/FileUploadResultVO" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/tenant/update": {
@@ -159,9 +111,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantMetaUpdateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantMetaUpdateRequest" }
             }
           },
           "required": true
@@ -169,18 +119,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["Tenant:update"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["Tenant:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -194,9 +138,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantPackageUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantPackageUpsertRequest" }
             }
           },
           "required": true
@@ -204,21 +146,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["TenantPackage:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["TenantPackage:update"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -233,9 +167,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantPackageListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantPackageListQuery" }
             }
           },
           "required": true
@@ -245,9 +177,7 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultTenantPackageDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultTenantPackageDTO" }
               }
             }
           }
@@ -255,11 +185,7 @@
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["TenantPackage:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["TenantPackage:read"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -273,9 +199,7 @@
         "operationId": "detail",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -283,22 +207,14 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultTenantPackageDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultTenantPackageDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["TenantPackage:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["TenantPackage:read"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -312,30 +228,20 @@
         "operationId": "delete",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["TenantPackage:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["TenantPackage:delete"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -350,9 +256,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantPackageUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantPackageUpsertRequest" }
             }
           },
           "required": true
@@ -360,21 +264,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["TenantPackage:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["TenantPackage:create"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -389,9 +285,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantPackageBindMenuRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantPackageBindMenuRequest" }
             }
           },
           "required": true
@@ -399,21 +293,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["TenantPackage:bindMenu"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["TenantPackage:bindMenu"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -428,9 +314,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantMetaListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantMetaListQuery" }
             }
           },
           "required": true
@@ -440,18 +324,14 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultTenantMetaDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultTenantMetaDTO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["Tenant:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["Tenant:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -464,9 +344,7 @@
         "operationId": "detail_1",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -474,19 +352,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultTenantMetaDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultTenantMetaDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["Tenant:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["Tenant:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -499,27 +371,19 @@
         "operationId": "delete_1",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["Tenant:delete"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["Tenant:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -533,9 +397,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminTenantCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminTenantCreateRequest" }
             }
           },
           "required": true
@@ -543,18 +405,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["Tenant:create"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["Tenant:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -568,9 +424,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysUserUpdateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysUserUpdateRequest" }
             }
           },
           "required": true
@@ -578,22 +432,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -608,7 +452,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminBatchSetStatusRequestLongSysUserStatusEnum"
+                "$ref": "#/components/schemas/AdminSetStatusRequestLongSysUserStatusEnum"
               }
             }
           },
@@ -617,22 +461,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -641,14 +475,12 @@
     "/admin/v1/sys/user/reset-password": {
       "post": {
         "tags": ["后台管理-系统用户管理"],
-        "summary": "重置指定用户密码",
+        "summary": "重置密码",
         "operationId": "resetPassword",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysUserResetSpecifiedOnePasswordRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysUserResetPasswordRequest" }
             }
           },
           "required": true
@@ -656,21 +488,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["SysUser:resetPassword"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["SysUser:reset-password"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -694,19 +518,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysUserDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysUserDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -719,27 +537,19 @@
         "operationId": "listRelatedRole",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultListLong" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultListLong" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -752,31 +562,19 @@
         "operationId": "kickOut",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:kickOut"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:kick-out"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -789,9 +587,7 @@
         "operationId": "detail_2",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -799,17 +595,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultSysUserDTO" }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysUserDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -822,31 +614,19 @@
         "operationId": "delete_2",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -860,9 +640,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysUserCreateRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysUserCreateRequest" }
             }
           },
           "required": true
@@ -870,22 +648,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -899,9 +667,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysUserBindRoleRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysUserBindRoleRequest" }
             }
           },
           "required": true
@@ -909,22 +675,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:bindRole"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:bind-role"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -938,9 +694,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysUserBindDeptRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysUserBindDeptRequest" }
             }
           },
           "required": true
@@ -948,22 +702,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysUser:bindDept"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysUser:bind-dept"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -977,8 +721,35 @@
         "requestBody": {
           "content": {
             "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminSysRoleUpsertRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [{ "values": ["SysRole:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/role/set-status": {
+      "post": {
+        "tags": ["后台管理-系统角色管理"],
+        "summary": "修改角色状态",
+        "operationId": "setStatus_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminSysRoleUpsertRequest"
+                "$ref": "#/components/schemas/AdminSetStatusRequestLongEnabledStatusEnum"
               }
             }
           },
@@ -987,21 +758,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["SysRole:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["SysRole:set-status"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -1025,19 +788,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysRoleDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysRoleDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1050,9 +807,7 @@
         "operationId": "detail_3",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -1060,17 +815,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultSysRoleDTO" }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysRoleDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1083,31 +834,19 @@
         "operationId": "delete_3",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysRole:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysRole:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1121,9 +860,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysRoleUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysRoleUpsertRequest" }
             }
           },
           "required": true
@@ -1132,21 +869,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultIdResponseLong" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysRole:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysRole:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1160,9 +889,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysRoleBindMenuRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysRoleBindMenuRequest" }
             }
           },
           "required": true
@@ -1170,22 +897,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysRole:bindMenu"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysRole:bind-menu"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1199,9 +916,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysOperateLogListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysOperateLogListQuery" }
             }
           },
           "required": true
@@ -1211,9 +926,7 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysOperateLogDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysOperateLogDTO" }
               }
             }
           }
@@ -1221,11 +934,7 @@
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["SysOperateLog:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["SysOperateLog:read"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -1239,9 +948,7 @@
         "operationId": "detail_4",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -1249,22 +956,14 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultSysOperateLogDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysOperateLogDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["SysOperateLog:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["SysOperateLog:read"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -1280,20 +979,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListSysMenuDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultListSysMenuDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/sys/menu/update": {
@@ -1304,9 +995,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysMenuUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysMenuUpsertRequest" }
             }
           },
           "required": true
@@ -1314,22 +1003,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysMenu:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysMenu:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1344,17 +1023,40 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListSysMenuDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultListSysMenuDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
+      }
+    },
+    "/admin/v1/sys/menu/set-status": {
+      "post": {
+        "tags": ["后台管理-系统菜单管理"],
+        "summary": "修改菜单状态",
+        "operationId": "setStatus_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSetStatusRequestLongEnabledStatusEnum"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [],
+          "permissions": [
+            { "values": ["SysMenu:set-status"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
           "roles": [],
           "ignore": false
         }
@@ -1369,19 +1071,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListSysMenuDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultListSysMenuDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysMenu:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysMenu:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1394,9 +1090,7 @@
         "operationId": "detail_5",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -1404,17 +1098,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultSysMenuDTO" }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysMenuDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysMenu:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysMenu:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1427,31 +1117,19 @@
         "operationId": "delete_4",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysMenu:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysMenu:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1465,9 +1143,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysMenuUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysMenuUpsertRequest" }
             }
           },
           "required": true
@@ -1475,22 +1151,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysMenu:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysMenu:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1504,9 +1170,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysLoginLogListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysLoginLogListQuery" }
             }
           },
           "required": true
@@ -1516,22 +1180,14 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysLoginLogDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysLoginLogDTO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysLoginLog:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysLoginLog:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1544,9 +1200,7 @@
         "operationId": "detail_6",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -1554,23 +1208,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultSysLoginLogDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysLoginLogDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysLoginLog:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysLoginLog:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1584,9 +1228,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysDictItemUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysDictItemUpsertRequest" }
             }
           },
           "required": true
@@ -1594,22 +1236,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDict:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDict:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1623,9 +1255,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysDictItemListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysDictItemListQuery" }
             }
           },
           "required": true
@@ -1635,18 +1265,14 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysDictItemDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysDictItemDTO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1659,31 +1285,19 @@
         "operationId": "deleteItem",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDict:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDict:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1697,9 +1311,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysDictItemUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysDictItemUpsertRequest" }
             }
           },
           "required": true
@@ -1707,22 +1319,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDict:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDict:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1736,9 +1338,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysDictCategoryUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysDictCategoryUpsertRequest" }
             }
           },
           "required": true
@@ -1746,22 +1346,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDict:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDict:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1778,22 +1368,14 @@
             "in": "query",
             "description": "当前页码",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "description": "当前页码"
-            }
+            "schema": { "type": "integer", "format": "int32", "description": "当前页码" }
           },
           {
             "name": "pageParam.pageSize",
             "in": "query",
             "description": "当前页大小",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "description": "当前页大小"
-            }
+            "schema": { "type": "integer", "format": "int32", "description": "当前页大小" }
           },
           {
             "name": "code",
@@ -1815,18 +1397,14 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysDictCategoryDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysDictCategoryDTO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1839,31 +1417,19 @@
         "operationId": "deleteCategory",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDict:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDict:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1877,9 +1443,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysDictCategoryUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysDictCategoryUpsertRequest" }
             }
           },
           "required": true
@@ -1887,22 +1451,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDict:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDict:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1919,22 +1473,14 @@
             "in": "query",
             "description": "当前页码",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "description": "当前页码"
-            }
+            "schema": { "type": "integer", "format": "int32", "description": "当前页码" }
           },
           {
             "name": "pageParam.pageSize",
             "in": "query",
             "description": "当前页大小",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "description": "当前页大小"
-            }
+            "schema": { "type": "integer", "format": "int32", "description": "当前页大小" }
           },
           {
             "name": "code",
@@ -1956,18 +1502,14 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultSysDictBuiltinDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultSysDictBuiltinDTO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1981,8 +1523,35 @@
         "requestBody": {
           "content": {
             "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminSysDeptUpsertRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [{ "values": ["SysDept:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dept/set-status": {
+      "post": {
+        "tags": ["后台管理-部门管理"],
+        "summary": "修改部门状态",
+        "operationId": "setStatus_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminSysDeptUpsertRequest"
+                "$ref": "#/components/schemas/AdminSetStatusRequestLongEnabledStatusEnum"
               }
             }
           },
@@ -1991,21 +1560,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["SysDept:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["SysDept:set-status"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -2021,19 +1582,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListSysDeptDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultListSysDeptDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysDept:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysDept:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2046,9 +1601,7 @@
         "operationId": "detail_7",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -2056,17 +1609,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultSysDeptDTO" }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysDeptDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysDept:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysDept:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2079,31 +1628,19 @@
         "operationId": "delete_5",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDept:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDept:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2117,9 +1654,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminSysDeptUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminSysDeptUpsertRequest" }
             }
           },
           "required": true
@@ -2127,22 +1662,12 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["SysDept:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["SysDept:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2158,19 +1683,13 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/select-option/sys/dept": {
@@ -2183,19 +1702,13 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/select-option/dict/{categoryCode}": {
@@ -2204,31 +1717,20 @@
         "summary": "字典数据",
         "operationId": "dict",
         "parameters": [
-          {
-            "name": "categoryCode",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "categoryCode", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultListAdminSelectOptionItemVO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/file/storage/update": {
@@ -2239,9 +1741,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminFileStorageUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminFileStorageUpsertRequest" }
             }
           },
           "required": true
@@ -2249,21 +1749,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["FileStorage:update"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["FileStorage:update"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -2278,9 +1770,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminFileStorageListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminFileStorageListQuery" }
             }
           },
           "required": true
@@ -2290,22 +1780,14 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultFileStorageDTO"
-                }
+                "schema": { "$ref": "#/components/schemas/ApiResultPageResultFileStorageDTO" }
               }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["FileStorage:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["FileStorage:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2318,9 +1800,7 @@
         "operationId": "detail_8",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -2328,23 +1808,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultFileStorageDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultFileStorageDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            {
-              "values": ["FileStorage:read"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
-          ],
+          "permissions": [{ "values": ["FileStorage:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2357,30 +1827,20 @@
         "operationId": "delete_6",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["FileStorage:delete"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["FileStorage:delete"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -2395,9 +1855,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminFileStorageUpsertRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminFileStorageUpsertRequest" }
             }
           },
           "required": true
@@ -2405,21 +1863,13 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            {
-              "values": ["FileStorage:create"],
-              "mode": "AND",
-              "type": "ADMIN_USER"
-            }
+            { "values": ["FileStorage:create"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -2434,9 +1884,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminFileMetaListQuery"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminFileMetaListQuery" }
             }
           },
           "required": true
@@ -2445,19 +1893,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultPageResultFileMetaDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultPageResultFileMetaDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["File:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["File:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2470,9 +1912,7 @@
         "operationId": "detail_9",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
@@ -2480,19 +1920,13 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultFileMetaDTO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultFileMetaDTO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["File:read"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["File:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2505,27 +1939,19 @@
         "operationId": "delete_7",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/IdRequestLong" }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/IdRequestLong" } }
           },
           "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["File:delete"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["File:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2539,9 +1965,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdminAuthPasswordLoginRequest"
-              }
+              "schema": { "$ref": "#/components/schemas/AdminAuthPasswordLoginRequest" }
             }
           },
           "required": true
@@ -2550,20 +1974,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultSysUserLoginVO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultSysUserLoginVO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/auth/logout": {
@@ -2574,19 +1990,11 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/ApiResultVoid" }
-              }
-            }
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/v1/auth/challenge": {
@@ -2598,20 +2006,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultAdminAuthChallengeVO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultAdminAuthChallengeVO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/file/upload": {
@@ -2626,9 +2026,7 @@
                 "type": "object",
                 "properties": {
                   "arg0": { "type": "string", "format": "binary" },
-                  "arg1": {
-                    "$ref": "#/components/schemas/FileAttrExtraRequest"
-                  }
+                  "arg1": { "$ref": "#/components/schemas/FileAttrExtraRequest" }
                 },
                 "required": ["arg0"]
               }
@@ -2639,20 +2037,12 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResultFileUploadResultVO"
-                }
-              }
+              "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultFileUploadResultVO" } }
             }
           }
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     },
     "/admin/file/download/v1/{hashIds}/{tenantCode}": {
@@ -2663,11 +2053,7 @@
         "parameters": [],
         "responses": { "200": { "description": "OK" } },
         "security": [{ "AUTH_HEADER_NAME": [] }],
-        "x-nextdoc4j-security": {
-          "permissions": [],
-          "roles": [],
-          "ignore": false
-        }
+        "x-nextdoc4j-security": { "permissions": [], "roles": [], "ignore": false }
       }
     }
   },
@@ -2685,12 +2071,7 @@
       "AdminUpdateMyProfileRequest": {
         "type": "object",
         "properties": {
-          "nickname": {
-            "type": "string",
-            "description": "昵称",
-            "maxLength": 20,
-            "minLength": 0
-          },
+          "nickname": { "type": "string", "description": "昵称", "maxLength": 20, "minLength": 0 },
           "gender": {
             "type": "string",
             "description": "性别",
@@ -2719,10 +2100,7 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/MyProfileDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/MyProfileDTO", "description": "承载数据" }
         }
       },
       "MyProfileDTO": {
@@ -2730,11 +2108,7 @@
         "properties": {
           "pin": { "type": "string", "description": "账号" },
           "nickname": { "type": "string", "description": "昵称" },
-          "lastLoginAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "最后登录时刻"
-          },
+          "lastLoginAt": { "type": "string", "format": "date-time", "description": "最后登录时刻" },
           "gender": {
             "type": "string",
             "description": "性别",
@@ -2754,12 +2128,7 @@
         "type": "object",
         "properties": {
           "old": { "type": "string", "description": "原密码", "minLength": 1 },
-          "neo": {
-            "type": "string",
-            "description": "新密码",
-            "maxLength": 20,
-            "minLength": 8
-          },
+          "neo": { "type": "string", "description": "新密码", "maxLength": 20, "minLength": 8 },
           "confirmNeo": {
             "type": "string",
             "description": "确认密码",
@@ -2787,22 +2156,9 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "name": {
-            "type": "string",
-            "description": "租户名称",
-            "maxLength": 50,
-            "minLength": 0
-          },
-          "packageId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属租户套餐ID"
-          },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          }
+          "name": { "type": "string", "description": "租户名称", "maxLength": 50, "minLength": 0 },
+          "packageId": { "type": "integer", "format": "int64", "description": "所属租户套餐ID" },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         },
         "required": ["name"]
       },
@@ -2815,23 +2171,9 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "code": {
-            "type": "string",
-            "description": "套餐编码",
-            "maxLength": 100,
-            "minLength": 0
-          },
-          "name": {
-            "type": "string",
-            "description": "套餐名称",
-            "maxLength": 100,
-            "minLength": 0
-          },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "code": { "type": "string", "description": "套餐编码", "maxLength": 100, "minLength": 0 },
+          "name": { "type": "string", "description": "套餐名称", "maxLength": 100, "minLength": 0 },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "description": {
             "type": "string",
             "description": "套餐描述",
@@ -2844,32 +2186,17 @@
       "AdminTenantPackageListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
           "code": { "type": "string", "description": "套餐编码(关键词)" },
           "name": { "type": "string", "description": "套餐名称(关键词)" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          }
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         }
       },
       "PageParam": {
         "type": "object",
         "properties": {
-          "pageNum": {
-            "type": "integer",
-            "format": "int32",
-            "description": "当前页码"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32",
-            "description": "当前页大小"
-          }
+          "pageNum": { "type": "integer", "format": "int32", "description": "当前页码" },
+          "pageSize": { "type": "integer", "format": "int32", "description": "当前页大小" }
         }
       },
       "ApiResultPageResultTenantPackageDTO": {
@@ -2887,21 +2214,9 @@
       "PageResultTenantPackageDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -2912,28 +2227,12 @@
       "TenantPackageDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "code": { "type": "string", "description": "套餐编码" },
           "name": { "type": "string", "description": "套餐名称" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "description": { "type": "string", "description": "套餐描述" },
           "menuIds": {
             "type": "array",
@@ -2944,9 +2243,7 @@
       },
       "IdRequestLong": {
         "type": "object",
-        "properties": {
-          "id": { "type": "integer", "format": "int64", "description": "ID" }
-        },
+        "properties": { "id": { "type": "integer", "format": "int64", "description": "ID" } },
         "required": ["id"]
       },
       "ApiResultTenantPackageDTO": {
@@ -2955,20 +2252,13 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/TenantPackageDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/TenantPackageDTO", "description": "承载数据" }
         }
       },
       "AdminTenantPackageBindMenuRequest": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
           "menuIds": {
             "type": "array",
             "description": "菜单Ids(空=清理关联关系后不再绑定任何菜单)",
@@ -2980,17 +2270,10 @@
       "AdminTenantMetaListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
           "code": { "type": "string", "description": "租户编码(关键词)" },
           "name": { "type": "string", "description": "租户名称(关键词)" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          }
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         }
       },
       "ApiResultPageResultTenantMetaDTO": {
@@ -3008,21 +2291,9 @@
       "PageResultTenantMetaDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -3033,38 +2304,18 @@
       "TenantMetaDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "code": { "type": "string", "description": "租户编码" },
           "name": { "type": "string", "description": "租户名称" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "adminUserId": {
             "type": "integer",
             "format": "int64",
             "description": "租户管理员用户ID"
           },
-          "packageId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属租户套餐ID"
-          },
+          "packageId": { "type": "integer", "format": "int64", "description": "所属租户套餐ID" },
           "adminUserProfile": {
             "$ref": "#/components/schemas/TenantUserBasicProfileDTO",
             "description": "租户管理员用户资料"
@@ -3091,27 +2342,14 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/TenantMetaDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/TenantMetaDTO", "description": "承载数据" }
         }
       },
       "AdminTenantCreateRequest": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string",
-            "description": "租户编码",
-            "maxLength": 100,
-            "minLength": 0
-          },
-          "name": {
-            "type": "string",
-            "description": "租户名称",
-            "maxLength": 100,
-            "minLength": 0
-          },
+          "code": { "type": "string", "description": "租户编码", "maxLength": 100, "minLength": 0 },
+          "name": { "type": "string", "description": "租户名称", "maxLength": 100, "minLength": 0 },
           "tenantAdminPin": {
             "type": "string",
             "description": "租户管理员账号",
@@ -3138,11 +2376,7 @@
             "minLength": 0,
             "pattern": "(?:0|86|\\+86)?1[3-9]\\d{9}"
           },
-          "packageId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属租户套餐ID"
-          }
+          "packageId": { "type": "integer", "format": "int64", "description": "所属租户套餐ID" }
         },
         "required": [
           "code",
@@ -3162,23 +2396,8 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "pin": {
-            "type": "string",
-            "description": "账号",
-            "maxLength": 16,
-            "minLength": 5
-          },
-          "requireNewPwdFlag": {
-            "type": "string",
-            "description": "要求用户下次登录时修改密码",
-            "enum": ["NO", "YES"]
-          },
-          "nickname": {
-            "type": "string",
-            "description": "昵称",
-            "maxLength": 20,
-            "minLength": 0
-          },
+          "pin": { "type": "string", "description": "账号", "maxLength": 16, "minLength": 5 },
+          "nickname": { "type": "string", "description": "昵称", "maxLength": 20, "minLength": 0 },
           "gender": {
             "type": "string",
             "description": "性别",
@@ -3199,56 +2418,42 @@
             "pattern": "(?:0|86|\\+86)?1[3-9]\\d{9}"
           }
         },
-        "required": [
-          "email",
-          "gender",
-          "nickname",
-          "phoneNo",
-          "pin",
-          "requireNewPwdFlag"
-        ]
+        "required": ["email", "gender", "nickname", "phoneNo", "pin"]
       },
-      "AdminBatchSetStatusRequestLongSysUserStatusEnum": {
+      "AdminSetStatusRequestLongSysUserStatusEnum": {
         "type": "object",
         "properties": {
-          "ids": {
-            "type": "array",
-            "description": "主键ID数组",
-            "items": { "type": "integer", "format": "int64" },
-            "minItems": 1
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
           "newStatus": {
             "type": "string",
             "description": "新状态",
             "enum": ["DISABLED", "ENABLED"]
           }
         },
-        "required": ["ids", "newStatus"]
+        "required": ["id", "newStatus"]
       },
-      "AdminSysUserResetSpecifiedOnePasswordRequest": {
+      "AdminSysUserResetPasswordRequest": {
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID"
-          },
+          "userId": { "type": "integer", "format": "int64", "description": "用户ID" },
           "randomPassword": {
             "type": "string",
             "description": "随机新密码",
             "maxLength": 64,
             "minLength": 16
+          },
+          "requireNewPwdFlag": {
+            "type": "string",
+            "description": "要求用户下次登录时修改密码",
+            "enum": ["NO", "YES"]
           }
         },
-        "required": ["randomPassword"]
+        "required": ["randomPassword", "requireNewPwdFlag"]
       },
       "AdminSysUserListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
           "phoneNo": { "type": "string", "description": "手机号(关键词)" },
           "selectedDeptId": {
             "type": "integer",
@@ -3263,30 +2468,15 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/PageResultSysUserDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/PageResultSysUserDTO", "description": "承载数据" }
         }
       },
       "PageResultSysUserDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -3297,28 +2487,12 @@
       "SysUserDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "pin": { "type": "string", "description": "账号" },
           "nickname": { "type": "string", "description": "昵称" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "gender": {
             "type": "string",
             "description": "性别",
@@ -3326,16 +2500,8 @@
           },
           "email": { "type": "string", "description": "邮箱" },
           "phoneNo": { "type": "string", "description": "手机号" },
-          "lastLoginAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "最后登录时刻"
-          },
-          "deptId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属部门ID"
-          },
+          "lastLoginAt": { "type": "string", "format": "date-time", "description": "最后登录时刻" },
+          "deptId": { "type": "integer", "format": "int64", "description": "所属部门ID" },
           "deptName": { "type": "string", "description": "所属部门名称" },
           "avatarUrl": { "type": "string", "description": "头像URL" }
         }
@@ -3359,32 +2525,14 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysUserDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysUserDTO", "description": "承载数据" }
         }
       },
       "AdminSysUserCreateRequest": {
         "type": "object",
         "properties": {
-          "pin": {
-            "type": "string",
-            "description": "账号",
-            "maxLength": 16,
-            "minLength": 5
-          },
-          "requireNewPwdFlag": {
-            "type": "string",
-            "description": "要求用户下次登录时修改密码",
-            "enum": ["NO", "YES"]
-          },
-          "nickname": {
-            "type": "string",
-            "description": "昵称",
-            "maxLength": 20,
-            "minLength": 0
-          },
+          "pin": { "type": "string", "description": "账号", "maxLength": 16, "minLength": 5 },
+          "nickname": { "type": "string", "description": "昵称", "maxLength": 20, "minLength": 0 },
           "gender": {
             "type": "string",
             "description": "性别",
@@ -3410,21 +2558,9 @@
             "maxLength": 20,
             "minLength": 5
           },
-          "deptId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属部门ID"
-          }
+          "deptId": { "type": "integer", "format": "int64", "description": "所属部门ID" }
         },
-        "required": [
-          "email",
-          "gender",
-          "initPwd",
-          "nickname",
-          "phoneNo",
-          "pin",
-          "requireNewPwdFlag"
-        ]
+        "required": ["email", "gender", "initPwd", "nickname", "phoneNo", "pin"]
       },
       "AdminSysUserBindRoleRequest": {
         "type": "object",
@@ -3435,11 +2571,7 @@
             "items": { "type": "integer", "format": "int64" },
             "uniqueItems": true
           },
-          "userId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID"
-          }
+          "userId": { "type": "integer", "format": "int64", "description": "用户ID" }
         },
         "required": ["userId"]
       },
@@ -3451,11 +2583,7 @@
             "format": "int64",
             "description": "部门ID；如果为空则视为解除部门绑定"
           },
-          "userId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID"
-          }
+          "userId": { "type": "integer", "format": "int64", "description": "用户ID" }
         },
         "required": ["userId"]
       },
@@ -3468,18 +2596,8 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "code": {
-            "type": "string",
-            "description": "角色编码",
-            "maxLength": 100,
-            "minLength": 0
-          },
-          "name": {
-            "type": "string",
-            "description": "角色名称",
-            "maxLength": 100,
-            "minLength": 0
-          },
+          "code": { "type": "string", "description": "角色编码", "maxLength": 100, "minLength": 0 },
+          "name": { "type": "string", "description": "角色名称", "maxLength": 100, "minLength": 0 },
           "description": {
             "type": "string",
             "description": "角色描述",
@@ -3489,13 +2607,22 @@
         },
         "required": ["code", "description", "name"]
       },
+      "AdminSetStatusRequestLongEnabledStatusEnum": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "newStatus": {
+            "type": "string",
+            "description": "新状态",
+            "enum": ["DISABLED", "ENABLED"]
+          }
+        },
+        "required": ["id", "newStatus"]
+      },
       "AdminSysRoleListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
           "name": { "type": "string", "description": "角色名称(关键词)" },
           "code": { "type": "string", "description": "角色编码(关键词)" }
         }
@@ -3506,30 +2633,15 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/PageResultSysRoleDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/PageResultSysRoleDTO", "description": "承载数据" }
         }
       },
       "PageResultSysRoleDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -3540,29 +2652,13 @@
       "SysRoleDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "code": { "type": "string", "description": "角色编码" },
           "name": { "type": "string", "description": "角色名称" },
           "description": { "type": "string", "description": "角色描述" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "flags": {
             "type": "array",
             "description": "角色特殊标记",
@@ -3581,11 +2677,21 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysRoleDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysRoleDTO", "description": "承载数据" }
         }
+      },
+      "ApiResultIdResponseLong": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "是否成功" },
+          "code": { "type": "string", "description": "错误码" },
+          "msg": { "type": "string", "description": "消息文本" },
+          "data": { "$ref": "#/components/schemas/IdResponseLong", "description": "承载数据" }
+        }
+      },
+      "IdResponseLong": {
+        "type": "object",
+        "properties": { "id": { "type": "integer", "format": "int64", "description": "ID" } }
       },
       "AdminSysRoleBindMenuRequest": {
         "type": "object",
@@ -3596,39 +2702,20 @@
             "items": { "type": "integer", "format": "int64" },
             "uniqueItems": true
           },
-          "roleId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "角色ID"
-          }
+          "roleId": { "type": "integer", "format": "int64", "description": "角色ID" }
         },
         "required": ["roleId"]
       },
       "AdminSysOperateLogListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
-          "beginAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间起"
-          },
-          "endAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间止"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
+          "beginAt": { "type": "string", "format": "date-time", "description": "时间区间起" },
+          "endAt": { "type": "string", "format": "date-time", "description": "时间区间止" },
           "bizType": { "type": "string", "description": "业务类型" },
           "behavior": { "type": "string", "description": "行为" },
           "bizNo": { "type": "string", "description": "业务号" },
-          "userId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID"
-          },
+          "userId": { "type": "integer", "format": "int64", "description": "用户ID" },
           "resultStatus": {
             "type": "string",
             "description": "结果状态",
@@ -3651,21 +2738,9 @@
       "PageResultSysOperateLogDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -3676,40 +2751,21 @@
       "SysOperateLogDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "bizType": { "type": "string", "description": "业务类型" },
           "behavior": { "type": "string", "description": "行为" },
           "bizNo": { "type": "string", "description": "业务号" },
           "operation": { "type": "string", "description": "操作内容" },
           "bizExtra": { "type": "string", "description": "额外业务信息" },
-          "userId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID"
-          },
+          "userId": { "type": "integer", "format": "int64", "description": "用户ID" },
           "userTypeCode": { "type": "string", "description": "用户类型编码" },
           "requestMethod": { "type": "string", "description": "HTTP请求方法" },
           "requestPath": { "type": "string", "description": "HTTP请求路径" },
           "visitorIp": { "type": "string", "description": "来源IP地址" },
           "visitorUserAgent": { "type": "string", "description": "来源UA" },
-          "visitorIpLocation": {
-            "type": "string",
-            "description": "IP地址归属地"
-          },
+          "visitorIpLocation": { "type": "string", "description": "IP地址归属地" },
           "resultStatus": {
             "type": "string",
             "description": "结果状态",
@@ -3724,10 +2780,7 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysOperateLogDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysOperateLogDTO", "description": "承载数据" }
         }
       },
       "ApiResultListSysMenuDTO": {
@@ -3746,21 +2799,9 @@
       "SysMenuDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "name": { "type": "string", "description": "名称" },
           "parentId": {
             "type": "integer",
@@ -3773,17 +2814,9 @@
             "enum": ["DIR", "MENU", "BUTTON", "EXTERNAL_LINK"]
           },
           "permission": { "type": "string", "description": "授权标识" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "icon": { "type": "string", "description": "图标" },
-          "sort": {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序"
-          },
+          "sort": { "type": "integer", "format": "int32", "description": "排序" },
           "component": { "type": "string", "description": "前端组件名称" },
           "externalLink": { "type": "string", "description": "外链地址" }
         }
@@ -3797,12 +2830,7 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "name": {
-            "type": "string",
-            "description": "菜单名称",
-            "maxLength": 100,
-            "minLength": 0
-          },
+          "name": { "type": "string", "description": "菜单名称", "maxLength": 100, "minLength": 0 },
           "parentId": {
             "type": "integer",
             "format": "int64",
@@ -3825,22 +2853,9 @@
             "maxLength": 255,
             "minLength": 0
           },
-          "icon": {
-            "type": "string",
-            "description": "图标",
-            "maxLength": 255,
-            "minLength": 0
-          },
-          "sort": {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序"
-          },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "icon": { "type": "string", "description": "图标", "maxLength": 255, "minLength": 0 },
+          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "externalLink": {
             "type": "string",
             "description": "外链地址",
@@ -3856,35 +2871,21 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysMenuDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysMenuDTO", "description": "承载数据" }
         }
       },
       "AdminSysLoginLogListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
           "userPin": { "type": "string", "description": "用户账号" },
           "resultStatus": {
             "type": "string",
             "description": "结果状态",
             "enum": ["SUCCESS", "FAILED"]
           },
-          "beginAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间起"
-          },
-          "endAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间止"
-          }
+          "beginAt": { "type": "string", "format": "date-time", "description": "时间区间起" },
+          "endAt": { "type": "string", "format": "date-time", "description": "时间区间止" }
         }
       },
       "ApiResultPageResultSysLoginLogDTO": {
@@ -3902,21 +2903,9 @@
       "PageResultSysLoginLogDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -3927,33 +2916,19 @@
       "SysLoginLogDTO": {
         "type": "object",
         "properties": {
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
           "loginLogType": {
             "type": "string",
             "description": "登录日志类型",
             "enum": ["PASSWORD_LOGIN", "LOGOUT"]
           },
           "userPin": { "type": "string", "description": "用户账号" },
-          "userId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID"
-          },
+          "userId": { "type": "integer", "format": "int64", "description": "用户ID" },
           "userTypeCode": { "type": "string", "description": "用户类型编码" },
           "visitorIp": { "type": "string", "description": "来源IP地址" },
-          "visitorBrowser": {
-            "type": "string",
-            "description": "来源浏览器+版本"
-          },
+          "visitorBrowser": { "type": "string", "description": "来源浏览器+版本" },
           "visitorOs": { "type": "string", "description": "来源操作系统+版本" },
-          "visitorIpLocation": {
-            "type": "string",
-            "description": "IP地址归属地"
-          },
+          "visitorIpLocation": { "type": "string", "description": "IP地址归属地" },
           "resultStatus": {
             "type": "string",
             "description": "结果状态",
@@ -3968,10 +2943,7 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysLoginLogDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysLoginLogDTO", "description": "承载数据" }
         }
       },
       "AdminSysDictItemUpsertRequest": {
@@ -3983,11 +2955,7 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "categoryId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属分类ID"
-          },
+          "categoryId": { "type": "integer", "format": "int64", "description": "所属分类ID" },
           "code": {
             "type": "string",
             "description": "字典项编码",
@@ -4006,16 +2974,8 @@
             "maxLength": 100,
             "minLength": 0
           },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
-          "sort": {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序"
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
+          "sort": { "type": "integer", "format": "int32", "description": "排序" },
           "description": {
             "type": "string",
             "description": "字典项描述",
@@ -4028,15 +2988,8 @@
       "AdminSysDictItemListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
-          "categoryId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属分类ID"
-          }
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
+          "categoryId": { "type": "integer", "format": "int64", "description": "所属分类ID" }
         },
         "required": ["categoryId"]
       },
@@ -4055,21 +3008,9 @@
       "PageResultSysDictItemDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -4086,34 +3027,14 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
-          "categoryId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "所属分类ID"
-          },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
+          "categoryId": { "type": "integer", "format": "int64", "description": "所属分类ID" },
           "code": { "type": "string", "description": "字典项编码" },
           "value": { "type": "string", "description": "字典项值" },
           "label": { "type": "string", "description": "字典项标签" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
-          "sort": {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序"
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
+          "sort": { "type": "integer", "format": "int32", "description": "排序" },
           "description": { "type": "string", "description": "字典项描述" }
         }
       },
@@ -4126,23 +3047,9 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "code": {
-            "type": "string",
-            "description": "字典编码",
-            "maxLength": 100,
-            "minLength": 0
-          },
-          "name": {
-            "type": "string",
-            "description": "字典名称",
-            "maxLength": 100,
-            "minLength": 0
-          },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "code": { "type": "string", "description": "字典编码", "maxLength": 100, "minLength": 0 },
+          "name": { "type": "string", "description": "字典名称", "maxLength": 100, "minLength": 0 },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "description": {
             "type": "string",
             "description": "字典描述",
@@ -4167,21 +3074,9 @@
       "PageResultSysDictCategoryDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -4192,28 +3087,12 @@
       "SysDictCategoryDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "code": { "type": "string", "description": "字典编码" },
           "name": { "type": "string", "description": "字典名称" },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "description": { "type": "string", "description": "字典描述" }
         }
       },
@@ -4232,21 +3111,9 @@
       "PageResultSysDictBuiltinDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -4276,27 +3143,14 @@
             "description": "主键ID",
             "title": "仅修改时使用"
           },
-          "name": {
-            "type": "string",
-            "description": "部门名称",
-            "maxLength": 100,
-            "minLength": 0
-          },
+          "name": { "type": "string", "description": "部门名称", "maxLength": 100, "minLength": 0 },
           "parentId": {
             "type": "integer",
             "format": "int64",
             "description": "上级部门ID(根部门设置为0)"
           },
-          "sort": {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序"
-          },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          }
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越大越靠前)" },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         },
         "required": ["name"]
       },
@@ -4316,37 +3170,17 @@
       "SysDeptDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "name": { "type": "string", "description": "部门名称" },
           "parentId": {
             "type": "integer",
             "format": "int64",
             "description": "上级部门ID(根部门设置为0)"
           },
-          "sort": {
-            "type": "integer",
-            "format": "int32",
-            "description": "排序"
-          },
-          "status": {
-            "type": "string",
-            "description": "状态",
-            "enum": ["DISABLED", "ENABLED"]
-          }
+          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         }
       },
       "ApiResultSysDeptDTO": {
@@ -4355,10 +3189,7 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysDeptDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysDeptDTO", "description": "承载数据" }
         }
       },
       "AdminSelectOptionItemVO": {
@@ -4416,37 +3247,16 @@
             "additionalProperties": {},
             "description": "配置属性"
           },
-          "primaryFlag": {
-            "type": "string",
-            "description": "主存储点标识",
-            "enum": ["NO", "YES"]
-          }
+          "primaryFlag": { "type": "string", "description": "主存储点标识", "enum": ["NO", "YES"] }
         },
-        "required": [
-          "code",
-          "name",
-          "platformType",
-          "primaryFlag",
-          "settingBody"
-        ]
+        "required": ["code", "name", "platformType", "primaryFlag", "settingBody"]
       },
       "AdminFileStorageListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
-          "beginAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间起"
-          },
-          "endAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间止"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
+          "beginAt": { "type": "string", "format": "date-time", "description": "时间区间起" },
+          "endAt": { "type": "string", "format": "date-time", "description": "时间区间止" },
           "code": { "type": "string", "description": "存储点编码" },
           "name": { "type": "string", "description": "存储点名称" },
           "platformType": {
@@ -4454,11 +3264,7 @@
             "description": "存储平台类型",
             "enum": ["LOCAL", "AMAZON_S3", "AMAZON_S3_V2", "ALIYUN_OSS"]
           },
-          "primaryFlag": {
-            "type": "string",
-            "description": "主存储点标识",
-            "enum": ["NO", "YES"]
-          }
+          "primaryFlag": { "type": "string", "description": "主存储点标识", "enum": ["NO", "YES"] }
         }
       },
       "ApiResultPageResultFileStorageDTO": {
@@ -4476,21 +3282,9 @@
       "FileStorageDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "code": { "type": "string", "description": "存储点编码" },
           "name": { "type": "string", "description": "存储点名称" },
           "platformType": {
@@ -4502,32 +3296,16 @@
             "$ref": "#/components/schemas/FileStorageSetting",
             "description": "配置属性"
           },
-          "primaryFlag": {
-            "type": "string",
-            "description": "主存储点标识",
-            "enum": ["NO", "YES"]
-          }
+          "primaryFlag": { "type": "string", "description": "主存储点标识", "enum": ["NO", "YES"] }
         }
       },
       "FileStorageSetting": {},
       "PageResultFileStorageDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -4541,40 +3319,22 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/FileStorageDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/FileStorageDTO", "description": "承载数据" }
         }
       },
       "AdminFileMetaListQuery": {
         "type": "object",
         "properties": {
-          "pageParam": {
-            "$ref": "#/components/schemas/PageParam",
-            "description": "分页查询参数"
-          },
-          "beginAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间起"
-          },
-          "endAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "时间区间止"
-          },
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
+          "beginAt": { "type": "string", "format": "date-time", "description": "时间区间起" },
+          "endAt": { "type": "string", "format": "date-time", "description": "时间区间止" },
           "periodBetween": {
             "type": "array",
             "description": "时间区间起止",
             "items": { "type": "string", "format": "date-time" },
             "maxLength": 2
           },
-          "storageId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "原始存储点ID"
-          },
+          "storageId": { "type": "integer", "format": "int64", "description": "原始存储点ID" },
           "storageCode": { "type": "string", "description": "存储点编码" },
           "storageFilename": { "type": "string", "description": "存储文件名" },
           "originalFilename": { "type": "string", "description": "原始文件名" },
@@ -4597,40 +3357,17 @@
       "FileMetaDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "主键ID"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "创建时刻"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "更新时刻"
-          },
-          "storageId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "原始存储点ID"
-          },
+          "id": { "type": "integer", "format": "int64", "description": "主键ID" },
+          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
+          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
+          "storageId": { "type": "integer", "format": "int64", "description": "原始存储点ID" },
           "storageCode": { "type": "string", "description": "存储点编码" },
-          "storageBasePath": {
-            "type": "string",
-            "description": "存储点主目录路径"
-          },
+          "storageBasePath": { "type": "string", "description": "存储点主目录路径" },
           "subDirPath": { "type": "string", "description": "子目录路径" },
           "storageFilename": { "type": "string", "description": "存储文件名" },
           "originalFilename": { "type": "string", "description": "原始文件名" },
           "extendName": { "type": "string", "description": "扩展名" },
-          "fileSize": {
-            "type": "integer",
-            "format": "int64",
-            "description": "文件大小"
-          },
+          "fileSize": { "type": "integer", "format": "int64", "description": "文件大小" },
           "digestSha256": { "type": "string", "description": "SHA256" },
           "category": { "type": "string", "description": "文件主分类" },
           "directUrl": { "type": "string", "description": "对象存储直链" },
@@ -4641,21 +3378,9 @@
       "PageResultFileMetaDTO": {
         "type": "object",
         "properties": {
-          "current": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int64",
-            "description": "当前页数量"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64",
-            "description": "总量"
-          },
+          "current": { "type": "integer", "format": "int64", "description": "当前页" },
+          "size": { "type": "integer", "format": "int64", "description": "当前页数量" },
+          "total": { "type": "integer", "format": "int64", "description": "总量" },
           "records": {
             "type": "array",
             "description": "记录",
@@ -4669,27 +3394,14 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/FileMetaDTO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/FileMetaDTO", "description": "承载数据" }
         }
       },
       "AdminAuthPasswordLoginRequest": {
         "type": "object",
         "properties": {
-          "pin": {
-            "type": "string",
-            "description": "账号",
-            "maxLength": 16,
-            "minLength": 5
-          },
-          "pwd": {
-            "type": "string",
-            "description": "密码",
-            "maxLength": 20,
-            "minLength": 5
-          },
+          "pin": { "type": "string", "description": "账号", "maxLength": 16, "minLength": 5 },
+          "pwd": { "type": "string", "description": "密码", "maxLength": 20, "minLength": 5 },
           "tenantCode": { "type": "string", "description": "租户编码" },
           "captchaId": { "type": "string", "description": "验证码唯一标识" },
           "captchaAnswer": { "type": "string", "description": "验证码答案" }
@@ -4702,21 +3414,14 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/SysUserLoginVO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/SysUserLoginVO", "description": "承载数据" }
         }
       },
       "SysUserLoginVO": {
         "type": "object",
         "properties": {
           "token": { "type": "string", "description": "token值" },
-          "roles": {
-            "type": "array",
-            "description": "对应角色",
-            "items": { "type": "string" }
-          },
+          "roles": { "type": "array", "description": "对应角色", "items": { "type": "string" } },
           "permissions": {
             "type": "array",
             "description": "拥有权限",
@@ -4728,16 +3433,9 @@
         "type": "object",
         "properties": {
           "type": { "type": "string", "description": "挑战类型" },
-          "captchaImageEncoded": {
-            "type": "string",
-            "description": "验证码图片Base64"
-          },
+          "captchaImageEncoded": { "type": "string", "description": "验证码图片Base64" },
           "captchaId": { "type": "string", "description": "验证码唯一标识" },
-          "expiredAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "验证码失效时刻"
-          }
+          "expiredAt": { "type": "string", "format": "date-time", "description": "验证码失效时刻" }
         }
       },
       "ApiResultAdminAuthChallengeVO": {
@@ -4746,10 +3444,7 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/AdminAuthChallengeVO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/AdminAuthChallengeVO", "description": "承载数据" }
         }
       },
       "FileAttrExtraRequest": {
@@ -4768,10 +3463,7 @@
           "success": { "type": "boolean", "description": "是否成功" },
           "code": { "type": "string", "description": "错误码" },
           "msg": { "type": "string", "description": "消息文本" },
-          "data": {
-            "$ref": "#/components/schemas/FileUploadResultVO",
-            "description": "承载数据"
-          }
+          "data": { "$ref": "#/components/schemas/FileUploadResultVO", "description": "承载数据" }
         }
       }
     },

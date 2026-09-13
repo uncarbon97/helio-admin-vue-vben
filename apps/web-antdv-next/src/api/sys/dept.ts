@@ -78,12 +78,12 @@ async function deleteDept(id: string) {
 
 /**
  * 修改状态（启用/禁用）
- * @param ids 部门ID列表
+ * @param id 部门ID
  * @param newStatus 新状态
  */
-async function setDeptStatus(ids: string[], newStatus: EnabledStatusEnum) {
+async function setDeptStatus(id: string, newStatus: EnabledStatusEnum) {
   return requestClient.post('/v1/sys/dept/set-status', {
-    ids,
+    id,
     newStatus,
   });
 }

@@ -124,6 +124,8 @@ export function useColumns<T = MenuApi.SysMenuDTO>(
       },
       field: 'operation',
       fixed: 'right',
+     // 关闭溢出 tooltip
+      showOverflow: false,
       title: $t('sys.menu.operation'),
       width: 200,
     },
