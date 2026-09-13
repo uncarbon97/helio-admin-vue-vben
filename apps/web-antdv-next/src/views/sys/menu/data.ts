@@ -152,6 +152,25 @@ export function useFormSchema(
     },
     {
       component: 'Input',
+      componentProps: ({ rootValues }) => ({
+        placeholder:
+          rootValues?.menuType === MenuTypeEnum.DIR
+            ? $t('sys.menu.pathPlaceholderDir')
+            : $t('sys.menu.pathPlaceholderMenu'),
+      }),
+      dependencies: {
+        if: (values) =>
+          values.menuType === MenuTypeEnum.DIR ||
+          values.menuType === MenuTypeEnum.MENU,
+        triggerFields: ['menuType'],
+      },
+      description: $t('sys.menu.pathTip'),
+      fieldName: 'path',
+      label: $t('sys.menu.path'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
       fieldName: 'name',
       label: $t('sys.menu.menuName'),
       rules: 'required',

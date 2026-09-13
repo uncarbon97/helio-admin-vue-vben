@@ -2,12 +2,11 @@ import type { RouteRecordStringComponent } from '@vben/types';
 
 import { requestClient } from '#/api/request';
 
-// adapt to helium: 菜单对接自研后端（后端权限模式），并新增 transformMenus 将扁平 SysMenuDTO 转为路由树
 export namespace MenuApi {
   // adapt to helium: 后端 BaseEnum 按枚举 value 序列化为数字（DIR=0, MENU=1, BUTTON=2, EXTERNAL_LINK=3）
   export type MenuType = 0 | 1 | 2 | 3;
 
-  /** 后端 SysMenuDTO */
+  /** 后端 SysMenuDTO（侧边菜单精简契约：目录无 component、path 为可读 slug） */
   export interface SysMenuDTO {
     component?: string;
     externalLink?: string;
@@ -16,7 +15,7 @@ export namespace MenuApi {
     menuType: MenuType;
     name: string;
     parentId: string;
-    permission?: string;
+    path: string;
     sort?: number;
     /** 0=禁用, 1=启用 */
     status?: 0 | 1;
@@ -49,14 +48,13 @@ export async function getAllMenusApi() {
 }
 
 /**
- * 将后端菜单 DTO 转换为路由树
+ * 将后端扁平菜单 DTO 转换为 v5 规范路由树
  *
- * 字段映射约定（如与真实数据不符，按实际后端字段调整）：
+ * 约定（见 docs/src/guide/in-depth/access.md 后端访问控制示例）：
  * - BUTTON 仅作权限标识，不生成路由
- * - 路由 path 由 component 派生（后端 DTO 无独立 path 字段），外链使用 externalLink
- * - component 为空时（多为目录）使用 BasicLayout 作为容器
- * - 外链使用 IFrameView 承载
- * - parentId=0 视为根节点
+ * - path 直接使用后端 DTO 的 path（目录为可读 slug，叶子为全路径）
+ * - 目录无 component（BasicLayout 由根路由承担）；外链映射 IFrameView
+ * - 有子节点时 redirect 到排序首个子节点（叶子 path 为绝对路径，accessible 不会自动生成 redirect）
  */
 function transformMenus(
   list: MenuApi.SysMenuDTO[],
@@ -64,9 +62,9 @@ function transformMenus(
   const nodes: TreeNode[] = list
     .filter((m) => m.menuType !== MenuTypeEnum.BUTTON)
     .map((m) => {
-      const slug = m.component
-        ? m.component.replaceAll(/[\\/]+/g, '-').replaceAll(/^-+|-+$/g, '')
-        : `menu-${m.id}`;
+      const slug = m.path
+        .replaceAll(/[\\/]+/g, '-')
+        .replaceAll(/^-+|-+$/g, '');
       return {
         _id: m.id,
         _parentId: m.parentId ?? 0,
@@ -74,7 +72,7 @@ function transformMenus(
         component:
           m.menuType === MenuTypeEnum.EXTERNAL_LINK
             ? 'IFrameView'
-            : m.component || 'BasicLayout',
+            : m.component,
         meta: {
           hideInMenu: m.status === 0,
           icon: m.icon,
@@ -83,7 +81,7 @@ function transformMenus(
           title: m.name,
         },
         name: slug,
-        path: m.externalLink || `/${(m.component || slug).replace(/^\/+/, '')}`,
+        path: m.externalLink || m.path,
       };
     });
 
@@ -109,6 +107,7 @@ function transformMenus(
         const result = route as RouteRecordStringComponent;
         if (children?.length) {
           result.children = toRoutes(children);
+          result.redirect = result.children[0]!.path;
         }
         return result;
       });

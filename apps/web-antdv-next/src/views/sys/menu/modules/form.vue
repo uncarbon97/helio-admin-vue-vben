@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { ParentTreeOption } from '../data';
+
 import type { MenuApi, SysMenuApi } from '#/api';
 
 import { computed, ref } from 'vue';
@@ -7,10 +9,9 @@ import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
 import { buildMenuTreeFull, createMenu, getMenuList, updateMenu } from '#/api';
-import { MenuTypeEnum } from '#/api';
 import { $t } from '#/locales';
 
-import { type ParentTreeOption, useFormSchema } from '../data';
+import { useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
 
@@ -35,27 +36,13 @@ const [Drawer, drawerApi] = useVbenDrawer<
     const values = await formApi.getValues();
     drawerApi.lock();
     try {
-      // 按菜单类型收敛提交字段，隐藏字段的残留值不提交
-      const menuType = values.menuType as MenuApi.MenuType;
-      const request: SysMenuApi.UpsertRequest = {
+      // 按FormSchema全量提交
+      const request = {
         ...(id.value ? { id: id.value } : {}),
-        name: values.name,
+        ...values,
         parentId: values.parentId ?? '0',
-        menuType,
-        ...(menuType !== MenuTypeEnum.BUTTON
-          ? { icon: values.icon || undefined }
-          : {}),
-        ...(menuType === MenuTypeEnum.MENU ? { component: values.component } : {}),
-        ...(menuType === MenuTypeEnum.EXTERNAL_LINK
-          ? { externalLink: values.externalLink }
-          : {}),
-        ...(menuType === MenuTypeEnum.BUTTON ||
-        menuType === MenuTypeEnum.MENU
-          ? { permission: values.permission }
-          : {}),
         sort: values.sort ?? 0,
-        status: values.status,
-      };
+      } as SysMenuApi.UpsertRequest;
       await (id.value
         ? updateMenu(request)
         : createMenu(request));
@@ -86,17 +73,8 @@ const [Drawer, drawerApi] = useVbenDrawer<
       if (data && 'id' in data) {
         formData.value = data;
         id.value = data.id;
-        formApi.setValues({
-          menuType: data.menuType,
-          name: data.name,
-          parentId: data.parentId,
-          icon: data.icon,
-          component: data.component,
-          externalLink: data.externalLink,
-          permission: data.permission,
-          sort: data.sort,
-          status: data.status,
-        });
+        // setValues 默认按 FormSchema 过滤字段，可直接整份 DTO 灌入
+        formApi.setValues(data);
       } else {
         formData.value = undefined;
         id.value = undefined;

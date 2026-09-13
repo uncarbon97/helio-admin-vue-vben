@@ -15,16 +15,18 @@ export namespace SysMenuApi {
     parentId: string;
     /** 菜单类型 0=目录 1=菜单 2=按钮 3=外链 */
     menuType: MenuApi.MenuType;
-    /** 前端组件名称 */
-    component?: string;
+    /** 路由地址 */
+    path: string;
     /** 授权标识 */
     permission?: string;
+    /** 状态 */
+    status: EnabledStatusEnum;
     /** 图标 */
     icon?: string;
     /** 排序 */
     sort: number;
-    /** 状态 */
-    status: EnabledStatusEnum;
+    /** 前端组件名称 */
+    component?: string;
     /** 外链地址 */
     externalLink?: string;
   }
