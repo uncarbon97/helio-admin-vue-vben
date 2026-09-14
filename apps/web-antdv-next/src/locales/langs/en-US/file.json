@@ -1,0 +1,24 @@
+{
+  "storage": {
+    "title": "File Storage",
+    "name": "Storage Name",
+    "code": "Storage Code",
+    "platformType": "Platform Type",
+    "primaryFlag": "Primary",
+    "createTime": "Created At",
+    "operation": "Operation",
+    "platformLocal": "Local",
+    "platformS3": "S3 Compatible",
+    "platformS3V2": "S3-v2 Compatible",
+    "platformAliyunOss": "Aliyun OSS",
+    "basePath": "Base Path",
+    "storagePath": "Storage Path",
+    "domain": "Domain",
+    "accessKey": "AccessKey",
+    "secretKey": "SecretKey",
+    "region": "Region",
+    "endPoint": "EndPoint",
+    "bucketName": "Bucket Name",
+    "defaultAcl": "Default ACL"
+  }
+}

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Recordable } from '@vben/types';
+
 import type { VbenFormSchema } from '#/adapter/form';
 
 import { computed } from 'vue';
@@ -6,6 +8,13 @@ import { computed } from 'vue';
 import { ProfilePasswordSetting, z } from '@vben/common-ui';
 
 import { message } from 'antdv-next';
+
+import { updateMyPasswordApi } from '#/api';
+import { useAuthStore } from '#/store';
+
+defineOptions({ name: 'ProfilePasswordSetting' });
+
+const authStore = useAuthStore();
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
@@ -50,8 +59,15 @@ const formSchema = computed((): VbenFormSchema[] => {
   ];
 });
 
-function handleSubmit() {
-  message.success('密码修改成功');
+// adapt to helium: 对接真实修改密码接口；成功后后端会话已过期，直接回登录页
+async function handleSubmit(values: Recordable<any>) {
+  await updateMyPasswordApi({
+    confirmNeo: values.confirmPassword,
+    neo: values.newPassword,
+    old: values.oldPassword,
+  });
+  message.success('密码修改成功，请重新登录');
+  await authStore.logout(false);
 }
 </script>
 <template>

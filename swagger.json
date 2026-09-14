@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": { "title": "OpenAPI definition", "version": "v0" },
-  "servers": [{ "url": "http://localhost:7003", "description": "Generated server url" }],
+  "servers": [{ "url": "http://127.0.0.1:7003", "description": "Generated server url" }],
   "security": [{ "AUTH_HEADER_NAME": [] }],
   "paths": {
     "/app/v1/auth/login": {
@@ -437,7 +437,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -466,7 +466,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -494,7 +494,7 @@
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
           "permissions": [
-            { "values": ["SysUser:reset-password"], "mode": "AND", "type": "ADMIN_USER" }
+            { "values": ["sys:user:reset-password"], "mode": "AND", "type": "ADMIN_USER" }
           ],
           "roles": [],
           "ignore": false
@@ -524,7 +524,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -549,7 +549,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -558,7 +558,7 @@
     "/admin/v1/sys/user/kick-out": {
       "post": {
         "tags": ["后台管理-系统用户管理"],
-        "summary": "踢用户下线",
+        "summary": "踢下线",
         "operationId": "kickOut",
         "requestBody": {
           "content": {
@@ -574,7 +574,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:kick-out"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:kick-out"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -601,7 +601,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -626,7 +626,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:delete"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -653,7 +653,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:create"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:user:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -662,7 +662,7 @@
     "/admin/v1/sys/user/bind-role": {
       "post": {
         "tags": ["后台管理-系统用户管理"],
-        "summary": "绑定用户角色",
+        "summary": "分配角色",
         "operationId": "bindRole",
         "requestBody": {
           "content": {
@@ -680,7 +680,9 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:bind-role"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [
+            { "values": ["sys:user:bind-role"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
           "roles": [],
           "ignore": false
         }
@@ -689,7 +691,7 @@
     "/admin/v1/sys/user/bind-dept": {
       "post": {
         "tags": ["后台管理-系统用户管理"],
-        "summary": "调整用户部门",
+        "summary": "修改部门",
         "operationId": "bindDept",
         "requestBody": {
           "content": {
@@ -707,7 +709,9 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysUser:bind-dept"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [
+            { "values": ["sys:user:bind-dept"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
           "roles": [],
           "ignore": false
         }
@@ -734,7 +738,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysRole:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:role:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -763,9 +767,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysRole:set-status"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["sys:role:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -794,7 +796,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:role:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -821,7 +823,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysRole:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:role:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -846,7 +848,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysRole:delete"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:role:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -875,7 +877,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysRole:create"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:role:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -884,7 +886,7 @@
     "/admin/v1/sys/role/bind-menu": {
       "post": {
         "tags": ["后台管理-系统角色管理"],
-        "summary": "绑定角色菜单",
+        "summary": "授权",
         "operationId": "bindMenu_1",
         "requestBody": {
           "content": {
@@ -902,7 +904,9 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysRole:bind-menu"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [
+            { "values": ["sys:role:bind-menu"], "mode": "AND", "type": "ADMIN_USER" }
+          ],
           "roles": [],
           "ignore": false
         }
@@ -1054,9 +1058,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysMenu:set-status"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysMenu:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1241,7 +1243,36 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/item/set-status": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "修改字典项状态",
+        "operationId": "setStatusItem",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSetStatusRequestLongEnabledStatusEnum"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [{ "values": ["sys:dict:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1272,7 +1303,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1297,7 +1328,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:delete"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1324,7 +1355,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:create"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1351,7 +1382,36 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:update"], "mode": "AND", "type": "ADMIN_USER" }],
+          "roles": [],
+          "ignore": false
+        }
+      }
+    },
+    "/admin/v1/sys/dict/category/set-status": {
+      "post": {
+        "tags": ["后台管理-字典管理"],
+        "summary": "修改字典分类状态",
+        "operationId": "setStatusCategory",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSetStatusRequestLongEnabledStatusEnum"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "$ref": "#/components/schemas/ApiResultVoid" } } }
+          }
+        },
+        "security": [{ "AUTH_HEADER_NAME": [] }],
+        "x-nextdoc4j-security": {
+          "permissions": [{ "values": ["sys:dict:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1362,36 +1422,14 @@
         "tags": ["后台管理-字典管理"],
         "summary": "分页查询字典分类",
         "operationId": "list_8",
-        "parameters": [
-          {
-            "name": "pageParam.pageNum",
-            "in": "query",
-            "description": "当前页码",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "description": "当前页码" }
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminSysDictCategoryListQuery" }
+            }
           },
-          {
-            "name": "pageParam.pageSize",
-            "in": "query",
-            "description": "当前页大小",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "description": "当前页大小" }
-          },
-          {
-            "name": "code",
-            "in": "query",
-            "description": "字典编码",
-            "required": false,
-            "schema": { "type": "string", "description": "字典编码" }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "description": "字典名称",
-            "required": false,
-            "schema": { "type": "string", "description": "字典名称" }
-          }
-        ],
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -1404,7 +1442,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1429,7 +1467,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:delete"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:delete"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1456,7 +1494,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:create"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:create"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1467,36 +1505,14 @@
         "tags": ["后台管理-字典管理"],
         "summary": "分页查询内置字典分类",
         "operationId": "listBuiltin",
-        "parameters": [
-          {
-            "name": "pageParam.pageNum",
-            "in": "query",
-            "description": "当前页码",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "description": "当前页码" }
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminSysDictCategoryListQuery" }
+            }
           },
-          {
-            "name": "pageParam.pageSize",
-            "in": "query",
-            "description": "当前页大小",
-            "required": false,
-            "schema": { "type": "integer", "format": "int32", "description": "当前页大小" }
-          },
-          {
-            "name": "code",
-            "in": "query",
-            "description": "字典编码",
-            "required": false,
-            "schema": { "type": "string", "description": "字典编码" }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "description": "字典名称",
-            "required": false,
-            "schema": { "type": "string", "description": "字典名称" }
-          }
-        ],
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -1509,7 +1525,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [{ "values": ["SysDict:read"], "mode": "AND", "type": "ADMIN_USER" }],
+          "permissions": [{ "values": ["sys:dict:read"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -1565,9 +1581,7 @@
         },
         "security": [{ "AUTH_HEADER_NAME": [] }],
         "x-nextdoc4j-security": {
-          "permissions": [
-            { "values": ["SysDept:set-status"], "mode": "AND", "type": "ADMIN_USER" }
-          ],
+          "permissions": [{ "values": ["SysDept:update"], "mode": "AND", "type": "ADMIN_USER" }],
           "roles": [],
           "ignore": false
         }
@@ -2769,7 +2783,7 @@
           "resultStatus": {
             "type": "string",
             "description": "结果状态",
-            "enum": ["DISABLED", "ENABLED"]
+            "enum": ["SUCCESS", "FAILED"]
           },
           "failedMsg": { "type": "string", "description": "失败原因文本" }
         }
@@ -2800,8 +2814,6 @@
         "type": "object",
         "properties": {
           "id": { "type": "integer", "format": "int64", "description": "主键ID" },
-          "createdAt": { "type": "string", "format": "date-time", "description": "创建时刻" },
-          "updatedAt": { "type": "string", "format": "date-time", "description": "更新时刻" },
           "name": { "type": "string", "description": "名称" },
           "parentId": {
             "type": "integer",
@@ -2813,10 +2825,11 @@
             "description": "菜单类型",
             "enum": ["DIR", "MENU", "BUTTON", "EXTERNAL_LINK"]
           },
+          "path": { "type": "string", "description": "路由地址(目录为可读slug, 页面为全路径)" },
           "permission": { "type": "string", "description": "授权标识" },
           "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
           "icon": { "type": "string", "description": "图标" },
-          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越小越优先)" },
           "component": { "type": "string", "description": "前端组件名称" },
           "externalLink": { "type": "string", "description": "外链地址" }
         }
@@ -2841,9 +2854,9 @@
             "description": "菜单类型",
             "enum": ["DIR", "MENU", "BUTTON", "EXTERNAL_LINK"]
           },
-          "component": {
+          "path": {
             "type": "string",
-            "description": "前端组件名称",
+            "description": "路由地址(目录为可读slug, 页面为全路径)",
             "maxLength": 255,
             "minLength": 0
           },
@@ -2853,9 +2866,15 @@
             "maxLength": 255,
             "minLength": 0
           },
-          "icon": { "type": "string", "description": "图标", "maxLength": 255, "minLength": 0 },
-          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "component": {
+            "type": "string",
+            "description": "前端组件名称",
+            "maxLength": 255,
+            "minLength": 0
+          },
           "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
+          "icon": { "type": "string", "description": "图标", "maxLength": 255, "minLength": 0 },
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越小越优先)" },
           "externalLink": {
             "type": "string",
             "description": "外链地址",
@@ -2863,7 +2882,7 @@
             "minLength": 0
           }
         },
-        "required": ["menuType", "name"]
+        "required": ["menuType", "name", "status"]
       },
       "ApiResultSysMenuDTO": {
         "type": "object",
@@ -2975,7 +2994,7 @@
             "minLength": 0
           },
           "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
-          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越小越优先)" },
           "description": {
             "type": "string",
             "description": "字典项描述",
@@ -3034,7 +3053,7 @@
           "value": { "type": "string", "description": "字典项值" },
           "label": { "type": "string", "description": "字典项标签" },
           "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] },
-          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越小越优先)" },
           "description": { "type": "string", "description": "字典项描述" }
         }
       },
@@ -3058,6 +3077,14 @@
           }
         },
         "required": ["code", "name", "status"]
+      },
+      "AdminSysDictCategoryListQuery": {
+        "type": "object",
+        "properties": {
+          "pageParam": { "$ref": "#/components/schemas/PageParam", "description": "分页查询参数" },
+          "code": { "type": "string", "description": "字典编码" },
+          "name": { "type": "string", "description": "字典名称" }
+        }
       },
       "ApiResultPageResultSysDictCategoryDTO": {
         "type": "object",
@@ -3149,7 +3176,7 @@
             "format": "int64",
             "description": "上级部门ID(根部门设置为0)"
           },
-          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越大越靠前)" },
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越小越优先)" },
           "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         },
         "required": ["name"]
@@ -3179,7 +3206,7 @@
             "format": "int64",
             "description": "上级部门ID(根部门设置为0)"
           },
-          "sort": { "type": "integer", "format": "int32", "description": "排序" },
+          "sort": { "type": "integer", "format": "int32", "description": "排序(数值越小越优先)" },
           "status": { "type": "string", "description": "状态", "enum": ["DISABLED", "ENABLED"] }
         }
       },

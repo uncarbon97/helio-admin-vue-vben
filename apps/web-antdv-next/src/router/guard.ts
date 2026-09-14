@@ -6,6 +6,7 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
 import { accessRoutes, coreRouteNames } from '#/router/routes';
+import { CHANGE_PWD_PATH } from '#/router/constants';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
@@ -83,6 +84,14 @@ function setupAccessGuard(router: Router) {
         };
       }
       return to;
+    }
+
+    // adapt to helium: requireNewPwdFlag=YES（管理员重置过密码）时强制跳转修改密码页
+    if (
+      userStore.userInfo?.requireNewPwdFlag === 'YES' &&
+      to.path !== CHANGE_PWD_PATH
+    ) {
+      return { path: CHANGE_PWD_PATH, replace: true };
     }
 
     // 是否已经生成过动态路由

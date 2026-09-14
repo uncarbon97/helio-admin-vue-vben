@@ -12,6 +12,7 @@ import { defineStore } from 'pinia';
 
 import { getUserInfoApi, loginApi, logoutApi } from '#/api';
 import { $t } from '#/locales';
+import { CHANGE_PWD_PATH } from '#/router/constants';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
@@ -63,10 +64,13 @@ export const useAuthStore = defineStore('auth', () => {
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);
         } else {
+          // adapt to helium: requireNewPwdFlag=YES 时登录后直达强制修改密码页
           onSuccess
             ? await onSuccess?.()
             : await router.push(
-                userInfo?.homePath || preferences.app.defaultHomePath,
+                userInfo?.requireNewPwdFlag === 'YES'
+                  ? CHANGE_PWD_PATH
+                  : userInfo?.homePath || preferences.app.defaultHomePath,
               );
         }
 
