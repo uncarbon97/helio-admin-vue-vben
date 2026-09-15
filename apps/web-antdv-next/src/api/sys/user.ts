@@ -15,11 +15,11 @@ export const GenderEnum = {
 
 export type GenderEnumValue = (typeof GenderEnum)[keyof typeof GenderEnum];
 
-export type RequireNewPwdFlagEnumValue =
-  (typeof RequireNewPwdFlagEnum)[keyof typeof RequireNewPwdFlagEnum];
+export type MustChangePasswordEnumValue =
+  (typeof MustChangePasswordEnum)[keyof typeof MustChangePasswordEnum];
 
 /** 首次登录是否要求修改密码 */
-export const RequireNewPwdFlagEnum = {
+export const MustChangePasswordEnum = {
   NO: 'NO',
   YES: 'YES',
 } as const;
@@ -40,7 +40,7 @@ export namespace SysUserApi {
     /** 账号（5-16位） */
     pin: string;
     /** 首次登录是否要求修改密码 */
-    requireNewPwdFlag: RequireNewPwdFlagEnumValue;
+    mustChangePassword: MustChangePasswordEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
     /** 性别 */
@@ -55,14 +55,14 @@ export namespace SysUserApi {
     deptId?: string;
   }
 
-  /** 修改请求表单（无 deptId，改部门走 bind-dept；requireNewPwdFlag 由重置密码抽屉统一设置，修改时不上送） */
+  /** 修改请求表单（无 deptId，改部门走 bind-dept；mustChangePassword 由重置密码抽屉统一设置，修改时不上送） */
   export interface UpdateRequest {
     /** 主键ID */
     id: string;
     /** 账号（5-16位） */
     pin: string;
     /** 首次登录是否要求修改密码（契约必填，前端修改时省略） */
-    requireNewPwdFlag?: RequireNewPwdFlagEnumValue;
+    mustChangePassword?: MustChangePasswordEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
     /** 性别 */
@@ -161,16 +161,16 @@ async function setUserStatus(id: string, newStatus: EnabledStatusEnum) {
  * 重置指定用户密码
  * @param userId 用户ID
  * @param randomPassword 随机密码（16-64位）
- * @param requireNewPwdFlag 是否要求下次登录改密（swagger 契约暂未收录该字段，后端待补）
+ * @param mustChangePassword 是否要求下次登录改密（swagger 契约暂未收录该字段，后端待补）
  */
 async function resetUserPassword(
   userId: string,
   randomPassword: string,
-  requireNewPwdFlag: RequireNewPwdFlagEnumValue,
+  mustChangePassword: MustChangePasswordEnumValue,
 ) {
   return requestClient.post('/v1/sys/user/reset-password', {
+    mustChangePassword,
     randomPassword,
-    requireNewPwdFlag,
     userId,
   });
 }

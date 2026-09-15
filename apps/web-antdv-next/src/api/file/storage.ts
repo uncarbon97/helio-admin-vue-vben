@@ -79,6 +79,18 @@ export namespace FileStorageApi {
     /** 主存储点标识 */
     primaryFlag: YesOrNoEnumValue;
   }
+
+  /** 测试上传结果 */
+  export interface TestUploadResult {
+    /** 外显文件ID（Hashids） */
+    outFileId: string;
+    /** 存储文件名（含路径） */
+    filename: string;
+    /** 访问URL */
+    url: string;
+    /** 原始文件名 */
+    originalFilename: string;
+  }
 }
 
 /**
@@ -126,10 +138,22 @@ async function deleteFileStorage(id: string) {
   return requestClient.post('/v1/file/storage/delete', { id });
 }
 
+/**
+ * adapt to helium: 测试上传（服务端生成测试文件，验证存储点可用性，支持非主存储点；需 file:storage:update 权限）
+ * @param id 存储点ID
+ */
+async function testFileStorage(id: string) {
+  return requestClient.post<FileStorageApi.TestUploadResult>(
+    '/v1/file/storage/test-upload',
+    { id },
+  );
+}
+
 export {
   createFileStorage,
   deleteFileStorage,
   getFileStorageDetail,
   getFileStorageList,
+  testFileStorage,
   updateFileStorage,
 };

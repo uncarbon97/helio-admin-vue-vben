@@ -86,9 +86,9 @@ function setupAccessGuard(router: Router) {
       return to;
     }
 
-    // adapt to helium: requireNewPwdFlag=YES（管理员重置过密码）时强制跳转修改密码页
+    // adapt to helium: mustChangePassword=YES（管理员重置过密码）时强制跳转修改密码页
     if (
-      userStore.userInfo?.requireNewPwdFlag === 'YES' &&
+      userStore.userInfo?.mustChangePassword === 'YES' &&
       to.path !== CHANGE_PWD_PATH
     ) {
       return { path: CHANGE_PWD_PATH, replace: true };

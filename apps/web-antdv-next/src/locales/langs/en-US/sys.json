@@ -89,7 +89,7 @@
     "allUsers": "All Users",
     "initPwd": "Initial Password",
     "initPwdTip": "5-20 characters, used for first login",
-    "requireNewPwdFlag": "Change Pwd on First Login",
+    "mustChangePassword": "Change Pwd on First Login",
     "resetPwd": "Reset Password",
     "resetPwdTitle": "Reset Password - {0}",
     "resetPwdTip": "Please notify the user of the new password after reset",

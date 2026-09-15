@@ -7,7 +7,11 @@ import { computed, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { createFileStorage, getFileStorageDetail, updateFileStorage } from '#/api';
+import {
+  createFileStorage,
+  getFileStorageDetail,
+  updateFileStorage,
+} from '#/api';
 import { $t } from '#/locales';
 
 import { ALL_SETTING_FIELDS, SETTING_FIELDS, useFormSchema } from '../data';
@@ -18,7 +22,6 @@ const formData = ref<FileStorageApi.FileStorageDTO>();
 
 /**
  * 按存储平台类型切换配置属性字段显隐
- * （本工程 fork 的表单 if 字段不生效，用 hide 控制显隐）
  */
 function applySettingFieldsVisible(platformType?: PlatformTypeEnumValue) {
   const visibleFields = new Set(
@@ -33,6 +36,10 @@ function applySettingFieldsVisible(platformType?: PlatformTypeEnumValue) {
 }
 
 const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    // 长字段名不换行
+    labelWidth: 120,
+  },
   schema: useFormSchema(onPlatformTypeChange),
   showDefaultActions: false,
 });

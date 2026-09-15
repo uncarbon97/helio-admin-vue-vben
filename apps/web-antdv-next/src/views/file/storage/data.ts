@@ -1,8 +1,7 @@
 // adapt to helium: 文件存储点管理表格/查询条件/表单配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { FileStorageApi } from '#/api';
-import type { PlatformTypeEnumValue } from '#/api';
+import type { FileStorageApi, PlatformTypeEnumValue } from '#/api';
 
 import { PlatformTypeEnum, YesOrNoEnum } from '#/api';
 import { $t } from '#/locales';
@@ -95,23 +94,6 @@ export function useGridFormSchema(): VbenFormSchema[] {
       fieldName: 'platformType',
       label: $t('file.storage.platformType'),
     },
-    {
-      component: 'Select',
-      componentProps: {
-        allowClear: true,
-        options: YES_OR_NO_OPTIONS,
-      },
-      fieldName: 'primaryFlag',
-      label: $t('file.storage.primaryFlag'),
-    },
-    {
-      component: 'RangePicker',
-      componentProps: {
-        showTime: true,
-      },
-      fieldName: 'createdAtRange',
-      label: $t('file.storage.createTime'),
-    },
   ];
 }
 
@@ -183,6 +165,10 @@ export function useColumns<T = FileStorageApi.FileStorageDTO>(
         name: 'CellOperation',
         options: [
           ...(hasUpdate ? ['edit'] : []),
+          // adapt to helium: 测试上传（调用上传文件接口，验证存储点可用性）
+          ...(hasUpdate
+            ? [{ code: 'testUpload', text: $t('file.storage.testUpload') }]
+            : []),
           ...(hasDelete ? ['delete'] : []),
         ],
       },
@@ -191,7 +177,7 @@ export function useColumns<T = FileStorageApi.FileStorageDTO>(
       // 关闭溢出 tooltip
       showOverflow: false,
       title: $t('file.storage.operation'),
-      width: 120,
+      width: 200,
     },
   ];
 }
@@ -225,6 +211,7 @@ export function useFormSchema(
     {
       component: 'Select',
       componentProps: {
+        class: 'w-full',
         onChange: onPlatformTypeChange,
         options: PLATFORM_TYPE_OPTIONS,
       },
@@ -233,8 +220,9 @@ export function useFormSchema(
       rules: 'required',
     },
     {
-      component: 'Select',
+      component: 'RadioGroup',
       componentProps: {
+        class: 'w-auto',
         options: YES_OR_NO_OPTIONS,
       },
       defaultValue: YesOrNoEnum.NO,
@@ -245,6 +233,30 @@ export function useFormSchema(
     // 以下为配置属性动态字段
     {
       component: 'Input',
+      fieldName: 'endPoint',
+      label: $t('file.storage.endPoint'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      fieldName: 'bucketName',
+      label: $t('file.storage.bucketName'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      fieldName: 'accessKey',
+      label: $t('file.storage.accessKey'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      fieldName: 'secretKey',
+      label: $t('file.storage.secretKey'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
       fieldName: 'basePath',
       label: $t('file.storage.basePath'),
     },
@@ -252,6 +264,7 @@ export function useFormSchema(
       component: 'Input',
       fieldName: 'storagePath',
       label: $t('file.storage.storagePath'),
+      rules: 'required',
     },
     {
       component: 'Input',
@@ -260,28 +273,8 @@ export function useFormSchema(
     },
     {
       component: 'Input',
-      fieldName: 'accessKey',
-      label: $t('file.storage.accessKey'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'secretKey',
-      label: $t('file.storage.secretKey'),
-    },
-    {
-      component: 'Input',
       fieldName: 'region',
       label: $t('file.storage.region'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'endPoint',
-      label: $t('file.storage.endPoint'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'bucketName',
-      label: $t('file.storage.bucketName'),
     },
     {
       component: 'Input',

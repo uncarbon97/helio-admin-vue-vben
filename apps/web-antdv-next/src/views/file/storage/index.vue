@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 // adapt to helium: 文件存储点管理（按钮按权限码显隐）
-import type { OnActionClickParams, VxeTableGridOptions } from '#/adapter/vxe-table';
+import type {
+  OnActionClickParams,
+  VxeTableGridOptions,
+} from '#/adapter/vxe-table';
 import type { FileStorageApi } from '#/api';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
@@ -10,13 +13,17 @@ import { useAccess } from '@vben/access';
 import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteFileStorage, getFileStorageList } from '#/api';
+import {
+  deleteFileStorage,
+  getFileStorageList,
+  testFileStorage,
+} from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
 
-// 权限码（对应后端 AdminFileStorageController）
+// 权限码
 const { hasAccessByCodes } = useAccess();
 const hasCreate = hasAccessByCodes(['file:storage:create']);
 const hasUpdate = hasAccessByCodes(['file:storage:update']);
@@ -81,6 +88,10 @@ function onActionClick(e: OnActionClickParams<FileStorageApi.FileStorageDTO>) {
       onEdit(e.row);
       break;
     }
+    case 'testUpload': {
+      onTestUpload(e.row);
+      break;
+    }
   }
 }
 
@@ -101,6 +112,25 @@ async function onDelete(row: FileStorageApi.FileStorageDTO) {
       key: 'action_process_msg',
     });
     onRefresh();
+  } catch {
+    hideLoading();
+  }
+}
+
+// adapt to helium: 测试上传，验证存储点能否正常上传文件（服务端生成测试文件，支持非主存储点）
+async function onTestUpload(row: FileStorageApi.FileStorageDTO) {
+  const hideLoading = message.loading({
+    content: $t('file.storage.testUploading'),
+    duration: 0,
+    key: 'action_process_msg',
+  });
+  try {
+    const ret = await testFileStorage(row.id);
+    hideLoading();
+    message.success({
+      content: `${$t('file.storage.testUploadSuccess')}: ${ret.url}`,
+      key: 'action_process_msg',
+    });
   } catch {
     hideLoading();
   }

@@ -40,7 +40,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
     try {
       const idVal = id.value;
       if (idVal) {
-        // 修改表单剔除 登录改密/所属部门/初始密码，契约必填的 requireNewPwdFlag 不再上送
+        // 修改表单剔除 登录改密/所属部门/初始密码，契约必填的 mustChangePassword 不再上送
         await updateUser({
           id: idVal,
           email: values.email,
@@ -58,7 +58,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
           nickname: values.nickname,
           phoneNo: values.phoneNo,
           pin: values.pin,
-          requireNewPwdFlag: values.requireNewPwdFlag,
+          mustChangePassword: values.mustChangePassword,
         });
       }
       emits('success');
@@ -79,7 +79,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
       formApi.updateSchema([
         { fieldName: 'initPwd', hide: !isCreate, rules: 'required' },
         { fieldName: 'deptId', hide: !isCreate },
-        { fieldName: 'requireNewPwdFlag', hide: !isCreate },
+        { fieldName: 'mustChangePassword', hide: !isCreate },
       ]);
 
       // 每次打开重新拉取部门树

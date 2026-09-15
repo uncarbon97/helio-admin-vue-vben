@@ -229,8 +229,8 @@ export function useFormSchema(
         ],
       },
       defaultValue: 'NO',
-      fieldName: 'requireNewPwdFlag',
-      label: $t('sys.user.requireNewPwdFlag'),
+      fieldName: 'mustChangePassword',
+      label: $t('sys.user.mustChangePassword'),
     },
   ];
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // adapt to helium: 重置用户密码抽屉（前端生成随机密码，提交后展示供复制）
-import type { RequireNewPwdFlagEnumValue, SysUserApi } from '#/api';
+import type { MustChangePasswordEnumValue, SysUserApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -22,7 +22,7 @@ const userNickname = ref('');
 /** 生成的随机密码（16位，契约要求 16-64 位） */
 const randomPassword = ref('');
 /** 是否要求下次登录改密 */
-const requireNewPwdFlag = ref<RequireNewPwdFlagEnumValue>('NO');
+const mustChangePassword = ref<MustChangePasswordEnumValue>('NO');
 
 const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
   async onConfirm() {
@@ -32,7 +32,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
       await resetUserPassword(
         userId.value,
         randomPassword.value,
-        requireNewPwdFlag.value,
+        mustChangePassword.value,
       );
       message.success($t('ui.actionMessage.operationSuccess'));
       emits('success');
@@ -96,7 +96,7 @@ async function onCopy() {
       <div class="mt-2 flex items-center gap-3">
         <span>{{ $t('sys.user.nextLoginChangePwd') }}</span>
         <RadioGroup
-          v-model:value="requireNewPwdFlag"
+          v-model:value="mustChangePassword"
           :options="[
             { label: $t('common.no'), value: 'NO' },
             { label: $t('common.yes'), value: 'YES' },

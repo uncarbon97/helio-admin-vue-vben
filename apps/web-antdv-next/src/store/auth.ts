@@ -64,11 +64,11 @@ export const useAuthStore = defineStore('auth', () => {
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);
         } else {
-          // adapt to helium: requireNewPwdFlag=YES 时登录后直达强制修改密码页
+          // adapt to helium: mustChangePassword=YES 时登录后直达强制修改密码页
           onSuccess
             ? await onSuccess?.()
             : await router.push(
-                userInfo?.requireNewPwdFlag === 'YES'
+                userInfo?.mustChangePassword === 'YES'
                   ? CHANGE_PWD_PATH
                   : userInfo?.homePath || preferences.app.defaultHomePath,
               );

@@ -89,7 +89,7 @@
     "allUsers": "全部用户",
     "initPwd": "初始密码",
     "initPwdTip": "5-20位，用户首次登录使用",
-    "requireNewPwdFlag": "登录后要求修改密码",
+    "mustChangePassword": "登录后要求修改密码",
     "resetPwd": "重置密码",
     "resetPwdTitle": "重置密码 - {0}",
     "resetPwdTip": "重置后请将新密码告知用户，用户需使用新密码重新登录",

@@ -14,7 +14,7 @@ interface MyProfileDTO {
   phoneNo?: string;
   avatarUrl?: string;
   lastLoginAt?: string;
-  requireNewPwdFlag?: 'NO' | 'YES';
+  mustChangePassword?: 'NO' | 'YES';
 }
 
 /**
@@ -29,7 +29,7 @@ export async function getUserInfoApi() {
     desc: '',
     homePath: preferences.app.defaultHomePath,
     realName: profile.nickname || profile.pin,
-    requireNewPwdFlag: profile.requireNewPwdFlag,
+    mustChangePassword: profile.mustChangePassword,
     roles: [] as string[],
     token: '',
     userId: profile.pin,
