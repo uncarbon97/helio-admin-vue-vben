@@ -6,6 +6,8 @@ import type {
 } from '#/adapter/vxe-table';
 import type { FileMetaApi } from '#/api';
 
+import { onMounted } from 'vue';
+
 import { useAccess } from '@vben/access';
 import { Page } from '@vben/common-ui';
 
@@ -13,6 +15,8 @@ import { message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteFileMeta, getFileMetaList } from '#/api';
+// adapt to helium: 存储点下拉筛选数据源
+import { getFileStorageSelectOptions } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -20,6 +24,23 @@ import { useColumns, useGridFormSchema } from './data';
 // 权限码
 const { hasAccessByCodes } = useAccess();
 const hasDelete = hasAccessByCodes(['file:meta:delete']);
+
+// adapt to helium: 拉取存储点下拉选项，注入查询表单（value 取存储点编码）
+onMounted(async () => {
+  const options = (await getFileStorageSelectOptions())?.map((item) => ({
+    label: item.label,
+    value: item.storageCode ?? item.value,
+  }));
+  gridApi.formApi.updateSchema([
+    {
+      componentProps: {
+        allowClear: true,
+        options: options ?? [],
+      },
+      fieldName: 'storageCode',
+    },
+  ]);
+});
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {

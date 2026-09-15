@@ -17,6 +17,10 @@ const emits = defineEmits(['success']);
 const formData = ref<SysDictApi.CategoryDTO>();
 
 const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    // 长字段名不换行
+    labelWidth: 120,
+  },
   schema: useCategoryFormSchema(),
   showDefaultActions: false,
 });

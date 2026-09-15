@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-// adapt to helium: 文件存储点管理（按钮按权限码显隐）
+// adapt to helium: 租户管理（列表 + 新增/编辑 + 删除）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { FileStorageApi } from '#/api';
+import type { TenantMetaApi } from '#/api';
 
-import { useAccess } from '@vben/access';
+import { ref } from 'vue';
+
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
@@ -14,20 +15,15 @@ import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
-  deleteFileStorage,
-  getFileStorageList,
-  testFileStorage,
+  deleteTenant,
+  getTenantMetaDetail,
+  getTenantMetaList,
+  getTenantPackageList,
 } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
-
-// 权限码
-const { hasAccessByCodes } = useAccess();
-const hasCreate = hasAccessByCodes(['file:storage:create']);
-const hasUpdate = hasAccessByCodes(['file:storage:update']);
-const hasDelete = hasAccessByCodes(['file:storage:delete']);
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
@@ -35,30 +31,28 @@ const [FormDrawer, formDrawerApi] = useVbenDrawer({
   closeOnClickModal: false,
 });
 
+/** 套餐ID👉名称映射（所属套餐列展示） */
+const packageNameMap = ref(new Map<string, string>());
+
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(onActionClick, hasUpdate, hasDelete),
+    columns: useColumns(onActionClick, packageNameMap),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {
-          const [beginAt, endAt] = formValues.createdAtRange ?? [];
-          return await getFileStorageList({
-            beginAt: beginAt?.toISOString?.(),
+          return await getTenantMetaList({
             code: formValues.code,
-            endAt: endAt?.toISOString?.(),
             name: formValues.name,
             pageParam: {
               pageNum: page.currentPage,
               pageSize: page.pageSize,
             },
-            platformType: formValues.platformType,
-            primaryFlag: formValues.primaryFlag,
           });
         },
       },
@@ -75,10 +69,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
       zoom: true,
     },
-  } as VxeTableGridOptions<FileStorageApi.FileStorageDTO>,
+  } as VxeTableGridOptions<TenantMetaApi.TenantMetaDTO>,
 });
 
-function onActionClick(e: OnActionClickParams<FileStorageApi.FileStorageDTO>) {
+function onActionClick(e: OnActionClickParams<TenantMetaApi.TenantMetaDTO>) {
   switch (e.code) {
     case 'delete': {
       onDelete(e.row);
@@ -88,49 +82,28 @@ function onActionClick(e: OnActionClickParams<FileStorageApi.FileStorageDTO>) {
       onEdit(e.row);
       break;
     }
-    case 'testUpload': {
-      onTestUpload(e.row);
-      break;
-    }
   }
 }
 
-async function onEdit(row: FileStorageApi.FileStorageDTO) {
-  formDrawerApi.setData(row).open();
+async function onEdit(row: TenantMetaApi.TenantMetaDTO) {
+  // 修改前拉取详情，保证数据为最新
+  const detail = await getTenantMetaDetail(row.id);
+  formDrawerApi.setData(detail).open();
 }
 
-async function onDelete(row: FileStorageApi.FileStorageDTO) {
+async function onDelete(row: TenantMetaApi.TenantMetaDTO) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
     key: 'action_process_msg',
   });
   try {
-    await deleteFileStorage(row.id);
+    await deleteTenant(row.id);
     message.success({
       content: $t('ui.actionMessage.deleteSuccess', [row.name]),
       key: 'action_process_msg',
     });
     onRefresh();
-  } catch {
-    hideLoading();
-  }
-}
-
-// adapt to helium: 测试上传，验证存储点能否正常上传文件（服务端生成测试文件，支持非主存储点）
-async function onTestUpload(row: FileStorageApi.FileStorageDTO) {
-  const hideLoading = message.loading({
-    content: $t('file.storage.testUploading'),
-    duration: 0,
-    key: 'action_process_msg',
-  });
-  try {
-    const ret = await testFileStorage(row.id);
-    hideLoading();
-    message.success({
-      content: `${$t('file.storage.testUploadSuccess')}: ${ret.url}`,
-      key: 'action_process_msg',
-    });
   } catch {
     hideLoading();
   }
@@ -143,13 +116,25 @@ function onRefresh() {
 function onCreate() {
   formDrawerApi.setData(null).open();
 }
+
+// adapt to helium: 拉取套餐列表建立 ID👉名称映射（所属套餐列展示）
+async function loadPackageNameMap() {
+  const page = await getTenantPackageList({
+    pageParam: { pageNum: 1, pageSize: 100 },
+  });
+  packageNameMap.value = new Map(
+    (page?.records ?? []).map((item) => [item.id, item.name]),
+  );
+}
+
+loadPackageNameMap();
 </script>
 <template>
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" />
     <Grid>
       <template #toolbar-tools>
-        <Button v-if="hasCreate" type="primary" @click="onCreate">
+        <Button type="primary" @click="onCreate">
           <Plus class="size-5" />
           {{ $t('ui.actionTitle.create') }}
         </Button>

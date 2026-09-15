@@ -7,6 +7,8 @@ export interface SelectOptionItem {
   value: string;
   /** 选项文案 */
   label: string;
+  /** 文件存储点编码（仅文件存储点下拉时返回） */
+  storageCode?: string;
 }
 
 /**
@@ -18,4 +20,14 @@ async function getRoleSelectOptions() {
   );
 }
 
-export { getRoleSelectOptions };
+/**
+ * 查询文件存储点下拉选项
+ * value 为存储点ID，storageCode 为存储点编码（按编码筛选时取 storageCode 作为选项值）
+ */
+async function getFileStorageSelectOptions() {
+  return requestClient.post<SelectOptionItem[]>(
+    '/v1/select-option/file/storage',
+  );
+}
+
+export { getFileStorageSelectOptions, getRoleSelectOptions };

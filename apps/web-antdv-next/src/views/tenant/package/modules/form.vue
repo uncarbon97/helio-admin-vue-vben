@@ -1,19 +1,20 @@
 <script lang="ts" setup>
-import type { SysRoleApi } from '#/api';
+// adapt to helium: 租户套餐新增/编辑抽屉
+import type { TenantPackageApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { createRole, updateRole } from '#/api/sys/role';
+import { createTenantPackage, updateTenantPackage } from '#/api/tenant/package';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
 
-const formData = ref<SysRoleApi.SysRoleDTO>();
+const formData = ref<TenantPackageApi.TenantPackageDTO>();
 
 const [Form, formApi] = useVbenForm({
   commonConfig: {
@@ -25,26 +26,25 @@ const [Form, formApi] = useVbenForm({
 });
 
 const id = ref<string>();
-const [Drawer, drawerApi] = useVbenDrawer<null | SysRoleApi.SysRoleDTO>({
+const [Drawer, drawerApi] = useVbenDrawer<
+  null | TenantPackageApi.TenantPackageDTO
+>({
   async onConfirm() {
     const { valid } = await formApi.validate();
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
     try {
+      const payload = {
+        code: values.code,
+        description: values.description,
+        name: values.name,
+        status: values.status,
+      };
       const idVal = id.value;
       await (idVal
-        ? updateRole({
-            id: idVal,
-            code: values.code,
-            description: values.description,
-            name: values.name,
-          })
-        : createRole({
-            code: values.code,
-            description: values.description,
-            name: values.name,
-          }));
+        ? updateTenantPackage({ id: idVal, ...payload })
+        : createTenantPackage(payload));
       emits('success');
       drawerApi.close();
     } catch {
@@ -64,6 +64,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysRoleApi.SysRoleDTO>({
           code: data.code,
           description: data.description,
           name: data.name,
+          status: data.status,
         });
       } else {
         formData.value = undefined;

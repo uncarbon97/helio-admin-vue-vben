@@ -21,6 +21,10 @@ const formData = ref<MenuApi.SysMenuDTO>();
 const parentOptions = ref<ParentTreeOption[]>([]);
 
 const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    // 长字段名不换行
+    labelWidth: 120,
+  },
   schema: useFormSchema(parentOptions),
   showDefaultActions: false,
   wrapperClass: 'grid-cols-1',

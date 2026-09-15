@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "租户管理",
+    "name": "租户",
+    "tenantName": "租户名称",
+    "tenantCode": "租户编码",
+    "id": "租户ID",
+    "status": "状态",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "adminUser": "租户管理员",
+    "packageName": "所属套餐",
+    "packageId": "所属套餐",
+    "adminPin": "管理员账号",
+    "adminPwd": "初始密码",
+    "adminEmail": "管理员邮箱",
+    "adminPhoneNo": "管理员手机号",
+    "adminSection": "租户管理员（用于初始化登录账号）"
+  },
+  "package": {
+    "title": "租户套餐",
+    "name": "套餐",
+    "packageName": "套餐名称",
+    "packageCode": "套餐编码",
+    "description": "套餐描述",
+    "id": "套餐ID",
+    "status": "状态",
+    "createTime": "创建时间",
+    "operation": "操作",
+    "setPermissions": "授权",
+    "grantTitle": "授权 - {0}",
+    "savePermissions": "保存权限",
+    "nodeLinked": "节点关联",
+    "nodeIndependent": "节点独立",
+    "collapse": "折叠",
+    "expand": "展开",
+    "menuCol": "菜单",
+    "permCol": "权限"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "Tenant Management",
+    "name": "Tenant",
+    "tenantName": "Tenant Name",
+    "tenantCode": "Tenant Code",
+    "id": "Tenant ID",
+    "status": "Status",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "adminUser": "Tenant Admin",
+    "packageName": "Package",
+    "packageId": "Package",
+    "adminPin": "Admin Account",
+    "adminPwd": "Initial Password",
+    "adminEmail": "Admin Email",
+    "adminPhoneNo": "Admin Phone No",
+    "adminSection": "Tenant Admin (for initial login account)"
+  },
+  "package": {
+    "title": "Tenant Package",
+    "name": "Package",
+    "packageName": "Package Name",
+    "packageCode": "Package Code",
+    "description": "Description",
+    "id": "Package ID",
+    "status": "Status",
+    "createTime": "Creation Time",
+    "operation": "Operation",
+    "setPermissions": "Permissions",
+    "grantTitle": "Grant - {0}",
+    "savePermissions": "Save Permissions",
+    "nodeLinked": "Node Linked",
+    "nodeIndependent": "Node Independent",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "menuCol": "Menu",
+    "permCol": "Permission"
+  }
+}

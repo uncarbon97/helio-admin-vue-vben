@@ -45,7 +45,7 @@ const [Form, formApi] = useVbenForm({
 });
 
 const id = ref<string>();
-const [Drawer, drawerApi] = useVbenDrawer<null | FileStorageApi.FileStorageDTO>(
+const [Drawer, drawerApi] = useVbenDrawer<FileStorageApi.FileStorageDTO | null>(
   {
     async onConfirm() {
       const { valid } = await formApi.validate();

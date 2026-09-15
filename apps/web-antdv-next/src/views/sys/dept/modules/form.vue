@@ -9,7 +9,7 @@ import { useVbenForm } from '#/adapter/form';
 import { buildDeptTree, createDept, getDeptList, updateDept } from '#/api';
 import { $t } from '#/locales';
 
-import { useFormSchema, type ParentTreeOption } from '../data';
+import { type ParentTreeOption, useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
 
@@ -19,6 +19,10 @@ const formData = ref<SysDeptApi.SysDeptDTO>();
 const parentOptions = ref<ParentTreeOption[]>([]);
 
 const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    // 长字段名不换行
+    labelWidth: 120,
+  },
   schema: useFormSchema(parentOptions),
   showDefaultActions: false,
   wrapperClass: 'grid-cols-1',
@@ -26,7 +30,7 @@ const [Form, formApi] = useVbenForm({
 
 const id = ref<string>();
 const [Drawer, drawerApi] = useVbenDrawer<
-  null | { parentId: string } | SysDeptApi.SysDeptDTO
+  null | SysDeptApi.SysDeptDTO | { parentId: string }
 >({
   async onConfirm() {
     const { valid } = await formApi.validate();

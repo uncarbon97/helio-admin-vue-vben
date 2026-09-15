@@ -24,11 +24,15 @@ const formData = ref<DrawerData>();
 const id = ref<string>();
 
 const [Form, formApi] = useVbenForm({
+  commonConfig: {
+    // 长字段名不换行
+    labelWidth: 120,
+  },
   schema: useItemFormSchema(),
   showDefaultActions: false,
 });
 
-const [Drawer, drawerApi] = useVbenDrawer<null | DrawerData>({
+const [Drawer, drawerApi] = useVbenDrawer<DrawerData | null>({
   async onConfirm() {
     const data = formData.value;
     if (!data) return;
