@@ -23,5 +23,20 @@
     "testUpload": "Test Upload",
     "testUploading": "Uploading test file…",
     "testUploadSuccess": "Upload succeeded"
+  },
+  "meta": {
+    "category": "Category",
+    "copyLink": "Copy Link",
+    "copyLinkFailed": "Copy failed",
+    "copyLinkSuccess": "Copied",
+    "createTime": "Uploaded At",
+    "directUrl": "Direct URL",
+    "directUrlMissing": "No direct URL available for this file",
+    "extendName": "Extension",
+    "fileSize": "File Size",
+    "operation": "Operation",
+    "originalFilename": "Original Filename",
+    "storageCode": "Storage Code",
+    "title": "Files"
   }
 }

@@ -1,4 +1,4 @@
-// adapt to helium: 文件存储点管理接口（后端 AdminFileStorageController）
+// 文件存储点管理
 import type { PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';

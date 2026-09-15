@@ -23,5 +23,20 @@
     "testUpload": "测试上传",
     "testUploading": "上传测试中…",
     "testUploadSuccess": "上传成功"
+  },
+  "meta": {
+    "category": "文件主分类",
+    "copyLink": "复制链接",
+    "copyLinkFailed": "复制失败",
+    "copyLinkSuccess": "复制成功",
+    "createTime": "上传时间",
+    "directUrl": "直链",
+    "directUrlMissing": "该文件没有可复制的直链",
+    "extendName": "扩展名",
+    "fileSize": "文件大小",
+    "operation": "操作",
+    "originalFilename": "原始文件名",
+    "storageCode": "存储点编码",
+    "title": "文件管理"
   }
 }
