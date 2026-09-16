@@ -71,7 +71,7 @@ export function useColumns<T = TenantMetaApi.TenantMetaDTO>(
       },
     },
     {
-      // 后端无独立 set-status 接口，切换走 update，页面层弹二次确认
+      // 有二次确认
       cellRender: {
         attrs: {
           checkedChildren: $t('common.enabled'),
@@ -144,7 +144,6 @@ export function useFormSchema(
       fieldName: 'packageId',
       label: $t('tenant.meta.packageId'),
     },
-    // 状态不走表单，由列表行内开关切换（二次确认）
     // ---- 租户管理员（仅新增） ----
     {
       component: 'Input',

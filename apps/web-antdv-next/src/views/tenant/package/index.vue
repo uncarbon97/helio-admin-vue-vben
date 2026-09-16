@@ -17,8 +17,8 @@ import {
   deleteTenantPackage,
   getTenantPackageDetail,
   getTenantPackageList,
+  setTenantPackageStatus,
 } from '#/api';
-import { updateTenantPackage } from '#/api/tenant/package';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -109,7 +109,6 @@ async function onBindMenu(row: TenantPackageApi.TenantPackageDTO) {
 
 /**
  * 状态开关切换（二次确认；成功后由 CellSwitch 渲染器行内更新，失败/取消回弹）
- * 后端无独立 set-status 接口，走 update 全量修改
  */
 async function onToggleStatus(
   row: TenantPackageApi.TenantPackageDTO,
@@ -123,13 +122,7 @@ async function onToggleStatus(
   if (!confirmed) {
     throw new Error('cancelled');
   }
-  await updateTenantPackage({
-    id: row.id,
-    code: row.code,
-    description: row.description,
-    name: row.name,
-    status: newStatus,
-  });
+  await setTenantPackageStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }
 

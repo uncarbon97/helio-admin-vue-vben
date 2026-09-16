@@ -51,7 +51,7 @@ export function useColumns<T = TenantPackageApi.TenantPackageDTO>(
       title: $t('tenant.package.description'),
     },
     {
-      // 后端无独立 set-status 接口，切换走 update，页面层弹二次确认
+      // 有二次确认
       cellRender: {
         attrs: {
           checkedChildren: $t('common.enabled'),

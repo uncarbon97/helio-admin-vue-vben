@@ -16,7 +16,8 @@
     "adminEmail": "Admin Email",
     "adminPhoneNo": "Admin Phone No",
     "adminSection": "Tenant Admin (for initial login account)",
-    "statusChangeConfirm": "Are you sure you want to {0} {1}?"
+    "statusChangeConfirm": "Are you sure you want to {0} {1}?",
+    "kickOutDangerTip": "All users of this tenant will be forced offline"
   },
   "package": {
     "title": "Tenant Package",

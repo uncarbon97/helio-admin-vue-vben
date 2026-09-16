@@ -1,4 +1,3 @@
-// adapt to helium: 租户套餐管理 API（契约见后端 AdminTenantPackageController）
 import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';
@@ -90,6 +89,18 @@ async function updateTenantPackage(
 }
 
 /**
+ * 修改状态（启用/禁用）
+ * @param id 套餐ID
+ * @param newStatus 新状态
+ */
+async function setTenantPackageStatus(id: string, newStatus: EnabledStatusEnum) {
+  return requestClient.post('/v1/tenant/package/set-status', {
+    id,
+    newStatus,
+  });
+}
+
+/**
  * 删除
  * @param id 套餐ID
  */
@@ -115,5 +126,6 @@ export {
   deleteTenantPackage,
   getTenantPackageDetail,
   getTenantPackageList,
+  setTenantPackageStatus,
   updateTenantPackage,
 };

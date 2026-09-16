@@ -16,7 +16,8 @@
     "adminEmail": "管理员邮箱",
     "adminPhoneNo": "管理员手机号",
     "adminSection": "租户管理员（用于初始化登录账号）",
-    "statusChangeConfirm": "确定{0} {1} 吗？"
+    "statusChangeConfirm": "确定{0} {1} 吗？",
+    "kickOutDangerTip": "会强制将该租户的所有用户踢下线"
   },
   "package": {
     "title": "租户套餐",

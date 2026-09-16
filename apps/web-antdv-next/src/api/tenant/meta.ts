@@ -1,4 +1,3 @@
-// adapt to helium: 租户管理 API（契约见后端 AdminTenantMetaController）
 import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';
@@ -113,6 +112,18 @@ async function updateTenant(request: TenantMetaApi.UpdateRequest) {
 }
 
 /**
+ * 修改状态（启用/禁用）
+ * @param id 租户ID
+ * @param newStatus 新状态
+ */
+async function setTenantStatus(id: string, newStatus: EnabledStatusEnum) {
+  return requestClient.post('/v1/tenant/set-status', {
+    id,
+    newStatus,
+  });
+}
+
+/**
  * 删除
  * @param id 租户ID
  */
@@ -125,5 +136,6 @@ export {
   deleteTenant,
   getTenantMetaDetail,
   getTenantMetaList,
+  setTenantStatus,
   updateTenant,
 };

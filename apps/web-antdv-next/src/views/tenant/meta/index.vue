@@ -20,8 +20,8 @@ import {
   getTenantMetaDetail,
   getTenantMetaList,
   getTenantPackageSelectOptions,
+  setTenantStatus,
 } from '#/api';
-import { updateTenant } from '#/api/tenant/meta';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -96,7 +96,6 @@ async function onEdit(row: TenantMetaApi.TenantMetaDTO) {
 
 /**
  * 状态开关切换（二次确认；成功后由 CellSwitch 渲染器行内更新，失败/取消回弹）
- * 后端无独立 set-status 接口，走 update 全量修改
  */
 async function onToggleStatus(
   row: TenantMetaApi.TenantMetaDTO,
@@ -106,16 +105,13 @@ async function onToggleStatus(
     newStatus === 1 ? $t('common.enabled') : $t('common.disabled');
   const confirmed = await confirmAction(
     $t('tenant.meta.statusChangeConfirm', [actionText, row.name]),
+    // 禁用时给出红色警示
+    newStatus === 1 ? {} : { dangerTips: [$t('tenant.meta.kickOutDangerTip')] },
   );
   if (!confirmed) {
     throw new Error('cancelled');
   }
-  await updateTenant({
-    id: row.id,
-    name: row.name,
-    packageId: row.packageId || undefined,
-    status: newStatus,
-  });
+  await setTenantStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }
 
