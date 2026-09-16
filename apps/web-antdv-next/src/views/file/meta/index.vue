@@ -18,6 +18,7 @@ import { deleteFileMeta, getFileMetaList } from '#/api';
 // adapt to helium: 存储点下拉筛选数据源
 import { getFileStorageSelectOptions } from '#/api';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns, useGridFormSchema } from './data';
 
@@ -115,6 +116,10 @@ async function onDelete(row: FileMetaApi.FileMetaDTO) {
   const displayName = row.extendName
     ? `${row.originalFilename}.${row.extendName}`
     : row.originalFilename;
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [displayName]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [displayName]),
     duration: 0,

@@ -19,6 +19,7 @@ import {
   testFileStorage,
 } from '#/api';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -100,6 +101,10 @@ async function onEdit(row: FileStorageApi.FileStorageDTO) {
 }
 
 async function onDelete(row: FileStorageApi.FileStorageDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.name]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,

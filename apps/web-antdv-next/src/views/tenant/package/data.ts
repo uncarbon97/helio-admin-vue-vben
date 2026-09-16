@@ -2,6 +2,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { TenantPackageApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
 
 import { $t } from '#/locales';
 
@@ -26,10 +27,12 @@ export function useGridFormSchema(): VbenFormSchema[] {
 /**
  * 表格列
  * @param onActionClick
+ * @param onToggleStatus 状态开关切换回调（页面层做二次确认）
  * @returns
  */
 export function useColumns<T = TenantPackageApi.TenantPackageDTO>(
   onActionClick: OnActionClickFn<T>,
+  onToggleStatus: (row: T, newStatus: EnabledStatusEnum) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -48,13 +51,15 @@ export function useColumns<T = TenantPackageApi.TenantPackageDTO>(
       title: $t('tenant.package.description'),
     },
     {
-      // 后端无独立 set-status 接口，状态走新增/修改表单，此处仅展示
+      // 后端无独立 set-status 接口，切换走 update，页面层弹二次确认
       cellRender: {
-        name: 'CellTag',
-        options: [
-          { color: 'success', label: $t('common.enabled'), value: 1 },
-          { color: 'error', label: $t('common.disabled'), value: 0 },
-        ],
+        attrs: {
+          checkedChildren: $t('common.enabled'),
+          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnum }) =>
+            onToggleStatus(row, value),
+          unCheckedChildren: $t('common.disabled'),
+        },
+        name: 'CellSwitch',
       },
       field: 'status',
       title: $t('tenant.package.status'),
@@ -107,18 +112,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('tenant.package.packageCode'),
       rules: 'required',
     },
-    {
-      component: 'RadioGroup',
-      defaultValue: 1,
-      fieldName: 'status',
-      label: $t('tenant.package.status'),
-      componentProps: {
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
-      },
-    },
+    // 状态不走表单，由列表行内开关切换（二次确认）；新增默认启用
     {
       component: 'Textarea',
       fieldName: 'description',

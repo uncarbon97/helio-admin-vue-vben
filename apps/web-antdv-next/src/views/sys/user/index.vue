@@ -12,7 +12,7 @@ import { computed, onMounted, ref } from 'vue';
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
-import { Button, Card, Empty, Input, Modal, Tree, message } from 'antdv-next';
+import { Button, Card, Empty, Input, message, Tree } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
@@ -25,6 +25,7 @@ import {
   setUserStatus,
 } from '#/api';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns, useGridFormSchema } from './data';
 import BindDept from './modules/bind-dept.vue';
@@ -206,6 +207,10 @@ async function onToggleStatus(
 }
 
 async function onDelete(row: SysUserApi.SysUserDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.nickname]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.nickname]),
     duration: 0,
@@ -223,17 +228,16 @@ async function onDelete(row: SysUserApi.SysUserDTO) {
   }
 }
 
-/** 踢下线（二次确认） */
-function onKickOut(row: SysUserApi.SysUserDTO) {
-  Modal.confirm({
-    content: $t('sys.user.kickOutConfirm', [row.nickname]),
-    onOk: async () => {
-      await kickOutUser(row.id);
-      message.success($t('ui.actionMessage.operationSuccess'));
-      onRefresh();
-    },
-    title: $t('sys.user.kickOut'),
-  });
+/** 踢下线（二次确认，居中模态框） */
+async function onKickOut(row: SysUserApi.SysUserDTO) {
+  const confirmed = await confirmAction(
+    $t('sys.user.kickOutConfirm', [row.nickname]),
+    $t('sys.user.kickOut'),
+  );
+  if (!confirmed) return;
+  await kickOutUser(row.id);
+  message.success($t('ui.actionMessage.operationSuccess'));
+  onRefresh();
 }
 
 function onRefresh() {

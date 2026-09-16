@@ -15,7 +15,8 @@
     "adminPwd": "Initial Password",
     "adminEmail": "Admin Email",
     "adminPhoneNo": "Admin Phone No",
-    "adminSection": "Tenant Admin (for initial login account)"
+    "adminSection": "Tenant Admin (for initial login account)",
+    "statusChangeConfirm": "Are you sure you want to {0} {1}?"
   },
   "package": {
     "title": "Tenant Package",
@@ -35,6 +36,7 @@
     "collapse": "Collapse",
     "expand": "Expand",
     "menuCol": "Menu",
-    "permCol": "Permission"
+    "permCol": "Permission",
+    "statusChangeConfirm": "Are you sure you want to {0} {1}?"
   }
 }

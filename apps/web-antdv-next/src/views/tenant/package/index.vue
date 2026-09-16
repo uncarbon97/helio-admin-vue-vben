@@ -5,6 +5,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { TenantPackageApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
@@ -17,7 +18,9 @@ import {
   getTenantPackageDetail,
   getTenantPackageList,
 } from '#/api';
+import { updateTenantPackage } from '#/api/tenant/package';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns, useGridFormSchema } from './data';
 import BindMenu from './modules/bind-menu.vue';
@@ -41,7 +44,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(onActionClick),
+    columns: useColumns(onActionClick, onToggleStatus),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -104,7 +107,37 @@ async function onBindMenu(row: TenantPackageApi.TenantPackageDTO) {
   bindMenuDrawerApi.setData(detail).open();
 }
 
+/**
+ * 状态开关切换（二次确认；成功后由 CellSwitch 渲染器行内更新，失败/取消回弹）
+ * 后端无独立 set-status 接口，走 update 全量修改
+ */
+async function onToggleStatus(
+  row: TenantPackageApi.TenantPackageDTO,
+  newStatus: EnabledStatusEnum,
+) {
+  const actionText =
+    newStatus === 1 ? $t('common.enabled') : $t('common.disabled');
+  const confirmed = await confirmAction(
+    $t('tenant.package.statusChangeConfirm', [actionText, row.name]),
+  );
+  if (!confirmed) {
+    throw new Error('cancelled');
+  }
+  await updateTenantPackage({
+    id: row.id,
+    code: row.code,
+    description: row.description,
+    name: row.name,
+    status: newStatus,
+  });
+  message.success($t('ui.actionMessage.operationSuccess'));
+}
+
 async function onDelete(row: TenantPackageApi.TenantPackageDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.name]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,

@@ -35,13 +35,14 @@ const [Drawer, drawerApi] = useVbenDrawer<
     const values = await formApi.getValues();
     drawerApi.lock();
     try {
+      const idVal = id.value;
       const payload = {
         code: values.code,
         description: values.description,
         name: values.name,
-        status: values.status,
+        // adapt to helium: 状态不走表单：新增默认启用，修改保持原状态（由列表行内开关切换）
+        status: formData.value?.status ?? 1,
       };
-      const idVal = id.value;
       await (idVal
         ? updateTenantPackage({ id: idVal, ...payload })
         : createTenantPackage(payload));
@@ -64,7 +65,6 @@ const [Drawer, drawerApi] = useVbenDrawer<
           code: data.code,
           description: data.description,
           name: data.name,
-          status: data.status,
         });
       } else {
         formData.value = undefined;

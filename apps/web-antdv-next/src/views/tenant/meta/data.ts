@@ -4,6 +4,7 @@ import type { Ref } from 'vue';
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SelectOptionItem, TenantMetaApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
 
 import { $t } from '#/locales';
 
@@ -29,11 +30,13 @@ export function useGridFormSchema(): VbenFormSchema[] {
  * 表格列
  * @param onActionClick
  * @param packageNameMap 套餐ID👉名称映射（响应式，用于所属套餐列展示）
+ * @param onToggleStatus 状态开关切换回调（页面层做二次确认）
  * @returns
  */
 export function useColumns<T = TenantMetaApi.TenantMetaDTO>(
   onActionClick: OnActionClickFn<T>,
   packageNameMap: Ref<Map<string, string>>,
+  onToggleStatus: (row: T, newStatus: EnabledStatusEnum) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -68,13 +71,15 @@ export function useColumns<T = TenantMetaApi.TenantMetaDTO>(
       },
     },
     {
-      // 后端无独立 set-status 接口，状态走修改表单，此处仅展示
+      // 后端无独立 set-status 接口，切换走 update，页面层弹二次确认
       cellRender: {
-        name: 'CellTag',
-        options: [
-          { color: 'success', label: $t('common.enabled'), value: 1 },
-          { color: 'error', label: $t('common.disabled'), value: 0 },
-        ],
+        attrs: {
+          checkedChildren: $t('common.enabled'),
+          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnum }) =>
+            onToggleStatus(row, value),
+          unCheckedChildren: $t('common.disabled'),
+        },
+        name: 'CellSwitch',
       },
       field: 'status',
       title: $t('tenant.meta.status'),
@@ -139,19 +144,7 @@ export function useFormSchema(
       fieldName: 'packageId',
       label: $t('tenant.meta.packageId'),
     },
-    {
-      // 仅修改可改状态（新增请求无状态字段）
-      component: 'RadioGroup',
-      defaultValue: 1,
-      fieldName: 'status',
-      label: $t('tenant.meta.status'),
-      componentProps: {
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
-      },
-    },
+    // 状态不走表单，由列表行内开关切换（二次确认）
     // ---- 租户管理员（仅新增） ----
     {
       component: 'Input',

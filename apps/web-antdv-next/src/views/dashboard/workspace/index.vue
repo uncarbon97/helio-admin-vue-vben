@@ -86,6 +86,7 @@ const projectItems: WorkbenchProjectItem[] = [
 ];
 
 // 同样，这里的 url 也可以使用以 http 开头的外部链接
+// adapt to helium: 原演示路由（/demos/...）已删除，快捷导航改为项目实际存在的页面
 const quickNavItems: WorkbenchQuickNavItem[] = [
   {
     color: '#1fdaca',
@@ -102,20 +103,14 @@ const quickNavItems: WorkbenchQuickNavItem[] = [
   {
     color: '#e18525',
     icon: 'ion:layers-outline',
-    title: '组件',
-    url: '/demos/features/icons',
-  },
-  {
-    color: '#3fb27f',
-    icon: 'ion:settings-outline',
-    title: '系统管理',
-    url: '/demos/features/login-expired', // 这里的 URL 是示例，实际项目中需要根据实际情况进行调整
+    title: '个人中心',
+    url: '/profile',
   },
   {
     color: '#4daf1bc9',
     icon: 'ion:key-outline',
-    title: '权限管理',
-    url: '/demos/access/page-control',
+    title: '修改密码',
+    url: '/profile/change-password',
   },
   {
     color: '#00d8ff',

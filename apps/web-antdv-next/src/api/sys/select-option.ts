@@ -30,4 +30,18 @@ async function getFileStorageSelectOptions() {
   );
 }
 
-export { getFileStorageSelectOptions, getRoleSelectOptions };
+/**
+ * 查询租户套餐下拉选项
+ * value 为套餐ID，label 为套餐名称
+ */
+async function getTenantPackageSelectOptions() {
+  return requestClient.post<SelectOptionItem[]>(
+    '/v1/select-option/tenant/package',
+  );
+}
+
+export {
+  getFileStorageSelectOptions,
+  getRoleSelectOptions,
+  getTenantPackageSelectOptions,
+};

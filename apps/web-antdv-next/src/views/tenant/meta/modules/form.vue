@@ -39,24 +39,23 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
     drawerApi.lock();
     try {
       const idVal = id.value;
-      if (idVal) {
-        await updateTenant({
-          id: idVal,
-          name: values.name,
-          packageId: values.packageId || undefined,
-          status: values.status,
-        });
-      } else {
-        await createTenant({
-          code: values.code,
-          name: values.name,
-          packageId: values.packageId || undefined,
-          tenantAdminEmail: values.tenantAdminEmail,
-          tenantAdminPhoneNo: values.tenantAdminPhoneNo,
-          tenantAdminPin: values.tenantAdminPin,
-          tenantAdminPwd: values.tenantAdminPwd,
-        });
-      }
+      await (idVal
+        ? updateTenant({
+            id: idVal,
+            name: values.name,
+            packageId: values.packageId || undefined,
+            // 状态不走表单，保持修改前状态（由列表行内开关切换）
+            status: formData.value?.status ?? 1,
+          })
+        : createTenant({
+            code: values.code,
+            name: values.name,
+            packageId: values.packageId || undefined,
+            tenantAdminEmail: values.tenantAdminEmail,
+            tenantAdminPhoneNo: values.tenantAdminPhoneNo,
+            tenantAdminPin: values.tenantAdminPin,
+            tenantAdminPwd: values.tenantAdminPwd,
+          }));
       emits('success');
       drawerApi.close();
     } catch {
@@ -69,7 +68,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
       const data = drawerApi.getData();
       formApi.reset();
 
-      // adapt to helium: 编码/租户管理员字段 仅新增时显示，状态 仅修改时显示
+      // adapt to helium: 编码/租户管理员字段 仅新增时显示
       // （本工程 fork 的表单 if 字段不生效，用 hide 控制显隐）
       const isCreate = !data;
       formApi.updateSchema([
@@ -86,7 +85,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
           hide: !isCreate,
           rules: 'required',
         },
-        { fieldName: 'status', hide: isCreate },
       ]);
 
       // 每次打开重新拉取套餐选项（后端暂无套餐下拉专用接口，取列表首页）
@@ -98,17 +96,13 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
         value: item.id,
       }));
 
+      formData.value = data ?? undefined;
+      id.value = data?.id;
       if (data) {
-        formData.value = data;
-        id.value = data.id;
         formApi.setValues({
           name: data.name,
           packageId: data.packageId,
-          status: data.status,
         });
-      } else {
-        formData.value = undefined;
-        id.value = undefined;
       }
     }
   },

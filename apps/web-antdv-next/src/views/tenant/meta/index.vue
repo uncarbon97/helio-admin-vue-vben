@@ -5,6 +5,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { TenantMetaApi } from '#/api';
+import type { EnabledStatusEnum } from '#/api/common';
 
 import { ref } from 'vue';
 
@@ -18,9 +19,11 @@ import {
   deleteTenant,
   getTenantMetaDetail,
   getTenantMetaList,
-  getTenantPackageList,
+  getTenantPackageSelectOptions,
 } from '#/api';
+import { updateTenant } from '#/api/tenant/meta';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -40,7 +43,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(onActionClick, packageNameMap),
+    columns: useColumns(onActionClick, packageNameMap, onToggleStatus),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -91,7 +94,36 @@ async function onEdit(row: TenantMetaApi.TenantMetaDTO) {
   formDrawerApi.setData(detail).open();
 }
 
+/**
+ * 状态开关切换（二次确认；成功后由 CellSwitch 渲染器行内更新，失败/取消回弹）
+ * 后端无独立 set-status 接口，走 update 全量修改
+ */
+async function onToggleStatus(
+  row: TenantMetaApi.TenantMetaDTO,
+  newStatus: EnabledStatusEnum,
+) {
+  const actionText =
+    newStatus === 1 ? $t('common.enabled') : $t('common.disabled');
+  const confirmed = await confirmAction(
+    $t('tenant.meta.statusChangeConfirm', [actionText, row.name]),
+  );
+  if (!confirmed) {
+    throw new Error('cancelled');
+  }
+  await updateTenant({
+    id: row.id,
+    name: row.name,
+    packageId: row.packageId || undefined,
+    status: newStatus,
+  });
+  message.success($t('ui.actionMessage.operationSuccess'));
+}
+
 async function onDelete(row: TenantMetaApi.TenantMetaDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.name]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
@@ -117,13 +149,11 @@ function onCreate() {
   formDrawerApi.setData(null).open();
 }
 
-// adapt to helium: 拉取套餐列表建立 ID👉名称映射（所属套餐列展示）
+// 拉取租户套餐下拉选项建立 ID👉名称映射（所属套餐列展示）
 async function loadPackageNameMap() {
-  const page = await getTenantPackageList({
-    pageParam: { pageNum: 1, pageSize: 100 },
-  });
+  const options = await getTenantPackageSelectOptions();
   packageNameMap.value = new Map(
-    (page?.records ?? []).map((item) => [item.id, item.name]),
+    (options ?? []).map((item) => [item.value, item.label]),
   );
 }
 

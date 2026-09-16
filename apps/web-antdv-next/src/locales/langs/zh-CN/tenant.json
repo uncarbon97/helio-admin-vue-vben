@@ -15,7 +15,8 @@
     "adminPwd": "初始密码",
     "adminEmail": "管理员邮箱",
     "adminPhoneNo": "管理员手机号",
-    "adminSection": "租户管理员（用于初始化登录账号）"
+    "adminSection": "租户管理员（用于初始化登录账号）",
+    "statusChangeConfirm": "确定{0} {1} 吗？"
   },
   "package": {
     "title": "租户套餐",
@@ -35,6 +36,7 @@
     "collapse": "折叠",
     "expand": "展开",
     "menuCol": "菜单",
-    "permCol": "权限"
+    "permCol": "权限",
+    "statusChangeConfirm": "确定{0} {1} 吗？"
   }
 }

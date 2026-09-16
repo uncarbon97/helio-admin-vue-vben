@@ -13,9 +13,11 @@
 
 - `internal/vite-config/src/plugins/nitro-mock.ts` — Nitro Mock 的 vite 插件实现
 
-### 修改文件
+- `apps/web-antdv-next/src/router/routes/modules/demos.ts` — 删除（演示路由）
+- `apps/web-antdv-next/src/router/routes/modules/vben.ts` — 删除 vben 项目展示/文档/关于等演示路由，仅保留「个人中心」（`/profile`）
+- `apps/web-antdv-next/src/views/demos/` — 删除演示页面
 
-- `apps/web-antdv-next/.env.development` — 移除 `VITE_NITRO_MOCK` 开关
+### 修改文件- `apps/web-antdv-next/.env.development` — 移除 `VITE_NITRO_MOCK` 开关
 - `apps/web-antdv-next/vite.config.ts` — 开发代理 `/api` 目标由 mock（`localhost:5320/api`）改为真实后端（`127.0.0.1:7003`）
 - `apps/web-antdv-next/src/api/request.ts` — 响应体约定对齐后端：成功判定 `code===0` → `success===true`，错误信息字段 `error/message` → `msg`；`doRefreshToken` 改空占位（后端无刷新接口）
 - `apps/web-antdv-next/src/api/core/auth.ts` — 登录 `POST /auth/login` → `POST /admin/v1/auth/password-login`，登出 → `/admin/v1/auth/logout`；入参改 `pin/pwd`（+tenantCode/captcha），返回 `token/roles/permissions`
@@ -46,6 +48,8 @@
 - `apps/web-antdv-next/src/api/core/auth.ts`、`user.ts`、`menu.ts` — 接口路径去掉重复的 `/admin` 前缀（baseURL `VITE_GLOB_API_URL` 已含 `/admin`，axios 拼接原会双前缀 `/admin/admin/v1/...`）
 - `apps/web-antdv-next/src/adapter/vxe-table.ts` — proxyConfig 分页结果字段 `items` → `records`（对齐后端 `PageResult`）
 - `apps/web-antdv-next/src/api/index.ts` — 新增 `export * from './system'`
+- `apps/web-antdv-next/src/views/dashboard/workspace/index.vue` — 快捷导航 3 个 `/demos/...` 死链改为 `/profile`、`/profile/change-password`
+- `apps/web-antdv-next/src/adapter/vxe-table.ts` — `CellOperation` 移除行内 Popconfirm 二次确认（delete 直接触发回调），确认改由页面层居中模态框处理（见 `utils/confirm.ts`）
 
 > 修改的文件中，相对源项目改动的位置会在上方添加注释 `// adapt to helium: <说明>`（配置文件用对应注释语法），方便与上游比较。
 
@@ -69,6 +73,8 @@
 - `apps/web-antdv-next/src/views/sys/dict/` — 数据字典管理页面：`index.vue`（左 30% 字典分类 Card + 右 70% 字典项，Tabs 切「自定义分类/内置字典」复用同一左表，点行联动右表；内置字典项内嵌于 DTO 本地展示、只读、不分页）、`data.ts`（列/表单配置）、`modules/category-form.vue`、`modules/item-form.vue`（categoryId 由所选分类注入）
 - `apps/web-antdv-next/src/locales/langs/zh-CN/sys.json`、`en-US/sys.json` — `sys.dict.*` 文案
 
+- `apps/web-antdv-next/src/utils/confirm.ts` — `confirmAction` 居中模态框二次确认封装（复用 `@vben/common-ui` 导出的 `confirm`/vbenAlert，样式同退出登录确认框）
+
 ### 增加包依赖
 
 - `vue3-tree-org@^4.2.2`（`apps/web-antdv-next`）— 部门管理「组织架构图」视图渲染
@@ -89,3 +95,5 @@
 > - 2026-09-13：新增登录日志页（`views/sys/login-log`，只读）；查询时间区间由 RangePicker 转 `beginAt`/`endAt` ISO 字符串；页面路由同样由后端菜单下发，需菜单表存在对应记录。
 > - 2026-09-13：安全删除 `playground/` 演示工程（git 可从上游恢复）：workspace/Dockerfile/tailwind `@source`/changeset 四处引用同步清理，`pnpm install` 重建锁文件。另：`pnpm install` 的 prepare 钩子会重新生成根目录 `lefthook.yml`（仓库已禁用 lefthook，属可删副产物）。
 > - 2026-09-13：新增数据字典管理页（`views/sys/dict`，左分类右字典项）；页面路由由后端菜单下发，需菜单表存在 `component: sys/dict/index` 的菜单记录（权限标识 `SysDict:read/create/update/delete`）。
+> - 2026-09-16：① 租户管理/租户套餐「启用/禁用」从新增/修改表单移至列表行内开关（`CellSwitch`），带居中模态框二次确认；后端无 set-status 接口，切换走 update 全量修改（取消/失败开关回弹），新增默认启用，修改保持原状态。② 全站删除等二次确认由操作列 Popconfirm 改为居中模态框（新增 `utils/confirm.ts`；涉及 sys/user、role、dept、menu、dict、file/storage、file/meta、tenant/* 各页 onDelete，用户管理「踢下线」由 antd `Modal.confirm` 迁移至同款弹窗）。新增文案 `tenant.meta/package.statusChangeConfirm`（zh/en）。
+> - 2026-09-16：删除演示路由与页面（`modules/demos.ts`、`views/demos/`、`vben.ts` 内 vben 项目展示路由），`vben.ts` 仅保留个人中心；工作台快捷导航同步改指真实页面。

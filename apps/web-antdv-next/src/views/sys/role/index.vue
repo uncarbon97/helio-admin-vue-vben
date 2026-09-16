@@ -14,6 +14,7 @@ import { Button, message } from 'antdv-next';
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteRole, getRoleDetail, getRoleList, setRoleStatus } from '#/api';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns, useGridFormSchema } from './data';
 import BindMenu from './modules/bind-menu.vue';
@@ -112,6 +113,10 @@ async function onToggleStatus(
 }
 
 async function onDelete(row: SysRoleApi.SysRoleDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.name]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,

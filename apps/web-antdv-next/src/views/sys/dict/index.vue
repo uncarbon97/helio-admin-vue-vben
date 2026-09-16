@@ -25,6 +25,7 @@ import {
   setDictItemStatus,
 } from '#/api';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import {
   useBuiltinColumns,
@@ -237,6 +238,10 @@ async function onToggleCategoryStatus(
 }
 
 async function onDeleteCategory(row: SysDictApi.CategoryDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.name]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
@@ -309,6 +314,10 @@ async function onToggleItemStatus(
 }
 
 async function onDeleteItem(row: SysDictApi.ItemDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.label]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.label]),
     duration: 0,

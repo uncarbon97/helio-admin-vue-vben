@@ -24,6 +24,7 @@ import {
   setDeptStatus,
 } from '#/api';
 import { $t } from '#/locales';
+import { confirmAction } from '#/utils/confirm';
 
 import { useColumns } from './data';
 import Form from './modules/form.vue';
@@ -181,6 +182,10 @@ async function onToggleStatus(
 }
 
 async function onDelete(row: SysDeptApi.SysDeptDTO) {
+  const confirmed = await confirmAction(
+    $t('ui.actionMessage.deleteConfirm', [row.name]),
+  );
+  if (!confirmed) return;
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,

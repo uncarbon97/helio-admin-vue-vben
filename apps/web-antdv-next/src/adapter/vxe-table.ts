@@ -15,13 +15,13 @@ import {
 import { get, isFunction, isString } from '@vben/utils';
 
 import { objectOmit } from '@vueuse/core';
-import { Button, Dropdown, Image, Popconfirm, Switch, Tag } from 'antdv-next';
+import { Button, Dropdown, Image, Switch, Tag } from 'antdv-next';
 
 import { useVbenForm } from './form';
 
 /**
  * adapt to helium: CellOperation 的「其他操作」下拉容器
- * 受控 open：面板内条目动作触发后由回调收起（delete 等 Popconfirm 确认后收起）
+ * 受控 open：面板内条目动作触发后由回调收起
  */
 const CellOperationDropdown = defineComponent({
   name: 'CellOperationDropdown',
@@ -136,9 +136,7 @@ setupVbenVxeTable({
         // adapt to helium: 值为数组时（如 flags），逐个匹配渲染多个标签
         if (Array.isArray(value)) {
           return value.map((item) => {
-            const matched = tagOptions.find(
-              (option) => option.value === item,
-            );
+            const matched = tagOptions.find((option) => option.value === item);
             return h(
               Tag,
               {
@@ -196,7 +194,8 @@ setupVbenVxeTable({
     });
 
     /**
-     * adapt to helium: 新增 CellOperation 操作列渲染器（编辑/详情/删除 + Popconfirm 二次确认）
+     * adapt to helium: 新增 CellOperation 操作列渲染器（编辑/详情/删除等）
+     * 不做行内二次确认，delete 等确认由页面层用居中模态框处理
      */
     vxeUI.renderer.add('CellOperation', {
       renderTableDefault({ attrs, options, props }, { column, row }) {
@@ -298,61 +297,15 @@ setupVbenVxeTable({
           );
         }
 
-        function renderConfirm(opt: Recordable<any>, onAfterConfirm?: () => void) {
-          let viewportWrapper: HTMLElement | null = null;
-          return h(
-            Popconfirm,
-            {
-              getPopupContainer(el) {
-                viewportWrapper = el.closest('.vxe-table--viewport-wrapper');
-                return document.body;
-              },
-              placement: 'topLeft',
-              title: $t('ui.actionTitle.delete', [attrs?.nameTitle || '']),
-              ...props,
-              ...opt,
-              icon: undefined,
-              onOpenChange: (open: boolean) => {
-                if (open) {
-                  viewportWrapper?.style.setProperty('pointer-events', 'none');
-                } else {
-                  viewportWrapper?.style.removeProperty('pointer-events');
-                }
-              },
-              onConfirm: () => {
-                attrs?.onClick?.({
-                  code: opt.code,
-                  row,
-                });
-                onAfterConfirm?.();
-              },
-            },
-            {
-              default: () => renderBtn({ ...opt }, false),
-              description: () =>
-                h(
-                  'div',
-                  { class: 'truncate' },
-                  $t('ui.actionMessage.deleteConfirm', [
-                    row[attrs?.nameField || 'name'],
-                  ]),
-                ),
-            },
-          );
-        }
-
         /**
          * adapt to helium: 带 children 的选项渲染为下拉收纳（如「其他操作」），
-         * 面板内条目复用 renderBtn/renderConfirm（delete 的 Popconfirm 照常生效），
          * 条目动作触发后自动收起下拉
          */
         function renderDropdown(opt: Recordable<any>) {
           return h(CellOperationDropdown, {
             renderPanel: (close: () => void) =>
               opt.children.map((child: Recordable<any>) =>
-                child.code === 'delete'
-                  ? renderConfirm(child, close)
-                  : renderBtn(child, true, close),
+                renderBtn(child, true, close),
               ),
             renderTrigger: () =>
               renderBtn(
@@ -369,7 +322,7 @@ setupVbenVxeTable({
           if (opt.children) {
             return renderDropdown(opt);
           }
-          return opt.code === 'delete' ? renderConfirm(opt) : renderBtn(opt);
+          return renderBtn(opt);
         });
         return h(
           'div',
