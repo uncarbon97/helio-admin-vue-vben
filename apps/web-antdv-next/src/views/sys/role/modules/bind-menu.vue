@@ -17,6 +17,8 @@ import {
 } from '#/api';
 import { $t } from '#/locales';
 
+import RoleUserTab from './role-user-tab.vue';
+
 interface PermItem {
   id: string;
   name: string;
@@ -373,9 +375,8 @@ function onToggleNode(row: PermRow) {
           </div>
         </TabPane>
         <TabPane key="user" :tab="$t('sys.role.tabRoleUser')">
-          <div class="flex items-center justify-center py-16">
-            <Empty :image="Empty.PRESENTED_IMAGE_SIMPLE" />
-          </div>
+          <!-- helium customization: 角色用户 tab，切到该页时才挂载加载 -->
+          <RoleUserTab v-if="activeTab === 'user' && roleId" :role-id="roleId" />
         </TabPane>
       </Tabs>
     </Spin>

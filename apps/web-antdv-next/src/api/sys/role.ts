@@ -3,10 +3,20 @@ import type {
   PageParam,
   PageResult,
 } from '#/api/common';
+import type { SysUserApi } from '#/api/sys/user';
 
 import { requestClient } from '#/api/request';
 
 export namespace SysRoleApi {
+  /** 角色关联用户列表查询条件 */
+  export interface ListRelatedUserQuery {
+    /** 分页参数 */
+    pageParam: PageParam;
+    /** 角色ID */
+    roleId: string;
+    /** 关键词(账号/昵称) */
+    keyword?: string;
+  }
   /** 列表查询条件 */
   export interface ListQuery {
     /** 分页参数 */
@@ -100,6 +110,27 @@ async function bindRoleMenu(roleId: string, menuIds: string[]) {
 }
 
 /**
+ * 分页查询角色关联用户
+ * @param data 查询条件
+ */
+async function listRelatedUser(data: SysRoleApi.ListRelatedUserQuery) {
+  return requestClient.post<PageResult<SysUserApi.SysUserDTO>>(
+    '/v1/sys/role/list-related-user',
+    data,
+  );
+}
+
+/**
+ * 查询角色关联的用户ID列表
+ * @param id 角色ID
+ */
+async function listRelatedUserId(id: string) {
+  return requestClient.post<string[]>('/v1/sys/role/list-related-user-id', {
+    id,
+  });
+}
+
+/**
  * 修改状态（启用/禁用）
  * @param id 角色ID
  * @param newStatus 新状态
@@ -120,6 +151,8 @@ export {
   deleteRole,
   getRoleDetail,
   getRoleList,
+  listRelatedUser,
+  listRelatedUserId,
   setRoleStatus,
   updateRole,
 };
