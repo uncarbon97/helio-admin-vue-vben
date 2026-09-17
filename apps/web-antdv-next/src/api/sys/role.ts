@@ -1,4 +1,8 @@
-import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
+import type {
+  EnabledStatusEnumValue,
+  PageParam,
+  PageResult,
+} from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -37,7 +41,7 @@ export namespace SysRoleApi {
     /** 可见菜单Ids */
     menuIds: string[];
     name: string;
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
   }
 }
 
@@ -100,7 +104,10 @@ async function bindRoleMenu(roleId: string, menuIds: string[]) {
  * @param id 角色ID
  * @param newStatus 新状态
  */
-async function setRoleStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setRoleStatus(
+  id: string,
+  newStatus: EnabledStatusEnumValue,
+) {
   return requestClient.post('/v1/sys/role/set-status', {
     id,
     newStatus,
@@ -113,6 +120,6 @@ export {
   deleteRole,
   getRoleDetail,
   getRoleList,
-  updateRole,
   setRoleStatus,
+  updateRole,
 };

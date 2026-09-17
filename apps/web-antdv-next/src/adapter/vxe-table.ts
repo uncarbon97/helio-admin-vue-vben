@@ -235,7 +235,7 @@ setupVbenVxeTable({
           opts: Array<Recordable<any> | string>,
         ): Array<Recordable<any>> {
           return opts
-            .map((opt) => {
+            .map((opt): Recordable<any> => {
               if (isString(opt)) {
                 return presets[opt]
                   ? { code: opt, ...presets[opt], ...defaultProps }

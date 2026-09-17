@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { TenantMetaApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { ref } from 'vue';
 
@@ -21,6 +21,7 @@ import {
   getTenantPackageSelectOptions,
   setTenantStatus,
 } from '#/api';
+import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -98,14 +99,18 @@ async function onEdit(row: TenantMetaApi.TenantMetaDTO) {
  */
 async function onToggleStatus(
   row: TenantMetaApi.TenantMetaDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   const actionText =
-    newStatus === 1 ? $t('common.enabled') : $t('common.disabled');
+    newStatus === EnabledStatusEnum.ENABLED
+      ? $t('common.enabled')
+      : $t('common.disabled');
   const confirmed = await confirmAction(
     $t('tenant.meta.statusChangeConfirm', [actionText, row.name]),
     // 禁用时给出红色警示
-    newStatus === 1 ? {} : { dangerTips: [$t('tenant.meta.kickOutDangerTip')] },
+    newStatus === EnabledStatusEnum.ENABLED
+      ? {}
+      : { dangerTips: [$t('tenant.meta.kickOutDangerTip')] },
   );
   if (!confirmed) {
     throw new Error('cancelled');

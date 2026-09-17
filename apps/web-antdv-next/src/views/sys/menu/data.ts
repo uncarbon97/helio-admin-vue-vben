@@ -3,11 +3,12 @@ import type { Ref } from 'vue';
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { MenuApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { listIcons } from '@vben/icons';
 
 import { MenuTypeEnum } from '#/api';
+import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 /** 上级菜单树选项节点（含虚拟根菜单 id=0） */
@@ -41,7 +42,7 @@ const MENU_TYPE_RADIO_OPTIONS = MENU_TYPE_TAG_OPTIONS.map(
  */
 export function useColumns<T = MenuApi.SysMenuDTO>(
   onActionClick: OnActionClickFn<T>,
-  onToggleStatus: (row: T, newStatus: EnabledStatusEnum) => Promise<void>,
+  onToggleStatus: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -87,8 +88,13 @@ export function useColumns<T = MenuApi.SysMenuDTO>(
       cellRender: {
         attrs: {
           checkedChildren: $t('common.enabled'),
-          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnum }) =>
-            onToggleStatus(row, value),
+          onSwitch: ({
+            row,
+            value,
+          }: {
+            row: T;
+            value: EnabledStatusEnumValue;
+          }) => onToggleStatus(row, value),
           unCheckedChildren: $t('common.disabled'),
         },
         name: 'CellSwitch',
@@ -248,12 +254,12 @@ export function useFormSchema(
       component: 'Switch',
       componentProps: {
         checkedChildren: $t('common.enabled'),
-        checkedValue: 1,
+        checkedValue: EnabledStatusEnum.ENABLED,
         class: 'w-auto',
         unCheckedChildren: $t('common.disabled'),
-        unCheckedValue: 0,
+        unCheckedValue: EnabledStatusEnum.DISABLED,
       },
-      defaultValue: 1,
+      defaultValue: EnabledStatusEnum.ENABLED,
       fieldName: 'status',
       label: $t('sys.menu.status'),
     },

@@ -1,5 +1,5 @@
 import type { MenuApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -19,7 +19,7 @@ export namespace SysMenuApi {
     /** 授权标识 */
     permission?: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 图标 */
     icon?: string;
     /** 排序 */
@@ -82,7 +82,10 @@ async function deleteMenu(id: string) {
  * @param id 菜单ID
  * @param newStatus 新状态
  */
-async function setMenuStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setMenuStatus(
+  id: string,
+  newStatus: EnabledStatusEnumValue,
+) {
   return requestClient.post('/v1/sys/menu/set-status', {
     id,
     newStatus,
@@ -102,11 +105,11 @@ function buildMenuTreeFull(
 
   const roots: SysMenuApi.MenuTreeNode[] = [];
   list.forEach((item) => {
-    const node = nodes.get(item.id)!;
+    const node = nodes.get(item.id);
     const parent = nodes.get(item.parentId ?? '0');
-    if (parent) {
+    if (node && parent) {
       (parent.children ??= []).push(node);
-    } else {
+    } else if (node) {
       roots.push(node);
     }
   });
@@ -163,11 +166,11 @@ function buildMenuTree(list: MenuApi.SysMenuDTO[]): MenuTreeNode[] {
 
   const roots: SortableNode[] = [];
   list.forEach((item) => {
-    const node = nodes.get(item.id)!;
+    const node = nodes.get(item.id);
     const parent = nodes.get(item.parentId ?? 0);
-    if (parent) {
+    if (node && parent) {
       (parent.children ??= []).push(node);
-    } else {
+    } else if (node) {
       roots.push(node);
     }
   });

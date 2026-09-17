@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import type { TenantPackageApi } from '#/api';
-import type { MenuTreeNode } from '#/api/sys/menu';
+import type { MenuTreeNode, TenantPackageApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -9,12 +8,13 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, Checkbox, Empty, Segmented, Spin } from 'antdv-next';
 
-import { buildMenuTree, getVisibleMenuList } from '#/api/sys/menu';
 import {
   bindTenantPackageMenu,
+  buildMenuTree,
   getTenantPackageDetail,
-} from '#/api/tenant/package';
-import { MenuTypeEnum } from '#/api';
+  getVisibleMenuList,
+  MenuTypeEnum,
+} from '#/api';
 import { $t } from '#/locales';
 
 interface PermItem {
@@ -84,7 +84,7 @@ async function reload(menuIds?: string[]) {
         : getTenantPackageDetail(packageId.value),
     ]);
     rows.value = toRows(buildMenuTree(menuList ?? []));
-    checkedIds.value = new Set(menuIds ?? detail?.menuIds ?? []);
+    checkedIds.value = new Set(menuIds ?? detail?.menuIds);
     resetExpanded();
   } finally {
     loading.value = false;

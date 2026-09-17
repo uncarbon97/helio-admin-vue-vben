@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { SysUserApi } from '#/api';
 
+import type { ParentTreeOption } from '../../dept/data';
+
 import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
@@ -9,8 +11,6 @@ import { TreeSelect } from 'antdv-next';
 
 import { bindUserDept, buildDeptTree, getDeptList } from '#/api';
 import { $t } from '#/locales';
-
-import type { ParentTreeOption } from '../../dept/data';
 
 const emits = defineEmits(['success']);
 

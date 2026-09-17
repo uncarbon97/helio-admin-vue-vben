@@ -1,7 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysRoleApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { $t } from '#/locales';
 
@@ -27,11 +27,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
  * 表格列
  * @param onActionClick
  * @param onToggleStatus 状态开关切换回调
- * @returns
  */
 export function useColumns<T = SysRoleApi.SysRoleDTO>(
   onActionClick: OnActionClickFn<T>,
-  onToggleStatus: (row: T, newStatus: EnabledStatusEnum) => Promise<void>,
+  onToggleStatus: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -53,8 +52,13 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
       cellRender: {
         attrs: {
           checkedChildren: $t('common.enabled'),
-          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnum }) =>
-            onToggleStatus(row, value),
+          onSwitch: ({
+            row,
+            value,
+          }: {
+            row: T;
+            value: EnabledStatusEnumValue;
+          }) => onToggleStatus(row, value),
           unCheckedChildren: $t('common.disabled'),
         },
         name: 'CellSwitch',

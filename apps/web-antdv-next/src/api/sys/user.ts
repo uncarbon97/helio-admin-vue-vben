@@ -1,5 +1,5 @@
 import type {
-  EnabledStatusEnum,
+  EnabledStatusEnumValue,
   GenderEnumValue,
   PageParam,
   PageResult,
@@ -67,7 +67,7 @@ export namespace SysUserApi {
     /** 昵称 */
     nickname: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 性别 */
     gender: GenderEnumValue;
     /** 邮箱 */
@@ -134,7 +134,10 @@ async function deleteUser(id: string) {
  * @param id 用户ID
  * @param newStatus 新状态
  */
-async function setUserStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setUserStatus(
+  id: string,
+  newStatus: EnabledStatusEnumValue,
+) {
   return requestClient.post('/v1/sys/user/set-status', {
     id,
     newStatus,

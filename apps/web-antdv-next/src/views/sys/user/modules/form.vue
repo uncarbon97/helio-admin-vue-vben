@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { SysUserApi } from '#/api';
 
+import type { ParentTreeOption } from '../../dept/data';
+
 import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
@@ -9,7 +11,6 @@ import { useVbenForm } from '#/adapter/form';
 import { buildDeptTree, createUser, getDeptList, updateUser } from '#/api';
 import { $t } from '#/locales';
 
-import type { ParentTreeOption } from '../../dept/data';
 import { useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
@@ -62,7 +63,10 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData();
+      // 先清空，避免加载中展示上一次的表单数据
       formApi.reset();
+      formData.value = undefined;
+      id.value = undefined;
 
       const isCreate = !data;
       formApi.updateSchema([
@@ -84,9 +88,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
           phoneNo: data.phoneNo,
           pin: data.pin,
         });
-      } else {
-        formData.value = undefined;
-        id.value = undefined;
       }
     }
   },

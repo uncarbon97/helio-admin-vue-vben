@@ -5,7 +5,7 @@ import { ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
-import { Descriptions, Spin, Tag, TextArea } from 'antdv-next';
+import { DescriptionsItem, Descriptions, Spin, Tag, TextArea } from 'antdv-next';
 
 import {
   getLoginLogDetail,
@@ -41,8 +41,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysLoginLogApi.SysLoginLogDTO>(
 
 defineExpose({ drawerApi });
 
-const DescriptionItem = Descriptions.Item;
-
 /** 日志类型展示 */
 function loginLogTypeTag(
   value: SysLoginLogApi.SysLoginLogDTO['loginLogType'] | undefined,
@@ -76,51 +74,51 @@ function resultStatusTag(
   <Drawer :title="$t('common.detail')" class="w-[640px]">
     <Spin :spinning="loading">
       <Descriptions v-if="detail" bordered :column="2" size="small">
-        <DescriptionItem :label="$t('sys.loginLog.createdAt')" :span="2">
+        <DescriptionsItem :label="$t('sys.loginLog.createdAt')" :span="2">
           {{ detail.createdAt }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.loginLogType')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.loginLogType')">
           <Tag :color="loginLogTypeTag(detail.loginLogType).color">
             {{ loginLogTypeTag(detail.loginLogType).label }}
           </Tag>
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.resultStatus')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.resultStatus')">
           <Tag :color="resultStatusTag(detail.resultStatus).color">
             {{ resultStatusTag(detail.resultStatus).label }}
           </Tag>
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.userPin')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.userPin')">
           {{ detail.userPin }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.userId')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.userId')">
           {{ detail.userId }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.userTypeCode')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.userTypeCode')">
           {{ detail.userTypeCode }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.visitorIp')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.visitorIp')">
           {{ detail.visitorIp }}
-        </DescriptionItem>
-        <DescriptionItem
+        </DescriptionsItem>
+        <DescriptionsItem
           :label="$t('sys.loginLog.visitorIpLocation')"
           :span="2"
         >
           {{ detail.visitorIpLocation }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.visitorBrowser')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.visitorBrowser')">
           {{ detail.visitorBrowser }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.loginLog.visitorOs')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.loginLog.visitorOs')">
           {{ detail.visitorOs }}
-        </DescriptionItem>
+        </DescriptionsItem>
         <!-- 可能是多行文本，用只读多行文本框渲染 -->
-        <DescriptionItem :label="$t('sys.loginLog.failedMsg')" :span="2">
+        <DescriptionsItem :label="$t('sys.loginLog.failedMsg')" :span="2">
           <TextArea
             :autosize="{ minRows: 1, maxRows: 6 }"
             readonly
             :value="detail.failedMsg ?? ''"
           />
-        </DescriptionItem>
+        </DescriptionsItem>
       </Descriptions>
     </Spin>
   </Drawer>

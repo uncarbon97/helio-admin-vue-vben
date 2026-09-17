@@ -6,7 +6,7 @@ import { computed, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { createDictCategory, updateDictCategory } from '#/api/sys/dict';
+import { createDictCategory, updateDictCategory } from '#/api';
 import { $t } from '#/locales';
 
 import { useCategoryFormSchema } from '../data';
@@ -58,7 +58,10 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysDictApi.CategoryDTO>({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData();
+      // 先清空，避免加载中展示上一次的表单数据
       formApi.reset();
+      formData.value = undefined;
+      id.value = undefined;
 
       if (data) {
         formData.value = data;
@@ -70,9 +73,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysDictApi.CategoryDTO>({
           name: data.name,
           status: data.status,
         });
-      } else {
-        formData.value = undefined;
-        id.value = undefined;
       }
     }
   },

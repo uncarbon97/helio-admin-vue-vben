@@ -5,7 +5,7 @@ import { ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
-import { Descriptions, Spin, Tag, TextArea } from 'antdv-next';
+import { DescriptionsItem, Descriptions, Spin, Tag, TextArea } from 'antdv-next';
 
 import { getOperateLogDetail, LogResultStatusEnum } from '#/api';
 import { $t } from '#/locales';
@@ -36,8 +36,6 @@ const [Drawer, drawerApi] =
 
 defineExpose({ drawerApi });
 
-const DescriptionItem = Descriptions.Item;
-
 /** 结果状态展示 */
 function resultStatusTag(
   value: SysOperateLogApi.SysOperateLogDTO['resultStatus'] | undefined,
@@ -51,64 +49,64 @@ function resultStatusTag(
   <Drawer :title="$t('common.detail')" class="w-[640px]">
     <Spin :spinning="loading">
       <Descriptions v-if="detail" bordered :column="2" size="small">
-        <DescriptionItem :label="$t('sys.operateLog.createdAt')" :span="2">
+        <DescriptionsItem :label="$t('sys.operateLog.createdAt')" :span="2">
           {{ detail.createdAt }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.resultStatus')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.resultStatus')">
           <Tag :color="resultStatusTag(detail.resultStatus).color">
             {{ resultStatusTag(detail.resultStatus).label }}
           </Tag>
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.bizType')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.bizType')">
           {{ detail.bizType }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.behavior')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.behavior')">
           {{ detail.behavior }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.bizNo')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.bizNo')">
           {{ detail.bizNo }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.userPin')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.userPin')">
           {{ detail.userPin }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.userTypeCode')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.userTypeCode')">
           {{ detail.userTypeCode }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.requestMethod')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.requestMethod')">
           {{ detail.requestMethod }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.visitorIp')" :span="2">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.visitorIp')" :span="2">
           {{ detail.visitorIp }}
-        </DescriptionItem>
-        <DescriptionItem
+        </DescriptionsItem>
+        <DescriptionsItem
           :label="$t('sys.operateLog.visitorIpLocation')"
           :span="2"
         >
           {{ detail.visitorIpLocation }}
-        </DescriptionItem>
+        </DescriptionsItem>
         <!-- 可能是多行文本，用只读多行文本框渲染 -->
-        <DescriptionItem :label="$t('sys.operateLog.requestPath')" :span="2">
+        <DescriptionsItem :label="$t('sys.operateLog.requestPath')" :span="2">
           <TextArea
             :autosize="{ minRows: 1, maxRows: 6 }"
             readonly
             :value="detail.requestPath"
           />
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.operation')" :span="2">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.operation')" :span="2">
           <TextArea
             :autosize="{ minRows: 1, maxRows: 8 }"
             readonly
             :value="detail.operation"
           />
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.bizExtra')" :span="2">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.bizExtra')" :span="2">
           <TextArea
             :autosize="{ minRows: 1, maxRows: 6 }"
             readonly
             :value="detail.bizExtra"
           />
-        </DescriptionItem>
-        <DescriptionItem
+        </DescriptionsItem>
+        <DescriptionsItem
           :label="$t('sys.operateLog.visitorUserAgent')"
           :span="2"
         >
@@ -117,14 +115,14 @@ function resultStatusTag(
             readonly
             :value="detail.visitorUserAgent"
           />
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.operateLog.failedMsg')" :span="2">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.operateLog.failedMsg')" :span="2">
           <TextArea
             :autosize="{ minRows: 1, maxRows: 6 }"
             readonly
             :value="detail.failedMsg ?? ''"
           />
-        </DescriptionItem>
+        </DescriptionsItem>
       </Descriptions>
     </Spin>
   </Drawer>

@@ -1,4 +1,4 @@
-import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
+import type { EnabledStatusEnumValue, PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -12,7 +12,7 @@ export namespace TenantPackageApi {
     /** 套餐名称(关键词) */
     name?: string;
     /** 状态 */
-    status?: EnabledStatusEnum;
+    status?: EnabledStatusEnumValue;
   }
 
   /** 新增/修改请求表单 */
@@ -37,7 +37,7 @@ export namespace TenantPackageApi {
     /** 套餐名称 */
     name: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 套餐描述 */
     description: string;
     /** 关联菜单Ids */
@@ -89,7 +89,7 @@ async function updateTenantPackage(request: TenantPackageApi.UpsertRequest) {
  */
 async function setTenantPackageStatus(
   id: string,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   return requestClient.post('/v1/tenant/package/set-status', {
     id,

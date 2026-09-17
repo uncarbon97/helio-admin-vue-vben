@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { SysUserApi, SelectOptionItem } from '#/api';
+import type { SelectOptionItem, SysUserApi } from '#/api';
 
 import { computed, ref } from 'vue';
 

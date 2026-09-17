@@ -6,11 +6,7 @@ import { computed, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import {
-  createFileStorage,
-  getFileStorageDetail,
-  updateFileStorage,
-} from '#/api';
+import { createFileStorage, updateFileStorage } from '#/api';
 import { $t } from '#/locales';
 
 import { ALL_SETTING_FIELDS, SETTING_FIELDS, useFormSchema } from '../data';
@@ -79,25 +75,25 @@ const [Drawer, drawerApi] = useVbenDrawer<FileStorageApi.FileStorageDTO | null>(
     async onOpenChange(isOpen) {
       if (isOpen) {
         const data = drawerApi.getData();
+        // 先清空，避免加载中展示上一次的表单数据
         formApi.reset();
+        formData.value = undefined;
+        id.value = undefined;
 
         if (data) {
-          // 修改前拉取详情，保证数据为最新
-          const detail = await getFileStorageDetail(data.id);
-          formData.value = detail;
-          id.value = detail.id;
+          // 详情由列表页编辑入口拉取后传入
+          formData.value = data;
+          id.value = data.id;
           formApi.setValues({
-            code: detail.code,
-            name: detail.name,
-            platformType: detail.platformType,
-            primaryFlag: detail.primaryFlag,
+            code: data.code,
+            name: data.name,
+            platformType: data.platformType,
+            primaryFlag: data.primaryFlag,
             // 配置属性摊平到表单
-            ...detail.settingBody,
+            ...data.settingBody,
           });
-          applySettingFieldsVisible(detail.platformType);
+          applySettingFieldsVisible(data.platformType);
         } else {
-          formData.value = undefined;
-          id.value = undefined;
           applySettingFieldsVisible(undefined);
         }
       }

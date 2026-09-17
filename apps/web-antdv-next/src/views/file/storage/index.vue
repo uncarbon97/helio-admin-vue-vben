@@ -12,7 +12,12 @@ import { Plus } from '@vben/icons';
 import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteFileStorage, getFileStorageList, testFileStorage } from '#/api';
+import {
+  deleteFileStorage,
+  getFileStorageDetail,
+  getFileStorageList,
+  testFileStorage,
+} from '#/api';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -92,7 +97,9 @@ function onActionClick(e: OnActionClickParams<FileStorageApi.FileStorageDTO>) {
 }
 
 async function onEdit(row: FileStorageApi.FileStorageDTO) {
-  formDrawerApi.setData(row).open();
+  // 修改前拉取详情，保证数据为最新
+  const detail = await getFileStorageDetail(row.id);
+  formDrawerApi.setData(detail).open();
 }
 
 async function onDelete(row: FileStorageApi.FileStorageDTO) {

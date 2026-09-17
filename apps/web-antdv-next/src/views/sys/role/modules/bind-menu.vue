@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import type { SysRoleApi } from '#/api';
-import type { MenuTreeNode } from '#/api/sys/menu';
+import type { MenuTreeNode, SysRoleApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -9,9 +8,13 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, Checkbox, Empty, Segmented, Spin, Tabs } from 'antdv-next';
 
-import { buildMenuTree, getVisibleMenuList } from '#/api/sys/menu';
-import { bindRoleMenu, getRoleDetail } from '#/api/sys/role';
-import { MenuTypeEnum } from '#/api';
+import {
+  bindRoleMenu,
+  buildMenuTree,
+  getRoleDetail,
+  getVisibleMenuList,
+  MenuTypeEnum,
+} from '#/api';
 import { $t } from '#/locales';
 
 interface PermItem {
@@ -83,7 +86,7 @@ async function reload(menuIds?: string[]) {
         : getRoleDetail(roleId.value),
     ]);
     rows.value = toRows(buildMenuTree(menuList ?? []));
-    checkedIds.value = new Set(menuIds ?? detail?.menuIds ?? []);
+    checkedIds.value = new Set(menuIds ?? detail?.menuIds);
     resetExpanded();
   } finally {
     loading.value = false;

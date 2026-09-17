@@ -1,6 +1,5 @@
 import type { Editor as CoreEditor } from '@tiptap/core';
 import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
-import type { EditorView } from '@tiptap/pm/view';
 import type { Extensions } from '@tiptap/vue-3';
 
 import type { ImageUploadOptions, VbenTiptapExtensionOptions } from './types';
@@ -307,7 +306,9 @@ function createCustomImage(
         new Plugin({
           key: new PluginKey('imageUploadDrop'),
           props: {
-            handleDrop: (view: EditorView, event: DragEvent) => {
+            // helium customization: handleDrop/handlePaste 去掉上游显式 `view: EditorView` 注解，
+            // 改由 Plugin props 上下文推断（pnpm 双 prosemirror-view 版本下显式注解与 Plugin 类型不同源，TS2322）
+            handleDrop: (view, event) => {
               if (!event.dataTransfer?.files.length) return false;
 
               const imageFiles = [...event.dataTransfer.files].filter((f) =>
@@ -354,7 +355,7 @@ function createCustomImage(
         new Plugin({
           key: new PluginKey('imageUploadPaste'),
           props: {
-            handlePaste: (_view: EditorView, event: ClipboardEvent) => {
+            handlePaste: (_view, event) => {
               const items = event.clipboardData?.items;
               if (!items) return false;
 

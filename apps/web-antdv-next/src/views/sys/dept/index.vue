@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { SysDeptApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { computed, ref } from 'vue';
 
@@ -13,7 +13,6 @@ import { Plus } from '@vben/icons';
 
 import { Button, Empty, Input, message, Radio, RadioGroup } from 'antdv-next';
 import { Vue3TreeOrg } from 'vue3-tree-org';
-import 'vue3-tree-org/lib/vue3-tree-org.css';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
@@ -29,13 +28,15 @@ import { confirmAction } from '#/utils/confirm';
 import { useColumns } from './data';
 import Form from './modules/form.vue';
 
+import 'vue3-tree-org/lib/vue3-tree-org.css';
+
 // 视图切换（列表 / 组织架构图，架构图仅查看）
 const viewType = ref<'table' | 'tree'>('table');
 // 响应式树数据，列表刷新时同步，供组织架构图渲染
 const treeData = ref<SysDeptApi.DeptTreeNode[]>([]);
 
 // 架构图根节点：跟随本地搜索过滤；单根直接用，多根包虚拟根，避免丢部门
-const orgRoot = computed<SysDeptApi.DeptTreeNode | null>(() => {
+const orgRoot = computed<null | SysDeptApi.DeptTreeNode>(() => {
   const nodes = applySearch(treeData.value);
   if (nodes.length === 0) return null;
   if (nodes.length === 1) return nodes[0] ?? null;
@@ -175,7 +176,7 @@ async function onEdit(row: SysDeptApi.SysDeptDTO) {
  */
 async function onToggleStatus(
   row: SysDeptApi.SysDeptDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   await setDeptStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));

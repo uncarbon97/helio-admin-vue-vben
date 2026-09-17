@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import type { SysUserApi, YesOrNoEnumValue } from '#/api';
+import type { SysUserApi } from '#/api';
+import type { YesOrNoEnumValue } from '#/api/common';
 
 import { computed, ref } from 'vue';
 
@@ -8,7 +9,8 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, Input, RadioGroup, message } from 'antdv-next';
 
-import { resetUserPassword, YesOrNoEnum } from '#/api';
+import { resetUserPassword } from '#/api';
+import { YesOrNoEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 const emits = defineEmits(['success']);

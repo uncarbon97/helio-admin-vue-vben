@@ -1,6 +1,16 @@
 // 通用业务契约
-/** 启用禁用状态枚举 */
-export type EnabledStatusEnum = 0 | 1;
+/**
+ * 启用禁用状态枚举（后端 EnabledStatusEnum，BaseEnum<Integer> 按整数输出）
+ * 跨领域复用：租户、套餐、菜单等
+ */
+export const EnabledStatusEnum = {
+  /** 禁用 */
+  DISABLED: 0,
+  /** 启用 */
+  ENABLED: 1,
+} as const;
+
+export type EnabledStatusEnumValue = (typeof EnabledStatusEnum)[keyof typeof EnabledStatusEnum];
 
 /**
  * 是否枚举（后端框架级 YesOrNoEnum，BaseEnum<Integer> 按整数输出）

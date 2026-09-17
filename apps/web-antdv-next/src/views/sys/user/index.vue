@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { SysDeptApi, SysUserApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { computed, onMounted, ref } from 'vue';
 
@@ -23,6 +23,7 @@ import {
   kickOutUser,
   setUserStatus,
 } from '#/api';
+import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -122,7 +123,7 @@ onMounted(async () => {
       name: $t('sys.user.allUsers'),
       parentId: '0',
       sort: 0,
-      status: 1,
+      status: EnabledStatusEnum.ENABLED,
       createdAt: '',
       updatedAt: '',
       children: tree as DeptTreeNodeOption[],
@@ -199,7 +200,7 @@ async function onEdit(row: SysUserApi.SysUserDTO) {
  */
 async function onToggleStatus(
   row: SysUserApi.SysUserDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   await setUserStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
@@ -231,7 +232,7 @@ async function onDelete(row: SysUserApi.SysUserDTO) {
 async function onKickOut(row: SysUserApi.SysUserDTO) {
   const confirmed = await confirmAction(
     $t('sys.user.kickOutConfirm', [row.nickname]),
-    $t('sys.user.kickOut'),
+    { title: $t('sys.user.kickOut') },
   );
   if (!confirmed) return;
   await kickOutUser(row.id);

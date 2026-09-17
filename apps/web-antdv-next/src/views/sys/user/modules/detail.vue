@@ -5,9 +5,10 @@ import { ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
-import { Descriptions, Spin, Tag } from 'antdv-next';
+import { DescriptionsItem, Descriptions, Spin, Tag } from 'antdv-next';
 
-import { GenderEnum, getUserDetail } from '#/api';
+import { getUserDetail } from '#/api';
+import { EnabledStatusEnum, GenderEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 const loading = ref(false);
@@ -35,8 +36,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
 
 defineExpose({ drawerApi });
 
-const DescriptionItem = Descriptions.Item;
-
 /** 性别展示 */
 function genderTag(value: undefined | SysUserApi.SysUserDTO['gender']) {
   switch (value) {
@@ -56,39 +55,47 @@ function genderTag(value: undefined | SysUserApi.SysUserDTO['gender']) {
   <Drawer :title="$t('common.detail')" class="w-[640px]">
     <Spin :spinning="loading">
       <Descriptions v-if="detail" bordered :column="2" size="small">
-        <DescriptionItem :label="$t('sys.user.pin')">
+        <DescriptionsItem :label="$t('sys.user.pin')">
           {{ detail.pin }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.nickname')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.nickname')">
           {{ detail.nickname }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.gender')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.gender')">
           <Tag :color="genderTag(detail.gender).color">
             {{ genderTag(detail.gender).label }}
           </Tag>
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.status')">
-          <Tag :color="detail.status === 1 ? 'success' : 'error'">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.status')">
+          <Tag
+            :color="
+              detail.status === EnabledStatusEnum.ENABLED
+                ? 'success'
+                : 'error'
+            "
+          >
             {{
-              detail.status === 1 ? $t('common.enabled') : $t('common.disabled')
+              detail.status === EnabledStatusEnum.ENABLED
+                ? $t('common.enabled')
+                : $t('common.disabled')
             }}
           </Tag>
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.deptName')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.deptName')">
           {{ detail.deptName ?? '-' }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.phoneNo')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.phoneNo')">
           {{ detail.phoneNo }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.email')" :span="2">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.email')" :span="2">
           {{ detail.email }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.lastLoginAt')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.lastLoginAt')">
           {{ detail.lastLoginAt ?? '-' }}
-        </DescriptionItem>
-        <DescriptionItem :label="$t('sys.user.createTime')">
+        </DescriptionsItem>
+        <DescriptionsItem :label="$t('sys.user.createTime')">
           {{ detail.createdAt }}
-        </DescriptionItem>
+        </DescriptionsItem>
       </Descriptions>
     </Spin>
   </Drawer>

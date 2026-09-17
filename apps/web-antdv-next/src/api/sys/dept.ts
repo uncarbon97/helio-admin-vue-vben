@@ -1,4 +1,4 @@
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -14,7 +14,7 @@ export namespace SysDeptApi {
     /** 排序 */
     sort: number;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
   }
 
   /** 值对象 */
@@ -26,7 +26,7 @@ export namespace SysDeptApi {
     /** 上级部门ID（根部门为 0） */
     parentId: string;
     sort: number;
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
   }
 
   /** 树节点（由扁平 SysDeptDTO 构建） */
@@ -81,7 +81,10 @@ async function deleteDept(id: string) {
  * @param id 部门ID
  * @param newStatus 新状态
  */
-async function setDeptStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setDeptStatus(
+  id: string,
+  newStatus: EnabledStatusEnumValue,
+) {
   return requestClient.post('/v1/sys/dept/set-status', {
     id,
     newStatus,
@@ -101,11 +104,11 @@ function buildDeptTree(
 
   const roots: SysDeptApi.DeptTreeNode[] = [];
   list.forEach((item) => {
-    const node = nodes.get(item.id)!;
+    const node = nodes.get(item.id);
     const parent = nodes.get(item.parentId ?? '0');
-    if (parent) {
+    if (node && parent) {
       (parent.children ??= []).push(node);
-    } else {
+    } else if (node) {
       roots.push(node);
     }
   });

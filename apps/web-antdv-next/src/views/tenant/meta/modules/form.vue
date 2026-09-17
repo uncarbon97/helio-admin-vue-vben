@@ -1,13 +1,17 @@
 <script lang="ts" setup>
-import type { TenantMetaApi, SelectOptionItem } from '#/api';
+import type { SelectOptionItem, TenantMetaApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { getTenantPackageList } from '#/api';
-import { createTenant, updateTenant } from '#/api/tenant/meta';
+import {
+  createTenant,
+  getTenantPackageList,
+  updateTenant,
+} from '#/api';
+import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
@@ -43,7 +47,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
             name: values.name,
             packageId: values.packageId || undefined,
             // 状态不走表单，保持修改前状态（由列表行内开关切换）
-            status: formData.value?.status ?? 1,
+            status: formData.value?.status ?? EnabledStatusEnum.ENABLED,
           })
         : createTenant({
             code: values.code,
@@ -64,7 +68,10 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData();
+      // 先清空，避免加载中展示上一次的表单数据
       formApi.reset();
+      formData.value = undefined;
+      id.value = undefined;
 
       const isCreate = !data;
       formApi.updateSchema([
@@ -92,9 +99,9 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
         value: item.id,
       }));
 
-      formData.value = data ?? undefined;
-      id.value = data?.id;
       if (data) {
+        formData.value = data;
+        id.value = data.id;
         formApi.setValues({
           name: data.name,
           packageId: data.packageId,

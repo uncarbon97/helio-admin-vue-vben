@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { ParentTreeOption } from '../data';
-
 import type { MenuApi, SysMenuApi } from '#/api';
+
+import type { ParentTreeOption } from '../data';
 
 import { computed, ref } from 'vue';
 
@@ -60,7 +60,10 @@ const [Drawer, drawerApi] = useVbenDrawer<
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData();
+      // 先清空，避免加载中展示上一次的表单数据
       formApi.reset();
+      formData.value = undefined;
+      id.value = undefined;
 
       // 每次打开重新拉取菜单树作为上级选项；编辑时剔除自身子树防止成环
       const list = await getMenuList();
@@ -79,13 +82,9 @@ const [Drawer, drawerApi] = useVbenDrawer<
         id.value = data.id;
         // setValues 默认按 FormSchema 过滤字段，可直接整份 DTO 灌入
         formApi.setValues(data);
-      } else {
-        formData.value = undefined;
-        id.value = undefined;
+      } else if (data?.parentId) {
         // 「新增下级」入口：预选上级菜单
-        if (data?.parentId) {
-          formApi.setValues({ parentId: data.parentId });
-        }
+        formApi.setValues({ parentId: data.parentId });
       }
     }
   },

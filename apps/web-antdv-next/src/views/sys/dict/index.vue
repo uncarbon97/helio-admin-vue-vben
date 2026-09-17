@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { SysDictApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { computed, ref } from 'vue';
 
@@ -224,7 +224,7 @@ function onCategorySaved(request: SysDictApi.CategoryUpsertRequest) {
  */
 async function onToggleCategoryStatus(
   row: SysDictApi.CategoryDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   await setDictCategoryStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
@@ -300,7 +300,7 @@ function onCreateItem() {
  */
 async function onToggleItemStatus(
   row: SysDictApi.ItemDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   await setDictItemStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));

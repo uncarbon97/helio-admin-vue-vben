@@ -53,7 +53,6 @@ export function useGridFormSchema(): VbenFormSchema[] {
  * 表格列
  * @param onActionClick
  * @param hasDelete 是否有删除权限
- * @returns
  */
 export function useColumns<T = FileMetaApi.FileMetaDTO>(
   onActionClick: OnActionClickFn<T>,

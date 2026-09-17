@@ -1,4 +1,4 @@
-import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
+import type { EnabledStatusEnumValue, PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -12,7 +12,7 @@ export namespace TenantMetaApi {
     /** 租户名称(关键词) */
     name?: string;
     /** 状态 */
-    status?: EnabledStatusEnum;
+    status?: EnabledStatusEnumValue;
   }
 
   /** 新增请求表单（含租户管理员账号初始化） */
@@ -42,7 +42,7 @@ export namespace TenantMetaApi {
     /** 所属租户套餐ID */
     packageId?: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
   }
 
   /** 租户管理员用户资料 */
@@ -65,7 +65,7 @@ export namespace TenantMetaApi {
     /** 租户名称 */
     name: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 租户管理员用户ID */
     adminUserId: string;
     /** 所属租户套餐ID */
@@ -116,7 +116,7 @@ async function updateTenant(request: TenantMetaApi.UpdateRequest) {
  * @param id 租户ID
  * @param newStatus 新状态
  */
-async function setTenantStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setTenantStatus(id: string, newStatus: EnabledStatusEnumValue) {
   return requestClient.post('/v1/tenant/set-status', {
     id,
     newStatus,

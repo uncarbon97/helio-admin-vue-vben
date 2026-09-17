@@ -1,5 +1,6 @@
 import type { RouteRecordStringComponent } from '@vben/types';
 
+import { EnabledStatusEnum } from '#/api/common';
 import { requestClient } from '#/api/request';
 
 export namespace MenuApi {
@@ -31,11 +32,13 @@ export const MenuTypeEnum = {
 } as const;
 
 /** 树构建过程中的临时节点，附带原菜单 id/parentId/排序用于组装树 */
-interface TreeNode extends RouteRecordStringComponent {
+interface TreeNode
+  extends Omit<RouteRecordStringComponent, 'children' | 'component'> {
   _id: string;
   _parentId: string;
   _sort: number;
   children?: TreeNode[];
+  component?: string;
 }
 
 /**
@@ -48,7 +51,7 @@ export async function getAllMenusApi() {
 }
 
 /**
- * 将后端扁平菜单 DTO 转换为 v5 规范路由树
+ * helium customization: 将后端扁平菜单 DTO 转换为 v5 规范路由树
  *
  * 约定（见 docs/src/guide/in-depth/access.md 后端访问控制示例）：
  * - BUTTON 仅作权限标识，不生成路由
@@ -65,14 +68,14 @@ function transformMenus(
       const slug = m.path.replaceAll(/[\\/]+/g, '-').replaceAll(/^-+|-+$/g, '');
       return {
         _id: m.id,
-        _parentId: m.parentId ?? 0,
+        _parentId: m.parentId ?? '',
         _sort: m.sort ?? 0,
         component:
           m.menuType === MenuTypeEnum.EXTERNAL_LINK
             ? 'IFrameView'
             : m.component,
         meta: {
-          hideInMenu: m.status === 0,
+          hideInMenu: m.status === EnabledStatusEnum.DISABLED,
           icon: m.icon,
           link: m.externalLink,
           order: m.sort ?? 0,
@@ -102,10 +105,11 @@ function transformMenus(
       .toSorted((a, b) => a._sort - b._sort)
       .map(({ _id, _parentId, _sort, ...rest }) => {
         const { children, ...route } = rest;
-        const result = route as RouteRecordStringComponent;
+        const result = route as unknown as RouteRecordStringComponent;
         if (children?.length) {
-          result.children = toRoutes(children);
-          result.redirect = result.children[0]!.path;
+          const childRoutes = toRoutes(children);
+          result.children = childRoutes;
+          result.redirect = childRoutes[0]?.path;
         }
         return result;
       });

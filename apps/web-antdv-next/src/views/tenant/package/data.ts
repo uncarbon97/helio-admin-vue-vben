@@ -1,7 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { TenantPackageApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { $t } from '#/locales';
 
@@ -27,11 +27,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
  * 表格列
  * @param onActionClick
  * @param onToggleStatus 状态开关切换回调（页面层做二次确认）
- * @returns
  */
 export function useColumns<T = TenantPackageApi.TenantPackageDTO>(
   onActionClick: OnActionClickFn<T>,
-  onToggleStatus: (row: T, newStatus: EnabledStatusEnum) => Promise<void>,
+  onToggleStatus: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -54,7 +53,7 @@ export function useColumns<T = TenantPackageApi.TenantPackageDTO>(
       cellRender: {
         attrs: {
           checkedChildren: $t('common.enabled'),
-          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnum }) =>
+          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnumValue }) =>
             onToggleStatus(row, value),
           unCheckedChildren: $t('common.disabled'),
         },

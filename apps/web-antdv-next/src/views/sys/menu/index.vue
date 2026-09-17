@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { MenuApi, SysMenuApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { ref } from 'vue';
 
@@ -151,7 +151,7 @@ async function onEdit(row: MenuApi.SysMenuDTO) {
  */
 async function onToggleStatus(
   row: MenuApi.SysMenuDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   await setMenuStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
@@ -206,7 +206,6 @@ async function onToggleExpand() {
   await gridApi.grid?.setAllTreeExpand(expanded.value);
 }
 </script>
-
 <template>
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" />

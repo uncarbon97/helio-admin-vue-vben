@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { SysRoleApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
@@ -106,7 +106,7 @@ async function onBindMenu(row: SysRoleApi.SysRoleDTO) {
  */
 async function onToggleStatus(
   row: SysRoleApi.SysRoleDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   await setRoleStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));

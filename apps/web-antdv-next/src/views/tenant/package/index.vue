@@ -4,7 +4,7 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { TenantPackageApi } from '#/api';
-import type { EnabledStatusEnum } from '#/api/common';
+import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
@@ -18,6 +18,7 @@ import {
   getTenantPackageList,
   setTenantPackageStatus,
 } from '#/api';
+import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -113,10 +114,12 @@ async function onBindMenu(row: TenantPackageApi.TenantPackageDTO) {
  */
 async function onToggleStatus(
   row: TenantPackageApi.TenantPackageDTO,
-  newStatus: EnabledStatusEnum,
+  newStatus: EnabledStatusEnumValue,
 ) {
   const actionText =
-    newStatus === 1 ? $t('common.enabled') : $t('common.disabled');
+    newStatus === EnabledStatusEnum.ENABLED
+      ? $t('common.enabled')
+      : $t('common.disabled');
   const confirmed = await confirmAction(
     $t('tenant.package.statusChangeConfirm', [actionText, row.name]),
   );

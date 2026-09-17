@@ -1,4 +1,8 @@
-import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
+import type {
+  EnabledStatusEnumValue,
+  PageParam,
+  PageResult,
+} from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -30,7 +34,7 @@ export namespace SysDictApi {
     /** 字典名称 */
     name: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 字典描述 */
     description?: string;
   }
@@ -48,7 +52,7 @@ export namespace SysDictApi {
     /** 字典项标签 */
     label: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 排序 */
     sort: number;
     /** 字典项描述 */
@@ -65,7 +69,7 @@ export namespace SysDictApi {
     /** 字典名称 */
     name: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 字典描述 */
     description?: string;
   }
@@ -84,7 +88,7 @@ export namespace SysDictApi {
     /** 字典项标签 */
     label: string;
     /** 状态 */
-    status: EnabledStatusEnum;
+    status: EnabledStatusEnumValue;
     /** 排序 */
     sort: number;
     /** 字典项描述 */
@@ -146,7 +150,10 @@ async function deleteDictCategory(id: string) {
  * @param id 字典分类ID
  * @param newStatus 新状态
  */
-async function setDictCategoryStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setDictCategoryStatus(
+  id: string,
+  newStatus: EnabledStatusEnumValue,
+) {
   return requestClient.post('/v1/sys/dict/category/set-status', {
     id,
     newStatus,
@@ -192,7 +199,10 @@ async function deleteDictItem(id: string) {
  * @param id 字典项ID
  * @param newStatus 新状态
  */
-async function setDictItemStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setDictItemStatus(
+  id: string,
+  newStatus: EnabledStatusEnumValue,
+) {
   return requestClient.post('/v1/sys/dict/item/set-status', {
     id,
     newStatus,

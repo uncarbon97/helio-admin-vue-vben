@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { SysDeptApi } from '#/api';
 
+import type { ParentTreeOption } from '../data';
+
 import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
@@ -9,7 +11,7 @@ import { useVbenForm } from '#/adapter/form';
 import { buildDeptTree, createDept, getDeptList, updateDept } from '#/api';
 import { $t } from '#/locales';
 
-import { type ParentTreeOption, useFormSchema } from '../data';
+import { useFormSchema } from '../data';
 
 const emits = defineEmits(['success']);
 
@@ -63,7 +65,10 @@ const [Drawer, drawerApi] = useVbenDrawer<
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData();
+      // 先清空，避免加载中展示上一次的表单数据
       formApi.reset();
+      formData.value = undefined;
+      id.value = undefined;
 
       // 每次打开重新拉取部门树作为上级选项；编辑时剔除自身子树防止成环
       const list = await getDeptList();
@@ -86,13 +91,9 @@ const [Drawer, drawerApi] = useVbenDrawer<
           sort: data.sort,
           status: data.status,
         });
-      } else {
-        formData.value = undefined;
-        id.value = undefined;
+      } else if (data?.parentId) {
         // 「新增下级」入口：预选上级部门
-        if (data?.parentId) {
-          formApi.setValues({ parentId: data.parentId });
-        }
+        formApi.setValues({ parentId: data.parentId });
       }
     }
   },

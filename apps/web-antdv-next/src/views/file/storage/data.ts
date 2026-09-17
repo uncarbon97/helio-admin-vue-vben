@@ -1,8 +1,10 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { FileStorageApi, PlatformTypeEnumValue } from '#/api';
+import type { YesOrNoEnumValue } from '#/api/common';
 
-import { PlatformTypeEnum, YesOrNoEnum } from '#/api';
+import { PlatformTypeEnum } from '#/api';
+import { YesOrNoEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 /** 存储平台类型选项 */
@@ -23,7 +25,10 @@ export const PLATFORM_TYPE_OPTIONS: {
 ];
 
 /** 主存储点标识选项 */
-export const YES_OR_NO_OPTIONS = [
+export const YES_OR_NO_OPTIONS: {
+  label: string;
+  value: YesOrNoEnumValue;
+}[] = [
   { label: $t('common.yes'), value: YesOrNoEnum.YES },
   { label: $t('common.no'), value: YesOrNoEnum.NO },
 ];
