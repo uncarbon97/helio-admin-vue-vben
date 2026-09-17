@@ -165,7 +165,7 @@ export function useColumns<T = FileStorageApi.FileStorageDTO>(
         name: 'CellOperation',
         options: [
           ...(hasUpdate ? ['edit'] : []),
-          // adapt to helium: 测试上传（调用上传文件接口，验证存储点可用性）
+          // 测试上传（调用上传文件接口，验证存储点可用性）
           ...(hasUpdate
             ? [{ code: 'testUpload', text: $t('file.storage.testUpload') }]
             : []),
@@ -268,6 +268,7 @@ export function useFormSchema(
     },
     {
       component: 'Input',
+      description: $t('file.storage.domainTip'),
       fieldName: 'domain',
       label: $t('file.storage.domain'),
     },

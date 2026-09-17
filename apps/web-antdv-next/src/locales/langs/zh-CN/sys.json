@@ -111,6 +111,8 @@
     "typePasswordLogin": "密码登录",
     "typeLogout": "登出",
     "userPin": "用户账号",
+    "userId": "用户ID",
+    "userTypeCode": "用户类型",
     "visitorIp": "来源IP",
     "visitorBrowser": "来源浏览器",
     "visitorOs": "来源操作系统",
@@ -118,7 +120,8 @@
     "resultStatus": "结果状态",
     "resultSuccess": "成功",
     "resultFailed": "失败",
-    "failedMsg": "失败原因"
+    "failedMsg": "失败原因",
+    "action": "操作"
   },
   "operateLog": {
     "title": "操作日志",
@@ -128,7 +131,7 @@
     "bizNo": "业务号",
     "operation": "操作内容",
     "bizExtra": "额外业务信息",
-    "userId": "用户ID",
+    "userPin": "操作人账号",
     "userTypeCode": "用户类型",
     "requestMethod": "请求方法",
     "requestPath": "请求路径",
@@ -138,7 +141,8 @@
     "resultStatus": "结果状态",
     "resultSuccess": "成功",
     "resultFailed": "失败",
-    "failedMsg": "失败原因"
+    "failedMsg": "失败原因",
+    "action": "操作"
   },
   "dict": {
     "title": "数据字典",

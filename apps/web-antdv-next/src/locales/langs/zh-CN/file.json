@@ -2,6 +2,7 @@
   "storage": {
     "accessKey": "AccessKey",
     "basePath": "基础路径",
+    "domainTip": "建议以 / 结尾",
     "bucketName": "桶名称",
     "code": "存储点编码",
     "createTime": "创建时间",

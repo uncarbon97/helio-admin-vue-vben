@@ -1,13 +1,21 @@
 <script lang="ts" setup>
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+import type {
+  OnActionClickParams,
+  VxeTableGridOptions,
+} from '#/adapter/vxe-table';
 import type { SysLoginLogApi } from '#/api';
 
-import { Page } from '@vben/common-ui';
+import { Page, useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getLoginLogList } from '#/api';
 
 import { useColumns, useGridFormSchema } from './data';
+import Detail from './modules/detail.vue';
+
+const [DetailDrawer, detailDrawerApi] = useVbenDrawer({
+  connectedComponent: Detail,
+});
 
 const [Grid] = useVbenVxeGrid({
   formOptions: {
@@ -15,7 +23,7 @@ const [Grid] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(),
+    columns: useColumns(onActionClick),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -36,7 +44,7 @@ const [Grid] = useVbenVxeGrid({
       },
     },
     rowConfig: {
-      keyField: 'createdAt',
+      keyField: 'id',
     },
 
     toolbarConfig: {
@@ -49,9 +57,19 @@ const [Grid] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions<SysLoginLogApi.SysLoginLogDTO>,
 });
+
+function onActionClick(e: OnActionClickParams<SysLoginLogApi.SysLoginLogDTO>) {
+  switch (e.code) {
+    case 'detail': {
+      detailDrawerApi.setData(e.row).open();
+      break;
+    }
+  }
+}
 </script>
 <template>
   <Page auto-content-height>
     <Grid />
+    <DetailDrawer />
   </Page>
 </template>

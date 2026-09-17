@@ -111,6 +111,8 @@
     "typePasswordLogin": "Password Login",
     "typeLogout": "Logout",
     "userPin": "Account",
+    "userId": "User ID",
+    "userTypeCode": "User Type",
     "visitorIp": "Source IP",
     "visitorBrowser": "Browser",
     "visitorOs": "OS",
@@ -118,7 +120,8 @@
     "resultStatus": "Result",
     "resultSuccess": "Success",
     "resultFailed": "Failed",
-    "failedMsg": "Failure Reason"
+    "failedMsg": "Failure Reason",
+    "action": "Action"
   },
   "operateLog": {
     "title": "Operate Log",
@@ -128,7 +131,7 @@
     "bizNo": "Biz No",
     "operation": "Operation",
     "bizExtra": "Biz Extra",
-    "userId": "User ID",
+    "userPin": "Operator Account",
     "userTypeCode": "User Type",
     "requestMethod": "Request Method",
     "requestPath": "Request Path",
@@ -138,7 +141,8 @@
     "resultStatus": "Result",
     "resultSuccess": "Success",
     "resultFailed": "Failed",
-    "failedMsg": "Failure Reason"
+    "failedMsg": "Failure Reason",
+    "action": "Action"
   },
   "dict": {
     "title": "Dict Management",

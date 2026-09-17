@@ -1,6 +1,6 @@
 // adapt to helium: 操作日志表格/查询条件配置
 import type { VbenFormSchema } from '#/adapter/form';
-import type { VxeTableGridColumns } from '#/adapter/vxe-table';
+import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysOperateLogApi } from '#/api';
 
 import { LogResultStatusEnum } from '#/api';
@@ -28,8 +28,8 @@ export function useGridFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'Input',
-      fieldName: 'userId',
-      label: $t('sys.operateLog.userId'),
+      fieldName: 'userPin',
+      label: $t('sys.operateLog.userPin'),
     },
     {
       component: 'Select',
@@ -62,9 +62,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
 
 /**
  * 表格列
- * @returns
+ * @param onActionClick 操作列点击回调
  */
-export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(): VxeTableGridColumns {
+export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(
+  onActionClick: OnActionClickFn<T>,
+): VxeTableGridColumns {
   return [
     {
       field: 'createdAt',
@@ -112,8 +114,8 @@ export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(): VxeTableGri
       title: $t('sys.operateLog.operation'),
     },
     {
-      field: 'userId',
-      title: $t('sys.operateLog.userId'),
+      field: 'userPin',
+      title: $t('sys.operateLog.userPin'),
       width: 140,
     },
     {

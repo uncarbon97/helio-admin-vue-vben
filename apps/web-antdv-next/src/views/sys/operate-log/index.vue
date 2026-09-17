@@ -1,13 +1,23 @@
 <script lang="ts" setup>
-import type { VxeTableGridOptions } from '#/adapter/vxe-table';
+// adapt to helium: 操作日志（列表 + 详情）
+import type {
+  OnActionClickParams,
+  VxeTableGridOptions,
+} from '#/adapter/vxe-table';
 import type { SysOperateLogApi } from '#/api';
 
 import { Page } from '@vben/common-ui';
+import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getOperateLogList } from '#/api';
 
 import { useColumns, useGridFormSchema } from './data';
+import Detail from './modules/detail.vue';
+
+const [DetailDrawer, detailDrawerApi] = useVbenDrawer({
+  connectedComponent: Detail,
+});
 
 const [Grid] = useVbenVxeGrid({
   formOptions: {
@@ -15,7 +25,7 @@ const [Grid] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: useColumns(),
+    columns: useColumns(onActionClick),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -33,7 +43,7 @@ const [Grid] = useVbenVxeGrid({
               pageSize: page.pageSize,
             },
             resultStatus: formValues.resultStatus,
-            userId: formValues.userId,
+            userPin: formValues.userPin,
           });
         },
       },
@@ -52,9 +62,20 @@ const [Grid] = useVbenVxeGrid({
     },
   } as VxeTableGridOptions<SysOperateLogApi.SysOperateLogDTO>,
 });
+
+// adapt to helium: 操作列点击分发
+function onActionClick(e: OnActionClickParams<SysOperateLogApi.SysOperateLogDTO>) {
+  switch (e.code) {
+    case 'detail': {
+      detailDrawerApi.setData(e.row).open();
+      break;
+    }
+  }
+}
 </script>
 <template>
   <Page auto-content-height>
     <Grid />
+    <DetailDrawer />
   </Page>
 </template>

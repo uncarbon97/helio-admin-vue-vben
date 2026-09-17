@@ -41,6 +41,9 @@ export namespace SysLoginLogApi {
 
   /** 值对象 */
   export interface SysLoginLogDTO {
+    // adapt to helium: 后端按 string 输出 long，用于兼容 JS 16 位上限
+    /** 主键ID */
+    id: string;
     /** 创建时刻 */
     createdAt: string;
     /** 登录日志类型 */

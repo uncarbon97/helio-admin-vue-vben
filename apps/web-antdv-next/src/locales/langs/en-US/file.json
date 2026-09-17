@@ -2,6 +2,7 @@
   "storage": {
     "accessKey": "AccessKey",
     "basePath": "Base Path",
+    "domainTip": "Recommended to end with /",
     "bucketName": "Bucket Name",
     "code": "Storage Code",
     "createTime": "Created At",

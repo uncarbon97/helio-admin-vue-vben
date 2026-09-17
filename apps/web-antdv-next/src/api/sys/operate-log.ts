@@ -19,8 +19,8 @@ export namespace SysOperateLogApi {
     behavior?: string;
     /** 业务号 */
     bizNo?: string;
-    /** 用户ID */
-    userId?: string;
+    /** 操作人账号 */
+    userPin?: string;
     /** 结果状态 */
     resultStatus?: LogResultStatusEnumValue;
   }
@@ -43,8 +43,8 @@ export namespace SysOperateLogApi {
     operation: string;
     /** 额外业务信息 */
     bizExtra: string;
-    /** 用户ID */
-    userId: string;
+    /** 操作人账号 */
+    userPin: string;
     /** 用户类型编码 */
     userTypeCode: string;
     /** HTTP请求方法 */

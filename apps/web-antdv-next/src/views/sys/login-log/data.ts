@@ -1,9 +1,9 @@
 // adapt to helium: 登录日志表格/查询条件配置
 import type { VbenFormSchema } from '#/adapter/form';
-import type { VxeTableGridColumns } from '#/adapter/vxe-table';
+import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysLoginLogApi } from '#/api';
 
-import { LogResultStatusEnum, LoginLogTypeEnum } from '#/api';
+import { LoginLogTypeEnum, LogResultStatusEnum } from '#/api';
 import { $t } from '#/locales';
 
 /**
@@ -47,9 +47,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
 
 /**
  * 表格列
- * @returns
+ * @param onActionClick 操作列点击回调
  */
-export function useColumns<T = SysLoginLogApi.SysLoginLogDTO>(): VxeTableGridColumns {
+export function useColumns<T = SysLoginLogApi.SysLoginLogDTO>(
+  onActionClick: OnActionClickFn<T>,
+): VxeTableGridColumns {
   return [
     {
       field: 'createdAt',
@@ -125,6 +127,25 @@ export function useColumns<T = SysLoginLogApi.SysLoginLogDTO>(): VxeTableGridCol
       field: 'failedMsg',
       minWidth: 200,
       title: $t('sys.loginLog.failedMsg'),
+    },
+    // adapt to helium: 操作列（详情）
+    {
+      align: 'center',
+      cellRender: {
+        attrs: {
+          nameField: 'userPin',
+          nameTitle: $t('sys.loginLog.userPin'),
+          onClick: onActionClick,
+        },
+        name: 'CellOperation',
+        options: ['detail'],
+      },
+      field: 'operation',
+      fixed: 'right',
+      // 关闭溢出 tooltip
+      showOverflow: false,
+      title: $t('sys.loginLog.action'),
+      width: 90,
     },
   ];
 }
