@@ -2,18 +2,20 @@ import type { UserInfo } from '@vben/types';
 
 import { preferences } from '@vben/preferences';
 
+import type { GenderEnumValue, YesOrNoEnumValue } from '#/api/common';
+
 import { requestClient } from '#/api/request';
 
 // helium customization: 用户资料对接真实后端，并映射为前端 UserInfo
 interface MyProfileDTO {
   pin: string;
   nickname?: string;
-  gender?: string;
+  gender?: GenderEnumValue;
   email?: string;
   phoneNo?: string;
   avatarUrl?: string;
   lastLoginAt?: string;
-  mustChangePassword?: 'NO' | 'YES';
+  mustChangePassword?: YesOrNoEnumValue;
 }
 
 /**

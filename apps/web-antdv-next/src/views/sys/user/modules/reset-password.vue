@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { MustChangePasswordEnumValue, SysUserApi } from '#/api';
+import type { SysUserApi, YesOrNoEnumValue } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -8,7 +8,7 @@ import { IconifyIcon } from '@vben/icons';
 
 import { Button, Input, RadioGroup, message } from 'antdv-next';
 
-import { resetUserPassword } from '#/api';
+import { resetUserPassword, YesOrNoEnum } from '#/api';
 import { $t } from '#/locales';
 
 const emits = defineEmits(['success']);
@@ -21,7 +21,7 @@ const userNickname = ref('');
 /** 生成的随机密码（16位，契约要求 16-64 位） */
 const randomPassword = ref('');
 /** 是否要求下次登录改密 */
-const mustChangePassword = ref<MustChangePasswordEnumValue>('NO');
+const mustChangePassword = ref<YesOrNoEnumValue>(YesOrNoEnum.NO);
 
 const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
   async onConfirm() {
@@ -96,8 +96,8 @@ async function onCopy() {
         <RadioGroup
           v-model:value="mustChangePassword"
           :options="[
-            { label: $t('common.no'), value: 'NO' },
-            { label: $t('common.yes'), value: 'YES' },
+            { label: $t('common.no'), value: YesOrNoEnum.NO },
+            { label: $t('common.yes'), value: YesOrNoEnum.YES },
           ]"
         />
       </div>

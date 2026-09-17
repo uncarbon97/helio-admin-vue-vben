@@ -2,6 +2,34 @@
 /** 启用禁用状态枚举 */
 export type EnabledStatusEnum = 0 | 1;
 
+/**
+ * 是否枚举（后端框架级 YesOrNoEnum，BaseEnum<Integer> 按整数输出）
+ * 跨领域复用：文件存储点主标识、用户首登改密标记等
+ */
+export const YesOrNoEnum = {
+  /** 否 */
+  NO: 0,
+  /** 是 */
+  YES: 1,
+} as const;
+
+export type YesOrNoEnumValue = (typeof YesOrNoEnum)[keyof typeof YesOrNoEnum];
+
+/**
+ * 性别枚举（后端框架级 GenderEnum，BaseEnum<Integer> 按整数输出）
+ * 跨领域复用：系统用户、个人资料等
+ */
+export const GenderEnum = {
+  /** 未知 */
+  UNKNOWN: 0,
+  /** 男 */
+  MALE: 1,
+  /** 女 */
+  FEMALE: 2,
+} as const;
+
+export type GenderEnumValue = (typeof GenderEnum)[keyof typeof GenderEnum];
+
 /** 分页查询参数 */
 export interface PageParam {
   /** 当前页码 */

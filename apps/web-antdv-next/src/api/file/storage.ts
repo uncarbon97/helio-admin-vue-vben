@@ -1,5 +1,9 @@
 // 文件存储点管理
-import type { PageParam, PageResult } from '#/api/common';
+import type {
+  PageParam,
+  PageResult,
+  YesOrNoEnumValue,
+} from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -17,16 +21,6 @@ export const PlatformTypeEnum = {
 
 export type PlatformTypeEnumValue =
   (typeof PlatformTypeEnum)[keyof typeof PlatformTypeEnum];
-
-/** 主存储点标识枚举（YesOrNoEnum，后端按整数输出） */
-export const YesOrNoEnum = {
-  /** 否 */
-  NO: 0,
-  /** 是 */
-  YES: 1,
-} as const;
-
-export type YesOrNoEnumValue = (typeof YesOrNoEnum)[keyof typeof YesOrNoEnum];
 
 export namespace FileStorageApi {
   /** 列表查询条件 */

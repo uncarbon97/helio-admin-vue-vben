@@ -7,7 +7,7 @@ import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysUserApi } from '#/api';
 import type { EnabledStatusEnum } from '#/api/common';
 
-import { GenderEnum } from '#/api';
+import { GenderEnum, YesOrNoEnum } from '#/api';
 import { $t } from '#/locales';
 
 /**
@@ -220,11 +220,11 @@ export function useFormSchema(
       componentProps: {
         class: 'w-auto',
         options: [
-          { label: $t('common.no'), value: 'NO' },
-          { label: $t('common.yes'), value: 'YES' },
+          { label: $t('common.no'), value: YesOrNoEnum.NO },
+          { label: $t('common.yes'), value: YesOrNoEnum.YES },
         ],
       },
-      defaultValue: 'NO',
+      defaultValue: YesOrNoEnum.NO,
       fieldName: 'mustChangePassword',
       label: $t('sys.user.mustChangePassword'),
     },

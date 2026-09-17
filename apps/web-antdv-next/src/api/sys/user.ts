@@ -1,27 +1,12 @@
-import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
+import type {
+  EnabledStatusEnum,
+  GenderEnumValue,
+  PageParam,
+  PageResult,
+  YesOrNoEnumValue,
+} from '#/api/common';
 
 import { requestClient } from '#/api/request';
-
-/** 性别枚举（后端实际可能返回整数） */
-export const GenderEnum = {
-  /** 未知 */
-  UNKNOWN: 0,
-  /** 男 */
-  MALE: 1,
-  /** 女 */
-  FEMALE: 2,
-} as const;
-
-export type GenderEnumValue = (typeof GenderEnum)[keyof typeof GenderEnum];
-
-export type MustChangePasswordEnumValue =
-  (typeof MustChangePasswordEnum)[keyof typeof MustChangePasswordEnum];
-
-/** 首次登录是否要求修改密码 */
-export const MustChangePasswordEnum = {
-  NO: 'NO',
-  YES: 'YES',
-} as const;
 
 export namespace SysUserApi {
   /** 列表查询条件 */
@@ -38,8 +23,8 @@ export namespace SysUserApi {
   export interface CreateRequest {
     /** 账号（5-16位） */
     pin: string;
-    /** 首次登录是否要求修改密码 */
-    mustChangePassword: MustChangePasswordEnumValue;
+    /** 首次登录是否要求修改密码（后端 YesOrNoEnum，按整数 0/1 输出） */
+    mustChangePassword: YesOrNoEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
     /** 性别 */
@@ -61,7 +46,7 @@ export namespace SysUserApi {
     /** 账号（5-16位） */
     pin: string;
     /** 首次登录是否要求修改密码（契约必填，前端修改时省略） */
-    mustChangePassword?: MustChangePasswordEnumValue;
+    mustChangePassword?: YesOrNoEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
     /** 性别 */
@@ -165,7 +150,7 @@ async function setUserStatus(id: string, newStatus: EnabledStatusEnum) {
 async function resetUserPassword(
   userId: string,
   randomPassword: string,
-  mustChangePassword: MustChangePasswordEnumValue,
+  mustChangePassword: YesOrNoEnumValue,
 ) {
   return requestClient.post('/v1/sys/user/reset-password', {
     mustChangePassword,
