@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-// adapt to helium: 租户新增/修改抽屉（新增含租户管理员账号初始化）
-import type { TenantMetaApi } from '#/api';
-import type { SelectOptionItem } from '#/api';
+import type { TenantMetaApi, SelectOptionItem } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -68,8 +66,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
       const data = drawerApi.getData();
       formApi.reset();
 
-      // adapt to helium: 编码/租户管理员字段 仅新增时显示
-      // （本工程 fork 的表单 if 字段不生效，用 hide 控制显隐）
       const isCreate = !data;
       formApi.updateSchema([
         { fieldName: 'code', hide: !isCreate },

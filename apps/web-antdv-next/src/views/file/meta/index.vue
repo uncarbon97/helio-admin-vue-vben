@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 文件管理（列表 + 复制链接 + 删除，无新增/编辑）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
@@ -14,9 +13,11 @@ import { Page } from '@vben/common-ui';
 import { message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteFileMeta, getFileMetaList } from '#/api';
-// adapt to helium: 存储点下拉筛选数据源
-import { getFileStorageSelectOptions } from '#/api';
+import {
+  deleteFileMeta,
+  getFileMetaList,
+  getFileStorageSelectOptions,
+} from '#/api';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -26,11 +27,12 @@ import { useColumns, useGridFormSchema } from './data';
 const { hasAccessByCodes } = useAccess();
 const hasDelete = hasAccessByCodes(['file:meta:delete']);
 
-// adapt to helium: 拉取存储点下拉选项，注入查询表单（value 取存储点编码）
 onMounted(async () => {
-  const options = (await getFileStorageSelectOptions())?.map((item) => ({
+  // 拉取存储点下拉选项，注入查询表单
+  const selectOptions = await getFileStorageSelectOptions();
+  const options = selectOptions?.map((item) => ({
     label: item.label,
-    value: item.storageCode ?? item.value,
+    value: item.storageCode,
   }));
   gridApi.formApi.updateSchema([
     {
@@ -98,7 +100,6 @@ function onActionClick(e: OnActionClickParams<FileMetaApi.FileMetaDTO>) {
   }
 }
 
-// adapt to helium: 复制链接（对象存储直链写入剪贴板）
 async function onCopyLink(row: FileMetaApi.FileMetaDTO) {
   if (!row.directUrl) {
     message.warning($t('file.meta.directUrlMissing'));

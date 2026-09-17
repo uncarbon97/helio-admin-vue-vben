@@ -45,7 +45,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
 
   /**
    * 刷新token逻辑
-   * adapt to helium: 后端无刷新token接口，此处保留占位（enableRefreshToken 默认关闭，不会调用）
+   * helium customization: 后端无刷新token接口，此处保留占位（enableRefreshToken 默认关闭，不会调用）
    */
   async function doRefreshToken() {
     return '';
@@ -66,7 +66,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     },
   });
 
-  // adapt to helium: 对齐后端统一响应体 { success, code, msg, data }：成功判定改判 success===true
+  // helium customization: 对齐后端统一响应体 { success, code, msg, data }：成功判定改判 success===true
   // 处理返回的响应数据格式
   // 后端响应体: { success: boolean, code: string, msg: string, data: any }
   client.addResponseInterceptor(
@@ -92,9 +92,9 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   client.addResponseInterceptor(
     errorMessageResponseInterceptor((msg: string, error) => {
       // 这里可以根据业务进行定制,你可以拿到 error 内的信息进行定制化处理，根据不同的 code 做不同的提示，而不是直接使用 message.error 提示 msg
-      // adapt to helium: 后端响应体错误字段为 msg
+      // helium customization: 后端响应体错误字段为 msg
       const responseData = error?.response?.data ?? {};
-      // adapt to helium: 入参校验失败(Z00406)时，data 内携带具体字段与原因，优先提示
+      // helium customization: 入参校验失败(Z00406)时，data 内携带具体字段与原因，优先提示
       if (responseData?.code === 'Z00406' && responseData?.data?.message) {
         message.error(responseData.data.message,);
         return;

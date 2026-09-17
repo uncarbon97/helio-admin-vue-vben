@@ -1,4 +1,3 @@
-// adapt to helium: 租户管理表格/查询条件配置
 import type { Ref } from 'vue';
 
 import type { VbenFormSchema } from '#/adapter/form';
@@ -54,8 +53,7 @@ export function useColumns<T = TenantMetaApi.TenantMetaDTO>(
       title: $t('tenant.meta.adminUser'),
       minWidth: 280,
       formatter: ({ row }) => {
-        const profile = (row as TenantMetaApi.TenantMetaDTO)
-          .adminUserProfile;
+        const profile = (row as TenantMetaApi.TenantMetaDTO).adminUserProfile;
         return profile?.nickname
           ? `${profile.nickname}(${profile.pin})`
           : (profile?.pin ?? '-');
@@ -137,7 +135,7 @@ export function useFormSchema(
     {
       component: 'Select',
       componentProps: () => ({
-         class: 'w-full',
+        class: 'w-full',
         allowClear: true,
         options: packageOptions.value,
       }),

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 用户修改部门抽屉
 import type { SysUserApi } from '#/api';
 
 import { computed, ref } from 'vue';

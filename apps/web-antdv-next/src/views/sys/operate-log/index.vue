@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-// adapt to helium: 操作日志（列表 + 详情）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { SysOperateLogApi } from '#/api';
 
-import { Page } from '@vben/common-ui';
-import { useVbenDrawer } from '@vben/common-ui';
+import { Page, useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getOperateLogList } from '#/api';
@@ -63,8 +61,10 @@ const [Grid] = useVbenVxeGrid({
   } as VxeTableGridOptions<SysOperateLogApi.SysOperateLogDTO>,
 });
 
-// adapt to helium: 操作列点击分发
-function onActionClick(e: OnActionClickParams<SysOperateLogApi.SysOperateLogDTO>) {
+// 操作列
+function onActionClick(
+  e: OnActionClickParams<SysOperateLogApi.SysOperateLogDTO>,
+) {
   switch (e.code) {
     case 'detail': {
       detailDrawerApi.setData(e.row).open();

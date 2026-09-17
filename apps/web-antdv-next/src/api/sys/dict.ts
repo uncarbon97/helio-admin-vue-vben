@@ -1,4 +1,3 @@
-// adapt to helium: 数据字典管理接口（后端无 detail 接口，编辑直接用行数据）
 import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';

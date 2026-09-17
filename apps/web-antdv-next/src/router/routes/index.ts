@@ -8,7 +8,7 @@ const dynamicRouteFiles = import.meta.glob('./modules/**/*.ts', {
   eager: true,
 });
 
-// adapt to helium: 固定路由目录，直接进入初始 routes 数组，始终注册、不受权限模式影响
+// helium customization: 固定路由目录，直接进入初始 routes 数组，始终注册、不受权限模式影响
 const fixedRouteFiles = import.meta.glob('./fixed/**/*.ts', {
   eager: true,
 });
@@ -21,7 +21,7 @@ const fixedRouteFiles = import.meta.glob('./fixed/**/*.ts', {
 const dynamicRoutes: RouteRecordRaw[] = mergeRouteModules(dynamicRouteFiles);
 
 /** 固定路由 */
-// adapt to helium: 见上方 fixedRouteFiles 注释
+// helium customization: 见上方 fixedRouteFiles 注释
 const fixedRoutes: RouteRecordRaw[] = mergeRouteModules(fixedRouteFiles);
 
 /** 外部路由列表，访问这些页面可以不需要Layout，可能用于内嵌在别的系统(不会显示在菜单中) */
@@ -34,7 +34,7 @@ const externalRoutes: RouteRecordRaw[] = [];
  *  无需走权限验证（会一直显示在菜单中） */
 const routes: RouteRecordRaw[] = [
   ...coreRoutes,
-  // adapt to helium: 固定路由始终注册（如 dashboard 首页）
+  // helium customization: 固定路由始终注册（如 dashboard 首页）
   ...fixedRoutes,
   ...externalRoutes,
   fallbackNotFoundRoute,

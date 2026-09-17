@@ -10,6 +10,7 @@ import { CHANGE_PWD_PATH } from '#/router/constants';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
+import { YesOrNoEnum } from '#/api';
 
 /**
  * 通用守卫配置
@@ -86,9 +87,9 @@ function setupAccessGuard(router: Router) {
       return to;
     }
 
-    // adapt to helium: mustChangePassword=YES（管理员重置过密码）时强制跳转修改密码页
+    // helium customization: mustChangePassword 时强制跳转修改密码页
     if (
-      userStore.userInfo?.mustChangePassword === 'YES' &&
+      userStore.userInfo?.mustChangePassword === YesOrNoEnum.YES &&
       to.path !== CHANGE_PWD_PATH
     ) {
       return { path: CHANGE_PWD_PATH, replace: true };
@@ -113,7 +114,7 @@ function setupAccessGuard(router: Router) {
     });
 
     // 保存菜单信息和路由信息
-    // adapt to helium: 侧边栏顶部固定「首页」入口（backend 模式菜单只来自后端，需前端注入）
+    // helium customization: 侧边栏顶部固定「首页」入口（backend 模式菜单只来自后端，需前端注入）
     const HOME_MENU = {
       icon: 'lucide:layout-dashboard',
       name: '首页',

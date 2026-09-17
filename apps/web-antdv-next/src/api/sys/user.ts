@@ -1,4 +1,3 @@
-// adapt to helium: 系统用户管理 API（契约见根目录 swagger.json，tag: 后台管理-系统用户管理）
 import type { EnabledStatusEnum, PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';

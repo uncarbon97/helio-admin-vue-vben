@@ -1,4 +1,3 @@
-// adapt to helium: 数据字典管理（左分类/右字典项）列与表单配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysDictApi } from '#/api';
@@ -123,8 +122,13 @@ export function useItemColumns<T = SysDictApi.ItemDTO>(
         : {
             attrs: {
               checkedChildren: $t('common.enabled'),
-              onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnum }) =>
-                onToggleStatus(row, value),
+              onSwitch: ({
+                row,
+                value,
+              }: {
+                row: T;
+                value: EnabledStatusEnum;
+              }) => onToggleStatus(row, value),
               unCheckedChildren: $t('common.disabled'),
             },
             name: 'CellSwitch',

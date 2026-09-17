@@ -19,7 +19,7 @@ import App from './app.vue';
 import { router } from './router';
 
 async function bootstrap(namespace: string) {
-  // adapt to helium: 注册离线图标集（ant-design），内网环境下图标渲染与选择不依赖 Iconify 在线 API
+  // helium customization: 注册离线图标集（ant-design），内网环境下图标渲染与选择不依赖 Iconify 在线 API
   addCollection(antDesignIcons);
 
   // 初始化组件适配器

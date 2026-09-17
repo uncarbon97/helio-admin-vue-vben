@@ -51,7 +51,7 @@
 - `apps/web-antdv-next/src/views/dashboard/workspace/index.vue` — 快捷导航 3 个 `/demos/...` 死链改为 `/profile`、`/profile/change-password`
 - `apps/web-antdv-next/src/adapter/vxe-table.ts` — `CellOperation` 移除行内 Popconfirm 二次确认（delete 直接触发回调），确认改由页面层居中模态框处理（见 `utils/confirm.ts`）
 
-> 修改的文件中，相对源项目改动的位置会在上方添加注释 `// adapt to helium: <说明>`（配置文件用对应注释语法），方便与上游比较。
+> 修改的文件中，相对源项目改动的位置会在上方添加注释 `// helium customization: <说明>`（配置文件用对应注释语法），方便与上游比较。
 
 ### 增加文件
 

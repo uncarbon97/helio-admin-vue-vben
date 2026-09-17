@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 操作日志详情只读抽屉（点击遮罩可关闭，多行文本用只读多行文本框渲染）
 import type { SysOperateLogApi } from '#/api';
 
 import { ref } from 'vue';

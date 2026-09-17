@@ -4,8 +4,7 @@ import { preferences } from '@vben/preferences';
 
 import { requestClient } from '#/api/request';
 
-// adapt to helium: 用户资料对接自研后端，GET /user/info 改为 POST /admin/v1/ucenter/profile/get，并将 MyProfileDTO 映射为前端 UserInfo
-/** 后端 /admin/v1/ucenter/profile/get 返回结构 */
+// helium customization: 用户资料对接真实后端，并映射为前端 UserInfo
 interface MyProfileDTO {
   pin: string;
   nickname?: string;

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 租户套餐授权抽屉（绑定菜单，复用角色授权的树表格交互）
 import type { TenantPackageApi } from '#/api';
 import type { MenuTreeNode } from '#/api/sys/menu';
 
@@ -48,30 +47,29 @@ const linkMode = ref<'independent' | 'linked'>('linked');
 const expandedIds = ref(new Set<string>());
 const collapsed = ref(false);
 
-const [Drawer, drawerApi] = useVbenDrawer<
-  null | TenantPackageApi.TenantPackageDTO
->({
-  async onConfirm() {
-    if (!packageId.value) return;
-    drawerApi.lock();
-    try {
-      await bindTenantPackageMenu(packageId.value, [...checkedIds.value]);
-      emits('success');
-      drawerApi.close();
-    } catch {
-      drawerApi.unlock();
-    }
-  },
+const [Drawer, drawerApi] =
+  useVbenDrawer<null | TenantPackageApi.TenantPackageDTO>({
+    async onConfirm() {
+      if (!packageId.value) return;
+      drawerApi.lock();
+      try {
+        await bindTenantPackageMenu(packageId.value, [...checkedIds.value]);
+        emits('success');
+        drawerApi.close();
+      } catch {
+        drawerApi.unlock();
+      }
+    },
 
-  async onOpenChange(isOpen) {
-    if (isOpen) {
-      const data = drawerApi.getData();
-      packageId.value = data?.id;
-      packageName.value = data?.name ?? '';
-      await reload(data?.menuIds ?? []);
-    }
-  },
-});
+    async onOpenChange(isOpen) {
+      if (isOpen) {
+        const data = drawerApi.getData();
+        packageId.value = data?.id;
+        packageName.value = data?.name ?? '';
+        await reload(data?.menuIds ?? []);
+      }
+    },
+  });
 
 defineExpose({ drawerApi });
 
@@ -355,11 +353,7 @@ function onToggleNode(row: PermRow) {
                 icon="ant-design:down-outlined"
                 @click="onToggleNode(row)"
               />
-              <IconifyIcon
-                v-if="row.icon"
-                class="size-4"
-                :icon="row.icon"
-              />
+              <IconifyIcon v-if="row.icon" class="size-4" :icon="row.icon" />
               <span class="truncate">{{ row.name }}</span>
             </div>
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1">

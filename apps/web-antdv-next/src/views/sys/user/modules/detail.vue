@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 用户详情只读抽屉（点击遮罩可关闭）
 import type { SysUserApi } from '#/api';
 
 import { ref } from 'vue';
@@ -69,9 +68,7 @@ function genderTag(value: undefined | SysUserApi.SysUserDTO['gender']) {
         <DescriptionItem :label="$t('sys.user.status')">
           <Tag :color="detail.status === 1 ? 'success' : 'error'">
             {{
-              detail.status === 1
-                ? $t('common.enabled')
-                : $t('common.disabled')
+              detail.status === 1 ? $t('common.enabled') : $t('common.disabled')
             }}
           </Tag>
         </DescriptionItem>

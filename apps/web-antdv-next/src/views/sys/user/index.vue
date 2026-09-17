@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 用户管理（左部门树 + 右用户列表）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,

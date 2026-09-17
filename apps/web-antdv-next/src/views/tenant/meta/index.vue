@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 租户管理（列表 + 新增/编辑 + 删除）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,

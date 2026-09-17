@@ -10,7 +10,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import { getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { getUserInfoApi, loginApi, logoutApi, YesOrNoEnum } from '#/api';
 import { $t } from '#/locales';
 import { CHANGE_PWD_PATH } from '#/router/constants';
 
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
-      // adapt to helium: 消费后端登录返回的 token/roles/permissions，分别写入 accessStore 与 userStore；用户资料拉取改为容错（失败不阻塞登录）
+      // helium customization: 消费后端登录返回的 token/roles/permissions，分别写入 accessStore 与 userStore；用户资料拉取改为容错（失败不阻塞登录）
       const {
         token,
         roles = [],
@@ -64,11 +64,11 @@ export const useAuthStore = defineStore('auth', () => {
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);
         } else {
-          // adapt to helium: mustChangePassword=YES 时登录后直达强制修改密码页
+          // helium customization: mustChangePassword 时登录后直达强制修改密码页
           onSuccess
             ? await onSuccess?.()
             : await router.push(
-                userInfo?.mustChangePassword === 'YES'
+                userInfo?.mustChangePassword === YesOrNoEnum.YES
                   ? CHANGE_PWD_PATH
                   : userInfo?.homePath || preferences.app.defaultHomePath,
               );

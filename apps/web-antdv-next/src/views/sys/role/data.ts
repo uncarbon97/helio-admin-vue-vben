@@ -84,6 +84,7 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
       width: 200,
     },
     {
+      // 操作列
       align: 'center',
       cellRender: {
         attrs: {
@@ -94,7 +95,6 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
         name: 'CellOperation',
         options: [
           'edit',
-          // adapt to helium: 授权（绑定菜单）独立到操作列
           { code: 'bindMenu', text: $t('sys.role.setPermissions') },
           'delete',
         ],

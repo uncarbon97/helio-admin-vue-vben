@@ -1,4 +1,3 @@
-<!-- adapt to helium: 字典项新增/编辑抽屉（categoryId 由所选分类注入，不可编辑；后端无 detail 接口，直接回显行数据） -->
 <script lang="ts" setup>
 import type { SysDictApi } from '#/api';
 
@@ -77,7 +76,7 @@ const [Drawer, drawerApi] = useVbenDrawer<DrawerData | null>({
       if (data) {
         formData.value = data;
         id.value = data.row?.id;
-        // adapt to helium: 后端无 detail 接口，直接回显行数据
+        // 后端无 detail 接口，直接回显行数据
         if (data.row) {
           formApi.setValues({
             code: data.row.code,

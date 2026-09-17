@@ -139,7 +139,7 @@ async function deleteFileStorage(id: string) {
 }
 
 /**
- * adapt to helium: 测试上传（服务端生成测试文件，验证存储点可用性，支持非主存储点；需 file:storage:update 权限）
+ * 测试上传（服务端生成测试文件，验证存储点可用性，支持非主存储点）
  * @param id 存储点ID
  */
 async function testFileStorage(id: string) {

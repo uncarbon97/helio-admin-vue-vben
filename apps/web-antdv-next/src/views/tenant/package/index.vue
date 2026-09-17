@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 租户套餐管理（列表 + 新增/编辑 + 授权 + 删除）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
@@ -76,7 +75,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<TenantPackageApi.TenantPackageDTO>,
 });
 
-function onActionClick(e: OnActionClickParams<TenantPackageApi.TenantPackageDTO>) {
+function onActionClick(
+  e: OnActionClickParams<TenantPackageApi.TenantPackageDTO>,
+) {
   switch (e.code) {
     case 'bindMenu': {
       onBindMenu(e.row);

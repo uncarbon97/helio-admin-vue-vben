@@ -3,7 +3,6 @@ import type { EnabledStatusEnum } from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
-// adapt to helium: 菜单管理 CRUD（后端 AdminSysMenuController）
 export namespace SysMenuApi {
   /** 新增/修改请求表单 */
   export interface UpsertRequest {
@@ -93,7 +92,9 @@ async function setMenuStatus(id: string, newStatus: EnabledStatusEnum) {
 /**
  * 将扁平菜单列表按 parentId（0 为根）构建为全字段树，并按 sort 排序
  */
-function buildMenuTreeFull(list: MenuApi.SysMenuDTO[]): SysMenuApi.MenuTreeNode[] {
+function buildMenuTreeFull(
+  list: MenuApi.SysMenuDTO[],
+): SysMenuApi.MenuTreeNode[] {
   const nodes = new Map<string, SysMenuApi.MenuTreeNode>();
   list.forEach((item) => {
     nodes.set(item.id, { ...item, children: [] });
@@ -176,7 +177,7 @@ function buildMenuTree(list: MenuApi.SysMenuDTO[]): MenuTreeNode[] {
       .toSorted((a, b) => a._sort - b._sort)
       .map(({ _sort, children, ...rest }) => ({
         ...rest,
-        // adapt to helium: 修复类型收窄（children 声明为 MenuTreeNode[]，此处实为 SortableNode[]）
+        // helium customization: 修复类型收窄（children 声明为 MenuTreeNode[]，此处实为 SortableNode[]）
         children: children?.length
           ? toTree(children as SortableNode[])
           : undefined,

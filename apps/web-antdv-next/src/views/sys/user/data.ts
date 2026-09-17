@@ -2,7 +2,6 @@ import type { Ref } from 'vue';
 
 import type { ParentTreeOption } from '../dept/data';
 
-// adapt to helium: 用户管理表格/表单配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysUserApi } from '#/api';
@@ -167,7 +166,6 @@ export function useFormSchema(
       rules: 'required',
     },
     {
-      // adapt to helium: 性别用单选框而非下拉
       component: 'RadioGroup',
       componentProps: {
         class: 'w-auto',
@@ -213,12 +211,10 @@ export function useFormSchema(
       },
       description: $t('sys.user.initPwdTip'),
       fieldName: 'initPwd',
-      // adapt to helium: 默认隐藏，仅新增时由 form.vue updateSchema 显示（本工程 fork 的表单 if 字段不生效，用 hide）
       hide: true,
       label: $t('sys.user.initPwd'),
       rules: 'required',
     },
-    // adapt to helium: 登录改密选项移至初始密码之下
     {
       component: 'RadioGroup',
       componentProps: {

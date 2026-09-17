@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 数据字典管理（左字典分类/内置字典 + 右字典项，左右联动）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
@@ -27,11 +26,7 @@ import {
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
-import {
-  useBuiltinColumns,
-  useCategoryColumns,
-  useItemColumns,
-} from './data';
+import { useBuiltinColumns, useCategoryColumns, useItemColumns } from './data';
 import CategoryForm from './modules/category-form.vue';
 import ItemForm from './modules/item-form.vue';
 
@@ -64,8 +59,11 @@ const [ItemFormDrawer, itemFormDrawerApi] = useVbenDrawer({
  */
 const [CategoryGrid, categoryGridApi] = useVbenVxeGrid({
   gridEvents: {
-    cellClick: ({ row }: { row: SysDictApi.BuiltinDTO | SysDictApi.CategoryDTO }) =>
-      onCategoryClick(row),
+    cellClick: ({
+      row,
+    }: {
+      row: SysDictApi.BuiltinDTO | SysDictApi.CategoryDTO;
+    }) => onCategoryClick(row),
   },
   gridOptions: {
     columns: useCategoryColumns(onCategoryActionClick, onToggleCategoryStatus),
@@ -117,7 +115,6 @@ const [ItemGrid, itemGridApi] = useVbenVxeGrid({
             return { current: 1, records: [], size: page.pageSize, total: 0 };
           }
           if (selected.kind === 'builtin') {
-            // adapt to helium: 内置字典项内嵌于 DTO，无独立 list 接口，本地返回不分页
             const records = selected.row.items ?? [];
             return {
               current: 1,
@@ -165,7 +162,7 @@ function applyItemGridMode() {
     columns: useItemColumns(!isCustom, onItemActionClick, onToggleItemStatus),
     pagerConfig: { enabled: isCustom, pageSize: 20 },
   });
-  // adapt to helium: 切换分类重置到第一页（query 会保留旧页码，跨分类无意义）
+  // 切换分类重置到第一页（query 会保留旧页码，跨分类无意义）
   itemGridApi.reload();
 }
 
@@ -182,9 +179,7 @@ function onTabChange() {
   categoryGridApi.reload();
 }
 
-function onCategoryClick(
-  row: SysDictApi.BuiltinDTO | SysDictApi.CategoryDTO,
-) {
+function onCategoryClick(row: SysDictApi.BuiltinDTO | SysDictApi.CategoryDTO) {
   selectedCategory.value =
     activeTab.value === 'custom'
       ? { kind: 'custom', row: row as SysDictApi.CategoryDTO }
@@ -192,9 +187,7 @@ function onCategoryClick(
   applyItemGridMode();
 }
 
-function onCategoryActionClick(
-  e: OnActionClickParams<SysDictApi.CategoryDTO>,
-) {
+function onCategoryActionClick(e: OnActionClickParams<SysDictApi.CategoryDTO>) {
   switch (e.code) {
     case 'delete': {
       onDeleteCategory(e.row);
@@ -207,7 +200,7 @@ function onCategoryActionClick(
   }
 }
 
-// adapt to helium: 后端无 detail 接口，直接用行数据编辑
+// 后端无 detail 接口，直接用行数据编辑
 function onEditCategory(row: SysDictApi.CategoryDTO) {
   categoryFormDrawerApi.setData(row).open();
 }

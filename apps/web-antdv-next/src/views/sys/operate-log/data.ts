@@ -1,4 +1,3 @@
-// adapt to helium: 操作日志表格/查询条件配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysOperateLogApi } from '#/api';

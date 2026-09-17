@@ -1,4 +1,3 @@
-<!-- adapt to helium: 字典分类新增/编辑抽屉（后端无 detail 接口，直接回显行数据） -->
 <script lang="ts" setup>
 import type { SysDictApi } from '#/api';
 
@@ -64,7 +63,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysDictApi.CategoryDTO>({
       if (data) {
         formData.value = data;
         id.value = data.id;
-        // adapt to helium: 后端无 detail 接口，直接回显行数据
+        // 后端无 detail 接口，直接回显行数据
         formApi.setValues({
           code: data.code,
           description: data.description,

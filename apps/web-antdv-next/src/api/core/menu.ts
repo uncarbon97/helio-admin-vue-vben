@@ -3,7 +3,7 @@ import type { RouteRecordStringComponent } from '@vben/types';
 import { requestClient } from '#/api/request';
 
 export namespace MenuApi {
-  // adapt to helium: 后端 BaseEnum 按枚举 value 序列化为数字（DIR=0, MENU=1, BUTTON=2, EXTERNAL_LINK=3）
+  // helium customization: 后端 BaseEnum 按枚举 value 序列化为数字（DIR=0, MENU=1, BUTTON=2, EXTERNAL_LINK=3）
   export type MenuType = 0 | 1 | 2 | 3;
 
   /** 后端 SysMenuDTO（侧边菜单精简契约：目录无 component、path 为可读 slug） */
@@ -22,7 +22,7 @@ export namespace MenuApi {
   }
 }
 
-// adapt to helium: 菜单类型枚举值（与后端 MenuTypeEnum 一致）
+// helium customization: 菜单类型枚举值（与后端 MenuTypeEnum 一致）
 export const MenuTypeEnum = {
   DIR: 0,
   MENU: 1,
@@ -62,9 +62,7 @@ function transformMenus(
   const nodes: TreeNode[] = list
     .filter((m) => m.menuType !== MenuTypeEnum.BUTTON)
     .map((m) => {
-      const slug = m.path
-        .replaceAll(/[\\/]+/g, '-')
-        .replaceAll(/^-+|-+$/g, '');
+      const slug = m.path.replaceAll(/[\\/]+/g, '-').replaceAll(/^-+|-+$/g, '');
       return {
         _id: m.id,
         _parentId: m.parentId ?? 0,

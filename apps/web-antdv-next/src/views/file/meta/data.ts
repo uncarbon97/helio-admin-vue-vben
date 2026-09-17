@@ -1,4 +1,3 @@
-// adapt to helium: 文件管理表格/查询条件配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { FileMetaApi } from '#/api';
@@ -109,7 +108,6 @@ export function useColumns<T = FileMetaApi.FileMetaDTO>(
         },
         name: 'CellOperation',
         options: [
-          // adapt to helium: 复制链接（将对象存储直链复制到剪贴板）
           { code: 'copyLink', text: $t('file.meta.copyLink') },
           ...(hasDelete ? ['delete'] : []),
         ],

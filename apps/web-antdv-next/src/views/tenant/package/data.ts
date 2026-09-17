@@ -1,4 +1,3 @@
-// adapt to helium: 租户套餐管理表格/查询条件配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { TenantPackageApi } from '#/api';

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 重置用户密码抽屉（前端生成随机密码，提交后展示供复制）
 import type { MustChangePasswordEnumValue, SysUserApi } from '#/api';
 
 import { computed, ref } from 'vue';
@@ -92,7 +91,6 @@ async function onCopy() {
           <IconifyIcon class="size-4" icon="ant-design:copy-outlined" />
         </Button>
       </div>
-      <!-- adapt to helium: 下次登录改密选项 -->
       <div class="mt-2 flex items-center gap-3">
         <span>{{ $t('sys.user.nextLoginChangePwd') }}</span>
         <RadioGroup

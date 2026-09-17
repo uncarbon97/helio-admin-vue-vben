@@ -20,7 +20,7 @@ import { Button, Dropdown, Image, Switch, Tag } from 'antdv-next';
 import { useVbenForm } from './form';
 
 /**
- * adapt to helium: CellOperation 的「其他操作」下拉容器
+ * helium customization: CellOperation 的「其他操作」下拉容器
  * 受控 open：面板内条目动作触发后由回调收起
  */
 const CellOperationDropdown = defineComponent({
@@ -79,7 +79,7 @@ setupVbenVxeTable({
         proxyConfig: {
           autoLoad: true,
           response: {
-            // adapt to helium: 分页结果字段对齐后端 PageResult
+            // helium customization: 分页结果字段对齐后端 PageResult
             result: 'records',
             total: 'total',
             list: 'records',
@@ -89,13 +89,13 @@ setupVbenVxeTable({
         },
         round: true,
         showOverflow: true,
-        // adapt to helium: 表格字号加大
+        // helium customization: 表格字号加大
         size: 'medium',
       } as VxeTableGridOptions,
     });
 
     /**
-     * adapt to helium: 解决 vxeTable 热更新时自定义渲染器重复注册报错（清理已注册的 Cell* 渲染器）
+     * helium customization: 解决 vxeTable 热更新时自定义渲染器重复注册报错（清理已注册的 Cell* 渲染器）
      */
     vxeUI.renderer.forEach((_item, key) => {
       if (key.startsWith('Cell')) {
@@ -124,7 +124,7 @@ setupVbenVxeTable({
       },
     });
 
-    // adapt to helium: 新增 CellTag 单元格渲染器（启用/禁用等状态标签）
+    // helium customization: 新增 CellTag 单元格渲染器（启用/禁用等状态标签）
     vxeUI.renderer.add('CellTag', {
       renderTableDefault({ options, props }, { column, row }) {
         const value = get(row, column.field);
@@ -133,7 +133,7 @@ setupVbenVxeTable({
           { color: 'error', label: $t('common.disabled'), value: 0 },
         ];
         const tagItem = tagOptions.find((item) => item.value === value);
-        // adapt to helium: 值为数组时（如 flags），逐个匹配渲染多个标签
+        // helium customization: 值为数组时（如 flags），逐个匹配渲染多个标签
         if (Array.isArray(value)) {
           return value.map((item) => {
             const matched = tagOptions.find((option) => option.value === item);
@@ -159,7 +159,7 @@ setupVbenVxeTable({
     });
 
     /**
-     * adapt to helium: 新增 CellSwitch 单元格渲染器（启用/禁用等状态行内切换）
+     * helium customization: 新增 CellSwitch 单元格渲染器（启用/禁用等状态行内切换）
      * attrs: { checkedValue, unCheckedValue, checkedChildren, unCheckedChildren, onSwitch }
      * onSwitch({ row, value }) 返回 Promise；成功（resolve）后行数据更新为 value，失败（reject）开关回弹
      */
@@ -194,7 +194,7 @@ setupVbenVxeTable({
     });
 
     /**
-     * adapt to helium: 新增 CellOperation 操作列渲染器（编辑/详情/删除等）
+     * helium customization: 新增 CellOperation 操作列渲染器（编辑/详情/删除等）
      * 不做行内二次确认，delete 等确认由页面层用居中模态框处理
      */
     vxeUI.renderer.add('CellOperation', {
@@ -252,7 +252,7 @@ setupVbenVxeTable({
               Object.keys(opt).forEach((key) => {
                 optBtn[key] = isFunction(opt[key]) ? opt[key](row) : opt[key];
               });
-              // adapt to helium: children 递归归一化，支持「其他操作」下拉收纳
+              // helium customization: children 递归归一化，支持「其他操作」下拉收纳
               if (optBtn.children) {
                 optBtn.children = normalizeOperations(optBtn.children);
               }
@@ -284,7 +284,7 @@ setupVbenVxeTable({
             },
             {
               default: () => {
-                // adapt to helium: 文字在前、图标在后且调小
+                // helium customization: 文字在前、图标在后且调小
                 const content = [opt.text];
                 if (opt.icon) {
                   content.push(
@@ -298,7 +298,7 @@ setupVbenVxeTable({
         }
 
         /**
-         * adapt to helium: 带 children 的选项渲染为下拉收纳（如「其他操作」），
+         * helium customization: 带 children 的选项渲染为下拉收纳（如「其他操作」），
          * 条目动作触发后自动收起下拉
          */
         function renderDropdown(opt: Recordable<any>) {
@@ -361,7 +361,7 @@ export const useVbenVxeGrid = <
   );
 
 /**
- * adapt to helium: 表格操作按钮点击事件回调类型（配合 CellOperation）
+ * helium customization: 表格操作按钮点击事件回调类型（配合 CellOperation）
  */
 export type OnActionClickParams<T = Recordable<any>> = {
   code: string;

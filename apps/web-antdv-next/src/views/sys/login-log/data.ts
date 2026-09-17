@@ -1,4 +1,3 @@
-// adapt to helium: 登录日志表格/查询条件配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysLoginLogApi } from '#/api';
@@ -128,8 +127,8 @@ export function useColumns<T = SysLoginLogApi.SysLoginLogDTO>(
       minWidth: 200,
       title: $t('sys.loginLog.failedMsg'),
     },
-    // adapt to helium: 操作列（详情）
     {
+      // 操作列
       align: 'center',
       cellRender: {
         attrs: {

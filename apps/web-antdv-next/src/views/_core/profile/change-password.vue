@@ -3,7 +3,7 @@ import { Alert } from 'antdv-next';
 
 import PasswordSetting from './password-setting.vue';
 
-// adapt to helium: 强制修改密码页（mustChangePassword=YES 时守卫强制跳转至此），无布局、不可绕过
+// helium customization: 强制修改密码页（mustChangePassword 时守卫强制跳转至此），无布局、不可绕过
 defineOptions({ name: 'ChangePassword' });
 </script>
 <template>

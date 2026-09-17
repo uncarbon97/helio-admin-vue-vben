@@ -23,8 +23,6 @@ export namespace TenantPackageApi {
     code: string;
     /** 套餐名称 */
     name: string;
-    /** 状态 */
-    status: EnabledStatusEnum;
     /** 套餐描述 */
     description: string;
   }
@@ -72,9 +70,7 @@ async function getTenantPackageDetail(id: string) {
  * 新增
  * @param request 请求表单
  */
-async function createTenantPackage(
-  request: TenantPackageApi.UpsertRequest,
-) {
+async function createTenantPackage(request: TenantPackageApi.UpsertRequest) {
   return requestClient.post('/v1/tenant/package/create', request);
 }
 
@@ -82,9 +78,7 @@ async function createTenantPackage(
  * 修改
  * @param request 请求表单
  */
-async function updateTenantPackage(
-  request: TenantPackageApi.UpsertRequest,
-) {
+async function updateTenantPackage(request: TenantPackageApi.UpsertRequest) {
   return requestClient.post('/v1/tenant/package/update', request);
 }
 
@@ -93,7 +87,10 @@ async function updateTenantPackage(
  * @param id 套餐ID
  * @param newStatus 新状态
  */
-async function setTenantPackageStatus(id: string, newStatus: EnabledStatusEnum) {
+async function setTenantPackageStatus(
+  id: string,
+  newStatus: EnabledStatusEnum,
+) {
   return requestClient.post('/v1/tenant/package/set-status', {
     id,
     newStatus,

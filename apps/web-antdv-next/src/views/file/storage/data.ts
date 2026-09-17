@@ -1,4 +1,3 @@
-// adapt to helium: 文件存储点管理表格/查询条件/表单配置
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { FileStorageApi, PlatformTypeEnumValue } from '#/api';

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 文件存储点新增/修改抽屉（配置属性按存储平台类型动态显隐）
 import type { FileStorageApi, PlatformTypeEnumValue } from '#/api';
 
 import { computed, ref } from 'vue';

@@ -54,7 +54,7 @@ interface PrintPluginOptions {
   infoMap?: Record<string, string | undefined>;
 }
 
-// adapt to helium: 已移除 NitroMockPluginOptions 接口、ApplicationPluginOptions 的 nitroMock/nitroMockOptions 字段及同名导出（mock 服务废弃）
+// helium customization: 已移除 NitroMockPluginOptions 接口、ApplicationPluginOptions 的 nitroMock/nitroMockOptions 字段及同名导出（mock 服务废弃）
 
 /**
  * 归档插件配置选项

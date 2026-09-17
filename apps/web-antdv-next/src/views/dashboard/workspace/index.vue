@@ -86,7 +86,7 @@ const projectItems: WorkbenchProjectItem[] = [
 ];
 
 // 同样，这里的 url 也可以使用以 http 开头的外部链接
-// adapt to helium: 原演示路由（/demos/...）已删除，快捷导航改为项目实际存在的页面
+// helium customization: 原演示路由（/demos/...）已删除，快捷导航改为项目实际存在的页面
 const quickNavItems: WorkbenchQuickNavItem[] = [
   {
     color: '#1fdaca',

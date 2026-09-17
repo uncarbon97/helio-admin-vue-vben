@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// adapt to helium: 文件存储点管理（按钮按权限码显隐）
 import type {
   OnActionClickParams,
   VxeTableGridOptions,
@@ -13,11 +12,7 @@ import { Plus } from '@vben/icons';
 import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import {
-  deleteFileStorage,
-  getFileStorageList,
-  testFileStorage,
-} from '#/api';
+import { deleteFileStorage, getFileStorageList, testFileStorage } from '#/api';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -122,7 +117,7 @@ async function onDelete(row: FileStorageApi.FileStorageDTO) {
   }
 }
 
-// adapt to helium: 测试上传，验证存储点能否正常上传文件（服务端生成测试文件，支持非主存储点）
+// 测试上传，验证存储点能否正常上传文件（服务端生成测试文件，支持非主存储点）
 async function onTestUpload(row: FileStorageApi.FileStorageDTO) {
   const hideLoading = message.loading({
     content: $t('file.storage.testUploading'),

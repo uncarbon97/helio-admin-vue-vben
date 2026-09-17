@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-// adapt to helium: 用户绑定角色抽屉
-import type { SysUserApi } from '#/api';
-import type { SelectOptionItem } from '#/api';
+import type { SysUserApi, SelectOptionItem } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -67,7 +65,11 @@ const getTitle = computed(() =>
   <Drawer :title="getTitle" class="w-[560px]">
     <Spin :spinning="loading">
       <CheckboxGroup v-model:value="checkedRoleIds" class="flex flex-col gap-2">
-        <Checkbox v-for="item in roleOptions" :key="item.value" :value="item.value">
+        <Checkbox
+          v-for="item in roleOptions"
+          :key="item.value"
+          :value="item.value"
+        >
           {{ item.label }}
         </Checkbox>
       </CheckboxGroup>
