@@ -118,16 +118,6 @@ export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(
       width: 140,
     },
     {
-      field: 'requestMethod',
-      title: $t('sys.operateLog.requestMethod'),
-      width: 110,
-    },
-    {
-      field: 'requestPath',
-      minWidth: 200,
-      title: $t('sys.operateLog.requestPath'),
-    },
-    {
       field: 'visitorIp',
       title: $t('sys.operateLog.visitorIp'),
       width: 140,
@@ -138,14 +128,28 @@ export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(
       title: $t('sys.operateLog.visitorIpLocation'),
     },
     {
-      field: 'visitorUserAgent',
-      minWidth: 200,
-      title: $t('sys.operateLog.visitorUserAgent'),
-    },
-    {
       field: 'failedMsg',
       minWidth: 200,
       title: $t('sys.operateLog.failedMsg'),
+    },
+    {
+      // 操作列
+      align: 'center',
+      cellRender: {
+        attrs: {
+          nameField: 'userPin',
+          nameTitle: $t('sys.operateLog.userPin'),
+          onClick: onActionClick,
+        },
+        name: 'CellOperation',
+        options: ['detail'],
+      },
+      field: 'action',
+      fixed: 'right',
+      // 关闭溢出 tooltip
+      showOverflow: false,
+      title: $t('sys.operateLog.action'),
+      width: 90,
     },
   ];
 }

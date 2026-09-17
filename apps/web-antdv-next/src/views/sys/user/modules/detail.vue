@@ -20,6 +20,8 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData();
+      // 先清空，避免加载中展示上一次的详情数据
+      detail.value = undefined;
       if (!data?.id) return;
       loading.value = true;
       try {

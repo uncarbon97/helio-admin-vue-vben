@@ -229,7 +229,11 @@ async function onToggleExpand() {
         <!-- 展开/折叠整棵菜单树（默认折叠） -->
         <Button class="ml-2" type="primary" ghost @click="onToggleExpand">
           <IconifyIcon
-            :icon="expanded ? 'ant-design:vertical-align-top-outlined' : 'ant-design:partition-outlined'"
+            :icon="
+              expanded
+                ? 'ant-design:vertical-align-top-outlined'
+                : 'ant-design:partition-outlined'
+            "
             class="mr-1 size-4"
           />
           {{ expanded ? $t('sys.menu.collapse') : $t('sys.menu.expand') }}
@@ -237,10 +241,7 @@ async function onToggleExpand() {
       </template>
       <!-- 图标列：动态渲染菜单配置的 iconify 图标名（flex 保证单元格内水平/垂直居中） -->
       <template #icon="{ row }">
-        <div
-          v-if="row.icon"
-          class="flex size-full items-center justify-center"
-        >
+        <div v-if="row.icon" class="flex size-full items-center justify-center">
           <IconifyIcon :icon="row.icon" class="size-4" />
         </div>
       </template>
