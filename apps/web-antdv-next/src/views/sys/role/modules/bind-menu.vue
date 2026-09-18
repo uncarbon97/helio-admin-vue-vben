@@ -42,6 +42,8 @@ const roleId = ref<string>();
 const roleName = ref('');
 const loading = ref(false);
 const rows = ref<PermRow[]>([]);
+// 超级管理员（编码 SuperAdmin 或 ID=1）全量勾选且禁止反选
+const isSuperAdmin = ref(false);
 
 /** 勾选集（含菜单与按钮的全部 id） */
 const checkedIds = ref(new Set<string>());
@@ -70,6 +72,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysRoleApi.SysRoleDTO>({
       const data = drawerApi.getData();
       roleId.value = data?.id;
       roleName.value = data?.name ?? '';
+      isSuperAdmin.value = data?.code === 'SuperAdmin' || data?.id === '1';
       await reload(data?.menuIds ?? []);
     }
   },
@@ -88,7 +91,9 @@ async function reload(menuIds?: string[]) {
         : getRoleDetail(roleId.value),
     ]);
     rows.value = toRows(buildMenuTree(menuList ?? []));
-    checkedIds.value = new Set(menuIds ?? detail?.menuIds);
+    checkedIds.value = isSuperAdmin.value
+      ? new Set(allIds())
+      : new Set(menuIds ?? detail?.menuIds);
     resetExpanded();
   } finally {
     loading.value = false;
@@ -185,6 +190,7 @@ function isRowIndeterminate(row: PermRow) {
 }
 
 function onToggleRow(row: PermRow, checked: boolean) {
+  if (isSuperAdmin.value) return;
   const ids = linkMode.value === 'linked' ? collectIds(row) : [row.id];
   ids.forEach((id) =>
     checked ? checkedIds.value.add(id) : checkedIds.value.delete(id),
@@ -195,6 +201,7 @@ function onToggleRow(row: PermRow, checked: boolean) {
 }
 
 function onTogglePerm(perm: PermItem, checked: boolean) {
+  if (isSuperAdmin.value) return;
   if (checked) {
     checkedIds.value.add(perm.id);
   } else {
@@ -206,6 +213,7 @@ function onTogglePerm(perm: PermItem, checked: boolean) {
 }
 
 function onToggleAll(checked: boolean) {
+  if (isSuperAdmin.value) return;
   if (checked) {
     allIds().forEach((id) => checkedIds.value.add(id));
   } else {
@@ -322,6 +330,7 @@ function onToggleNode(row: PermRow) {
             >
               <Checkbox
                 :checked="allChecked"
+                :disabled="isSuperAdmin"
                 :indeterminate="allIndeterminate"
                 @change="(e: any) => onToggleAll(e.target.checked)"
               />
@@ -339,6 +348,7 @@ function onToggleNode(row: PermRow) {
               >
                 <Checkbox
                   :checked="isRowChecked(row)"
+                  :disabled="isSuperAdmin"
                   :indeterminate="isRowIndeterminate(row)"
                   @change="(e: any) => onToggleRow(row, e.target.checked)"
                 />
@@ -365,6 +375,7 @@ function onToggleNode(row: PermRow) {
                     v-for="perm in row.permissions"
                     :key="perm.id"
                     :checked="checkedIds.has(perm.id)"
+                    :disabled="isSuperAdmin"
                     @change="(e: any) => onTogglePerm(perm, e.target.checked)"
                   >
                     {{ perm.name }}
@@ -376,7 +387,10 @@ function onToggleNode(row: PermRow) {
         </TabPane>
         <TabPane key="user" :tab="$t('sys.role.tabRoleUser')">
           <!-- helium customization: 角色用户 tab，切到该页时才挂载加载 -->
-          <RoleUserTab v-if="activeTab === 'user' && roleId" :role-id="roleId" />
+          <RoleUserTab
+            v-if="activeTab === 'user' && roleId"
+            :role-id="roleId"
+          />
         </TabPane>
       </Tabs>
     </Spin>
