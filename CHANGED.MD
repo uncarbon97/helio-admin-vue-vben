@@ -8,6 +8,8 @@
 
 - `apps/backend-mock` — 上游内置的 Nitro Mock 后端工程（全部接口 mock）
 - `playground` — 上游演示工程（2026-09-13 删除；mock 接口不再保留）
+- `apps/web-antdv-next/src/views/dashboard/analytics` — 上游分析页（2026-09-18 删除；仅保留 workbench）
+- `apps/web-antdv-next/src/views/dashboard/workspace` — 上游工作台页（2026-09-18 删除；仅保留 workbench）
 
 ### 删除文件
 
@@ -48,6 +50,8 @@
 - `apps/web-antdv-next/src/api/core/auth.ts`、`user.ts`、`menu.ts` — 接口路径去掉重复的 `/admin` 前缀（baseURL `VITE_GLOB_API_URL` 已含 `/admin`，axios 拼接原会双前缀 `/admin/admin/v1/...`）
 - `apps/web-antdv-next/src/adapter/vxe-table.ts` — proxyConfig 分页结果字段 `items` → `records`（对齐后端 `PageResult`）
 - `apps/web-antdv-next/src/api/index.ts` — 新增 `export * from './system'`
+- `apps/web-antdv-next/src/router/routes/fixed/dashboard.ts` — 移除 `Analytics` / `Workspace` 子路由（对应页面已删除，2026-09-18）
+- `apps/web-antdv-next/src/locales/langs/zh-CN/page.json`、`en-US/page.json` — 移除 `page.dashboard.analytics` / `page.dashboard.workspace` 文案（页面已删除，2026-09-18）
 - `apps/web-antdv-next/src/views/dashboard/workspace/index.vue` — 快捷导航 3 个 `/demos/...` 死链改为 `/profile`、`/profile/change-password`
 - `apps/web-antdv-next/src/adapter/vxe-table.ts` — `CellOperation` 移除行内 Popconfirm 二次确认（delete 直接触发回调），确认改由页面层居中模态框处理（见 `utils/confirm.ts`）
 

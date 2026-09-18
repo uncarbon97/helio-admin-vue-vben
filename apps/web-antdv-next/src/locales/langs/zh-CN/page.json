@@ -9,8 +9,6 @@
   },
   "dashboard": {
     "title": "概览",
-    "analytics": "分析页",
-    "workspace": "工作台",
     "workbench": {
       "title": "首页",
       "greeting": "欢迎回来，{name}",

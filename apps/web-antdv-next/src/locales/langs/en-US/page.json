@@ -9,8 +9,6 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "analytics": "Analytics",
-    "workspace": "Workspace",
     "workbench": {
       "title": "Home",
       "greeting": "Welcome back, {name}",
