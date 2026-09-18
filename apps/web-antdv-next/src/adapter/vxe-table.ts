@@ -52,7 +52,11 @@ const CellOperationDropdown = defineComponent({
           popupRender: () =>
             h(
               'div',
-              { class: 'flex flex-col items-start gap-1 p-2' },
+              // 衬底 + 阴影，避免面板文字与表格下层文字重叠
+              {
+                class:
+                  'bg-popover flex flex-col items-start gap-1 rounded-md p-2 shadow-md',
+              },
               props.renderPanel(close),
             ),
           trigger: ['click'],
