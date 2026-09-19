@@ -24,13 +24,14 @@ function definePreferencesExtension<
 
 /** 应用级版权配置，供各 app 的 preferences 覆盖使用 */
 const appCopyrightPreferences = {
+  // helium customization: 默认隐藏版权显示
+  enable: false,
+  settingShow: false,
   companyName: 'Vben',
   companySiteLink: 'https://www.vben.pro',
   date: '2024',
-  enable: true,
   icp: '闽ICP备19024351号',
   icpLink: 'https://beian.miit.gov.cn/',
-  settingShow: true,
 } satisfies DeepPartial<Preferences>['copyright'];
 
 export {

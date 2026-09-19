@@ -13,6 +13,7 @@ import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteRole, getRoleDetail, getRoleList, setRoleStatus } from '#/api';
+import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -102,12 +103,26 @@ async function onBindMenu(row: SysRoleApi.SysRoleDTO) {
 }
 
 /**
- * 状态开关切换（成功后由 CellSwitch 渲染器行内更新，失败回弹）
+ * 状态开关切换：二次确认后调用接口（成功后由 CellSwitch 渲染器行内更新，取消/失败回弹）
  */
 async function onToggleStatus(
   row: SysRoleApi.SysRoleDTO,
   newStatus: EnabledStatusEnumValue,
 ) {
+  const confirmed = await confirmAction(
+    $t('sys.role.toggleStatusConfirm', [
+      $t(
+        newStatus === EnabledStatusEnum.ENABLED
+          ? 'common.enabled'
+          : 'common.disabled',
+      ),
+      row.name,
+    ]),
+    {
+      dangerTips: [$t('sys.role.toggleStatusDangerTip')],
+    },
+  );
+  if (!confirmed) throw new Error('cancelled');
   await setRoleStatus(row.id, newStatus);
   message.success($t('ui.actionMessage.operationSuccess'));
 }

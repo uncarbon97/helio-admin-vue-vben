@@ -16,6 +16,18 @@ export namespace AuthApi {
     captchaAnswer?: string;
   }
 
+  /** 登录挑战 */
+  export interface LoginChallenge {
+    /** 挑战类型（NONE=无挑战, OCR=图形验证码） */
+    type: string;
+    /** 验证码图片Base64（无 data: 前缀） */
+    captchaImageEncoded?: string;
+    /** 验证码唯一标识 */
+    captchaId?: string;
+    /** 验证码失效时刻 */
+    expiredAt?: string;
+  }
+
   /** 登录接口返回值 */
   export interface LoginResult {
     /** token值 */
@@ -35,6 +47,13 @@ export async function loginApi(data: AuthApi.LoginParams) {
     '/v1/auth/password-login',
     data,
   );
+}
+
+/**
+ * 获取登录挑战
+ */
+export async function getLoginChallengeApi() {
+  return requestClient.post<AuthApi.LoginChallenge>('/v1/auth/challenge');
 }
 
 /**

@@ -4,7 +4,6 @@ import type {
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
 import type { SysDictApi } from '#/api';
-import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { computed, ref } from 'vue';
 
@@ -20,8 +19,6 @@ import {
   getDictBuiltinList,
   getDictCategoryList,
   getDictItemList,
-  setDictCategoryStatus,
-  setDictItemStatus,
 } from '#/api';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
@@ -66,7 +63,7 @@ const [CategoryGrid, categoryGridApi] = useVbenVxeGrid({
     }) => onCategoryClick(row),
   },
   gridOptions: {
-    columns: useCategoryColumns(onCategoryActionClick, onToggleCategoryStatus),
+    columns: useCategoryColumns(onCategoryActionClick),
     height: 'auto',
     keepSource: true,
     proxyConfig: {
@@ -102,7 +99,7 @@ const [CategoryGrid, categoryGridApi] = useVbenVxeGrid({
 /** 右表：字典项（内置分类时为本地内嵌数据，不分页） */
 const [ItemGrid, itemGridApi] = useVbenVxeGrid({
   gridOptions: {
-    columns: useItemColumns(true, onItemActionClick, onToggleItemStatus),
+    columns: useItemColumns(true, onItemActionClick),
     height: 'auto',
     keepSource: true,
     // 未选分类/内置字典不分页，选中自定义分类后再启用（applyItemGridMode）
@@ -159,7 +156,7 @@ const itemGridTitle = computed(() => {
 function applyItemGridMode() {
   const isCustom = selectedCategory.value?.kind === 'custom';
   itemGridApi.setGridOptions({
-    columns: useItemColumns(!isCustom, onItemActionClick, onToggleItemStatus),
+    columns: useItemColumns(!isCustom, onItemActionClick),
     pagerConfig: { enabled: isCustom, pageSize: 20 },
   });
   // 切换分类重置到第一页（query 会保留旧页码，跨分类无意义）
@@ -171,7 +168,7 @@ function onTabChange() {
   categoryGridApi.setGridOptions({
     columns:
       activeTab.value === 'custom'
-        ? useCategoryColumns(onCategoryActionClick, onToggleCategoryStatus)
+        ? useCategoryColumns(onCategoryActionClick)
         : useBuiltinColumns(),
   });
   applyItemGridMode();
@@ -217,17 +214,6 @@ function onCategorySaved(request: SysDictApi.CategoryUpsertRequest) {
     Object.assign(selected.row, request);
     itemGridApi.query();
   }
-}
-
-/**
- * 分类状态开关切换（成功后由 CellSwitch 渲染器行内更新，失败回弹）
- */
-async function onToggleCategoryStatus(
-  row: SysDictApi.CategoryDTO,
-  newStatus: EnabledStatusEnumValue,
-) {
-  await setDictCategoryStatus(row.id, newStatus);
-  message.success($t('ui.actionMessage.operationSuccess'));
 }
 
 async function onDeleteCategory(row: SysDictApi.CategoryDTO) {
@@ -293,17 +279,6 @@ function onCreateItem() {
       category: { id: selected.row.id, name: selected.row.name },
     })
     .open();
-}
-
-/**
- * 字典项状态开关切换（成功后由 CellSwitch 渲染器行内更新，失败回弹）
- */
-async function onToggleItemStatus(
-  row: SysDictApi.ItemDTO,
-  newStatus: EnabledStatusEnumValue,
-) {
-  await setDictItemStatus(row.id, newStatus);
-  message.success($t('ui.actionMessage.operationSuccess'));
 }
 
 async function onDeleteItem(row: SysDictApi.ItemDTO) {

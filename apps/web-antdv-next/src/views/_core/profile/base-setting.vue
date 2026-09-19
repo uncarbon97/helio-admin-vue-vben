@@ -1,65 +1,149 @@
 <script setup lang="ts">
-import type { BasicOption } from '@vben/types';
+import type { Recordable } from '@vben/types';
 
 import type { VbenFormSchema } from '#/adapter/form';
+import type { MyProfileDTO } from '#/api';
+import type { GenderEnumValue } from '#/api/common';
 
 import { computed, onMounted, ref } from 'vue';
 
 import { ProfileBaseSetting } from '@vben/common-ui';
+import { preferences } from '@vben/preferences';
+import { useUserStore } from '@vben/stores';
 
-import { getUserInfoApi } from '#/api';
+import { Avatar, message } from 'antdv-next';
+
+import {
+  getMyProfileApi,
+  updateMyAvatarApi,
+  updateMyProfileApi,
+  uploadFileApi,
+} from '#/api';
+import { GenderEnum } from '#/api/common';
+import { useAuthStore } from '#/store';
+
+const userStore = useUserStore();
+const authStore = useAuthStore();
 
 const profileBaseSettingRef = ref();
 
-const MOCK_ROLES_OPTIONS: BasicOption[] = [
-  {
-    label: '管理员',
-    value: 'super',
-  },
-  {
-    label: '用户',
-    value: 'user',
-  },
-  {
-    label: '测试',
-    value: 'test',
-  },
+// helium customization: 对接后端用户中心；抽屉/页面打开先清空再请求，避免残留上次数据
+const detail = ref<MyProfileDTO>();
+const uploading = ref(false);
+const fileInputRef = ref<HTMLInputElement>();
+
+const GENDER_OPTIONS: { label: string; value: GenderEnumValue }[] = [
+  { label: '未知', value: GenderEnum.UNKNOWN },
+  { label: '男', value: GenderEnum.MALE },
+  { label: '女', value: GenderEnum.FEMALE },
 ];
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
-      fieldName: 'realName',
+      fieldName: 'nickname',
       component: 'Input',
-      label: '姓名',
+      label: '昵称',
+      componentProps: { maxlength: 20 },
     },
     {
-      fieldName: 'username',
-      component: 'Input',
-      label: '用户名',
-    },
-    {
-      fieldName: 'roles',
+      fieldName: 'gender',
       component: 'Select',
       componentProps: {
-        mode: 'tags',
-        options: MOCK_ROLES_OPTIONS,
+        options: GENDER_OPTIONS,
       },
-      label: '角色',
+      label: '性别',
     },
     {
-      fieldName: 'introduction',
-      component: 'Textarea',
-      label: '个人简介',
+      fieldName: 'email',
+      component: 'Input',
+      label: '邮箱',
+    },
+    {
+      fieldName: 'phoneNo',
+      component: 'Input',
+      label: '手机号',
     },
   ];
 });
 
-onMounted(async () => {
-  const data = await getUserInfoApi();
-  profileBaseSettingRef.value.getFormApi().setValues(data);
-});
+const avatarUrl = computed(
+  () => detail.value?.avatarUrl || userStore.userInfo?.avatar || preferences.app.defaultAvatar,
+);
+
+async function loadDetail() {
+  detail.value = undefined;
+  detail.value = await getMyProfileApi();
+  profileBaseSettingRef.value?.getFormApi().setValues({
+    nickname: detail.value.nickname ?? '',
+    gender: detail.value.gender ?? GenderEnum.UNKNOWN,
+    email: detail.value.email ?? '',
+    phoneNo: detail.value.phoneNo ?? '',
+  });
+}
+
+// helium customization: 头像上传 —— 先走通用上传接口，再提交 /ucenter/avatar/update
+async function handleAvatarChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  input.value = '';
+  if (!file) return;
+
+  uploading.value = true;
+  try {
+    const uploaded = await uploadFileApi(file);
+    await updateMyAvatarApi(uploaded);
+    message.success('头像已更新');
+    // 刷新全局用户信息（导航栏头像等联动）
+    await authStore.fetchUserInfo();
+    await loadDetail();
+  } finally {
+    uploading.value = false;
+  }
+}
+
+async function handleSubmit(values: Recordable<any>) {
+  await updateMyProfileApi({
+    nickname: values.nickname,
+    gender: values.gender,
+    email: values.email,
+    phoneNo: values.phoneNo,
+  });
+  message.success('个人资料已更新');
+  await authStore.fetchUserInfo();
+}
+
+onMounted(loadDetail);
 </script>
 <template>
-  <ProfileBaseSetting ref="profileBaseSettingRef" :form-schema="formSchema" />
+  <div class="flex flex-col gap-6">
+    <!-- helium customization: 头像上传（点击选择图片，支持 jpg/jpeg/png/webp） -->
+    <div class="flex items-center gap-4">
+      <Avatar :src="avatarUrl" :size="72" />
+      <div>
+        <button
+          class="cursor-pointer rounded-md border px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+          :disabled="uploading"
+          @click="fileInputRef?.click()"
+        >
+          {{ uploading ? '上传中…' : '更换头像' }}
+        </button>
+        <div class="mt-1 text-xs text-muted-foreground">
+          支持 jpg / jpeg / png / webp
+        </div>
+        <input
+          ref="fileInputRef"
+          accept="image/jpeg,image/png,image/webp"
+          class="hidden"
+          type="file"
+          @change="handleAvatarChange"
+        />
+      </div>
+    </div>
+    <ProfileBaseSetting
+      ref="profileBaseSettingRef"
+      :form-schema="formSchema"
+      @submit="handleSubmit"
+    />
+  </div>
 </template>

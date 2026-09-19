@@ -90,9 +90,6 @@ function resultStatusTag(
         <DescriptionsItem :label="$t('sys.loginLog.userPin')">
           {{ detail.userPin }}
         </DescriptionsItem>
-        <DescriptionsItem :label="$t('sys.loginLog.userId')">
-          {{ detail.userId }}
-        </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.loginLog.userTypeCode')">
           {{ detail.userTypeCode }}
         </DescriptionsItem>

@@ -25,7 +25,9 @@
     "collapse": "折叠",
     "expand": "展开",
     "menuCol": "菜单",
-    "permCol": "权限"
+    "permCol": "权限",
+    "toggleStatusConfirm": "确认要{0}角色「{1}」吗？",
+    "toggleStatusDangerTip": "该操作会立即影响相关联的所有用户，强制刷新用户的权限信息，请确认影响范围和后果后再进行，是否继续？"
   },
   "dept": {
     "title": "部门架构",
@@ -115,7 +117,6 @@
     "typePasswordLogin": "密码登录",
     "typeLogout": "登出",
     "userPin": "用户账号",
-    "userId": "用户ID",
     "userTypeCode": "用户类型",
     "visitorIp": "来源IP",
     "visitorBrowser": "来源浏览器",
@@ -162,6 +163,7 @@
     "sort": "排序",
     "description": "描述",
     "status": "状态",
+    "statusDeprecated": "过时",
     "createTime": "创建时间",
     "operation": "操作",
     "searchPlaceholder": "搜索字典名称"

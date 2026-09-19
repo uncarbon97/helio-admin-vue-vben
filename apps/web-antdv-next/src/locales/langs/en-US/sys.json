@@ -25,7 +25,9 @@
     "collapse": "Collapse",
     "expand": "Expand",
     "menuCol": "Menu",
-    "permCol": "Permission"
+    "permCol": "Permission",
+    "toggleStatusConfirm": "Are you sure you want to {0} role \"{1}\"?",
+    "toggleStatusDangerTip": "This action takes effect immediately for all associated users and forcibly refreshes their permissions. Confirm the scope and impact before proceeding. Continue?"
   },
   "dept": {
     "title": "Dept Management",
@@ -115,7 +117,6 @@
     "typePasswordLogin": "Password Login",
     "typeLogout": "Logout",
     "userPin": "Account",
-    "userId": "User ID",
     "userTypeCode": "User Type",
     "visitorIp": "Source IP",
     "visitorBrowser": "Browser",
@@ -162,6 +163,7 @@
     "sort": "Sort",
     "description": "Description",
     "status": "Status",
+    "statusDeprecated": "Deprecated",
     "createTime": "Creation Time",
     "operation": "Operation",
     "searchPlaceholder": "Search by dict name"

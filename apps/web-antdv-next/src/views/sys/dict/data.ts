@@ -1,19 +1,40 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysDictApi } from '#/api';
-import type { EnabledStatusEnumValue } from '#/api/common';
 
-import { EnabledStatusEnum } from '#/api/common';
+import { DictStatusEnum } from '#/api';
 import { $t } from '#/locales';
+
+/** 字典状态标签选项（启用/禁用/过时） */
+const DICT_STATUS_TAG_OPTIONS = [
+  {
+    color: 'success',
+    label: $t('common.enabled'),
+    value: DictStatusEnum.ENABLED,
+  },
+  {
+    color: 'error',
+    label: $t('common.disabled'),
+    value: DictStatusEnum.DISABLED,
+  },
+  {
+    color: 'warning',
+    label: $t('sys.dict.statusDeprecated'),
+    value: DictStatusEnum.DEPRECATED,
+  },
+];
+
+/** 字典状态下拉选项 */
+const DICT_STATUS_SELECT_OPTIONS = DICT_STATUS_TAG_OPTIONS.map(
+  ({ label, value }) => ({ label, value }),
+);
 
 /**
  * 左表-自定义分类列
  * @param onActionClick
- * @param onToggleStatus 状态开关切换回调
  */
 export function useCategoryColumns<T = SysDictApi.CategoryDTO>(
   onActionClick: OnActionClickFn<T>,
-  onToggleStatus: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -28,18 +49,8 @@ export function useCategoryColumns<T = SysDictApi.CategoryDTO>(
     },
     {
       cellRender: {
-        attrs: {
-          checkedChildren: $t('common.enabled'),
-          onSwitch: ({
-            row,
-            value,
-          }: {
-            row: T;
-            value: EnabledStatusEnumValue;
-          }) => onToggleStatus(row, value),
-          unCheckedChildren: $t('common.disabled'),
-        },
-        name: 'CellSwitch',
+        name: 'CellTag',
+        options: DICT_STATUS_TAG_OPTIONS,
       },
       field: 'status',
       title: $t('sys.dict.status'),
@@ -91,14 +102,12 @@ export function useBuiltinColumns(): VxeTableGridColumns {
 
 /**
  * 右表-字典项列
- * @param readonly 内置字典项只读：状态用标签展示、无操作列
+ * @param readonly 内置字典项只读：无操作列
  * @param onActionClick
- * @param onToggleStatus 状态开关切换回调
  */
 export function useItemColumns<T = SysDictApi.ItemDTO>(
   readonly: boolean,
   onActionClick: OnActionClickFn<T>,
-  onToggleStatus: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
 ): VxeTableGridColumns {
   const columns: VxeTableGridColumns = [
     {
@@ -122,23 +131,10 @@ export function useItemColumns<T = SysDictApi.ItemDTO>(
       width: 80,
     },
     {
-      cellRender: readonly
-        ? // 只读模式下用默认状态标签（1→启用/success，0→禁用/error）
-          { name: 'CellTag' }
-        : {
-            attrs: {
-              checkedChildren: $t('common.enabled'),
-              onSwitch: ({
-                row,
-                value,
-              }: {
-                row: T;
-                value: EnabledStatusEnumValue;
-              }) => onToggleStatus(row, value),
-              unCheckedChildren: $t('common.disabled'),
-            },
-            name: 'CellSwitch',
-          },
+      cellRender: {
+        name: 'CellTag',
+        options: DICT_STATUS_TAG_OPTIONS,
+      },
       field: 'status',
       title: $t('sys.dict.status'),
       width: 90,
@@ -201,15 +197,12 @@ export function useCategoryFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      component: 'Switch',
+      component: 'Select',
       componentProps: {
-        checkedChildren: $t('common.enabled'),
-        checkedValue: EnabledStatusEnum.ENABLED,
-        class: 'w-auto',
-        unCheckedChildren: $t('common.disabled'),
-        unCheckedValue: EnabledStatusEnum.DISABLED,
+        class: 'w-full',
+        options: DICT_STATUS_SELECT_OPTIONS,
       },
-      defaultValue: EnabledStatusEnum.ENABLED,
+      defaultValue: DictStatusEnum.ENABLED,
       fieldName: 'status',
       label: $t('sys.dict.status'),
     },
@@ -257,15 +250,12 @@ export function useItemFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      component: 'Switch',
+      component: 'Select',
       componentProps: {
-        checkedChildren: $t('common.enabled'),
-        checkedValue: EnabledStatusEnum.ENABLED,
-        class: 'w-auto',
-        unCheckedChildren: $t('common.disabled'),
-        unCheckedValue: EnabledStatusEnum.DISABLED,
+        class: 'w-full',
+        options: DICT_STATUS_SELECT_OPTIONS,
       },
-      defaultValue: EnabledStatusEnum.ENABLED,
+      defaultValue: DictStatusEnum.ENABLED,
       fieldName: 'status',
       label: $t('sys.dict.status'),
     },

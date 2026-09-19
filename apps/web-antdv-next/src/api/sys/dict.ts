@@ -1,10 +1,22 @@
-import type {
-  EnabledStatusEnumValue,
-  PageParam,
-  PageResult,
-} from '#/api/common';
+import type { PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';
+
+/**
+ * 字典状态枚举（后端 DictStatusEnum，BaseEnum<Integer> 按整数输出）
+ * 分类与字典项通用；「过时」用于标记存量兼容数据
+ */
+export const DictStatusEnum = {
+  /** 禁用 */
+  DISABLED: 0,
+  /** 启用 */
+  ENABLED: 1,
+  /** 过时 */
+  DEPRECATED: 2,
+} as const;
+
+export type DictStatusEnumValue =
+  (typeof DictStatusEnum)[keyof typeof DictStatusEnum];
 
 export namespace SysDictApi {
   /** 分类/内置字典列表查询条件（两个接口查询结构相同） */
@@ -34,7 +46,7 @@ export namespace SysDictApi {
     /** 字典名称 */
     name: string;
     /** 状态 */
-    status: EnabledStatusEnumValue;
+    status: DictStatusEnumValue;
     /** 字典描述 */
     description?: string;
   }
@@ -52,7 +64,7 @@ export namespace SysDictApi {
     /** 字典项标签 */
     label: string;
     /** 状态 */
-    status: EnabledStatusEnumValue;
+    status: DictStatusEnumValue;
     /** 排序 */
     sort: number;
     /** 字典项描述 */
@@ -69,7 +81,7 @@ export namespace SysDictApi {
     /** 字典名称 */
     name: string;
     /** 状态 */
-    status: EnabledStatusEnumValue;
+    status: DictStatusEnumValue;
     /** 字典描述 */
     description?: string;
   }
@@ -88,7 +100,7 @@ export namespace SysDictApi {
     /** 字典项标签 */
     label: string;
     /** 状态 */
-    status: EnabledStatusEnumValue;
+    status: DictStatusEnumValue;
     /** 排序 */
     sort: number;
     /** 字典项描述 */
@@ -146,21 +158,6 @@ async function deleteDictCategory(id: string) {
 }
 
 /**
- * 修改字典分类状态（启用/禁用）
- * @param id 字典分类ID
- * @param newStatus 新状态
- */
-async function setDictCategoryStatus(
-  id: string,
-  newStatus: EnabledStatusEnumValue,
-) {
-  return requestClient.post('/v1/sys/dict/category/set-status', {
-    id,
-    newStatus,
-  });
-}
-
-/**
  * 分页查询字典项
  */
 async function getDictItemList(data: SysDictApi.ItemListQuery) {
@@ -195,21 +192,6 @@ async function deleteDictItem(id: string) {
 }
 
 /**
- * 修改字典项状态（启用/禁用）
- * @param id 字典项ID
- * @param newStatus 新状态
- */
-async function setDictItemStatus(
-  id: string,
-  newStatus: EnabledStatusEnumValue,
-) {
-  return requestClient.post('/v1/sys/dict/item/set-status', {
-    id,
-    newStatus,
-  });
-}
-
-/**
  * 分页查询内置字典分类（@EnumDict 枚举生成，只读）
  */
 async function getDictBuiltinList(data: SysDictApi.ListQuery) {
@@ -227,8 +209,6 @@ export {
   getDictBuiltinList,
   getDictCategoryList,
   getDictItemList,
-  setDictCategoryStatus,
-  setDictItemStatus,
   updateDictCategory,
   updateDictItem,
 };

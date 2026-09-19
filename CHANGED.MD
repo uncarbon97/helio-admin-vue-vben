@@ -17,7 +17,9 @@
 
 - `apps/web-antdv-next/src/router/routes/modules/demos.ts` — 删除（演示路由）
 - `apps/web-antdv-next/src/router/routes/modules/vben.ts` — 删除 vben 项目展示/文档/关于等演示路由，仅保留「个人中心」（`/profile`）
+  - 2026-09-18：「个人中心」路由迁移至 `src/router/routes/fixed/profile.ts` 固定注册（backend 权限模式下 `modules/` 动态路由不注册，头像菜单无法跳转 `/profile`），`modules/vben.ts` 随之删除（`modules/` 目录已空）
 - `apps/web-antdv-next/src/views/demos/` — 删除演示页面
+- `apps/web-antdv-next/src/views/_core/profile/security-setting.vue`、`notification-setting.vue` — 删除（安全设置/新消息提醒 Tab 无后端对应功能，2026-09-19）
 
 ### 修改文件- `apps/web-antdv-next/.env.development` — 移除 `VITE_NITRO_MOCK` 开关
 - `apps/web-antdv-next/vite.config.ts` — 开发代理 `/api` 目标由 mock（`localhost:5320/api`）改为真实后端（`127.0.0.1:7003`）
@@ -26,7 +28,7 @@
 - `apps/web-antdv-next/src/api/core/user.ts` — `GET /user/info` → `POST /admin/v1/ucenter/profile/get`，`MyProfileDTO` 映射为前端 `UserInfo`
 - `apps/web-antdv-next/src/api/core/menu.ts` — `GET /menu/all` → `POST /admin/v1/sys/menu/side`，新增 `transformMenus` 将扁平 `SysMenuDTO` 转为路由树
 - `apps/web-antdv-next/src/store/auth.ts` — 登录流程改为消费后端返回的 `token/roles/permissions`，用户资料拉取容错
-- `apps/web-antdv-next/src/views/_core/authentication/login.vue` — 移除上游 mock 账号下拉选择器（`MOCK_USER_OPTIONS`）及其自动填充逻辑
+- `apps/web-antdv-next/src/views/_core/authentication/login.vue` — 移除上游 mock 账号下拉选择器（`MOCK_USER_OPTIONS`）及其自动填充逻辑；移除上游滑块拖动验证（`SliderCaptcha`），改对接后端登录挑战（`POST /v1/auth/challenge`）：OCR 类型追加图形验证码输入框（suffix 渲染 base64 图片、点击刷新、登录失败自动刷新并清空答案，验证码一次性消费）；隐藏忘记密码/手机号登录/扫码登录/第三方登录/注册入口（2026-09-19）
 - `apps/web-antdv-next/src/preferences.ts` — 默认权限模式 `frontend` → `backend`，默认主题 `dark` → `light`
 - `apps/web-antdv-next/src/adapter/vxe-table.ts` — 新增 `CellTag` / `CellSwitch` / `CellOperation` 单元格渲染器、操作按钮回调类型，及热更新渲染器清理；表格全局 `size` `small` → `medium`（字号加大一档，对老年用户更友好）
 - `internal/vite-config/src/config/application.ts` — 移除 `nitroMock` / `nitroMockOptions` 选项
@@ -54,12 +56,22 @@
 - `apps/web-antdv-next/src/locales/langs/zh-CN/page.json`、`en-US/page.json` — 移除 `page.dashboard.analytics` / `page.dashboard.workspace` 文案（页面已删除，2026-09-18）
 - `apps/web-antdv-next/src/views/dashboard/workspace/index.vue` — 快捷导航 3 个 `/demos/...` 死链改为 `/profile`、`/profile/change-password`
 - `apps/web-antdv-next/src/adapter/vxe-table.ts` — `CellOperation` 移除行内 Popconfirm 二次确认（delete 直接触发回调），确认改由页面层居中模态框处理（见 `utils/confirm.ts`）
+- `apps/web-antdv-next/src/layouts/basic.vue` — 头像下拉菜单移除 vben 文档站/GitHub/常见问题（issues）外链，仅保留「个人中心」（2026-09-18）
+- `apps/web-antdv-next/src/layouts/basic.vue` — 移除右上角消息通知（上游 mock 数据）及 `UserDropdown` 的 `description`/`tag-text`（Pro 标识）演示数据（2026-09-19）
+- `apps/web-antdv-next/src/views/_core/profile/index.vue` — Tab 仅保留「基本设置」「修改密码」（2026-09-19）
+- `apps/web-antdv-next/src/views/_core/profile/base-setting.vue` — 对接后端用户中心：头像上传（通用 `/file/upload` + `/v1/ucenter/avatar/update`）、资料表单（昵称/性别/邮箱/手机号 → `/v1/ucenter/profile/update`），保存后刷新全局用户信息（2026-09-19）
+- `apps/web-antdv-next/src/api/core/user.ts` — 新增 `getMyProfileApi` / `updateMyProfileApi` / `uploadFileApi` / `updateMyAvatarApi`（对接 `AdminUCenterController`）（2026-09-19）
+- `apps/web-antdv-next/src/api/core/auth.ts` — 新增 `LoginChallenge` 类型与 `getLoginChallengeApi`（`POST /v1/auth/challenge`，对接后端登录验证码挑战）（2026-09-19）
+- `apps/web-antdv-next/src/preferences.ts` — 默认头像与 LOGO 改本地资源 `/images/avatar.svg`、`/images/logo.svg`（上游为 unpkg CDN 外链，离线内网不可用）（2026-09-19）
 
 > 修改的文件中，相对源项目改动的位置会在上方添加注释 `// helium customization: <说明>`（配置文件用对应注释语法），方便与上游比较。
 
 ### 增加文件
 
 - `apps/web-antdv-next/src/router/routes/fixed/dashboard.ts` — 原 `modules/dashboard.ts` 移入固定路由目录，顶层加 `BasicLayout` 容器；backend 权限模式下始终注册，修复 `/dashboard` 404
+- `apps/web-antdv-next/src/router/routes/fixed/profile.ts` — 「个人中心」路由（原 `modules/vben.ts`），固定注册修复 backend 模式下 `/profile` 无法跳转（2026-09-18）
+  - 2026-09-19：外层补 `BasicLayout` 容器（修复整页铺满、无法导航回退）
+- `apps/web-antdv-next/public/images/logo.svg`、`avatar.svg` — 本地 LOGO / 默认头像资源（离线内网友好，替代 unpkg CDN）
 - `swagger.json` — 后端 OpenAPI 定义，作为前端对接依据（非构建产物）
 - `CHANGED.MD` — 本变更说明
 - `apps/web-antdv-next/src/views/dashboard/workbench/index.vue` — 极简首页（问候+引导+版本，无 mock 数据），作为登录后默认落地页

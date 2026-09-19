@@ -26,6 +26,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       componentProps: {
         placeholder: $t('profile.passwordSetting.oldPasswordPlaceholder'),
       },
+      rules: 'required',
     },
     {
       fieldName: 'newPassword',
@@ -35,6 +36,7 @@ const formSchema = computed((): VbenFormSchema[] => {
         passwordStrength: true,
         placeholder: $t('profile.passwordSetting.newPasswordPlaceholder'),
       },
+      rules: 'required',
     },
     {
       fieldName: 'confirmPassword',

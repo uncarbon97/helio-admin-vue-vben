@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { MenuApi, SysMenuApi } from '#/api';
-
 import type { ParentTreeOption } from '../data';
+
+import type { MenuApi, SysMenuApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -23,7 +23,7 @@ const parentOptions = ref<ParentTreeOption[]>([]);
 const [Form, formApi] = useVbenForm({
   commonConfig: {
     // 长字段名不换行
-    labelWidth: 120,
+    labelWidth: 140,
   },
   schema: useFormSchema(parentOptions),
   showDefaultActions: false,
