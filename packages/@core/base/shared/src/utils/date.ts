@@ -115,7 +115,7 @@ export const getCurrentTimezone = () => {
 
 /**
  * helium customization: 是否在时刻字段尾部展示时区偏移后缀
- * 取值复用后端框架级 YesOrNoEnum（0=否，1=是），默认否；localStorage 持久化
+ * 取值复用后端框架级 YesOrNoEnum，默认否；localStorage 持久化
  */
 const SHOW_TIMEZONE_OFFSET_STORAGE_KEY = 'HELIUM_SHOW_TIMEZONE_OFFSET';
 
