@@ -7,6 +7,7 @@ import { useTimezoneStore } from '@vben/stores';
 
 import { useVbenModal } from '@vben-core/popup-ui';
 import {
+  Checkbox,
   RadioGroup,
   RadioGroupItem,
   VbenIconButton,
@@ -27,23 +28,37 @@ const timezoneOptionsRef = ref<
   }[]
 >([]);
 
+// helium customization: 弹窗打开时的快照，确认时据此判断时区/偏移开关是否变化，变化则刷新页面
+let initialShowOffset = 0;
+let initialTimezone: string | undefined;
+
 const [Modal, modalApi] = useVbenModal({
   fullscreenButton: false,
   onConfirm: async () => {
     try {
       modalApi.setState({ confirmLoading: true });
       const timezone = unref(timezoneRef);
-      if (timezone) {
+      const timezoneChanged = !!timezone && timezone !== initialTimezone;
+      if (timezoneChanged) {
         await timezoneStore.setTimezone(timezone);
       }
       modalApi.close();
+      // helium customization: 时区或偏移开关变化后刷新页面
+      if (
+        timezoneChanged ||
+        timezoneStore.showTimezoneOffset !== initialShowOffset
+      ) {
+        location.reload();
+      }
     } finally {
       modalApi.setState({ confirmLoading: false });
     }
   },
   async onOpenChange(isOpen) {
     if (isOpen) {
-      timezoneRef.value = unref(timezoneStore.timezone);
+      initialTimezone = unref(timezoneStore.timezone);
+      initialShowOffset = timezoneStore.showTimezoneOffset;
+      timezoneRef.value = initialTimezone;
       timezoneOptionsRef.value = await timezoneStore.getTimezoneOptions();
     }
   },
@@ -81,6 +96,22 @@ defineExpose({ open });
           </div>
         </RadioGroup>
       </div>
+      <!-- helium customization: 底栏左下角持久化选项，是否展示时刻字符串的时区偏移后缀（复用 YesOrNoEnum 取值） -->
+      <template #prepend-footer>
+        <div class="mr-auto flex items-center gap-2 pl-2">
+          <Checkbox
+            id="showTimezoneOffset"
+            :model-value="timezoneStore.showTimezoneOffset === 1"
+            @update:model-value="
+              (checked) =>
+                timezoneStore.setShowTimezoneOffset(checked === true ? 1 : 0)
+            "
+          />
+          <label for="showTimezoneOffset" class="cursor-pointer">{{
+            $t('ui.widgets.timezone.showOffset')
+          }}</label>
+        </div>
+      </template>
     </Modal>
   </div>
 </template>

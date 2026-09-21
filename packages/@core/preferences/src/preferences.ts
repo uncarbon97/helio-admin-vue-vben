@@ -141,6 +141,20 @@ class PreferenceManager {
     // 在每次 updatePreferences 时被 concat 追加，膨胀到几十/上百条重复 key。
     // 这里在加载缓存后做一次去重，保留首次出现的 key。
     this.sanitizeCachedArray(cachedPreferences, 'widget', 'order');
+    // helium customization: 强制用 overrides 中显式指定的部署级静态资产字段（默认头像、LOGO）覆盖缓存
+    const cached = cachedPreferences as Preferences;
+    if (overrides?.app?.defaultAvatar) {
+      cached.app = { ...cached.app, defaultAvatar: overrides.app.defaultAvatar };
+    }
+    if (overrides?.logo?.source || overrides?.logo?.sourceDark) {
+      cached.logo = {
+        ...cached.logo,
+        ...(overrides.logo?.source ? { source: overrides.logo.source } : {}),
+        ...(overrides.logo?.sourceDark
+          ? { sourceDark: overrides.logo.sourceDark }
+          : {}),
+      };
+    }
     const mergedPreference = mergeWithArrayOverride(
       {},
       cachedPreferences, // 用户缓存的设置优先

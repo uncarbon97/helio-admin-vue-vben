@@ -11,7 +11,7 @@ import {
   errorMessageResponseInterceptor,
   RequestClient,
 } from '@vben/request';
-import { useAccessStore } from '@vben/stores';
+import { useAccessStore, useTimezoneStore } from '@vben/stores';
 
 import { message } from 'antdv-next';
 
@@ -62,6 +62,9 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
 
       config.headers.Authorization = formatToken(accessStore.accessToken);
       config.headers['Accept-Language'] = preferences.app.locale;
+      // helium customization: 后端 i18n 请求头：语言(zh-CN/en-US) + IANA 时区 ID，每次请求现取值，右上角切换后即时生效
+      config.headers['X-i18n-Lang'] = preferences.app.locale;
+      config.headers['X-i18n-Timezone'] = useTimezoneStore().timezone;
       return config;
     },
   });
@@ -96,7 +99,7 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
       const responseData = error?.response?.data ?? {};
       // helium customization: 入参校验失败(Z00406)时，data 内携带具体字段与原因，优先提示
       if (responseData?.code === 'Z00406' && responseData?.data?.message) {
-        message.error(responseData.data.message,);
+        message.error(responseData.data.message);
         return;
       }
       const errorMessage = responseData?.msg ?? '';

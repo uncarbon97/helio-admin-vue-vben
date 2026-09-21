@@ -69,6 +69,7 @@ export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(
   return [
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('sys.operateLog.createdAt'),
       width: 200,
     },

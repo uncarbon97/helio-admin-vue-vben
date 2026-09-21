@@ -3,7 +3,9 @@ import { ref, unref } from 'vue';
 import { DEFAULT_TIME_ZONE_OPTIONS } from '@vben-core/preferences';
 import {
   getCurrentTimezone,
+  isShowTimezoneOffset,
   setCurrentTimezone,
+  setShowTimezoneOffset as persistShowTimezoneOffset,
 } from '@vben-core/shared/utils';
 
 import { acceptHMRUpdate, defineStore } from 'pinia';
@@ -64,6 +66,18 @@ const useTimezoneStore = defineStore(
   () => {
     const timezoneRef = ref(getCurrentTimezone());
 
+    // helium customization: 时刻字段是否展示时区偏移后缀，取值复用 YesOrNoEnum（0=否，1=是），默认否；持久化由 shared utils 落 localStorage
+    const showTimezoneOffsetRef = ref(isShowTimezoneOffset() ? 1 : 0);
+
+    /**
+     * 设置时刻偏移展示开关
+     * @param value 0=否 1=是（YesOrNoEnum）
+     */
+    function setShowTimezoneOffset(value: number) {
+      showTimezoneOffsetRef.value = value === 1 ? 1 : 0;
+      persistShowTimezoneOffset(showTimezoneOffsetRef.value);
+    }
+
     /**
      * 初始化时区
      * Initialize the timezone
@@ -110,6 +124,8 @@ const useTimezoneStore = defineStore(
 
     return {
       timezone: timezoneRef,
+      showTimezoneOffset: showTimezoneOffsetRef,
+      setShowTimezoneOffset,
       setTimezone,
       getTimezoneOptions,
       $reset,

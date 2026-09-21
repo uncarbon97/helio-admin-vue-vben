@@ -150,6 +150,7 @@ export function useItemColumns<T = SysDictApi.ItemDTO>(
     columns.push(
       {
         field: 'createdAt',
+        formatter: 'formatDateTime',
         title: $t('sys.dict.createTime'),
         width: 180,
       },

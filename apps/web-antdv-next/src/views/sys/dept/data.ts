@@ -58,6 +58,7 @@ export function useColumns<T = SysDeptApi.SysDeptDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('sys.dept.createTime'),
       width: 200,
     },

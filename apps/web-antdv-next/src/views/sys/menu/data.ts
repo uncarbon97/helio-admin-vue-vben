@@ -110,6 +110,7 @@ export function useColumns<T = MenuApi.SysMenuDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('sys.menu.createTime'),
       width: 200,
     },

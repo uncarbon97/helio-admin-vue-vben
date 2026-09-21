@@ -23,7 +23,8 @@
 
 ### 修改文件- `apps/web-antdv-next/.env.development` — 移除 `VITE_NITRO_MOCK` 开关
 - `apps/web-antdv-next/vite.config.ts` — 开发代理 `/api` 目标由 mock（`localhost:5320/api`）改为真实后端（`127.0.0.1:7003`）
-- `apps/web-antdv-next/src/api/request.ts` — 响应体约定对齐后端：成功判定 `code===0` → `success===true`，错误信息字段 `error/message` → `msg`；`doRefreshToken` 改空占位（后端无刷新接口）
+- `apps/web-antdv-next/src/api/request.ts` — 响应体约定对齐后端：成功判定 `code===0` → `success===true`，错误信息字段 `error/message` → `msg`；`doRefreshToken` 改空占位（后端无刷新接口）；请求拦截器追加 i18n 头 `X-i18n-Lang`（locale）/`X-i18n-Timezone`（时区 store，右上角切换即时生效，2026-09-21）
+- `packages/@core/preferences/src/constants.ts` — `DEFAULT_TIME_ZONE_OPTIONS` 收敛为北京（首选）/纽约两项，移除上游 London/Tokyo/Seoul 演示项（2026-09-21）
 - `apps/web-antdv-next/src/api/core/auth.ts` — 登录 `POST /auth/login` → `POST /admin/v1/auth/password-login`，登出 → `/admin/v1/auth/logout`；入参改 `pin/pwd`（+tenantCode/captcha），返回 `token/roles/permissions`
 - `apps/web-antdv-next/src/api/core/user.ts` — `GET /user/info` → `POST /admin/v1/ucenter/profile/get`，`MyProfileDTO` 映射为前端 `UserInfo`
 - `apps/web-antdv-next/src/api/core/menu.ts` — `GET /menu/all` → `POST /admin/v1/sys/menu/side`，新增 `transformMenus` 将扁平 `SysMenuDTO` 转为路由树

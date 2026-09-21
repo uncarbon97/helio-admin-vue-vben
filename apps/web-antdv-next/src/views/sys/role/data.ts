@@ -84,6 +84,7 @@ export function useColumns<T = SysRoleApi.SysRoleDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('sys.role.createTime'),
       width: 200,
     },

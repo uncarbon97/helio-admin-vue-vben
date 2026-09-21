@@ -155,6 +155,7 @@ export function useColumns<T = FileStorageApi.FileStorageDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('file.storage.createTime'),
       width: 200,
     },

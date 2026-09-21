@@ -84,6 +84,7 @@ export function useColumns<T = TenantMetaApi.TenantMetaDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('tenant.meta.createTime'),
       width: 200,
     },

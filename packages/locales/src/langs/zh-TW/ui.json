@@ -159,7 +159,8 @@
     },
     "timezone": {
       "setTimezone": "設定時區",
-      "setSuccess": "時區設定成功"
+      "setSuccess": "時區設定成功",
+      "showOffset": "顯示時刻的時區偏移"
     }
   }
 }

@@ -94,6 +94,7 @@ export function useColumns<T = FileMetaApi.FileMetaDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('file.meta.createTime'),
       width: 200,
     },

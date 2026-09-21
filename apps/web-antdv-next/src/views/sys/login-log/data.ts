@@ -54,6 +54,7 @@ export function useColumns<T = SysLoginLogApi.SysLoginLogDTO>(
   return [
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('sys.loginLog.createdAt'),
       width: 200,
     },

@@ -53,7 +53,7 @@ export async function loginApi(data: AuthApi.LoginParams) {
  * 获取登录挑战
  */
 export async function getLoginChallengeApi() {
-  return requestClient.post<AuthApi.LoginChallenge>('/v1/auth/challenge');
+  return requestClient.post<AuthApi.LoginChallenge>('/v1/auth/login-challenge');
 }
 
 /**

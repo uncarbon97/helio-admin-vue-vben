@@ -65,6 +65,7 @@ export function useColumns<T = TenantPackageApi.TenantPackageDTO>(
     },
     {
       field: 'createdAt',
+      formatter: 'formatDateTime',
       title: $t('tenant.package.createTime'),
       width: 200,
     },
