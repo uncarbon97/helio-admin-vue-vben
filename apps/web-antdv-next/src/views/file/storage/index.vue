@@ -134,10 +134,12 @@ async function onTestUpload(row: FileStorageApi.FileStorageDTO) {
   try {
     const ret = await testFileStorage(row.id);
     hideLoading();
-    message.success({
-      content: `${$t('file.storage.testUploadSuccess')}: ${ret.url}`,
-      key: 'action_process_msg',
-    });
+    const confirmed = await confirmAction(
+      `${$t('file.storage.testUploadVisitConfirm')}\n(${ret.url})`,
+    );
+    if (confirmed) {
+      window.open(ret.url, '_blank');
+    }
   } catch {
     hideLoading();
   }

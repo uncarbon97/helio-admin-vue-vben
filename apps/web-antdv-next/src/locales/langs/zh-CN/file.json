@@ -23,7 +23,8 @@
     "title": "文件存储点",
     "testUpload": "测试上传",
     "testUploading": "上传测试中…",
-    "testUploadSuccess": "上传成功"
+    "testUploadSuccess": "上传成功",
+    "testUploadVisitConfirm": "上传成功，是否访问该文件？"
   },
   "meta": {
     "category": "文件主分类",

@@ -23,7 +23,8 @@
     "title": "File Storage",
     "testUpload": "Test Upload",
     "testUploading": "Uploading test file…",
-    "testUploadSuccess": "Upload succeeded"
+    "testUploadSuccess": "Upload succeeded",
+    "testUploadVisitConfirm": "Upload succeeded. Visit the file?"
   },
   "meta": {
     "category": "Category",
