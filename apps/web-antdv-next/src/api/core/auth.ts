@@ -24,8 +24,8 @@ export namespace AuthApi {
     captchaImageEncoded?: string;
     /** 验证码唯一标识 */
     captchaId?: string;
-    /** 验证码失效时刻 */
-    expiredAt?: string;
+    /** 验证码有效秒数 */
+    validSeconds?: number;
   }
 
   /** 登录接口返回值 */

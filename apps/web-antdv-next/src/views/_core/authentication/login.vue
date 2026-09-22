@@ -3,9 +3,10 @@ import type { VbenFormSchema } from '@vben/common-ui';
 
 import type { AuthApi } from '#/api';
 
-import { computed, h, onMounted, ref } from 'vue';
+import { computed, h, onBeforeUnmount, onMounted, ref } from 'vue';
 
 import { AuthenticationLogin, z } from '@vben/common-ui';
+import { createIconifyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
 
 import { getLoginChallengeApi } from '#/api';
@@ -15,10 +16,13 @@ defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
-// helium customization: Helium: 登录验证码 —— 对接后端登录挑战（POST /v1/auth/challenge），
+// helium customization: Helium: 登录验证码 —— 对接后端登录挑战（POST /v1/auth/login-challenge），
 // OCR 类型展示图形验证码；验证码一次性消费，登录失败或点击图片后刷新
 const loginChallenge = ref<AuthApi.LoginChallenge>();
 const loginRef = ref<InstanceType<typeof AuthenticationLogin>>();
+
+// helium customization: 离线图标集（ant-design）内的刷新图标，内网可用
+const RefreshIcon = createIconifyIcon('ant-design:redo-outlined');
 
 const hasOcrChallenge = computed(
   () =>
@@ -26,10 +30,33 @@ const hasOcrChallenge = computed(
     (loginChallenge.value?.type === 'OCR'),
 );
 
+// helium customization: 验证码有效期倒计时 —— 按 validSeconds 计时，超时后覆盖蒙层，需手动点击刷新
+const captchaExpired = ref(false);
+let captchaTimer: ReturnType<typeof setTimeout> | undefined;
+
+function clearCaptchaTimer() {
+  if (captchaTimer) {
+    clearTimeout(captchaTimer);
+    captchaTimer = undefined;
+  }
+}
+
 async function refreshChallenge() {
+  clearCaptchaTimer();
+  captchaExpired.value = false;
   loginChallenge.value = await getLoginChallengeApi();
   loginRef.value?.getFormApi().setFieldValue('captchaAnswer', '');
+
+  const validSeconds = loginChallenge.value?.validSeconds ?? 0;
+  if (hasOcrChallenge.value && validSeconds > 0) {
+    captchaTimer = setTimeout(
+      () => (captchaExpired.value = true),
+      validSeconds * 1000,
+    );
+  }
 }
+
+onBeforeUnmount(clearCaptchaTimer);
 
 // helium customization: 移除上游 mock 账号下拉选择器（MOCK_USER_OPTIONS）及其自动填充逻辑，仅保留账号/密码表单；
 // 移除上游滑块拖动组件，改用后端图形验证码挑战
@@ -65,12 +92,28 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.code'),
       rules: z.string().min(1, { message: $t('authentication.codeTip', [4]) }),
       suffix: () =>
-        h('img', {
-          alt: 'captcha',
-          class: 'h-9 w-[200px] cursor-pointer rounded-sm',
-          onClick: () => refreshChallenge(),
-          src: `${loginChallenge.value?.captchaImageEncoded}`,
-        }),
+        h('div', { class: 'relative' }, [
+          h('img', {
+            alt: 'captcha',
+            class: 'h-9 w-[200px] cursor-pointer rounded-sm',
+            onClick: () => refreshChallenge(),
+            src: `${loginChallenge.value?.captchaImageEncoded}`,
+          }),
+          captchaExpired.value
+            ? h(
+                'div',
+                {
+                  class:
+                    'absolute inset-0 z-10 flex cursor-pointer items-center justify-center gap-1 rounded-sm bg-black/60 text-xs text-white backdrop-blur-[1px]',
+                  onClick: () => refreshChallenge(),
+                },
+                [
+                  h(RefreshIcon, { class: 'size-4' }),
+                  $t('authentication.captchaRefresh'),
+                ],
+              )
+            : null,
+        ]),
     });
   }
 
