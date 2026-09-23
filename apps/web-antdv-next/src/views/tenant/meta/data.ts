@@ -72,8 +72,13 @@ export function useColumns<T = TenantMetaApi.TenantMetaDTO>(
       cellRender: {
         attrs: {
           checkedChildren: $t('common.enabled'),
-          onSwitch: ({ row, value }: { row: T; value: EnabledStatusEnumValue }) =>
-            onToggleStatus(row, value),
+          onSwitch: ({
+            row,
+            value,
+          }: {
+            row: T;
+            value: EnabledStatusEnumValue;
+          }) => onToggleStatus(row, value),
           unCheckedChildren: $t('common.disabled'),
         },
         name: 'CellSwitch',
@@ -128,6 +133,7 @@ export function useFormSchema(
       // 仅新增可改编码
       component: 'Input',
       componentProps: { maxlength: 100 },
+      description: $t('tenant.meta.tenantCodeTip'),
       fieldName: 'code',
       label: $t('tenant.meta.tenantCode'),
       rules: 'required',

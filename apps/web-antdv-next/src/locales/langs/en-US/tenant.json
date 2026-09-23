@@ -4,6 +4,7 @@
     "name": "Tenant",
     "tenantName": "Tenant Name",
     "tenantCode": "Tenant Code",
+    "tenantCodeTip": "For mainland China enterprises, use the Taxpayer Identification Number; for international enterprises, use identifiers such as DUNS, LEI (Legal Entity Identifier), or VAT number",
     "id": "Tenant ID",
     "status": "Status",
     "createTime": "Creation Time",
