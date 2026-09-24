@@ -123,12 +123,14 @@ export namespace SysDictApi {
   }
 }
 
+const API_PATH = '/v1/sys/dict';
+
 /**
  * 分页查询字典分类
  */
 async function getDictCategoryList(data: SysDictApi.ListQuery) {
   return requestClient.post<PageResult<SysDictApi.CategoryDTO>>(
-    '/v1/sys/dict/category/list',
+    `${API_PATH}/category/list`,
     data,
   );
 }
@@ -138,7 +140,7 @@ async function getDictCategoryList(data: SysDictApi.ListQuery) {
  * @param request 请求表单
  */
 async function createDictCategory(request: SysDictApi.CategoryUpsertRequest) {
-  return requestClient.post('/v1/sys/dict/category/create', request);
+  return requestClient.post(`${API_PATH}/category/create`, request);
 }
 
 /**
@@ -146,7 +148,7 @@ async function createDictCategory(request: SysDictApi.CategoryUpsertRequest) {
  * @param request 请求表单
  */
 async function updateDictCategory(request: SysDictApi.CategoryUpsertRequest) {
-  return requestClient.post('/v1/sys/dict/category/update', request);
+  return requestClient.post(`${API_PATH}/category/update`, request);
 }
 
 /**
@@ -154,7 +156,7 @@ async function updateDictCategory(request: SysDictApi.CategoryUpsertRequest) {
  * @param id 字典分类ID
  */
 async function deleteDictCategory(id: string) {
-  return requestClient.post('/v1/sys/dict/category/delete', { id });
+  return requestClient.post(`${API_PATH}/category/delete`, { id });
 }
 
 /**
@@ -162,7 +164,7 @@ async function deleteDictCategory(id: string) {
  */
 async function getDictItemList(data: SysDictApi.ItemListQuery) {
   return requestClient.post<PageResult<SysDictApi.ItemDTO>>(
-    '/v1/sys/dict/item/list',
+    `${API_PATH}/item/list`,
     data,
   );
 }
@@ -172,7 +174,7 @@ async function getDictItemList(data: SysDictApi.ItemListQuery) {
  * @param request 请求表单
  */
 async function createDictItem(request: SysDictApi.ItemUpsertRequest) {
-  return requestClient.post('/v1/sys/dict/item/create', request);
+  return requestClient.post(`${API_PATH}/item/create`, request);
 }
 
 /**
@@ -180,7 +182,7 @@ async function createDictItem(request: SysDictApi.ItemUpsertRequest) {
  * @param request 请求表单
  */
 async function updateDictItem(request: SysDictApi.ItemUpsertRequest) {
-  return requestClient.post('/v1/sys/dict/item/update', request);
+  return requestClient.post(`${API_PATH}/item/update`, request);
 }
 
 /**
@@ -188,7 +190,7 @@ async function updateDictItem(request: SysDictApi.ItemUpsertRequest) {
  * @param id 字典项ID
  */
 async function deleteDictItem(id: string) {
-  return requestClient.post('/v1/sys/dict/item/delete', { id });
+  return requestClient.post(`${API_PATH}/item/delete`, { id });
 }
 
 /**
@@ -196,7 +198,7 @@ async function deleteDictItem(id: string) {
  */
 async function getDictBuiltinList(data: SysDictApi.ListQuery) {
   return requestClient.post<PageResult<SysDictApi.BuiltinDTO>>(
-    '/v1/sys/dict/builtin/list',
+    `${API_PATH}/builtin/list`,
     data,
   );
 }

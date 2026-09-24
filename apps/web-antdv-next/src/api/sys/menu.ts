@@ -1,4 +1,4 @@
-import type { MenuApi } from '#/api';
+import type { MenuApi, MenuVisibleScope } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { requestClient } from '#/api/request';
@@ -12,7 +12,7 @@ export namespace SysMenuApi {
     name: string;
     /** 上级菜单ID（根菜单传 0） */
     parentId: string;
-    /** 菜单类型 0=目录 1=菜单 2=按钮 3=外链 */
+    /** 菜单类型 */
     menuType: MenuApi.MenuType;
     /** 路由地址 */
     path: string;
@@ -20,6 +20,8 @@ export namespace SysMenuApi {
     permission?: string;
     /** 状态 */
     status: EnabledStatusEnumValue;
+    /** 可见范围 */
+    visibleScope: MenuVisibleScope;
     /** 图标 */
     icon?: string;
     /** 排序 */
@@ -30,17 +32,19 @@ export namespace SysMenuApi {
     externalLink?: string;
   }
 
-  /** 树节点（由扁平 SysMenuDTO 构建，保留全字段） */
+  /** 树节点 */
   export interface MenuTreeNode extends MenuApi.SysMenuDTO {
     children?: MenuTreeNode[];
   }
 }
 
+const API_PATH = '/v1/sys/menu';
+
 /**
  * 列表查询（无分页，返回全量扁平列表）
  */
 async function getMenuList() {
-  return requestClient.post<MenuApi.SysMenuDTO[]>('/v1/sys/menu/list');
+  return requestClient.post<MenuApi.SysMenuDTO[]>(`${API_PATH}/list`);
 }
 
 /**
@@ -48,7 +52,7 @@ async function getMenuList() {
  * @param id ID
  */
 async function getMenuDetail(id: string) {
-  return requestClient.post<MenuApi.SysMenuDTO>('/v1/sys/menu/detail', {
+  return requestClient.post<MenuApi.SysMenuDTO>(`${API_PATH}/detail`, {
     id,
   });
 }
@@ -58,7 +62,7 @@ async function getMenuDetail(id: string) {
  * @param request 请求表单
  */
 async function createMenu(request: SysMenuApi.UpsertRequest) {
-  return requestClient.post('/v1/sys/menu/create', request);
+  return requestClient.post(`${API_PATH}/create`, request);
 }
 
 /**
@@ -66,7 +70,7 @@ async function createMenu(request: SysMenuApi.UpsertRequest) {
  * @param request 请求表单
  */
 async function updateMenu(request: SysMenuApi.UpsertRequest) {
-  return requestClient.post('/v1/sys/menu/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -74,7 +78,7 @@ async function updateMenu(request: SysMenuApi.UpsertRequest) {
  * @param id 菜单ID
  */
 async function deleteMenu(id: string) {
-  return requestClient.post('/v1/sys/menu/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 /**
@@ -82,11 +86,8 @@ async function deleteMenu(id: string) {
  * @param id 菜单ID
  * @param newStatus 新状态
  */
-async function setMenuStatus(
-  id: string,
-  newStatus: EnabledStatusEnumValue,
-) {
-  return requestClient.post('/v1/sys/menu/set-status', {
+async function setMenuStatus(id: string, newStatus: EnabledStatusEnumValue) {
+  return requestClient.post(`${API_PATH}/set-status`, {
     id,
     newStatus,
   });
@@ -140,7 +141,7 @@ export interface MenuTreeNode {
  * 获取所有可见菜单（扁平列表），用于角色授权树
  */
 async function getVisibleMenuList() {
-  return requestClient.post<MenuApi.SysMenuDTO[]>('/v1/sys/menu/visible');
+  return requestClient.post<MenuApi.SysMenuDTO[]>(`${API_PATH}/visible`);
 }
 
 /** 树构建临时节点，附带排序字段 */

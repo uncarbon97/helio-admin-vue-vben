@@ -35,11 +35,13 @@ export namespace SysDeptApi {
   }
 }
 
+const API_PATH = '/v1/sys/dept';
+
 /**
  * 列表查询（无分页，返回全量扁平列表）
  */
 async function getDeptList() {
-  return requestClient.post<SysDeptApi.SysDeptDTO[]>('/v1/sys/dept/list');
+  return requestClient.post<SysDeptApi.SysDeptDTO[]>(`${API_PATH}/list`);
 }
 
 /**
@@ -47,7 +49,7 @@ async function getDeptList() {
  * @param id ID
  */
 async function getDeptDetail(id: string) {
-  return requestClient.post<SysDeptApi.SysDeptDTO>('/v1/sys/dept/detail', {
+  return requestClient.post<SysDeptApi.SysDeptDTO>(`${API_PATH}/detail`, {
     id,
   });
 }
@@ -57,7 +59,7 @@ async function getDeptDetail(id: string) {
  * @param request 请求表单
  */
 async function createDept(request: SysDeptApi.UpsertRequest) {
-  return requestClient.post('/v1/sys/dept/create', request);
+  return requestClient.post(`${API_PATH}/create`, request);
 }
 
 /**
@@ -65,7 +67,7 @@ async function createDept(request: SysDeptApi.UpsertRequest) {
  * @param request 请求表单
  */
 async function updateDept(request: SysDeptApi.UpsertRequest) {
-  return requestClient.post('/v1/sys/dept/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -73,7 +75,7 @@ async function updateDept(request: SysDeptApi.UpsertRequest) {
  * @param id 部门ID
  */
 async function deleteDept(id: string) {
-  return requestClient.post('/v1/sys/dept/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 /**
@@ -85,7 +87,7 @@ async function setDeptStatus(
   id: string,
   newStatus: EnabledStatusEnumValue,
 ) {
-  return requestClient.post('/v1/sys/dept/set-status', {
+  return requestClient.post(`${API_PATH}/set-status`, {
     id,
     newStatus,
   });

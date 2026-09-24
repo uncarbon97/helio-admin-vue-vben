@@ -28,6 +28,12 @@ export namespace AuthApi {
     validSeconds?: number;
   }
 
+  /** 登录页租户相关UI配置 */
+  export interface LoginTenantUIConfig {
+    /** 是否显示租户编码输入框 */
+    showTenantCodeInputFlag?: boolean;
+  }
+
   /** 登录接口返回值 */
   export interface LoginResult {
     /** token值 */
@@ -39,12 +45,14 @@ export namespace AuthApi {
   }
 }
 
+const API_PATH = '/v1/auth';
+
 /**
  * 登录
  */
 export async function loginApi(data: AuthApi.LoginParams) {
   return requestClient.post<AuthApi.LoginResult>(
-    '/v1/auth/password-login',
+    `${API_PATH}/password-login`,
     data,
   );
 }
@@ -53,12 +61,25 @@ export async function loginApi(data: AuthApi.LoginParams) {
  * 获取登录挑战
  */
 export async function getLoginChallengeApi() {
-  return requestClient.post<AuthApi.LoginChallenge>('/v1/auth/login-challenge');
+  return requestClient.post<AuthApi.LoginChallenge>(
+    `${API_PATH}/login-challenge`,
+  );
+}
+
+/**
+ * 获取租户相关UI配置
+ */
+// helium customization: 对接后端“获取租户相关UI配置”（POST /v1/auth/tenant-ui-config），
+// 登录页租户编码输入框等开关由后端下发，禁止前端本地硬编码
+export async function getTenantUIConfigApi() {
+  return requestClient.post<AuthApi.LoginTenantUIConfig>(
+    `${API_PATH}/tenant-ui-config`,
+  );
 }
 
 /**
  * 退出登录
  */
 export async function logoutApi() {
-  return baseRequestClient.post('/v1/auth/logout');
+  return baseRequestClient.post(`${API_PATH}/logout`);
 }

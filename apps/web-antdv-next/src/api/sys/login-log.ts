@@ -68,12 +68,14 @@ export namespace SysLoginLogApi {
   }
 }
 
+const API_PATH = '/v1/sys/login-log';
+
 /**
  * 分页查询
  */
 async function getLoginLogList(data: SysLoginLogApi.ListQuery) {
   return requestClient.post<PageResult<SysLoginLogApi.SysLoginLogDTO>>(
-    '/v1/sys/login-log/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -84,7 +86,7 @@ async function getLoginLogList(data: SysLoginLogApi.ListQuery) {
  */
 async function getLoginLogDetail(id: string) {
   return requestClient.post<SysLoginLogApi.SysLoginLogDTO>(
-    '/v1/sys/login-log/detail',
+    `${API_PATH}/detail`,
     { id },
   );
 }

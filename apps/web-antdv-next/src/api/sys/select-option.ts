@@ -1,5 +1,7 @@
 import { requestClient } from '#/api/request';
 
+const API_PATH = '/v1/select-option';
+
 /** 通用下拉选项项 */
 export interface SelectOptionItem {
   /** 选项值 */
@@ -14,7 +16,7 @@ export interface SelectOptionItem {
  * 查询角色下拉选项
  */
 async function getRoleSelectOptions() {
-  return requestClient.post<SelectOptionItem[]>('/v1/select-option/sys/role');
+  return requestClient.post<SelectOptionItem[]>(`${API_PATH}/sys/role`);
 }
 
 /** 部门下拉选项项（后端按 parentId=0 或缺失视为根） */
@@ -29,7 +31,7 @@ export interface DeptSelectOptionItem {
  */
 async function getDeptSelectOptions() {
   return requestClient.post<DeptSelectOptionItem[]>(
-    '/v1/select-option/sys/dept',
+    `${API_PATH}/sys/dept`,
   );
 }
 
@@ -39,7 +41,7 @@ async function getDeptSelectOptions() {
  */
 async function getFileStorageSelectOptions() {
   return requestClient.post<SelectOptionItem[]>(
-    '/v1/select-option/file/storage',
+    `${API_PATH}/file/storage`,
   );
 }
 
@@ -49,7 +51,7 @@ async function getFileStorageSelectOptions() {
  */
 async function getTenantPackageSelectOptions() {
   return requestClient.post<SelectOptionItem[]>(
-    '/v1/select-option/tenant/package',
+    `${API_PATH}/tenant/package`,
   );
 }
 

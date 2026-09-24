@@ -50,12 +50,13 @@ export namespace FileMetaApi {
   }
 }
 
+const API_PATH = '/v1/file/meta';
 /**
  * 分页查询
  */
 async function getFileMetaList(data: FileMetaApi.ListQuery) {
   return requestClient.post<PageResult<FileMetaApi.FileMetaDTO>>(
-    '/v1/file/file/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -65,7 +66,7 @@ async function getFileMetaList(data: FileMetaApi.ListQuery) {
  * @param id ID
  */
 async function getFileMetaDetail(id: string) {
-  return requestClient.post<FileMetaApi.FileMetaDTO>('/v1/file/file/detail', {
+  return requestClient.post<FileMetaApi.FileMetaDTO>(`${API_PATH}/detail`, {
     id,
   });
 }
@@ -75,7 +76,7 @@ async function getFileMetaDetail(id: string) {
  * @param id 文件ID
  */
 async function deleteFileMeta(id: string) {
-  return requestClient.post('/v1/file/file/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 export { deleteFileMeta, getFileMetaDetail, getFileMetaList };

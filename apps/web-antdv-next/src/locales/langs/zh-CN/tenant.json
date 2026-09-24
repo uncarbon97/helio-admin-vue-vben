@@ -40,5 +40,16 @@
     "status": "状态",
     "statusChangeConfirm": "确定{0} {1} 吗？",
     "title": "租户套餐"
+  },
+  "switch": {
+    "currentTag": "当前",
+    "currentView": "当前视角：",
+    "exit": "退出切换",
+    "exitSuccessTitle": "已退出切换，回到默认视角",
+    "platformView": "平台视角",
+    "searchPlaceholder": "搜索租户名称 / 编码",
+    "switchSuccessTitle": "切换租户成功",
+    "switched": "已切换",
+    "title": "切换租户"
   }
 }

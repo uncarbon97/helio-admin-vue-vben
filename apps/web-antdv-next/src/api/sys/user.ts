@@ -85,12 +85,14 @@ export namespace SysUserApi {
   }
 }
 
+const API_PATH = '/v1/sys/user';
+
 /**
  * 分页查询
  */
 async function getUserList(data: SysUserApi.ListQuery) {
   return requestClient.post<PageResult<SysUserApi.SysUserDTO>>(
-    '/v1/sys/user/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -100,7 +102,7 @@ async function getUserList(data: SysUserApi.ListQuery) {
  * @param id 用户ID
  */
 async function getUserDetail(id: string) {
-  return requestClient.post<SysUserApi.SysUserDTO>('/v1/sys/user/detail', {
+  return requestClient.post<SysUserApi.SysUserDTO>(`${API_PATH}/detail`, {
     id,
   });
 }
@@ -110,7 +112,7 @@ async function getUserDetail(id: string) {
  * @param request 请求表单
  */
 async function createUser(request: SysUserApi.CreateRequest) {
-  return requestClient.post('/v1/sys/user/create', request);
+  return requestClient.post(`${API_PATH}/create`, request);
 }
 
 /**
@@ -118,7 +120,7 @@ async function createUser(request: SysUserApi.CreateRequest) {
  * @param request 请求表单
  */
 async function updateUser(request: SysUserApi.UpdateRequest) {
-  return requestClient.post('/v1/sys/user/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -126,7 +128,7 @@ async function updateUser(request: SysUserApi.UpdateRequest) {
  * @param id 用户ID
  */
 async function deleteUser(id: string) {
-  return requestClient.post('/v1/sys/user/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 /**
@@ -138,7 +140,7 @@ async function setUserStatus(
   id: string,
   newStatus: EnabledStatusEnumValue,
 ) {
-  return requestClient.post('/v1/sys/user/set-status', {
+  return requestClient.post(`${API_PATH}/set-status`, {
     id,
     newStatus,
   });
@@ -155,7 +157,7 @@ async function resetUserPassword(
   randomPassword: string,
   mustChangePassword: YesOrNoEnumValue,
 ) {
-  return requestClient.post('/v1/sys/user/reset-password', {
+  return requestClient.post(`${API_PATH}/reset-password`, {
     mustChangePassword,
     randomPassword,
     userId,
@@ -167,7 +169,7 @@ async function resetUserPassword(
  * @param userId 用户ID
  */
 async function listRelatedRole(userId: string) {
-  return requestClient.post<string[]>('/v1/sys/user/list-related-role', {
+  return requestClient.post<string[]>(`${API_PATH}/list-related-role`, {
     id: userId,
   });
 }
@@ -178,7 +180,7 @@ async function listRelatedRole(userId: string) {
  * @param roleIds 角色IDs；为空则解除所有绑定
  */
 async function bindUserRole(userId: string, roleIds: string[]) {
-  return requestClient.post('/v1/sys/user/bind-role', {
+  return requestClient.post(`${API_PATH}/bind-role`, {
     roleIds,
     userId,
   });
@@ -190,7 +192,7 @@ async function bindUserRole(userId: string, roleIds: string[]) {
  * @param deptId 部门ID；传 null 解除绑定
  */
 async function bindUserDept(userId: string, deptId: null | string) {
-  return requestClient.post('/v1/sys/user/bind-dept', {
+  return requestClient.post(`${API_PATH}/bind-dept`, {
     deptId,
     userId,
   });
@@ -201,7 +203,7 @@ async function bindUserDept(userId: string, deptId: null | string) {
  * @param id 用户ID
  */
 async function kickOutUser(id: string) {
-  return requestClient.post('/v1/sys/user/kick-out', { id });
+  return requestClient.post(`${API_PATH}/kick-out`, { id });
 }
 
 export {

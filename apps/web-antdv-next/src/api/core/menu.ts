@@ -20,8 +20,12 @@ export namespace MenuApi {
     sort?: number;
     /** 0=禁用, 1=启用 */
     status?: 0 | 1;
+    /** 1=通用, 2=仅超级管理员 */
+    visibleScope?: MenuVisibleScope;
   }
 }
+
+const API_PATH = '/v1/sys/menu';
 
 // helium customization: 菜单类型枚举值（与后端 MenuTypeEnum 一致）
 export const MenuTypeEnum = {
@@ -31,9 +35,22 @@ export const MenuTypeEnum = {
   EXTERNAL_LINK: 3,
 } as const;
 
+// helium customization: 菜单可见范围枚举值（与后端 MenuVisibleScopeEnum 一致）
+export const MenuVisibleScopeEnum = {
+  /** 通用 */
+  ALL: 1,
+  /** 仅超级管理员 */
+  SUPER_ADMIN_ONLY: 2,
+} as const;
+
+export type MenuVisibleScope =
+  (typeof MenuVisibleScopeEnum)[keyof typeof MenuVisibleScopeEnum];
+
 /** 树构建过程中的临时节点，附带原菜单 id/parentId/排序用于组装树 */
-interface TreeNode
-  extends Omit<RouteRecordStringComponent, 'children' | 'component'> {
+interface TreeNode extends Omit<
+  RouteRecordStringComponent,
+  'children' | 'component'
+> {
   _id: string;
   _parentId: string;
   _sort: number;
@@ -46,7 +63,7 @@ interface TreeNode
  */
 export async function getAllMenusApi() {
   const list =
-    await requestClient.post<MenuApi.SysMenuDTO[]>('/v1/sys/menu/side');
+    await requestClient.post<MenuApi.SysMenuDTO[]>(`${API_PATH}/side`);
   return transformMenus(list ?? []);
 }
 

@@ -55,12 +55,14 @@ export namespace SysRoleApi {
   }
 }
 
+const API_PATH = '/v1/sys/role';
+
 /**
  * 分页查询
  */
 async function getRoleList(data: SysRoleApi.ListQuery) {
   return requestClient.post<PageResult<SysRoleApi.SysRoleDTO>>(
-    '/v1/sys/role/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -70,7 +72,7 @@ async function getRoleList(data: SysRoleApi.ListQuery) {
  * @param id ID
  */
 async function getRoleDetail(id: string) {
-  return requestClient.post<SysRoleApi.SysRoleDTO>('/v1/sys/role/detail', {
+  return requestClient.post<SysRoleApi.SysRoleDTO>(`${API_PATH}/detail`, {
     id,
   });
 }
@@ -81,7 +83,7 @@ async function getRoleDetail(id: string) {
  * @returns 新记录ID
  */
 async function createRole(request: SysRoleApi.UpsertRequest) {
-  return requestClient.post<string>('/v1/sys/role/create', request);
+  return requestClient.post<string>(`${API_PATH}/create`, request);
 }
 
 /**
@@ -89,7 +91,7 @@ async function createRole(request: SysRoleApi.UpsertRequest) {
  * @param request 请求表单
  */
 async function updateRole(request: SysRoleApi.UpsertRequest) {
-  return requestClient.post('/v1/sys/role/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -97,7 +99,7 @@ async function updateRole(request: SysRoleApi.UpsertRequest) {
  * @param id 角色ID
  */
 async function deleteRole(id: string) {
-  return requestClient.post('/v1/sys/role/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 /**
@@ -106,7 +108,7 @@ async function deleteRole(id: string) {
  * @param menuIds 菜单IDs；为空则解除所有绑定
  */
 async function bindRoleMenu(roleId: string, menuIds: string[]) {
-  return requestClient.post('/v1/sys/role/bind-menu', { menuIds, roleId });
+  return requestClient.post(`${API_PATH}/bind-menu`, { menuIds, roleId });
 }
 
 /**
@@ -115,7 +117,7 @@ async function bindRoleMenu(roleId: string, menuIds: string[]) {
  */
 async function listRelatedUser(data: SysRoleApi.ListRelatedUserQuery) {
   return requestClient.post<PageResult<SysUserApi.SysUserDTO>>(
-    '/v1/sys/role/list-related-user',
+    `${API_PATH}/list-related-user`,
     data,
   );
 }
@@ -125,7 +127,7 @@ async function listRelatedUser(data: SysRoleApi.ListRelatedUserQuery) {
  * @param id 角色ID
  */
 async function listRelatedUserId(id: string) {
-  return requestClient.post<string[]>('/v1/sys/role/list-related-user-id', {
+  return requestClient.post<string[]>(`${API_PATH}/list-related-user-id`, {
     id,
   });
 }
@@ -139,7 +141,7 @@ async function setRoleStatus(
   id: string,
   newStatus: EnabledStatusEnumValue,
 ) {
-  return requestClient.post('/v1/sys/role/set-status', {
+  return requestClient.post(`${API_PATH}/set-status`, {
     id,
     newStatus,
   });

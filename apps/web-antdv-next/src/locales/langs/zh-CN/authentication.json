@@ -1,3 +1,5 @@
 {
-  "captchaRefresh": "点击刷新"
+  "captchaRefresh": "点击刷新",
+  "tenantCode": "租户编码",
+  "tenantCodeTip": "请输入租户编码"
 }

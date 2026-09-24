@@ -64,6 +64,7 @@
 - `apps/web-antdv-next/src/api/core/user.ts` — 新增 `getMyProfileApi` / `updateMyProfileApi` / `uploadFileApi` / `updateMyAvatarApi`（对接 `AdminUCenterController`）（2026-09-19）
 - `apps/web-antdv-next/src/api/core/auth.ts` — 新增 `LoginChallenge` 类型与 `getLoginChallengeApi`（`POST /v1/auth/challenge`，对接后端登录验证码挑战）（2026-09-19）
 - `apps/web-antdv-next/src/preferences.ts` — 默认头像与 LOGO 改本地资源 `/images/avatar.svg`、`/images/logo.svg`（上游为 unpkg CDN 外链，离线内网不可用）（2026-09-19）
+- `apps/web-antdv-next/index.html` — 移除生产环境下注入百度统计（`hm.baidu.com`）的脚本块（离线内网不可达）（2026-09-24）
 
 > 修改的文件中，相对源项目改动的位置会在上方添加注释 `// helium customization: <说明>`（配置文件用对应注释语法），方便与上游比较。
 

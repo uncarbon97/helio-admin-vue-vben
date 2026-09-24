@@ -6,6 +6,8 @@ import { preferences } from '@vben/preferences';
 
 import { requestClient } from '#/api/request';
 
+const API_PATH = '/v1/ucenter';
+
 // helium customization: 用户资料对接真实后端，并映射为前端 UserInfo
 export interface MyProfileDTO {
   pin: string;
@@ -22,7 +24,7 @@ export interface MyProfileDTO {
  * 取当前用户资料（原始 DTO）
  */
 export function getMyProfileApi() {
-  return requestClient.post<MyProfileDTO>('/v1/ucenter/profile/get');
+  return requestClient.post<MyProfileDTO>(`${API_PATH}/profile/get`);
 }
 
 /**
@@ -51,7 +53,7 @@ export function updateMyPasswordApi(data: {
   neo: string;
   old: string;
 }) {
-  return requestClient.post('/v1/ucenter/password/update', data);
+  return requestClient.post(`${API_PATH}/password/update`, data);
 }
 
 /**
@@ -63,7 +65,7 @@ export function updateMyProfileApi(data: {
   nickname: string;
   phoneNo: string;
 }) {
-  return requestClient.post('/v1/ucenter/profile/update', data);
+  return requestClient.post(`${API_PATH}/profile/update`, data);
 }
 
 // helium customization: 头像上传走通用文件上传接口，再把结果提交给用户中心
@@ -89,5 +91,5 @@ export function uploadFileApi(file: File) {
  * 修改当前用户头像（需先上传文件拿到 FileUploadResultVO）
  */
 export function updateMyAvatarApi(data: FileUploadResultVO) {
-  return requestClient.post('/v1/ucenter/avatar/update', data);
+  return requestClient.post(`${API_PATH}/avatar/update`, data);
 }

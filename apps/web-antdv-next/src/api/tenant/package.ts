@@ -45,12 +45,14 @@ export namespace TenantPackageApi {
   }
 }
 
+const API_PATH = '/v1/tenant/package';
+
 /**
  * 分页查询
  */
 async function getTenantPackageList(data: TenantPackageApi.ListQuery) {
   return requestClient.post<PageResult<TenantPackageApi.TenantPackageDTO>>(
-    '/v1/tenant/package/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -61,7 +63,7 @@ async function getTenantPackageList(data: TenantPackageApi.ListQuery) {
  */
 async function getTenantPackageDetail(id: string) {
   return requestClient.post<TenantPackageApi.TenantPackageDTO>(
-    '/v1/tenant/package/detail',
+    `${API_PATH}/detail`,
     { id },
   );
 }
@@ -71,7 +73,7 @@ async function getTenantPackageDetail(id: string) {
  * @param request 请求表单
  */
 async function createTenantPackage(request: TenantPackageApi.UpsertRequest) {
-  return requestClient.post('/v1/tenant/package/create', request);
+  return requestClient.post(`${API_PATH}/create`, request);
 }
 
 /**
@@ -79,7 +81,7 @@ async function createTenantPackage(request: TenantPackageApi.UpsertRequest) {
  * @param request 请求表单
  */
 async function updateTenantPackage(request: TenantPackageApi.UpsertRequest) {
-  return requestClient.post('/v1/tenant/package/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -91,7 +93,7 @@ async function setTenantPackageStatus(
   id: string,
   newStatus: EnabledStatusEnumValue,
 ) {
-  return requestClient.post('/v1/tenant/package/set-status', {
+  return requestClient.post(`${API_PATH}/set-status`, {
     id,
     newStatus,
   });
@@ -102,7 +104,7 @@ async function setTenantPackageStatus(
  * @param id 套餐ID
  */
 async function deleteTenantPackage(id: string) {
-  return requestClient.post('/v1/tenant/package/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 /**
@@ -111,7 +113,7 @@ async function deleteTenantPackage(id: string) {
  * @param menuIds 菜单IDs；为空则解除所有绑定
  */
 async function bindTenantPackageMenu(id: string, menuIds: string[]) {
-  return requestClient.post('/v1/tenant/package/bind-menu', {
+  return requestClient.post(`${API_PATH}/bind-menu`, {
     id,
     menuIds,
   });

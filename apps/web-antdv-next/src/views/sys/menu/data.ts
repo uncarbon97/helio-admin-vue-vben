@@ -7,7 +7,7 @@ import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { listIcons } from '@vben/icons';
 
-import { MenuTypeEnum } from '#/api';
+import { MenuTypeEnum, MenuVisibleScopeEnum } from '#/api';
 import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 
@@ -18,11 +18,23 @@ export interface ParentTreeOption {
   name: string;
 }
 
-/** 菜单类型 → 标签/颜色映射（后端枚举按整数序列化） */
+/** 菜单类型 → 标签/颜色映射 */
 const MENU_TYPE_TAG_OPTIONS = [
-  { color: 'processing', label: $t('sys.menu.typeDir'), value: MenuTypeEnum.DIR },
-  { color: 'success', label: $t('sys.menu.typeMenu'), value: MenuTypeEnum.MENU },
-  { color: 'warning', label: $t('sys.menu.typeButton'), value: MenuTypeEnum.BUTTON },
+  {
+    color: 'processing',
+    label: $t('sys.menu.typeDir'),
+    value: MenuTypeEnum.DIR,
+  },
+  {
+    color: 'success',
+    label: $t('sys.menu.typeMenu'),
+    value: MenuTypeEnum.MENU,
+  },
+  {
+    color: 'warning',
+    label: $t('sys.menu.typeButton'),
+    value: MenuTypeEnum.BUTTON,
+  },
   {
     color: 'error',
     label: $t('sys.menu.typeExternalLink'),
@@ -34,6 +46,18 @@ const MENU_TYPE_TAG_OPTIONS = [
 const MENU_TYPE_RADIO_OPTIONS = MENU_TYPE_TAG_OPTIONS.map(
   ({ label, value }) => ({ label, value }),
 );
+
+/** 菜单可见范围单选项（后端枚举按整数序列化） */
+const VISIBLE_SCOPE_RADIO_OPTIONS = [
+  {
+    label: $t('sys.menu.visibleScopeAll'),
+    value: MenuVisibleScopeEnum.ALL,
+  },
+  {
+    label: $t('sys.menu.visibleScopeSuperAdminOnly'),
+    value: MenuVisibleScopeEnum.SUPER_ADMIN_ONLY,
+  },
+];
 
 /**
  * 表格列
@@ -131,7 +155,7 @@ export function useColumns<T = MenuApi.SysMenuDTO>(
       },
       field: 'operation',
       fixed: 'right',
-     // 关闭溢出 tooltip
+      // 关闭溢出 tooltip
       showOverflow: false,
       title: $t('sys.menu.operation'),
       width: 200,
@@ -263,6 +287,16 @@ export function useFormSchema(
       defaultValue: EnabledStatusEnum.ENABLED,
       fieldName: 'status',
       label: $t('sys.menu.status'),
+    },
+    {
+      component: 'RadioGroup',
+      componentProps: {
+        options: VISIBLE_SCOPE_RADIO_OPTIONS,
+      },
+      defaultValue: MenuVisibleScopeEnum.ALL,
+      help: $t('sys.menu.visibleScopeTip'),
+      fieldName: 'visibleScope',
+      label: $t('sys.menu.visibleScope'),
     },
   ];
 }

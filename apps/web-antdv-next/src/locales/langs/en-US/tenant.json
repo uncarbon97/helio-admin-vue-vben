@@ -40,5 +40,16 @@
     "menuCol": "Menu",
     "permCol": "Permission",
     "statusChangeConfirm": "Are you sure you want to {0} {1}?"
+  },
+  "switch": {
+    "currentTag": "Current",
+    "currentView": "Current view:",
+    "exit": "Exit Switch",
+    "exitSuccessTitle": "Exited tenant switch, back to default view",
+    "platformView": "Platform View",
+    "searchPlaceholder": "Search tenant name / code",
+    "switchSuccessTitle": "Tenant switched",
+    "switched": "Switched",
+    "title": "Switch Tenant"
   }
 }

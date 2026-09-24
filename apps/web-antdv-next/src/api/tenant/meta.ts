@@ -1,4 +1,8 @@
-import type { EnabledStatusEnumValue, PageParam, PageResult } from '#/api/common';
+import type {
+  EnabledStatusEnumValue,
+  PageParam,
+  PageResult,
+} from '#/api/common';
 
 import { requestClient } from '#/api/request';
 
@@ -75,12 +79,14 @@ export namespace TenantMetaApi {
   }
 }
 
+const API_PATH = '/v1/tenant/meta';
+
 /**
  * 分页查询
  */
 async function getTenantMetaList(data: TenantMetaApi.ListQuery) {
   return requestClient.post<PageResult<TenantMetaApi.TenantMetaDTO>>(
-    '/v1/tenant/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -90,9 +96,12 @@ async function getTenantMetaList(data: TenantMetaApi.ListQuery) {
  * @param id ID
  */
 async function getTenantMetaDetail(id: string) {
-  return requestClient.post<TenantMetaApi.TenantMetaDTO>('/v1/tenant/detail', {
-    id,
-  });
+  return requestClient.post<TenantMetaApi.TenantMetaDTO>(
+    `${API_PATH}/detail`,
+    {
+      id,
+    },
+  );
 }
 
 /**
@@ -100,7 +109,7 @@ async function getTenantMetaDetail(id: string) {
  * @param request 请求表单
  */
 async function createTenant(request: TenantMetaApi.CreateRequest) {
-  return requestClient.post('/v1/tenant/create', request);
+  return requestClient.post(`${API_PATH}/create`, request);
 }
 
 /**
@@ -108,7 +117,7 @@ async function createTenant(request: TenantMetaApi.CreateRequest) {
  * @param request 请求表单
  */
 async function updateTenant(request: TenantMetaApi.UpdateRequest) {
-  return requestClient.post('/v1/tenant/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -117,7 +126,7 @@ async function updateTenant(request: TenantMetaApi.UpdateRequest) {
  * @param newStatus 新状态
  */
 async function setTenantStatus(id: string, newStatus: EnabledStatusEnumValue) {
-  return requestClient.post('/v1/tenant/set-status', {
+  return requestClient.post(`${API_PATH}/set-status`, {
     id,
     newStatus,
   });
@@ -128,7 +137,7 @@ async function setTenantStatus(id: string, newStatus: EnabledStatusEnumValue) {
  * @param id 租户ID
  */
 async function deleteTenant(id: string) {
-  return requestClient.post('/v1/tenant/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 export {

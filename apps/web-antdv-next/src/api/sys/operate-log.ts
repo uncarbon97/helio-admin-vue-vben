@@ -1,8 +1,8 @@
+import type { LogResultStatusEnumValue } from './login-log';
+
 import type { PageParam, PageResult } from '#/api/common';
 
 import { requestClient } from '#/api/request';
-
-import type { LogResultStatusEnumValue } from './login-log';
 
 export namespace SysOperateLogApi {
   /** 列表查询条件 */
@@ -64,12 +64,14 @@ export namespace SysOperateLogApi {
   }
 }
 
+const API_PATH = '/v1/sys/operate-log';
+
 /**
  * 分页查询
  */
 async function getOperateLogList(data: SysOperateLogApi.ListQuery) {
   return requestClient.post<PageResult<SysOperateLogApi.SysOperateLogDTO>>(
-    '/v1/sys/operate-log/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -80,7 +82,7 @@ async function getOperateLogList(data: SysOperateLogApi.ListQuery) {
  */
 async function getOperateLogDetail(id: string) {
   return requestClient.post<SysOperateLogApi.SysOperateLogDTO>(
-    '/v1/sys/operate-log/detail',
+    `${API_PATH}/detail`,
     { id },
   );
 }

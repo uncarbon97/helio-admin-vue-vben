@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
+import type { Recordable } from '@vben/types';
 
 import type { AuthApi } from '#/api';
 
@@ -9,7 +10,7 @@ import { AuthenticationLogin, z } from '@vben/common-ui';
 import { createIconifyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
 
-import { getLoginChallengeApi } from '#/api';
+import { getLoginChallengeApi, getTenantUIConfigApi } from '#/api';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
@@ -33,6 +34,13 @@ const hasOcrChallenge = computed(
 // helium customization: 验证码有效期倒计时 —— 按 validSeconds 计时，超时后覆盖蒙层，需手动点击刷新
 const captchaExpired = ref(false);
 let captchaTimer: ReturnType<typeof setTimeout> | undefined;
+
+// helium customization: 租户相关UI配置 —— 由后端下发（多租户启用且 TENANT_FIRST 模式时显示租户编码输入框），禁止前端硬编码开关
+const tenantUIConfig = ref<AuthApi.LoginTenantUIConfig>();
+
+const showTenantCodeInput = computed(
+  () => tenantUIConfig.value?.showTenantCodeInputFlag === true,
+);
 
 function clearCaptchaTimer() {
   if (captchaTimer) {
@@ -61,7 +69,21 @@ onBeforeUnmount(clearCaptchaTimer);
 // helium customization: 移除上游 mock 账号下拉选择器（MOCK_USER_OPTIONS）及其自动填充逻辑，仅保留账号/密码表单；
 // 移除上游滑块拖动组件，改用后端图形验证码挑战
 const formSchema = computed((): VbenFormSchema[] => {
-  const schemas: VbenFormSchema[] = [
+  const schemas: VbenFormSchema[] = [];
+
+  // helium customization: 后端下发开关控制是否显示租户编码输入框（登录时随表单提交 tenantCode）
+  if (showTenantCodeInput.value) {
+    schemas.push({
+      component: 'VbenInput',
+      componentProps: {
+        placeholder: $t('authentication.tenantCodeTip'),
+      },
+      fieldName: 'tenantCode',
+      label: $t('authentication.tenantCode'),
+    });
+  }
+
+  schemas.push(
     {
       component: 'VbenInput',
       componentProps: {
@@ -80,7 +102,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.password'),
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
-  ];
+  );
 
   if (hasOcrChallenge.value) {
     schemas.push({
@@ -134,6 +156,12 @@ async function handleSubmit(values: Recordable<any>) {
 
 onMounted(() => {
   refreshChallenge();
+  // helium customization: 拉取租户相关UI配置，决定是否渲染租户编码输入框（失败不阻塞登录）
+  getTenantUIConfigApi()
+    .then((config) => {
+      tenantUIConfig.value = config;
+    })
+    .catch(() => {});
 });
 </script>
 

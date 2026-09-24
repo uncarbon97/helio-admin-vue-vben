@@ -87,12 +87,14 @@ export namespace FileStorageApi {
   }
 }
 
+const API_PATH = '/v1/file/storage';
+
 /**
  * 分页查询
  */
 async function getFileStorageList(data: FileStorageApi.ListQuery) {
   return requestClient.post<PageResult<FileStorageApi.FileStorageDTO>>(
-    '/v1/file/storage/list',
+    `${API_PATH}/list`,
     data,
   );
 }
@@ -103,7 +105,7 @@ async function getFileStorageList(data: FileStorageApi.ListQuery) {
  */
 async function getFileStorageDetail(id: string) {
   return requestClient.post<FileStorageApi.FileStorageDTO>(
-    '/v1/file/storage/detail',
+    `${API_PATH}/detail`,
     { id },
   );
 }
@@ -113,7 +115,7 @@ async function getFileStorageDetail(id: string) {
  * @param request 请求表单
  */
 async function createFileStorage(request: FileStorageApi.UpsertRequest) {
-  return requestClient.post('/v1/file/storage/create', request);
+  return requestClient.post(`${API_PATH}/create`, request);
 }
 
 /**
@@ -121,7 +123,7 @@ async function createFileStorage(request: FileStorageApi.UpsertRequest) {
  * @param request 请求表单
  */
 async function updateFileStorage(request: FileStorageApi.UpsertRequest) {
-  return requestClient.post('/v1/file/storage/update', request);
+  return requestClient.post(`${API_PATH}/update`, request);
 }
 
 /**
@@ -129,7 +131,7 @@ async function updateFileStorage(request: FileStorageApi.UpsertRequest) {
  * @param id 存储点ID
  */
 async function deleteFileStorage(id: string) {
-  return requestClient.post('/v1/file/storage/delete', { id });
+  return requestClient.post(`${API_PATH}/delete`, { id });
 }
 
 /**
@@ -138,7 +140,7 @@ async function deleteFileStorage(id: string) {
  */
 async function testFileStorage(id: string) {
   return requestClient.post<FileStorageApi.TestUploadResult>(
-    '/v1/file/storage/test-upload',
+    `${API_PATH}/test-upload`,
     { id },
   );
 }

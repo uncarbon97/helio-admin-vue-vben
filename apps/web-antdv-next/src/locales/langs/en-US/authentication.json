@@ -1,3 +1,5 @@
 {
-  "captchaRefresh": "Click to refresh"
+  "captchaRefresh": "Click to refresh",
+  "tenantCode": "Tenant Code",
+  "tenantCodeTip": "Enter the tenant code"
 }
