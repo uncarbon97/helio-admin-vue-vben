@@ -14,9 +14,7 @@ import { useTenantStore } from '#/store';
 
 defineOptions({ name: 'TenantSwitch' });
 
-// helium customization: 离线图标集（ant-design）内的切换图标，内网可用
 const TenantSwitchIcon = createIconifyIcon('ant-design:swap-outlined');
-
 const accessStore = useAccessStore();
 const tenantStore = useTenantStore();
 
@@ -27,11 +25,11 @@ const selectedCode = ref<string | undefined>();
 /** 切换/退出切换请求进行中 */
 const switching = ref(false);
 
-// 当前视角展示名：平台视角或无租户名称时显示“平台视角”
+// 当前视角展示名：平台视角或无租户名称时显示“切换租户”
 const currentLabel = computed(() => {
   const context = tenantStore.current;
   if (!context || context.firstPartyView || !context.tenantName) {
-    return $t('tenant.switch.platformView');
+    return $t('tenant.switch.switchTenant');
   }
   return context.tenantName;
 });

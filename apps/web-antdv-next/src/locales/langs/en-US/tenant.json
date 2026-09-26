@@ -46,7 +46,7 @@
     "currentView": "Current view:",
     "exit": "Exit Switch",
     "exitSuccessTitle": "Exited tenant switch, back to default view",
-    "platformView": "Platform View",
+    "switchTenant": "Switch Tenant",
     "searchPlaceholder": "Search tenant name / code",
     "switchSuccessTitle": "Tenant switched",
     "switched": "Switched",

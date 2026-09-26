@@ -100,9 +100,11 @@ watch(
       />
     </template>
     <!-- helium customization: 移除右上角消息通知（上游 mock 数据，无后端对接） -->
-    <!-- helium customization: 头像左侧增加租户切换入口（slot 序号 999，位于内置组件之后、头像之前） -->
-    <template #header-right-999>
-      <TenantSwitch />
+    <!-- helium customization: 头像左侧增加租户切换入口（slot 序号 99，位于内置组件之前、菜单搜索框左边） -->
+    <template #header-right-99>
+      <div class="mr-4">
+        <TenantSwitch />
+      </div>
     </template>
     <template #extra>
       <AuthenticationLoginExpiredModal
