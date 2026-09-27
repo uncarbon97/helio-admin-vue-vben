@@ -11,7 +11,7 @@ import { GenderEnum, YesOrNoEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 /**
- * 上方查询条件（swagger 仅支持手机号关键词，部门由左侧树联动）
+ * 上方查询条件
  */
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
@@ -106,6 +106,7 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
     },
     {
       field: 'lastLoginAt',
+      formatter: 'formatDateTime',
       title: $t('sys.user.lastLoginAt'),
       width: 180,
     },
@@ -146,7 +147,7 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
 
 /**
  * 新增/修改表单
- * @param deptOptions 部门树选项（响应式）
+ * @param deptOptions 部门树选项
  */
 export function useFormSchema(
   deptOptions: Ref<ParentTreeOption[]>,

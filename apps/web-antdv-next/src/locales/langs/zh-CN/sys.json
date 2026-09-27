@@ -1,8 +1,10 @@
 {
   "dept": {
+    "collapse": "折叠",
     "createChild": "新增下级",
     "createTime": "创建时间",
     "deptName": "部门名称",
+    "expand": "展开",
     "name": "部门",
     "operation": "操作",
     "parentId": "上级部门",

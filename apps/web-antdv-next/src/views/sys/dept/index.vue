@@ -9,7 +9,7 @@ import type { EnabledStatusEnumValue } from '#/api/common';
 import { computed, ref } from 'vue';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
-import { Plus } from '@vben/icons';
+import { IconifyIcon, Plus } from '@vben/icons';
 
 import { Button, Empty, Input, message, Radio, RadioGroup } from 'antdv-next';
 import { Vue3TreeOrg } from 'vue3-tree-org';
@@ -49,6 +49,8 @@ const orgRoot = computed<null | SysDeptApi.DeptTreeNode>(() => {
 
 // 部门名称本地搜索关键词 + 全量树缓存（纯前端过滤，不发请求）
 const searchName = ref('');
+// 树是否整体展开（默认折叠，由「展开/折叠」按钮控制）
+const expanded = ref(false);
 let cachedTree: SysDeptApi.DeptTreeNode[] = [];
 
 /** 按名称过滤树：命中节点保留整棵子树，未命中但子孙命中的保留并继续下钻 */
@@ -72,19 +74,12 @@ function filterTree(
   return result;
 }
 
-/** 收集需要展开的父节点：搜索时全部展开，默认展开 1、2 级节点 */
-function collectExpandNodes(
-  nodes: SysDeptApi.DeptTreeNode[],
-  maxDepth = Number.MAX_SAFE_INTEGER,
-  depth = 1,
-): SysDeptApi.DeptTreeNode[] {
+/** 收集全部含子节点的树节点（整体展开用） */
+function collectExpandNodes(nodes: SysDeptApi.DeptTreeNode[]): SysDeptApi.DeptTreeNode[] {
   const result: SysDeptApi.DeptTreeNode[] = [];
   nodes.forEach((node) => {
-    if (depth <= maxDepth && node.children?.length) {
-      result.push(
-        node,
-        ...collectExpandNodes(node.children, maxDepth, depth + 1),
-      );
+    if (node.children?.length) {
+      result.push(node, ...collectExpandNodes(node.children));
     }
   });
   return result;
@@ -117,13 +112,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
           cachedTree = buildDeptTree(await getDeptList());
           // 同步响应式树数据，供组织架构图视图渲染
           treeData.value = cachedTree;
-          // 搜索时展开全部，否则默认展开到 3 级
+          // 刷新后恢复展开状态：搜索命中或已点「展开」时全部展开，否则保持折叠
           gridApi.setGridOptions({
             treeConfig: {
-              expandRowKeys: collectExpandNodes(
-                cachedTree,
-                searchName.value.trim() ? undefined : 2,
-              ).map((node) => node.id),
+              expandRowKeys:
+                searchName.value.trim() || expanded.value
+                  ? collectExpandNodes(cachedTree).map((node) => node.id)
+                  : [],
             },
           });
           return { records: applySearch(cachedTree) };
@@ -220,10 +215,15 @@ async function onSearch() {
   const keyword = searchName.value.trim();
   const grid = gridApi.grid;
   await grid.reloadData(applySearch(cachedTree));
-  // reloadData 后 treeConfig.expandRowKeys 不会重新生效，需显式展开
-  await (keyword
-    ? grid.setAllTreeExpand(true)
-    : grid.setTreeExpand(collectExpandNodes(cachedTree, 2), true));
+  // reloadData 后 treeConfig.expandRowKeys 不会重新生效，需显式展开/折叠
+  // 搜索时全部展开；清空搜索后跟随「展开/折叠」按钮状态
+  await grid.setAllTreeExpand(Boolean(keyword) || expanded.value);
+}
+
+/** 「展开/折叠」按钮：整体展开或折叠全部树节点 */
+async function onToggleExpand() {
+  expanded.value = !expanded.value;
+  await gridApi.grid?.setAllTreeExpand(expanded.value);
 }
 </script>
 <template>
@@ -258,7 +258,7 @@ async function onSearch() {
             children: 'children',
           }"
         />
-        <Empty v-else :description="$t('sys.dept.rootDept')" class="m-auto" />
+        <Empty v-else :description="$t('common.noData')" class="m-auto" />
       </div>
       <Grid v-show="viewType === 'table'" class="min-h-0 flex-1">
         <!-- 表格上方最左侧，部门名称本地搜索框 -->
@@ -275,6 +275,18 @@ async function onSearch() {
           <Button type="primary" @click="onCreate">
             <Plus class="size-5" />
             {{ $t('ui.actionTitle.create') }}
+          </Button>
+          <!-- 展开/折叠整棵部门树（默认折叠） -->
+          <Button class="ml-2" type="primary" ghost @click="onToggleExpand">
+            <IconifyIcon
+              :icon="
+                expanded
+                  ? 'ant-design:vertical-align-top-outlined'
+                  : 'ant-design:partition-outlined'
+              "
+              class="mr-1 size-4"
+            />
+            {{ expanded ? $t('sys.dept.collapse') : $t('sys.dept.expand') }}
           </Button>
         </template>
       </Grid>

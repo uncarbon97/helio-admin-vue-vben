@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { SysDeptApi } from '#/api';
-
 import type { ParentTreeOption } from '../data';
+
+import type { SysDeptApi } from '#/api';
 
 import { computed, ref } from 'vue';
 

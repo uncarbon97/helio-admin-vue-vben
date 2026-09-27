@@ -42,6 +42,8 @@
     "operation": "Operation",
     "createChild": "Add Child",
     "searchPlaceholder": "Search by dept name",
+    "expand": "Expand",
+    "collapse": "Collapse",
     "viewTable": "List view",
     "viewTree": "Org chart"
   },

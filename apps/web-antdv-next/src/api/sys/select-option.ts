@@ -15,8 +15,12 @@ export interface SelectOptionItem {
 /**
  * 查询角色下拉选项
  */
+// helium customization: 角色下拉后端实际返回 {id, name}，此处适配为通用 value/label 结构
 async function getRoleSelectOptions() {
-  return requestClient.post<SelectOptionItem[]>(`${API_PATH}/sys/role`);
+  const list = await requestClient.post<
+    Array<{ id: string; name: string }>
+  >(`${API_PATH}/sys/role`);
+  return list.map((item) => ({ label: item.name, value: item.id }));
 }
 
 /** 部门下拉选项项（后端按 parentId=0 或缺失视为根） */
