@@ -29,7 +29,8 @@ const menus = computed(() => [
     handler: () => {
       router.push({ name: 'Profile' });
     },
-    icon: 'lucide:user',
+    // helium customization: 离线环境，图标改用本地打包的 ant-design 集
+    icon: 'ant-design:user-outlined',
     text: $t('page.auth.profile'),
   },
 ]);

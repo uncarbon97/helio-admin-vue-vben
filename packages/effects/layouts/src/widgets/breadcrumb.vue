@@ -47,7 +47,8 @@ const breadcrumbs = computed((): IBreadcrumb[] => {
   }
   if (props.showHome) {
     resultBreadcrumb.unshift({
-      icon: 'mdi:home-outline',
+      // helium customization: 离线环境，图标改用本地打包的 ant-design 集
+      icon: 'ant-design:home-outlined',
       isHome: true,
       path: '/',
     });

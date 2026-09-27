@@ -15,7 +15,8 @@ import {
 
 withDefaults(defineProps<{ showButton?: boolean }>(), { showButton: true });
 
-const TimezoneIcon = createIconifyIcon('fluent-mdl2:world-clock');
+// helium customization: 离线环境，图标改用本地打包的 ant-design 集
+const TimezoneIcon = createIconifyIcon('ant-design:global-outlined');
 
 const timezoneStore = useTimezoneStore();
 

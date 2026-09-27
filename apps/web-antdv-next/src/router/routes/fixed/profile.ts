@@ -9,7 +9,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('#/layouts/basic.vue'),
     meta: {
       hideInMenu: true,
-      icon: 'lucide:user',
+      // helium customization: 离线环境，图标改用本地打包的 ant-design 集
+      icon: 'ant-design:user-outlined',
       title: $t('page.auth.profile'),
     },
     name: 'Profile',

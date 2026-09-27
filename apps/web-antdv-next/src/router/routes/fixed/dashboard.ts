@@ -8,7 +8,8 @@ const routes: RouteRecordRaw[] = [
     // 独立注册于 Root 之外，需自带布局容器
     component: () => import('#/layouts/basic.vue'),
     meta: {
-      icon: 'lucide:layout-dashboard',
+      // helium customization: 离线环境，图标改用本地打包的 ant-design 集（避免运行时请求 api.iconify.design）
+      icon: 'ant-design:dashboard-outlined',
       order: -1,
       title: $t('page.dashboard.title'),
     },
@@ -23,7 +24,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/dashboard/workbench/index.vue'),
         meta: {
           affixTab: false,
-          icon: 'lucide:layout-dashboard',
+          icon: 'ant-design:dashboard-outlined',
           order: 1,
           title: $t('page.dashboard.workbench.title'),
         },

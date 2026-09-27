@@ -139,7 +139,8 @@ const refGlobalSearch = useTemplateRef('refGlobalSearch');
 const refTimezone = useTemplateRef('refTimezone');
 const refNotification = useTemplateRef('refNotification');
 
-const TimezoneIcon = createIconifyIcon('fluent-mdl2:world-clock');
+// helium customization: 离线环境，图标改用本地打包的 ant-design 集
+const TimezoneIcon = createIconifyIcon('ant-design:global-outlined');
 const [openPopover, hoverWatcher] = useHoverToggle(
   [refTrigger, refContent],
   () => props.hoverDelay,
