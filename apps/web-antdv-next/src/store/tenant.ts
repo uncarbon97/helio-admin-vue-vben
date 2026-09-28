@@ -36,7 +36,8 @@ export const useTenantStore = defineStore('tenant', () => {
    * 初始化：拉取当前视角 + 可切换租户列表（失败不阻塞页面，下次进入再试）
    */
   async function init() {
-    if (initialized.value) {
+    // helium customization: 无 token 时（如登出中）不发起请求，避免必然 401
+    if (initialized.value || !accessStore.accessToken) {
       return;
     }
     try {

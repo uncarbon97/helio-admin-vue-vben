@@ -92,10 +92,14 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout(redirect: boolean = true) {
-    try {
-      await logoutApi();
-    } catch {
-      // 不做任何处理
+    // helium customization: 401 触发的 doReAuthenticate 会先清 token 再调 logout；
+    // 无 token 时跳过登出接口，避免 401→logout→401 无限递归
+    if (accessStore.accessToken) {
+      try {
+        await logoutApi();
+      } catch {
+        // 不做任何处理
+      }
     }
     resetAllStores();
     accessStore.setLoginExpired(false);

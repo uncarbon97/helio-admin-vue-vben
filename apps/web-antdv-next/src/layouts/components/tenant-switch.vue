@@ -100,9 +100,13 @@ onMounted(() => {
 });
 
 // 令牌变化（如登录过期后重登）时重置并重拉租户上下文，避免残留其他账号的视角
+// helium customization: token 被清空（登出）时跳过，否则会以无凭证请求 /tenant-switch/* 必然 401
 watch(
   () => accessStore.accessToken,
-  () => {
+  (token) => {
+    if (!token) {
+      return;
+    }
     tenantStore.$reset();
     tenantStore.init();
   },

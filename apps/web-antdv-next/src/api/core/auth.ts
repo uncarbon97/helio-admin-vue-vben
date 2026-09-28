@@ -1,3 +1,5 @@
+import { useAccessStore } from '@vben/stores';
+
 import { baseRequestClient, requestClient } from '#/api/request';
 
 // helium customization: 登录/登出对接真实后端；入参改 pin/pwd（+tenantCode/captcha），返回 token/roles/permissions；移除 refreshTokenApi、getAccessCodesApi
@@ -80,6 +82,11 @@ export async function getTenantUIConfigApi() {
 /**
  * 退出登录
  */
+// helium customization: 登出请求补上 Authorization 头（baseRequestClient 无拦截器，不带头会被后端 401 拒绝）
 export async function logoutApi() {
-  return baseRequestClient.post(`${API_PATH}/logout`);
+  const accessStore = useAccessStore();
+  const token = accessStore.accessToken;
+  return baseRequestClient.post(`${API_PATH}/logout`, undefined, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
 }
