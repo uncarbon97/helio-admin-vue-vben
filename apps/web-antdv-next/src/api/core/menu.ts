@@ -1,26 +1,23 @@
 import type { RouteRecordStringComponent } from '@vben/types';
 
+import type { EnabledStatusEnumValue } from '#/api/common';
+
 import { EnabledStatusEnum } from '#/api/common';
 import { requestClient } from '#/api/request';
 
 export namespace MenuApi {
-  // helium customization: 后端 BaseEnum 按枚举 value 序列化为数字（DIR=0, MENU=1, BUTTON=2, EXTERNAL_LINK=3）
-  export type MenuType = 0 | 1 | 2 | 3;
-
-  /** 后端 SysMenuDTO（侧边菜单精简契约：目录无 component、path 为可读 slug） */
+  /** 后端 SysMenuDTO */
   export interface SysMenuDTO {
     component?: string;
     externalLink?: string;
     icon?: string;
     id: string;
-    menuType: MenuType;
+    menuType: MenuTypeEnumValue;
     name: string;
     parentId: string;
     path: string;
     sort?: number;
-    /** 0=禁用, 1=启用 */
-    status?: 0 | 1;
-    /** 1=通用, 2=仅超级管理员 */
+    status?: EnabledStatusEnumValue;
     visibleScope?: MenuVisibleScope;
   }
 }
@@ -35,18 +32,19 @@ export const MenuTypeEnum = {
   EXTERNAL_LINK: 3,
 } as const;
 
+export type MenuTypeEnumValue =
+  (typeof MenuTypeEnum)[keyof typeof MenuTypeEnum];
+
 // helium customization: 菜单可见范围枚举值（与后端 MenuVisibleScopeEnum 一致）
 export const MenuVisibleScopeEnum = {
-  /** 通用 */
   ALL: 1,
-  /** 仅超级管理员 */
   SUPER_ADMIN_ONLY: 2,
 } as const;
 
 export type MenuVisibleScope =
   (typeof MenuVisibleScopeEnum)[keyof typeof MenuVisibleScopeEnum];
 
-/** 树构建过程中的临时节点，附带原菜单 id/parentId/排序用于组装树 */
+/** 树构建临时节点：附原菜单 id/parentId/排序 */
 interface TreeNode extends Omit<
   RouteRecordStringComponent,
   'children' | 'component'
@@ -58,9 +56,7 @@ interface TreeNode extends Omit<
   component?: string;
 }
 
-/**
- * 获取侧边菜单（后端权限模式），并将扁平 SysMenuDTO 列表转换为路由树
- */
+/** 获取侧边菜单（后端权限模式）并转为路由树 */
 export async function getAllMenusApi() {
   const list =
     await requestClient.post<MenuApi.SysMenuDTO[]>(`${API_PATH}/side`);
@@ -68,13 +64,10 @@ export async function getAllMenusApi() {
 }
 
 /**
- * helium customization: 将后端扁平菜单 DTO 转换为 v5 规范路由树
- *
- * 约定（见 docs/src/guide/in-depth/access.md 后端访问控制示例）：
+ * helium customization: 扁平菜单 DTO 转 v5 规范路由树
  * - BUTTON 仅作权限标识，不生成路由
- * - path 直接使用后端 DTO 的 path（目录为可读 slug，叶子为全路径）
  * - 目录无 component（BasicLayout 由根路由承担）；外链映射 IFrameView
- * - 有子节点时 redirect 到排序首个子节点（叶子 path 为绝对路径，accessible 不会自动生成 redirect）
+ * - 有子节点时 redirect 到排序首个子节点
  */
 function transformMenus(
   list: MenuApi.SysMenuDTO[],

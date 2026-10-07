@@ -2,7 +2,7 @@ import { requestClient } from '#/api/request';
 
 const API_PATH = '/v1/select-option';
 
-/** 通用下拉选项项 */
+/** 通用下拉选项 */
 export interface SelectOptionItem {
   /** 选项值 */
   value: string;
@@ -22,7 +22,7 @@ async function getRoleSelectOptions() {
   return list.map((item) => ({ label: item.name, value: item.id }));
 }
 
-/** 部门下拉选项项（后端按 parentId=0 或缺失视为根） */
+/** 部门下拉选项 */
 export interface DeptSelectOptionItem {
   id: string;
   name: string;
@@ -30,7 +30,7 @@ export interface DeptSelectOptionItem {
 }
 
 /**
- * 查询部门下拉选项（扁平列表，含 parentId；后端按权限过滤可见范围）
+ * 查询部门下拉选项
  */
 async function getDeptSelectOptions() {
   return requestClient.post<DeptSelectOptionItem[]>(
@@ -38,14 +38,14 @@ async function getDeptSelectOptions() {
   );
 }
 
-/** 部门树选项节点（由扁平部门下拉选项构建） */
+/** 部门树选项节点 */
 export interface DeptOptionNode {
   id: string;
   name: string;
   children?: DeptOptionNode[];
 }
 
-/** 将扁平部门下拉选项按 parentId 构建为树（顺序由后端保证） */
+/** 将扁平部门下拉选项按 parentId 构建为树 */
 function buildDeptOptionTree(list: DeptSelectOptionItem[]): DeptOptionNode[] {
   const nodes = new Map<string, DeptOptionNode>();
   list.forEach((item) => {
@@ -74,7 +74,6 @@ function buildDeptOptionTree(list: DeptSelectOptionItem[]): DeptOptionNode[] {
 
 /**
  * 查询文件存储点下拉选项
- * value 为存储点ID，storageCode 为存储点编码（按编码筛选时取 storageCode 作为选项值）
  */
 async function getFileStorageSelectOptions() {
   return requestClient.post<SelectOptionItem[]>(
@@ -84,7 +83,6 @@ async function getFileStorageSelectOptions() {
 
 /**
  * 查询租户套餐下拉选项
- * value 为套餐ID，label 为套餐名称
  */
 async function getTenantPackageSelectOptions() {
   return requestClient.post<SelectOptionItem[]>(
