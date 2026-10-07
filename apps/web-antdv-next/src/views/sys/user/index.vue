@@ -3,7 +3,7 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { SysDeptApi, SysUserApi } from '#/api';
+import type { DeptOptionNode, SysUserApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { computed, onMounted, ref } from 'vue';
@@ -15,15 +15,14 @@ import { Button, Card, Empty, Input, message, Tree } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
-  buildDeptTree,
+  buildDeptOptionTree,
   deleteUser,
-  getDeptList,
+  getDeptSelectOptions,
   getUserDetail,
   getUserList,
   kickOutUser,
   setUserStatus,
 } from '#/api';
-import { EnabledStatusEnum } from '#/api/common';
 import { $t } from '#/locales';
 import { confirmAction } from '#/utils/confirm';
 
@@ -65,13 +64,8 @@ const [ResetPwdDrawer, resetPwdDrawerApi] = useVbenDrawer({
   closeOnClickModal: false,
 });
 
-/** 左侧部门树选项（含虚拟根节点 id='' 表示全部用户） */
-interface DeptTreeNodeOption extends SysDeptApi.DeptTreeNode {
-  children?: DeptTreeNodeOption[];
-}
-
 const ALL_DEPT_KEY = '';
-const deptTreeData = ref<DeptTreeNodeOption[]>([]);
+const deptTreeData = ref<DeptOptionNode[]>([]);
 const selectedDeptId = ref<null | string>(null);
 const selectedKeys = ref<string[]>([ALL_DEPT_KEY]);
 const deptSearchKeyword = ref('');
@@ -116,28 +110,23 @@ const [Grid, gridApi] = useVbenVxeGrid({
 });
 
 onMounted(async () => {
-  const tree = buildDeptTree(await getDeptList());
+  const tree = buildDeptOptionTree(await getDeptSelectOptions());
   deptTreeData.value = [
     {
       id: ALL_DEPT_KEY,
       name: $t('sys.user.allUsers'),
-      parentId: '0',
-      sort: 0,
-      status: EnabledStatusEnum.ENABLED,
-      createdAt: '',
-      updatedAt: '',
-      children: tree as DeptTreeNodeOption[],
+      children: tree,
     },
   ];
 });
 
 /** 按关键词过滤部门树（保留命中节点的祖先链） */
-const filteredDeptTree = computed<DeptTreeNodeOption[]>(() => {
+const filteredDeptTree = computed<DeptOptionNode[]>(() => {
   const keyword = deptSearchKeyword.value.trim();
   if (!keyword) return deptTreeData.value;
 
-  const filter = (nodes: DeptTreeNodeOption[]): DeptTreeNodeOption[] => {
-    const result: DeptTreeNodeOption[] = [];
+  const filter = (nodes: DeptOptionNode[]): DeptOptionNode[] => {
+    const result: DeptOptionNode[] = [];
     nodes.forEach((node) => {
       const children = node.children ? filter(node.children) : undefined;
       if (node.name.includes(keyword) || children?.length) {

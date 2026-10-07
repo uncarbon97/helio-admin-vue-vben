@@ -28,7 +28,7 @@ const switching = ref(false);
 // 当前视角展示名：平台视角或无租户名称时显示“切换租户”
 const currentLabel = computed(() => {
   const context = tenantStore.current;
-  if (!context || context.firstPartyView || !context.tenantName) {
+  if (!context || context.platformView || !context.tenantName) {
     return $t('tenant.switch.switchTenant');
   }
   return context.tenantName;
@@ -100,7 +100,7 @@ onMounted(() => {
 });
 
 // 令牌变化（如登录过期后重登）时重置并重拉租户上下文，避免残留其他账号的视角
-// helium customization: token 被清空（登出）时跳过，否则会以无凭证请求 /tenant-switch/* 必然 401
+// token 被清空（登出）时跳过，否则会以无凭证请求 /tenant-switch/* 必然 401
 watch(
   () => accessStore.accessToken,
   (token) => {

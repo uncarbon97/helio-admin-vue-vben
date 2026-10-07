@@ -1,4 +1,3 @@
-// helium customization: 居中模态框二次确认，替代操作列 PopConfirm
 import { h } from 'vue';
 
 import { confirm as vbenConfirm } from '@vben/common-ui';

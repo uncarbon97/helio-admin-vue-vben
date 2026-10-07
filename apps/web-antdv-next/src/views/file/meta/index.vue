@@ -60,13 +60,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
           const [beginAt, endAt] = formValues.createdAtRange ?? [];
           return await getFileMetaList({
             beginAt: beginAt?.toISOString?.(),
-            category: formValues.category,
             endAt: endAt?.toISOString?.(),
-            extendName: formValues.extendName,
             pageParam: {
               pageNum: page.currentPage,
               pageSize: page.pageSize,
             },
+            category: formValues.category,
+            extendName: formValues.extendName,
             storageCode: formValues.storageCode,
           });
         },

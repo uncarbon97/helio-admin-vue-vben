@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import type { SysUserApi } from '#/api';
-
-import type { ParentTreeOption } from '../../dept/data';
+import type { DeptOptionNode, SysUserApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
@@ -9,7 +7,11 @@ import { useVbenDrawer } from '@vben/common-ui';
 
 import { TreeSelect } from 'antdv-next';
 
-import { bindUserDept, getDeptSelectOptions } from '#/api';
+import {
+  bindUserDept,
+  buildDeptOptionTree,
+  getDeptSelectOptions,
+} from '#/api';
 import { $t } from '#/locales';
 
 const emits = defineEmits(['success']);
@@ -19,38 +21,9 @@ const userId = ref<string>();
 const userNickname = ref('');
 
 /** 部门树选项 */
-const deptOptions = ref<ParentTreeOption[]>([]);
+const deptOptions = ref<DeptOptionNode[]>([]);
 /** 选中部门ID；清空 = 解除绑定 */
 const selectedDeptId = ref<string>();
-
-/** 将扁平部门下拉选项按 parentId 构建为树（顺序由后端保证） */
-function buildDeptOptionTree(
-  list: Awaited<ReturnType<typeof getDeptSelectOptions>>,
-): ParentTreeOption[] {
-  const nodes = new Map<string, ParentTreeOption>();
-  list.forEach((item) => {
-    nodes.set(item.id, { id: item.id, name: item.name, children: [] });
-  });
-
-  const roots: ParentTreeOption[] = [];
-  list.forEach((item) => {
-    const node = nodes.get(item.id);
-    const parent = nodes.get(item.parentId ?? '0');
-    if (node && parent) {
-      (parent.children ??= []).push(node);
-    } else if (node) {
-      roots.push(node);
-    }
-  });
-
-  const toTree = (items: ParentTreeOption[]): ParentTreeOption[] =>
-    items.map(({ children, ...rest }) => ({
-      ...rest,
-      children: children?.length ? toTree(children) : undefined,
-    }));
-
-  return toTree(roots);
-}
 
 const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
   async onConfirm() {

@@ -386,7 +386,6 @@ function onToggleNode(row: PermRow) {
           </div>
         </TabPane>
         <TabPane key="user" :tab="$t('sys.role.tabRoleUser')">
-          <!-- helium customization: 角色用户 tab，切到该页时才挂载加载 -->
           <RoleUserTab
             v-if="activeTab === 'user' && roleId"
             :role-id="roleId"

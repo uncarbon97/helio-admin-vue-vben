@@ -15,7 +15,6 @@ export interface SelectOptionItem {
 /**
  * 查询角色下拉选项
  */
-// helium customization: 角色下拉后端实际返回 {id, name}，此处适配为通用 value/label 结构
 async function getRoleSelectOptions() {
   const list = await requestClient.post<
     Array<{ id: string; name: string }>
@@ -39,6 +38,40 @@ async function getDeptSelectOptions() {
   );
 }
 
+/** 部门树选项节点（由扁平部门下拉选项构建） */
+export interface DeptOptionNode {
+  id: string;
+  name: string;
+  children?: DeptOptionNode[];
+}
+
+/** 将扁平部门下拉选项按 parentId 构建为树（顺序由后端保证） */
+function buildDeptOptionTree(list: DeptSelectOptionItem[]): DeptOptionNode[] {
+  const nodes = new Map<string, DeptOptionNode>();
+  list.forEach((item) => {
+    nodes.set(item.id, { id: item.id, name: item.name, children: [] });
+  });
+
+  const roots: DeptOptionNode[] = [];
+  list.forEach((item) => {
+    const node = nodes.get(item.id);
+    const parent = nodes.get(item.parentId ?? '0');
+    if (node && parent) {
+      (parent.children ??= []).push(node);
+    } else if (node) {
+      roots.push(node);
+    }
+  });
+
+  const toTree = (items: DeptOptionNode[]): DeptOptionNode[] =>
+    items.map(({ children, ...rest }) => ({
+      ...rest,
+      children: children?.length ? toTree(children) : undefined,
+    }));
+
+  return toTree(roots);
+}
+
 /**
  * 查询文件存储点下拉选项
  * value 为存储点ID，storageCode 为存储点编码（按编码筛选时取 storageCode 作为选项值）
@@ -60,6 +93,7 @@ async function getTenantPackageSelectOptions() {
 }
 
 export {
+  buildDeptOptionTree,
   getDeptSelectOptions,
   getFileStorageSelectOptions,
   getRoleSelectOptions,

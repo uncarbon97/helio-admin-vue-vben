@@ -47,7 +47,7 @@ const MENU_TYPE_RADIO_OPTIONS = MENU_TYPE_TAG_OPTIONS.map(
   ({ label, value }) => ({ label, value }),
 );
 
-/** 菜单可见范围单选项（后端枚举按整数序列化） */
+/** 菜单可见范围单选项 */
 const VISIBLE_SCOPE_RADIO_OPTIONS = [
   {
     label: $t('sys.menu.visibleScopeAll'),

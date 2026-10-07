@@ -51,15 +51,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
           const [beginAt, endAt] = formValues.createdAtRange ?? [];
           return await getFileStorageList({
             beginAt: beginAt?.toISOString?.(),
-            code: formValues.code,
             endAt: endAt?.toISOString?.(),
-            name: formValues.name,
             pageParam: {
               pageNum: page.currentPage,
               pageSize: page.pageSize,
             },
+            code: formValues.code,
+            name: formValues.name,
             platformType: formValues.platformType,
-            primaryFlag: formValues.primaryFlag,
           });
         },
       },

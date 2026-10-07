@@ -27,7 +27,7 @@ export function formatFileSize(size: number | undefined): string {
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
-      // 存储点下拉筛选（选项由 index.vue 异步注入）
+      // 存储点下拉筛选
       component: 'Select',
       fieldName: 'storageCode',
       label: $t('file.meta.storageCode'),

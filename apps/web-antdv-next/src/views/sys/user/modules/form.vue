@@ -1,14 +1,17 @@
 <script lang="ts" setup>
-import type { SysUserApi } from '#/api';
-
-import type { ParentTreeOption } from '../../dept/data';
+import type { DeptOptionNode, SysUserApi } from '#/api';
 
 import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { useVbenForm } from '#/adapter/form';
-import { buildDeptTree, createUser, getDeptList, updateUser } from '#/api';
+import {
+  buildDeptOptionTree,
+  createUser,
+  getDeptSelectOptions,
+  updateUser,
+} from '#/api';
 import { $t } from '#/locales';
 
 import { useFormSchema } from '../data';
@@ -18,7 +21,7 @@ const emits = defineEmits(['success']);
 const formData = ref<SysUserApi.SysUserDTO>();
 
 /** 部门树选项（供所属部门选择） */
-const deptOptions = ref<ParentTreeOption[]>([]);
+const deptOptions = ref<DeptOptionNode[]>([]);
 
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(deptOptions),
@@ -76,7 +79,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
       ]);
 
       // 每次打开重新拉取部门树
-      deptOptions.value = buildDeptTree(await getDeptList());
+      deptOptions.value = buildDeptOptionTree(await getDeptSelectOptions());
 
       if (data) {
         formData.value = data;

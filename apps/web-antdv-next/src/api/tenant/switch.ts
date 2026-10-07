@@ -1,7 +1,5 @@
 import { requestClient } from '#/api/request';
 
-// helium customization: 租户切换 —— 对接后端 AdminTenantSwitchController（POST /v1/tenant-switch/*），
-// 供登录后右上角租户切换控件使用
 export namespace TenantSwitchApi {
   /** 可切换租户项（后端 TenantContext） */
   export interface SwitchableTenant {
@@ -20,7 +18,7 @@ export namespace TenantSwitchApi {
     /** 当前生效租户名称；null=平台视角或个人空间 */
     tenantName?: string;
     /** 是否为平台视角（超级管理员未切换租户） */
-    firstPartyView?: boolean;
+    platformView?: boolean;
     /** 当前会话是否处于切换后的租户视角 */
     switched?: boolean;
   }

@@ -31,15 +31,15 @@ const [Grid] = useVbenVxeGrid({
         query: async ({ page }, formValues) => {
           const [beginAt, endAt] = formValues.createdAtRange ?? [];
           return await getOperateLogList({
-            behavior: formValues.behavior,
             beginAt: beginAt?.toISOString?.(),
-            bizNo: formValues.bizNo,
-            bizType: formValues.bizType,
             endAt: endAt?.toISOString?.(),
             pageParam: {
               pageNum: page.currentPage,
               pageSize: page.pageSize,
             },
+            behavior: formValues.behavior,
+            bizNo: formValues.bizNo,
+            bizType: formValues.bizType,
             resultStatus: formValues.resultStatus,
             userPin: formValues.userPin,
           });

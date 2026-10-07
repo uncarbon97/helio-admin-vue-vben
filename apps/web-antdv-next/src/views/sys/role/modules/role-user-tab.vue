@@ -21,7 +21,6 @@ import { confirmAction } from '#/utils/confirm';
 
 import AssignUser from './assign-user.vue';
 
-// helium customization: 授权抽屉「角色用户」tab，展示已绑定用户并支持快速分配/取消分配
 defineOptions({ name: 'RoleUserTab' });
 
 const props = defineProps<{

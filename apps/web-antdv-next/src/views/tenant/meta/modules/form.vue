@@ -8,7 +8,7 @@ import { useVbenDrawer } from '@vben/common-ui';
 import { useVbenForm } from '#/adapter/form';
 import {
   createTenant,
-  getTenantPackageList,
+  getTenantPackageSelectOptions,
   updateTenant,
 } from '#/api';
 import { EnabledStatusEnum } from '#/api/common';
@@ -90,14 +90,9 @@ const [Drawer, drawerApi] = useVbenDrawer<null | TenantMetaApi.TenantMetaDTO>({
         },
       ]);
 
-      // 每次打开重新拉取套餐选项（后端暂无套餐下拉专用接口，取列表首页）
-      const page = await getTenantPackageList({
-        pageParam: { pageNum: 1, pageSize: 100 },
-      });
-      packageOptions.value = (page?.records ?? []).map((item) => ({
-        label: item.name,
-        value: item.id,
-      }));
+      // 每次打开重新拉取套餐选项
+      const options = await getTenantPackageSelectOptions();
+      packageOptions.value = options ?? [];
 
       if (data) {
         formData.value = data;

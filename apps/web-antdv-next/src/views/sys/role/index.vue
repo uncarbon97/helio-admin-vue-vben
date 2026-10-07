@@ -46,12 +46,12 @@ const [Grid, gridApi] = useVbenVxeGrid({
       ajax: {
         query: async ({ page }, formValues) => {
           return await getRoleList({
-            code: formValues.code,
-            name: formValues.name,
             pageParam: {
               pageNum: page.currentPage,
               pageSize: page.pageSize,
             },
+            code: formValues.code,
+            name: formValues.name,
           });
         },
       },

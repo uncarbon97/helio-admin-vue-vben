@@ -13,7 +13,6 @@ import {
 import { bindUserRole, getUserList, listRelatedRole } from '#/api';
 import { $t } from '#/locales';
 
-// helium customization: 授权抽屉「角色用户」tab 的添加用户弹窗，搜索勾选后批量绑定
 defineOptions({ name: 'AssignUser' });
 
 const props = defineProps<{

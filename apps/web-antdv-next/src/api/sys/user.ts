@@ -23,7 +23,7 @@ export namespace SysUserApi {
   export interface CreateRequest {
     /** 账号（5-16位） */
     pin: string;
-    /** 首次登录是否要求修改密码（后端 YesOrNoEnum，按整数 0/1 输出） */
+    /** 首次登录是否要求修改密码 */
     mustChangePassword: YesOrNoEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
@@ -39,13 +39,13 @@ export namespace SysUserApi {
     deptId?: string;
   }
 
-  /** 修改请求表单（无 deptId，改部门走 bind-dept；mustChangePassword 由重置密码抽屉统一设置，修改时不上送） */
+  /** 修改请求表单 */
   export interface UpdateRequest {
     /** 主键ID */
     id: string;
     /** 账号（5-16位） */
     pin: string;
-    /** 首次登录是否要求修改密码（契约必填，前端修改时省略） */
+    /** 首次登录是否要求修改密码 */
     mustChangePassword?: YesOrNoEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
@@ -150,7 +150,7 @@ async function setUserStatus(
  * 重置指定用户密码
  * @param userId 用户ID
  * @param randomPassword 随机密码（16-64位）
- * @param mustChangePassword 是否要求下次登录改密（swagger 契约暂未收录该字段，后端待补）
+ * @param mustChangePassword 是否要求下次登录改密
  */
 async function resetUserPassword(
   userId: string,

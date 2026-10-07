@@ -1,3 +1,5 @@
+import type { TenantSwitchApi } from '#/api';
+
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -7,19 +9,12 @@ import { useAccessStore } from '@vben/stores';
 import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import {
-  enterTenantSwitch,
-  exitTenantSwitch,
-  getCurrentTenantContext,
-  getSwitchableTenants,
-  type TenantSwitchApi,
-} from '#/api';
+import { enterTenantSwitch, exitTenantSwitch, getCurrentTenantContext, getSwitchableTenants } from '#/api';
 import { $t } from '#/locales';
 import { resetRoutes } from '#/router';
 
 import { useAuthStore } from './auth';
 
-// helium customization: 租户切换状态 —— 对接后端 /v1/tenant-switch/*，供右上角租户切换控件消费
 export const useTenantStore = defineStore('tenant', () => {
   const authStore = useAuthStore();
   const accessStore = useAccessStore();
@@ -36,7 +31,7 @@ export const useTenantStore = defineStore('tenant', () => {
    * 初始化：拉取当前视角 + 可切换租户列表（失败不阻塞页面，下次进入再试）
    */
   async function init() {
-    // helium customization: 无 token 时（如登出中）不发起请求，避免必然 401
+    // 无 token 时（如登出中）不发起请求，避免必然 401
     if (initialized.value || !accessStore.accessToken) {
       return;
     }

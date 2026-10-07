@@ -17,6 +17,7 @@ export namespace SysRoleApi {
     /** 关键词(账号/昵称) */
     keyword?: string;
   }
+
   /** 列表查询条件 */
   export interface ListQuery {
     /** 分页参数 */

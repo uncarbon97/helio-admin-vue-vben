@@ -3,8 +3,7 @@ import type { PageParam, PageResult } from '#/api/common';
 import { requestClient } from '#/api/request';
 
 /**
- * 字典状态枚举（后端 DictStatusEnum，BaseEnum<Integer> 按整数输出）
- * 分类与字典项通用；「过时」用于标记存量兼容数据
+ * 字典状态枚举，分类与字典项通用
  */
 export const DictStatusEnum = {
   /** 禁用 */
@@ -19,7 +18,7 @@ export type DictStatusEnumValue =
   (typeof DictStatusEnum)[keyof typeof DictStatusEnum];
 
 export namespace SysDictApi {
-  /** 分类/内置字典列表查询条件（两个接口查询结构相同） */
+  /** 分类/内置字典列表查询条件 */
   export interface ListQuery {
     /** 分页参数 */
     pageParam: PageParam;
@@ -29,7 +28,7 @@ export namespace SysDictApi {
     name?: string;
   }
 
-  /** 字典项列表查询条件（后端仅支持按分类过滤） */
+  /** 字典项列表查询条件 */
   export interface ItemListQuery {
     /** 分页参数 */
     pageParam: PageParam;

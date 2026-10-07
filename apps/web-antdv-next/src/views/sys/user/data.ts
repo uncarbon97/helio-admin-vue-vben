@@ -1,10 +1,8 @@
 import type { Ref } from 'vue';
 
-import type { ParentTreeOption } from '../dept/data';
-
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { SysUserApi } from '#/api';
+import type { DeptOptionNode, SysUserApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { GenderEnum, YesOrNoEnum } from '#/api/common';
@@ -150,7 +148,7 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
  * @param deptOptions 部门树选项
  */
 export function useFormSchema(
-  deptOptions: Ref<ParentTreeOption[]>,
+  deptOptions: Ref<DeptOptionNode[]>,
 ): VbenFormSchema[] {
   return [
     {

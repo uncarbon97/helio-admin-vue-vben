@@ -181,7 +181,6 @@ function buildMenuTree(list: MenuApi.SysMenuDTO[]): MenuTreeNode[] {
       .toSorted((a, b) => a._sort - b._sort)
       .map(({ _sort, children, ...rest }) => ({
         ...rest,
-        // helium customization: 修复类型收窄（children 声明为 MenuTreeNode[]，此处实为 SortableNode[]）
         children: children?.length
           ? toTree(children as SortableNode[])
           : undefined,
