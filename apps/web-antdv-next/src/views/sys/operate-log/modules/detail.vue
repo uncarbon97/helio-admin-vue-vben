@@ -4,6 +4,7 @@ import type { SysOperateLogApi } from '#/api';
 import { ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
+import { formatDateTime } from '@vben/utils';
 
 import { DescriptionsItem, Descriptions, Spin, Tag, TextArea } from 'antdv-next';
 
@@ -50,7 +51,7 @@ function resultStatusTag(
     <Spin :spinning="loading">
       <Descriptions v-if="detail" bordered :column="2" size="small">
         <DescriptionsItem :label="$t('sys.operateLog.createdAt')" :span="2">
-          {{ detail.createdAt }}
+          {{ formatDateTime(detail.createdAt) }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.operateLog.resultStatus')">
           <Tag :color="resultStatusTag(detail.resultStatus).color">

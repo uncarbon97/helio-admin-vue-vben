@@ -4,6 +4,7 @@ import type { SysUserApi } from '#/api';
 import { ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
+import { formatDateTime } from '@vben/utils';
 
 import { DescriptionsItem, Descriptions, Spin, Tag } from 'antdv-next';
 
@@ -91,10 +92,10 @@ function genderTag(value: undefined | SysUserApi.SysUserDTO['gender']) {
           {{ detail.email }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.user.lastLoginAt')">
-          {{ detail.lastLoginAt ?? '-' }}
+          {{ formatDateTime(detail.lastLoginAt ?? undefined) || '-' }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.user.createTime')">
-          {{ detail.createdAt }}
+          {{ formatDateTime(detail.createdAt) }}
         </DescriptionsItem>
       </Descriptions>
     </Spin>
