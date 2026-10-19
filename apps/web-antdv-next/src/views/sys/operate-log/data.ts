@@ -29,7 +29,6 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('sys.operateLog.bizNo'),
     },
     {
-      // helium customization: 操作人改用户多选
       component: markRaw(UserPickerField),
       fieldName: 'users',
       label: $t('sys.operateLog.user'),
@@ -118,8 +117,8 @@ export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(
       title: $t('sys.operateLog.operation'),
     },
     {
-      field: 'userPin',
-      title: $t('sys.operateLog.userPin'),
+      field: 'userNickname',
+      title: $t('sys.operateLog.userNickname'),
       width: 140,
     },
     {
@@ -142,8 +141,8 @@ export function useColumns<T = SysOperateLogApi.SysOperateLogDTO>(
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'userPin',
-          nameTitle: $t('sys.operateLog.userPin'),
+          nameField: 'userNickname',
+          nameTitle: $t('sys.operateLog.userNickname'),
           onClick: onActionClick,
         },
         name: 'CellOperation',

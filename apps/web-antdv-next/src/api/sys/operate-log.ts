@@ -43,6 +43,8 @@ export namespace SysOperateLogApi {
     operation: string;
     /** 额外业务信息 */
     bizExtra: string;
+    /** 操作人 */
+    userNickname: string;
     /** 操作人账号 */
     userPin: string;
     /** 用户类型编码 */

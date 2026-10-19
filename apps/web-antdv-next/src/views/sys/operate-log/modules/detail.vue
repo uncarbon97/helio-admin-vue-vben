@@ -66,8 +66,8 @@ function resultStatusTag(
         <DescriptionsItem :label="$t('sys.operateLog.bizNo')">
           {{ detail.bizNo }}
         </DescriptionsItem>
-        <DescriptionsItem :label="$t('sys.operateLog.userPin')">
-          {{ detail.userPin }}
+        <DescriptionsItem :label="$t('sys.operateLog.userNickname')">
+          {{ detail.userNickname }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.operateLog.userTypeCode')">
           {{ detail.userTypeCode }}

@@ -146,7 +146,7 @@
     "operation": "Operation",
     "bizExtra": "Biz Extra",
     "user": "User",
-    "userPin": "Operator Account",
+    "userNickname": "Operator",
     "userTypeCode": "User Type",
     "requestMethod": "Request Method",
     "requestPath": "Request Path",

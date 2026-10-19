@@ -106,7 +106,7 @@
     "resultSuccess": "成功",
     "title": "操作日志",
     "user": "操作人",
-    "userPin": "操作人账号",
+    "userNickname": "操作人",
     "userTypeCode": "用户类型",
     "visitorIp": "来源IP",
     "visitorIpLocation": "IP归属地",
