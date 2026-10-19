@@ -38,7 +38,10 @@ const [Grid] = useVbenVxeGrid({
               pageSize: page.pageSize,
             },
             resultStatus: formValues.resultStatus,
-            userPin: formValues.userPin,
+            // 按用户多选查询，取已选用户ID数组
+            userIds: (formValues.users ?? []).map(
+              (item: { id: string }) => item.id,
+            ),
           });
         },
       },

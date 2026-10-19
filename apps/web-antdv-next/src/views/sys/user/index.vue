@@ -3,21 +3,19 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { DeptOptionNode, SysUserApi } from '#/api';
+import type { SysUserApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
-import { computed, onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
-import { Button, Card, Empty, Input, message, Tree } from 'antdv-next';
+import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
-  buildDeptOptionTree,
   deleteUser,
-  getDeptSelectOptions,
   getUserDetail,
   getUserList,
   kickOutUser,
@@ -29,6 +27,7 @@ import { confirmAction } from '#/utils/confirm';
 import { useColumns, useGridFormSchema } from './data';
 import BindDept from './modules/bind-dept.vue';
 import BindRole from './modules/bind-role.vue';
+import DeptTreeCard from './modules/dept-tree-card.vue';
 import Detail from './modules/detail.vue';
 import Form from './modules/form.vue';
 import ResetPassword from './modules/reset-password.vue';
@@ -64,11 +63,7 @@ const [ResetPwdDrawer, resetPwdDrawerApi] = useVbenDrawer({
   closeOnClickModal: false,
 });
 
-const ALL_DEPT_KEY = '';
-const deptTreeData = ref<DeptOptionNode[]>([]);
 const selectedDeptId = ref<null | string>(null);
-const selectedKeys = ref<string[]>([ALL_DEPT_KEY]);
-const deptSearchKeyword = ref('');
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
@@ -109,39 +104,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SysUserApi.SysUserDTO>,
 });
 
-onMounted(async () => {
-  const tree = buildDeptOptionTree(await getDeptSelectOptions());
-  deptTreeData.value = [
-    {
-      id: ALL_DEPT_KEY,
-      name: $t('sys.user.allUsers'),
-      children: tree,
-    },
-  ];
-});
-
-/** 按关键词过滤部门树（保留命中节点的祖先链） */
-const filteredDeptTree = computed<DeptOptionNode[]>(() => {
-  const keyword = deptSearchKeyword.value.trim();
-  if (!keyword) return deptTreeData.value;
-
-  const filter = (nodes: DeptOptionNode[]): DeptOptionNode[] => {
-    const result: DeptOptionNode[] = [];
-    nodes.forEach((node) => {
-      const children = node.children ? filter(node.children) : undefined;
-      if (node.name.includes(keyword) || children?.length) {
-        result.push({ ...node, children });
-      }
-    });
-    return result;
-  };
-  return filter(deptTreeData.value);
-});
-
-function onDeptSelect(keys: (number | string)[]) {
-  const key = String(keys[0] ?? ALL_DEPT_KEY);
-  selectedKeys.value = [key];
-  selectedDeptId.value = key === ALL_DEPT_KEY ? null : key;
+function onDeptSelect(deptId: null | string) {
+  selectedDeptId.value = deptId;
   gridApi.query();
 }
 
@@ -246,39 +210,9 @@ function onCreate() {
     <ResetPwdDrawer @success="onRefresh" />
     <div class="flex h-full w-full gap-2">
       <!-- 左侧部门树 -->
-      <Card
-        class="w-60 shrink-0"
-        :body-style="{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          overflow: 'hidden',
-        }"
-      >
-        <div class="mb-2 shrink-0">
-          <Input
-            v-model:value="deptSearchKeyword"
-            allow-clear
-            :placeholder="$t('sys.dept.searchPlaceholder')"
-            size="small"
-          />
-        </div>
-        <div class="min-h-0 flex-1 overflow-auto">
-          <Tree
-            v-model:selected-keys="selectedKeys"
-            :field-names="{ children: 'children', key: 'id', title: 'name' }"
-            :tree-data="filteredDeptTree"
-            block-node
-            default-expand-all
-            @select="onDeptSelect"
-          />
-          <Empty
-            v-if="filteredDeptTree.length === 0"
-            :image="Empty.PRESENTED_IMAGE_SIMPLE"
-            class="py-8"
-          />
-        </div>
-      </Card>
+      <div class="w-60 shrink-0">
+        <DeptTreeCard @select="onDeptSelect" />
+      </div>
       <!-- 右侧用户列表 -->
       <div class="min-w-0 flex-1">
         <Grid>

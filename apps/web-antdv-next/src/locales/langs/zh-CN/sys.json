@@ -47,6 +47,7 @@
     "title": "登录日志",
     "typeLogout": "登出",
     "typePasswordLogin": "密码登录",
+    "user": "用户",
     "userPin": "用户账号",
     "userTypeCode": "用户类型",
     "visitorBrowser": "来源浏览器",
@@ -104,6 +105,7 @@
     "resultStatus": "结果状态",
     "resultSuccess": "成功",
     "title": "操作日志",
+    "user": "操作人",
     "userPin": "操作人账号",
     "userTypeCode": "用户类型",
     "visitorIp": "来源IP",
@@ -148,6 +150,7 @@
     "bindRoleTitle": "分配角色 - {0}",
     "copyFailed": "复制失败",
     "copySuccess": "复制成功",
+    "countUnit": "人",
     "createTime": "创建时间",
     "deptName": "所属部门",
     "email": "邮箱",
@@ -171,6 +174,7 @@
     "resetPwd": "重置密码",
     "resetPwdTip": "重置后请将新密码告知用户，用户需使用新密码重新登录",
     "resetPwdTitle": "重置密码 - {0}",
+    "selectTitle": "选择用户",
     "status": "状态",
     "title": "系统用户"
   }

@@ -41,7 +41,9 @@ const [Grid] = useVbenVxeGrid({
             bizNo: formValues.bizNo,
             bizType: formValues.bizType,
             resultStatus: formValues.resultStatus,
-            userPin: formValues.userPin,
+            userIds: (formValues.users ?? []).map(
+              (item: { id: string }) => item.id,
+            ),
           });
         },
       },

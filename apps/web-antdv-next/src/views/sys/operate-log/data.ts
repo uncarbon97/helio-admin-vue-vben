@@ -2,8 +2,11 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysOperateLogApi } from '#/api';
 
+import { markRaw } from 'vue';
+
 import { LogResultStatusEnum } from '#/api';
 import { $t } from '#/locales';
+import UserPickerField from '../user/modules/user-picker-field.vue';
 
 /**
  * 上方查询条件
@@ -26,9 +29,10 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('sys.operateLog.bizNo'),
     },
     {
-      component: 'Input',
-      fieldName: 'userPin',
-      label: $t('sys.operateLog.userPin'),
+      // helium customization: 操作人改用户多选
+      component: markRaw(UserPickerField),
+      fieldName: 'users',
+      label: $t('sys.operateLog.user'),
     },
     {
       component: 'Select',

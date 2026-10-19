@@ -1,9 +1,11 @@
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { SysLoginLogApi } from '#/api';
+import { markRaw } from 'vue';
 
 import { LoginLogTypeEnum, LogResultStatusEnum } from '#/api';
 import { $t } from '#/locales';
+import UserPickerField from '../user/modules/user-picker-field.vue';
 
 /**
  * 上方查询条件
@@ -11,9 +13,9 @@ import { $t } from '#/locales';
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
     {
-      component: 'Input',
-      fieldName: 'userPin',
-      label: $t('sys.loginLog.userPin'),
+      component: markRaw(UserPickerField),
+      fieldName: 'users',
+      label: $t('sys.loginLog.user'),
     },
     {
       component: 'Select',

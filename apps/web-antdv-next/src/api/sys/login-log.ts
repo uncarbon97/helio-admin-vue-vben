@@ -29,8 +29,8 @@ export namespace SysLoginLogApi {
   export interface ListQuery {
     /** 分页参数 */
     pageParam: PageParam;
-    /** 用户账号(关键词) */
-    userPin?: string;
+    /** 用户ID数组（按用户多选查询） */
+    userIds?: string[];
     /** 结果状态 */
     resultStatus?: LogResultStatusEnumValue;
     /** 时间区间起 */

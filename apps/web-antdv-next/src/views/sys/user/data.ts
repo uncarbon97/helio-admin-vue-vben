@@ -5,7 +5,7 @@ import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { DeptOptionNode, SysUserApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
-import { GenderEnum, YesOrNoEnum } from '#/api/common';
+import { EnabledStatusEnum, GenderEnum, YesOrNoEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 /**
@@ -30,8 +30,8 @@ export function useGridFormSchema(): VbenFormSchema[] {
  * @param onToggleStatus 状态开关切换回调
  */
 export function useColumns<T = SysUserApi.SysUserDTO>(
-  onActionClick: OnActionClickFn<T>,
-  onToggleStatus: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
+  onActionClick?: OnActionClickFn<T>,
+  onToggleStatus?: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
 ): VxeTableGridColumns {
   return [
     {
@@ -84,20 +84,36 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
       title: $t('sys.user.email'),
     },
     {
-      cellRender: {
-        attrs: {
-          checkedChildren: $t('common.enabled'),
-          onSwitch: ({
-            row,
-            value,
-          }: {
-            row: T;
-            value: EnabledStatusEnumValue;
-          }) => onToggleStatus(row, value),
-          unCheckedChildren: $t('common.disabled'),
-        },
-        name: 'CellSwitch',
-      },
+      cellRender: onToggleStatus
+        ? {
+            attrs: {
+              checkedChildren: $t('common.enabled'),
+              onSwitch: ({
+                row,
+                value,
+              }: {
+                row: T;
+                value: EnabledStatusEnumValue;
+              }) => onToggleStatus(row, value),
+              unCheckedChildren: $t('common.disabled'),
+            },
+            name: 'CellSwitch',
+          }
+        : {
+            name: 'CellTag',
+            options: [
+              {
+                color: 'success',
+                label: $t('common.enabled'),
+                value: EnabledStatusEnum.ENABLED,
+              },
+              {
+                color: 'error',
+                label: $t('common.disabled'),
+                value: EnabledStatusEnum.DISABLED,
+              },
+            ],
+          },
       field: 'status',
       title: $t('sys.user.status'),
       width: 100,
@@ -108,38 +124,43 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
       title: $t('sys.user.lastLoginAt'),
       width: 180,
     },
-    {
-      align: 'center',
-      cellRender: {
-        attrs: {
-          nameField: 'nickname',
-          nameTitle: $t('sys.user.nickname'),
-          onClick: onActionClick,
-        },
-        name: 'CellOperation',
-        options: [
-          'detail',
-          'edit',
-          { code: 'bindRole', text: $t('sys.user.bindRole') },
-          // 收纳低频操作
+    // 未传操作回调时不生成操作列（选人抽屉复用列定义）
+    ...(onActionClick
+      ? [
           {
-            children: [
-              { code: 'bindDept', text: $t('sys.user.bindDept') },
-              { code: 'resetPwd', text: $t('sys.user.resetPwd') },
-              { code: 'kickOut', text: $t('sys.user.kickOut') },
-              'delete',
-            ],
-            text: $t('sys.user.otherActions'),
+            align: 'center' as const,
+            cellRender: {
+              attrs: {
+                nameField: 'nickname',
+                nameTitle: $t('sys.user.nickname'),
+                onClick: onActionClick,
+              },
+              name: 'CellOperation',
+              options: [
+                'detail',
+                'edit',
+                { code: 'bindRole', text: $t('sys.user.bindRole') },
+                // 收纳低频操作
+                {
+                  children: [
+                    { code: 'bindDept', text: $t('sys.user.bindDept') },
+                    { code: 'resetPwd', text: $t('sys.user.resetPwd') },
+                    { code: 'kickOut', text: $t('sys.user.kickOut') },
+                    'delete',
+                  ],
+                  text: $t('sys.user.otherActions'),
+                },
+              ],
+            },
+            field: 'operation',
+            fixed: 'right' as const,
+            // 关闭溢出 tooltip
+            showOverflow: false,
+            title: $t('sys.user.operation'),
+            width: 270,
           },
-        ],
-      },
-      field: 'operation',
-      fixed: 'right',
-      // 关闭溢出 tooltip
-      showOverflow: false,
-      title: $t('sys.user.operation'),
-      width: 270,
-    },
+        ]
+      : []),
   ];
 }
 
