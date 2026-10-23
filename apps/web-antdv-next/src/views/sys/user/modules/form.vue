@@ -54,7 +54,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
             nickname: values.nickname,
             phoneNo: values.phoneNo,
             pin: values.pin,
-            mustChangePassword: values.mustChangePassword,
           }));
       emits('success');
       drawerApi.close();
@@ -75,7 +74,6 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
       formApi.updateSchema([
         { fieldName: 'initPwd', hide: !isCreate, rules: 'required' },
         { fieldName: 'deptId', hide: !isCreate },
-        { fieldName: 'mustChangePassword', hide: !isCreate },
       ]);
 
       // 每次打开重新拉取部门树
@@ -84,13 +82,27 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
       if (data) {
         formData.value = data;
         id.value = data.id;
+        // 详情仅返回脱敏手机号/邮箱，明文需用户重新填写后提交
         formApi.setValues({
-          email: data.email,
           gender: data.gender,
           nickname: data.nickname,
-          phoneNo: data.phoneNo,
           pin: data.pin,
         });
+        formApi.updateSchema([
+          {
+            componentProps: { placeholder: data.emailMasked ?? '' },
+            fieldName: 'email',
+          },
+          {
+            componentProps: { placeholder: data.phoneNoMasked ?? '' },
+            fieldName: 'phoneNo',
+          },
+        ]);
+      } else {
+        formApi.updateSchema([
+          { componentProps: { placeholder: '' }, fieldName: 'email' },
+          { componentProps: { placeholder: '' }, fieldName: 'phoneNo' },
+        ]);
       }
     }
   },

@@ -13,8 +13,8 @@ export namespace SysUserApi {
   export interface ListQuery {
     /** 分页参数 */
     pageParam: PageParam;
-    /** 手机号(关键词) */
-    phoneNo?: string;
+    /** 手机号后4位（精确匹配） */
+    phoneNoTail4?: string;
     /** 选中的部门ID（左侧部门树联动） */
     selectedDeptId?: string;
   }
@@ -23,8 +23,6 @@ export namespace SysUserApi {
   export interface CreateRequest {
     /** 账号（5-16位） */
     pin: string;
-    /** 首次登录是否要求修改密码 */
-    mustChangePassword: YesOrNoEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
     /** 性别 */
@@ -45,8 +43,6 @@ export namespace SysUserApi {
     id: string;
     /** 账号（5-16位） */
     pin: string;
-    /** 首次登录是否要求修改密码 */
-    mustChangePassword?: YesOrNoEnumValue;
     /** 昵称（0-20位） */
     nickname: string;
     /** 性别 */
@@ -66,22 +62,22 @@ export namespace SysUserApi {
     pin: string;
     /** 昵称 */
     nickname: string;
-    /** 状态 */
-    status: EnabledStatusEnumValue;
     /** 性别 */
     gender: GenderEnumValue;
-    /** 邮箱 */
-    email: string;
-    /** 手机号 */
-    phoneNo: string;
+    /** 状态 */
+    status: EnabledStatusEnumValue;
     /** 最后登录时间 */
     lastLoginAt: null | string;
+    /** 头像地址 */
+    avatarUrl: null | string;
+    /** 手机号脱敏展示，如 189****8927 */
+    phoneNoMasked: null | string;
+    /** 邮箱脱敏展示，如 al***@example.com */
+    emailMasked: null | string;
     /** 所属部门ID */
     deptId: null | string;
     /** 所属部门名称 */
     deptName: null | string;
-    /** 头像地址 */
-    avatarUrl: null | string;
   }
 }
 
@@ -150,15 +146,15 @@ async function setUserStatus(
  * 重置指定用户密码
  * @param userId 用户ID
  * @param randomPassword 随机密码（16-64位）
- * @param mustChangePassword 是否要求下次登录改密
+ * @param pwdMustChange 是否要求下次登录改密
  */
 async function resetUserPassword(
   userId: string,
   randomPassword: string,
-  mustChangePassword: YesOrNoEnumValue,
+  pwdMustChange: YesOrNoEnumValue,
 ) {
   return requestClient.post(`${API_PATH}/reset-password`, {
-    mustChangePassword,
+    pwdMustChange,
     randomPassword,
     userId,
   });

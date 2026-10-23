@@ -68,7 +68,7 @@ async function query() {
         pageNum: pageNum.value,
         pageSize: pageSize.value,
       },
-      phoneNo: keyword.value || undefined,
+      phoneNoTail4: keyword.value || undefined,
     });
     records.value = result?.records ?? [];
     total.value = result?.total ?? 0;
@@ -131,7 +131,7 @@ watch(
       <Input
         v-model:value="keyword"
         allow-clear
-        :placeholder="$t('sys.user.phoneNo')"
+        :placeholder="$t('sys.user.phoneNoTail4')"
         @press-enter="onSearch"
       />
     </div>

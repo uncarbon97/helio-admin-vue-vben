@@ -9,15 +9,19 @@ import { requestClient } from '#/api/request';
 const API_PATH = '/v1/ucenter';
 
 // helium customization: 用户资料对接真实后端，并映射为前端 UserInfo
+// helium customization: 手机号/邮箱后端不再返回明文，仅返回脱敏值
 export interface MyProfileDTO {
   pin: string;
   nickname?: string;
   gender?: GenderEnumValue;
-  email?: string;
-  phoneNo?: string;
   avatarUrl?: string;
   lastLoginAt?: string;
-  mustChangePassword?: YesOrNoEnumValue;
+  /** 要求用户下次登录时修改密码 */
+  pwdMustChange?: YesOrNoEnumValue;
+  /** 手机号脱敏，如 189****8927 */
+  phoneNoMasked?: string;
+  /** 邮箱脱敏，如 al***@example.com */
+  emailMasked?: string;
 }
 
 /**
@@ -37,7 +41,7 @@ export async function getUserInfoApi() {
     desc: '',
     homePath: preferences.app.defaultHomePath,
     realName: profile.nickname || profile.pin,
-    mustChangePassword: profile.mustChangePassword,
+    pwdMustChange: profile.pwdMustChange,
     roles: [] as string[],
     token: '',
     userId: profile.pin,

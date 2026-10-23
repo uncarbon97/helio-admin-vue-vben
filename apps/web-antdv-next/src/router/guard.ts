@@ -87,9 +87,9 @@ function setupAccessGuard(router: Router) {
       return to;
     }
 
-    // helium customization: mustChangePassword 时强制跳转修改密码页
+    // helium customization: pwdMustChange 时强制跳转修改密码页
     if (
-      userStore.userInfo?.mustChangePassword === YesOrNoEnum.YES &&
+      userStore.userInfo?.pwdMustChange === YesOrNoEnum.YES &&
       to.path !== CHANGE_PWD_PATH
     ) {
       return { path: CHANGE_PWD_PATH, replace: true };

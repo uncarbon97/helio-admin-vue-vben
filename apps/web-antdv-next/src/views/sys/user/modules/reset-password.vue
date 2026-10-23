@@ -23,7 +23,7 @@ const userNickname = ref('');
 /** 生成的随机密码（16位，契约要求 16-64 位） */
 const randomPassword = ref('');
 /** 是否要求下次登录改密 */
-const mustChangePassword = ref<YesOrNoEnumValue>(YesOrNoEnum.NO);
+const pwdMustChange = ref<YesOrNoEnumValue>(YesOrNoEnum.NO);
 
 const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
   async onConfirm() {
@@ -33,7 +33,7 @@ const [Drawer, drawerApi] = useVbenDrawer<null | SysUserApi.SysUserDTO>({
       await resetUserPassword(
         userId.value,
         randomPassword.value,
-        mustChangePassword.value,
+        pwdMustChange.value,
       );
       message.success($t('ui.actionMessage.operationSuccess'));
       emits('success');
@@ -96,7 +96,7 @@ async function onCopy() {
       <div class="mt-2 flex items-center gap-3">
         <span>{{ $t('sys.user.nextLoginChangePwd') }}</span>
         <RadioGroup
-          v-model:value="mustChangePassword"
+          v-model:value="pwdMustChange"
           :options="[
             { label: $t('common.no'), value: YesOrNoEnum.NO },
             { label: $t('common.yes'), value: YesOrNoEnum.YES },

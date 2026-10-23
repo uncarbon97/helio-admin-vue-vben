@@ -54,15 +54,24 @@ const formSchema = computed((): VbenFormSchema[] => {
       },
       label: '性别',
     },
+    // helium customization: 后端不再返回明文联系方式，占位提示当前脱敏值，改动需重填完整明文
     {
       fieldName: 'email',
       component: 'Input',
       label: '邮箱',
+      componentProps: { maxlength: 254 },
+      description: detail.value?.emailMasked
+        ? `当前：${detail.value.emailMasked}`
+        : '',
     },
     {
       fieldName: 'phoneNo',
       component: 'Input',
       label: '手机号',
+      componentProps: { maxlength: 20 },
+      description: detail.value?.phoneNoMasked
+        ? `当前：${detail.value.phoneNoMasked}`
+        : '',
     },
   ];
 });
@@ -77,8 +86,7 @@ async function loadDetail() {
   profileBaseSettingRef.value?.getFormApi().setValues({
     nickname: detail.value.nickname ?? '',
     gender: detail.value.gender ?? GenderEnum.UNKNOWN,
-    email: detail.value.email ?? '',
-    phoneNo: detail.value.phoneNo ?? '',
+    // 明文联系方式后端不再返回，留空待用户重新填写
   });
 }
 

@@ -86,10 +86,10 @@ function genderTag(value: undefined | SysUserApi.SysUserDTO['gender']) {
           {{ detail.deptName ?? '-' }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.user.phoneNo')">
-          {{ detail.phoneNo }}
+          {{ detail.phoneNoMasked ?? '-' }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.user.email')" :span="2">
-          {{ detail.email }}
+          {{ detail.emailMasked ?? '-' }}
         </DescriptionsItem>
         <DescriptionsItem :label="$t('sys.user.lastLoginAt')">
           {{ formatDateTime(detail.lastLoginAt ?? undefined) || '-' }}

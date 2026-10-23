@@ -82,7 +82,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
               pageNum: page.currentPage,
               pageSize: page.pageSize,
             },
-            phoneNo: formValues.phoneNo,
+            phoneNoTail4: formValues.phoneNoTail4,
             // 左侧部门树联动过滤
             selectedDeptId: selectedDeptId.value ?? undefined,
           });

@@ -5,7 +5,7 @@ import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
 import type { DeptOptionNode, SysUserApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
-import { EnabledStatusEnum, GenderEnum, YesOrNoEnum } from '#/api/common';
+import { EnabledStatusEnum, GenderEnum } from '#/api/common';
 import { $t } from '#/locales';
 
 /**
@@ -16,10 +16,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       componentProps: {
-        placeholder: $t('sys.user.phoneNo'),
+        maxlength: 4,
+        placeholder: $t('sys.user.phoneNoTail4'),
       },
-      fieldName: 'phoneNo',
-      label: $t('sys.user.phoneNo'),
+      fieldName: 'phoneNoTail4',
+      label: $t('sys.user.phoneNoTail4'),
     },
   ];
 }
@@ -74,12 +75,12 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
       title: $t('sys.user.deptName'),
     },
     {
-      field: 'phoneNo',
+      field: 'phoneNoMasked',
       title: $t('sys.user.phoneNo'),
       width: 140,
     },
     {
-      field: 'email',
+      field: 'emailMasked',
       minWidth: 180,
       title: $t('sys.user.email'),
     },
@@ -213,6 +214,9 @@ export function useFormSchema(
     },
     {
       component: 'Input',
+      componentProps: {
+        maxlength: 20,
+      },
       fieldName: 'phoneNo',
       label: $t('sys.user.phoneNo'),
       rules: 'required',
@@ -239,19 +243,6 @@ export function useFormSchema(
       hide: true,
       label: $t('sys.user.initPwd'),
       rules: 'required',
-    },
-    {
-      component: 'RadioGroup',
-      componentProps: {
-        class: 'w-auto',
-        options: [
-          { label: $t('common.no'), value: YesOrNoEnum.NO },
-          { label: $t('common.yes'), value: YesOrNoEnum.YES },
-        ],
-      },
-      defaultValue: YesOrNoEnum.NO,
-      fieldName: 'mustChangePassword',
-      label: $t('sys.user.mustChangePassword'),
     },
   ];
 }
