@@ -144,6 +144,7 @@
   },
   "user": {
     "allUsers": "全部用户",
+    "alreadyMember": "已是成员",
     "bindDept": "修改部门",
     "bindDeptTitle": "修改部门 - {0}",
     "bindRole": "分配角色",
@@ -163,6 +164,10 @@
     "kickOut": "踢下线",
     "kickOutConfirm": "确定将「{0}」踢下线吗？",
     "lastLoginAt": "最后登录时间",
+    "lookup": "全局找人",
+    "lookupEmptyTip": "请输入账号或完整手机号",
+    "lookupNoResult": "未找到匹配用户",
+    "lookupSelectFirst": "请先选择要加入的用户",
     "name": "用户",
     "nextLoginChangePwd": "下次登录改密",
     "nickname": "昵称",
@@ -176,6 +181,11 @@
     "resetPwdTitle": "重置密码 - {0}",
     "selectTitle": "选择用户",
     "status": "状态",
+    "tenantExpel": "移出租户",
+    "tenantExpelConfirm": "确定将「{0}」移出本租户吗？",
+    "tenantExpelTip": "移出后该用户立即被强制下线，且无法再访问本租户资源",
+    "tenantJoin": "拉入本租户",
+    "tenantJoinRoleTip": "可选：加入时绑定的初始角色",
     "title": "系统用户"
   }
 }

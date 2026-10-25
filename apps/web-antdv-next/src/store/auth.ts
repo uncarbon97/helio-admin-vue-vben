@@ -10,7 +10,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import { getUserInfoApi, loginApi, logoutApi, YesOrNoEnum } from '#/api';
+import { getPermissionsApi, getUserInfoApi, loginApi, logoutApi, YesOrNoEnum } from '#/api';
 import { $t } from '#/locales';
 import { CHANGE_PWD_PATH } from '#/router/constants';
 
@@ -34,12 +34,8 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
-      // helium customization: 消费后端登录返回的 token/roles/permissions，分别写入 accessStore 与 userStore；用户资料拉取改为容错（失败不阻塞登录）
-      const {
-        token,
-        roles = [],
-        permissions = [],
-      } = await loginApi({
+      // helium customization: 消费后端登录返回的 token；角色/权限码登录后从 /v1/auth/permissions 统一重取（与切换租户后同源）；用户资料拉取改为容错（失败不阻塞登录）
+      const { token } = await loginApi({
         captchaAnswer: params.captchaAnswer,
         captchaId: params.captchaId,
         pin: params.pin ?? params.username,
@@ -50,15 +46,19 @@ export const useAuthStore = defineStore('auth', () => {
       // 如果成功获取到 token
       if (token) {
         accessStore.setAccessToken(token);
-        accessStore.setAccessCodes(permissions);
-        userStore.setUserRoles(roles);
 
         // 拉取用户资料，失败不阻塞登录
         try {
           userInfo = await fetchUserInfo();
-          userStore.setUserRoles(roles);
         } catch {
           userInfo = null;
+        }
+
+        // helium customization: 放在 fetchUserInfo 之后，避免被 setUserInfo 内部的 setUserRoles 覆盖；拉取失败不阻塞登录
+        try {
+          await refreshSessionPermissions();
+        } catch {
+          // 忽略：沿用旧权限码，下次登录/切换租户时重试
         }
 
         if (accessStore.loginExpired) {
@@ -121,6 +121,17 @@ export const useAuthStore = defineStore('auth', () => {
     return userInfo;
   }
 
+  /**
+   * 重取当前会话角色与权限码
+   * 登录后、切换租户后统一入口，保持单一来源
+   */
+  async function refreshSessionPermissions() {
+    const { roles = [], permissions = [] } =
+      (await getPermissionsApi()) ?? {};
+    accessStore.setAccessCodes(permissions);
+    userStore.setUserRoles(roles);
+  }
+
   function $reset() {
     loginLoading.value = false;
   }
@@ -131,5 +142,6 @@ export const useAuthStore = defineStore('auth', () => {
     fetchUserInfo,
     loginLoading,
     logout,
+    refreshSessionPermissions,
   };
 });

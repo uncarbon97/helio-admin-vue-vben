@@ -30,12 +30,6 @@ export namespace AuthApi {
     validSeconds?: number;
   }
 
-  /** 登录页租户相关UI配置 */
-  export interface LoginTenantUIConfig {
-    /** 是否显示租户编码输入框 */
-    showTenantCodeInputFlag?: boolean;
-  }
-
   /** 登录接口返回值 */
   export interface LoginResult {
     /** token值 */
@@ -43,6 +37,14 @@ export namespace AuthApi {
     /** 对应角色 */
     roles?: string[];
     /** 拥有权限 */
+    permissions?: string[];
+  }
+
+  /** 会话角色与权限返回值（登录后、切换租户后统一从这里重取） */
+  export interface SessionPermissionResult {
+    /** 角色编码列表 */
+    roles?: string[];
+    /** 权限名集合 */
     permissions?: string[];
   }
 }
@@ -60,22 +62,21 @@ export async function loginApi(data: AuthApi.LoginParams) {
 }
 
 /**
+ * 获取当前会话角色与权限
+ * 登录后、切换租户后统一从这里重取
+ */
+export async function getPermissionsApi() {
+  return requestClient.post<AuthApi.SessionPermissionResult>(
+    `${API_PATH}/permissions`,
+  );
+}
+
+/**
  * 获取登录挑战
  */
 export async function getLoginChallengeApi() {
   return requestClient.post<AuthApi.LoginChallenge>(
     `${API_PATH}/login-challenge`,
-  );
-}
-
-/**
- * 获取租户相关UI配置
- */
-// helium customization: 对接后端“获取租户相关UI配置”（POST /v1/auth/tenant-ui-config），
-// 登录页租户编码输入框等开关由后端下发，禁止前端本地硬编码
-export async function getTenantUIConfigApi() {
-  return requestClient.post<AuthApi.LoginTenantUIConfig>(
-    `${API_PATH}/tenant-ui-config`,
   );
 }
 

@@ -116,7 +116,17 @@
     "otherActions": "More",
     "nextLoginChangePwd": "Change Pwd on Next Login",
     "kickOut": "Kick Out",
-    "kickOutConfirm": "Kick out \"{0}\"?"
+    "kickOutConfirm": "Kick out \"{0}\"?",
+    "alreadyMember": "Already a member",
+    "lookup": "Find User",
+    "lookupEmptyTip": "Enter pin or full phone number",
+    "lookupNoResult": "No matching user",
+    "lookupSelectFirst": "Select a user to join first",
+    "tenantExpel": "Remove from Tenant",
+    "tenantExpelConfirm": "Remove \"{0}\" from this tenant?",
+    "tenantExpelTip": "The user will be forced offline immediately and lose access to this tenant",
+    "tenantJoin": "Join tenant",
+    "tenantJoinRoleTip": "Optional: initial roles to bind on joining"
   },
   "loginLog": {
     "title": "Login Log",

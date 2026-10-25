@@ -3,19 +3,21 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { SysUserApi } from '#/api';
+import type { SysUserApi, UiConfigApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
-import { Plus } from '@vben/icons';
+import { IconifyIcon, Plus } from '@vben/icons';
 
 import { Button, message } from 'antdv-next';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import {
   deleteUser,
+  expelTenantUser,
+  getSysUserUIConfigApi,
   getUserDetail,
   getUserList,
   kickOutUser,
@@ -31,6 +33,7 @@ import DeptTreeCard from './modules/dept-tree-card.vue';
 import Detail from './modules/detail.vue';
 import Form from './modules/form.vue';
 import ResetPassword from './modules/reset-password.vue';
+import TenantJoin from './modules/tenant-join.vue';
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
@@ -63,7 +66,19 @@ const [ResetPwdDrawer, resetPwdDrawerApi] = useVbenDrawer({
   closeOnClickModal: false,
 });
 
+const [TenantJoinDrawer, tenantJoinDrawerApi] = useVbenDrawer({
+  connectedComponent: TenantJoin,
+  destroyOnClose: true,
+  closeOnClickModal: false,
+});
+
 const selectedDeptId = ref<null | string>(null);
+
+/** 用户优先模式功能开关（后端UI配置下发） */
+const showUserFirstFeatures = ref(false);
+
+/** 「删除」按钮语义（后端UI配置下发） */
+const userDeleteAction = ref<UiConfigApi.UserDeleteActionEnumValue>();
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
@@ -104,6 +119,22 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SysUserApi.SysUserDTO>,
 });
 
+onMounted(async () => {
+  // 开关接口失败时按关闭处理，不影响基础功能
+  const uiConfig = await getSysUserUIConfigApi().catch(() => undefined);
+  showUserFirstFeatures.value = uiConfig?.showUserFirstFeaturesFlag === true;
+  userDeleteAction.value = uiConfig?.userDeleteAction;
+  // 用户优先模式平台域：行操作补充「移出租户」；租户域：「删除」降级为「移出本租户」
+  gridApi.setGridOptions({
+    columns: useColumns(
+      onActionClick,
+      onToggleStatus,
+      showUserFirstFeatures.value,
+      userDeleteAction.value,
+    ),
+  });
+});
+
 function onDeptSelect(deptId: null | string) {
   selectedDeptId.value = deptId;
   gridApi.query();
@@ -137,6 +168,10 @@ function onActionClick(e: OnActionClickParams<SysUserApi.SysUserDTO>) {
     }
     case 'resetPwd': {
       resetPwdDrawerApi.setData(e.row).open();
+      break;
+    }
+    case 'tenantExpel': {
+      onTenantExpel(e.row);
       break;
     }
   }
@@ -193,12 +228,32 @@ async function onKickOut(row: SysUserApi.SysUserDTO) {
   onRefresh();
 }
 
+/** 移出租户（仅用户优先模式；成功后该用户被强制下线） */
+async function onTenantExpel(row: SysUserApi.SysUserDTO) {
+  const confirmed = await confirmAction(
+    $t('sys.user.tenantExpelConfirm', [row.nickname]),
+    {
+      dangerTips: [$t('sys.user.tenantExpelTip')],
+      title: $t('sys.user.tenantExpel'),
+    },
+  );
+  if (!confirmed) return;
+  await expelTenantUser(row.id);
+  message.success($t('ui.actionMessage.operationSuccess'));
+  onRefresh();
+}
+
 function onRefresh() {
   gridApi.query();
 }
 
 function onCreate() {
   formDrawerApi.setData(null).open();
+}
+
+/** 加入本租户（仅用户优先模式） */
+function onTenantJoin() {
+  tenantJoinDrawerApi.open();
 }
 </script>
 <template>
@@ -208,6 +263,7 @@ function onCreate() {
     <BindRoleDrawer @success="onRefresh" />
     <BindDeptDrawer @success="onRefresh" />
     <ResetPwdDrawer @success="onRefresh" />
+    <TenantJoinDrawer @success="onRefresh" />
     <div class="flex h-full w-full gap-2">
       <!-- 左侧部门树 -->
       <div class="w-60 shrink-0">
@@ -217,6 +273,14 @@ function onCreate() {
       <div class="min-w-0 flex-1">
         <Grid>
           <template #toolbar-tools>
+            <Button
+              v-if="showUserFirstFeatures"
+              class="mr-2"
+              @click="onTenantJoin"
+            >
+              <IconifyIcon class="size-4" icon="ant-design:user-add-outlined" />
+              {{ $t('sys.user.tenantJoin') }}
+            </Button>
             <Button type="primary" @click="onCreate">
               <Plus class="size-5" />
               {{ $t('ui.actionTitle.create') }}

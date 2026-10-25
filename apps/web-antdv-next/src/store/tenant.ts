@@ -3,16 +3,16 @@ import type { TenantSwitchApi } from '#/api';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { preferences } from '@vben/preferences';
-import { useAccessStore } from '@vben/stores';
+import { useAccessStore, useTabbarStore } from '@vben/stores';
 
-import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import { enterTenantSwitch, exitTenantSwitch, getCurrentTenantContext, getSwitchableTenants } from '#/api';
-import { $t } from '#/locales';
-import { resetRoutes } from '#/router';
-
+import {
+  enterTenantSwitch,
+  exitTenantSwitch,
+  getCurrentTenantContext,
+  getSwitchableTenants,
+} from '#/api';
 import { useAuthStore } from './auth';
 
 export const useTenantStore = defineStore('tenant', () => {
@@ -53,20 +53,19 @@ export const useTenantStore = defineStore('tenant', () => {
 
   /**
    * 切换视角后，后端已按目标租户重建权限快照；
-   * 前端需重取用户信息，并强制路由/菜单在下次导航时按新租户重新生成
+   * 前端重取角色/权限码（落持久化，供重载后使用），再整页重载清掉旧视角的
+   * 菜单、路由、keep-alive 缓存与业务缓存，由守卫重新走完整引导
    */
   async function refreshSessionAfterSwitch() {
-    let homePath: string | undefined;
+    // 重取角色/权限码；失败不阻塞重载（沿用旧码，下次切换时重试）
     try {
-      const userInfo = await authStore.fetchUserInfo();
-      homePath = userInfo?.homePath;
+      await authStore.refreshSessionPermissions();
     } catch {
-      // 用户信息拉取失败不阻塞视角切换
+      // 忽略
     }
-    accessStore.setIsAccessChecked(false);
-    // 清掉旧租户视角下已注册的动态路由，避免残留可直达的失效路由
-    resetRoutes();
-    await router.replace(homePath || preferences.app.defaultHomePath);
+    // 关闭全部标签页：旧租户专属路由在新视角下可能已不可达，避免残留死标签
+    await useTabbarStore().closeAllTabs(router);
+    window.location.reload();
   }
 
   /**
@@ -77,12 +76,8 @@ export const useTenantStore = defineStore('tenant', () => {
   async function switchTo(tenantCode: string) {
     const context = await enterTenantSwitch({ tenantCode });
     current.value = context;
+    // 重载会吞掉 toast，切换结果由头部租户名 +「已切换」标签反馈
     await refreshSessionAfterSwitch();
-    notification.success({
-      description: context.tenantName ?? context.tenantCode ?? tenantCode,
-      duration: 3,
-      title: $t('tenant.switch.switchSuccessTitle'),
-    });
   }
 
   /**
@@ -92,10 +87,6 @@ export const useTenantStore = defineStore('tenant', () => {
     const context = await exitTenantSwitch();
     current.value = context;
     await refreshSessionAfterSwitch();
-    notification.success({
-      duration: 3,
-      title: $t('tenant.switch.exitSuccessTitle'),
-    });
   }
 
   function $reset() {

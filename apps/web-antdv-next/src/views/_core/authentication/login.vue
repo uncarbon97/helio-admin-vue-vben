@@ -2,7 +2,7 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 import type { Recordable } from '@vben/types';
 
-import type { AuthApi } from '#/api';
+import type { AuthApi, UiConfigApi } from '#/api';
 
 import { computed, h, onBeforeUnmount, onMounted, ref } from 'vue';
 
@@ -10,19 +10,19 @@ import { AuthenticationLogin, z } from '@vben/common-ui';
 import { createIconifyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
 
-import { getLoginChallengeApi, getTenantUIConfigApi } from '#/api';
+import { getLoginChallengeApi, getLoginUIConfigApi } from '#/api';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
-// helium customization: Helium: 登录验证码 —— 对接后端登录挑战（POST /v1/auth/login-challenge），
+// 登录验证码
 // OCR 类型展示图形验证码；验证码一次性消费，登录失败或点击图片后刷新
 const loginChallenge = ref<AuthApi.LoginChallenge>();
 const loginRef = ref<InstanceType<typeof AuthenticationLogin>>();
 
-// helium customization: 离线图标集（ant-design）内的刷新图标，内网可用
+// 离线图标集（ant-design）内的刷新图标，内网可用
 const RefreshIcon = createIconifyIcon('ant-design:redo-outlined');
 
 const hasOcrChallenge = computed(
@@ -31,12 +31,12 @@ const hasOcrChallenge = computed(
     (loginChallenge.value?.type === 'OCR'),
 );
 
-// helium customization: 验证码有效期倒计时 —— 按 validSeconds 计时，超时后覆盖蒙层，需手动点击刷新
+// 验证码有效期倒计时 —— 按 validSeconds 计时，超时后覆盖蒙层，需手动点击刷新
 const captchaExpired = ref(false);
 let captchaTimer: ReturnType<typeof setTimeout> | undefined;
 
-// helium customization: 租户相关UI配置 —— 由后端下发（多租户启用且 TENANT_FIRST 模式时显示租户编码输入框），禁止前端硬编码开关
-const tenantUIConfig = ref<AuthApi.LoginTenantUIConfig>();
+// 租户相关UI配置
+const tenantUIConfig = ref<UiConfigApi.LoginUIConfig>();
 
 const showTenantCodeInput = computed(
   () => tenantUIConfig.value?.showTenantCodeInputFlag === true,
@@ -156,8 +156,8 @@ async function handleSubmit(values: Recordable<any>) {
 
 onMounted(() => {
   refreshChallenge();
-  // helium customization: 拉取租户相关UI配置，决定是否渲染租户编码输入框（失败不阻塞登录）
-  getTenantUIConfigApi()
+  // 拉取租户相关UI配置，决定是否渲染租户编码输入框
+  getLoginUIConfigApi()
     .then((config) => {
       tenantUIConfig.value = config;
     })

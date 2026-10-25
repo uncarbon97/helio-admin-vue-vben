@@ -2,7 +2,7 @@ import type { Ref } from 'vue';
 
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridColumns } from '#/adapter/vxe-table';
-import type { DeptOptionNode, SysUserApi } from '#/api';
+import type { DeptOptionNode, SysUserApi, UiConfigApi } from '#/api';
 import type { EnabledStatusEnumValue } from '#/api/common';
 
 import { EnabledStatusEnum, GenderEnum } from '#/api/common';
@@ -29,11 +29,17 @@ export function useGridFormSchema(): VbenFormSchema[] {
  * 表格列
  * @param onActionClick
  * @param onToggleStatus 状态开关切换回调
+ * @param showUserFirstFeatures 用户优先模式开关（后端UI配置下发）
+ * @param userDeleteAction 「删除」按钮语义（后端UI配置下发）
  */
 export function useColumns<T = SysUserApi.SysUserDTO>(
   onActionClick?: OnActionClickFn<T>,
   onToggleStatus?: (row: T, newStatus: EnabledStatusEnumValue) => Promise<void>,
+  showUserFirstFeatures = false,
+  userDeleteAction?: UiConfigApi.UserDeleteActionEnumValue,
 ): VxeTableGridColumns {
+  // 租户域下「删除」降级为「移出本租户」，避免独立入口与之重复
+  const deleteActionIsExpel = userDeleteAction === 'TENANT_EXPEL';
   return [
     {
       field: 'pin',
@@ -147,7 +153,18 @@ export function useColumns<T = SysUserApi.SysUserDTO>(
                     { code: 'bindDept', text: $t('sys.user.bindDept') },
                     { code: 'resetPwd', text: $t('sys.user.resetPwd') },
                     { code: 'kickOut', text: $t('sys.user.kickOut') },
-                    'delete',
+                    // 用户优先模式平台域：追加独立的「移出租户」入口
+                    ...(showUserFirstFeatures && !deleteActionIsExpel
+                      ? [{ code: 'tenantExpel', text: $t('sys.user.tenantExpel') }]
+                      : []),
+                    // 用户优先模式租户域：「删除」降级为「移出本租户」，保留危险色
+                    deleteActionIsExpel
+                      ? {
+                        code: 'tenantExpel',
+                        danger: true,
+                        text: $t('sys.user.tenantExpel'),
+                      }
+                      : 'delete',
                   ],
                   text: $t('sys.user.otherActions'),
                 },

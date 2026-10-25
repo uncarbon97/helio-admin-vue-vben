@@ -79,6 +79,22 @@ export namespace SysUserApi {
     /** 所属部门名称 */
     deptName: null | string;
   }
+
+  /** 全局找人结果（仅用户优先模式） */
+  export interface TenantUserLookupVO {
+    /** 用户ID */
+    userId: string;
+    /** 账号 */
+    pin: string;
+    /** 昵称 */
+    nickname: null | string;
+    /** 手机号 */
+    phoneNo: null | string;
+    /** 邮箱 */
+    email: null | string;
+    /** 是否已是本租户成员 */
+    memberFlag: boolean;
+  }
 }
 
 const API_PATH = '/v1/sys/user';
@@ -202,15 +218,46 @@ async function kickOutUser(id: string) {
   return requestClient.post(`${API_PATH}/kick-out`, { id });
 }
 
+/**
+ * 全局找人（仅用户优先模式）
+ * @param data 账号 / 完整手机号，至少填一项
+ */
+async function lookupTenantUsers(data: { phoneNo?: string; pin?: string }) {
+  return requestClient.post<SysUserApi.TenantUserLookupVO[]>(
+    `${API_PATH}/lookup`,
+    data,
+  );
+}
+
+/**
+ * 加入本租户（仅用户优先模式，目标租户取当前会话上下文）
+ * @param pin 账号
+ * @param roleIds 初始角色IDs；为空则不绑定角色
+ */
+async function joinTenantUser(pin: string, roleIds?: string[]) {
+  return requestClient.post(`${API_PATH}/tenant-join`, { pin, roleIds });
+}
+
+/**
+ * 移出租户（仅用户优先模式，成功后该用户被强制下线）
+ * @param userId 用户ID
+ */
+async function expelTenantUser(userId: string) {
+  return requestClient.post(`${API_PATH}/tenant-expel`, { userId });
+}
+
 export {
   bindUserDept,
   bindUserRole,
   createUser,
   deleteUser,
+  expelTenantUser,
   getUserDetail,
   getUserList,
+  joinTenantUser,
   kickOutUser,
   listRelatedRole,
+  lookupTenantUsers,
   resetUserPassword,
   setUserStatus,
   updateUser,
