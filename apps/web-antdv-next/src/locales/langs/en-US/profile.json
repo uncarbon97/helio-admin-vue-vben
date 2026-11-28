@@ -1,0 +1,12 @@
+{
+  "passwordSetting": {
+    "oldPassword": "Old Password",
+    "oldPasswordPlaceholder": "Enter old password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Enter the new password again",
+    "passwordMismatch": "The two passwords do not match",
+    "success": "Password changed, please log in again"
+  }
+}

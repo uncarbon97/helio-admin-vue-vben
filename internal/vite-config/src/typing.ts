@@ -54,29 +54,7 @@ interface PrintPluginOptions {
   infoMap?: Record<string, string | undefined>;
 }
 
-/**
- * Nitro Mock 插件配置选项
- * @description 用于配置 Nitro Mock 服务器的行为
- */
-interface NitroMockPluginOptions {
-  /**
-   * Mock 服务器包名
-   * @default '@vbenjs/nitro-mock'
-   */
-  mockServerPackage?: string;
-
-  /**
-   * Mock 服务端口
-   * @default 3000
-   */
-  port?: number;
-
-  /**
-   * 是否打印 Mock 日志
-   * @default false
-   */
-  verbose?: boolean;
-}
+// helium customization: 已移除 NitroMockPluginOptions 接口、ApplicationPluginOptions 的 nitroMock/nitroMockOptions 字段及同名导出（mock 服务废弃）
 
 /**
  * 归档插件配置选项
@@ -260,15 +238,6 @@ interface ApplicationPluginOptions extends CommonPluginOptions {
    */
   license?: boolean;
   /**
-   * 是否开启 Nitro Mock
-   * @default false
-   */
-  nitroMock?: boolean;
-  /**
-   * Nitro Mock 插件配置
-   */
-  nitroMockOptions?: NitroMockPluginOptions;
-  /**
    * 是否开启控制台打印
    * @default false
    */
@@ -358,7 +327,6 @@ export type {
   IImportMap,
   ImportmapPluginOptions,
   LibraryPluginOptions,
-  NitroMockPluginOptions,
   PrintPluginOptions,
   VbenViteConfig,
 };

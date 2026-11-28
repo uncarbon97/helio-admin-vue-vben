@@ -280,8 +280,7 @@ const mainStyle = computed(() => {
     const isSideNavEffective =
       (isSidebarMixedNav.value || isHeaderMixedNav.value) &&
       sidebarExpandOnHover.value &&
-      sidebarExtraVisible.value &&
-      !activeSidebarCollapse.value;
+      sidebarExtraVisible.value;
 
     if (isSideNavEffective) {
       const sideCollapseWidth = props.sidebarMixedWidth;
@@ -676,11 +675,12 @@ const layoutStaticHeaderTarget = `#${idLayoutStaticHeader}`;
                 class="my-0 mr-1 rounded-md"
                 @click="handleHeaderToggle"
               >
+                <!-- helium customization: 离线环境，图标改用本地打包的 ant-design 集（避免运行时请求 api.iconify.design） -->
                 <IconifyIcon
                   v-if="isMobile ? !activeSidebarCollapse : showSidebar"
-                  icon="ep:fold"
+                  icon="ant-design:menu-fold-outlined"
                 />
-                <IconifyIcon v-else icon="ep:expand" />
+                <IconifyIcon v-else icon="ant-design:menu-unfold-outlined" />
               </VbenIconButton>
             </template>
             <slot name="header"></slot>

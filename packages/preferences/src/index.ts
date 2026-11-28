@@ -3,7 +3,7 @@ import type {
   Preferences,
   PreferencesExtension,
 } from '@vben-core/preferences';
-import type { DeepPartial, SupportedLanguagesType } from '@vben-core/typings';
+import type { DeepPartial } from '@vben-core/typings';
 
 /**
  * 如果你想所有的app都使用相同的默认偏好设置，你可以在这里定义
@@ -12,11 +12,7 @@ import type { DeepPartial, SupportedLanguagesType } from '@vben-core/typings';
  * @returns
  */
 
-function defineOverridesPreferences(
-  preferences: DeepPartial<Preferences> & {
-    app?: { locale?: SupportedLanguagesType };
-  },
-) {
+function defineOverridesPreferences(preferences: DeepPartial<Preferences>) {
   return preferences;
 }
 
@@ -28,13 +24,14 @@ function definePreferencesExtension<
 
 /** 应用级版权配置，供各 app 的 preferences 覆盖使用 */
 const appCopyrightPreferences = {
+  // helium customization: 默认隐藏版权显示
+  enable: false,
+  settingShow: false,
   companyName: 'Vben',
   companySiteLink: 'https://www.vben.pro',
   date: '2024',
-  enable: true,
   icp: '闽ICP备19024351号',
   icpLink: 'https://beian.miit.gov.cn/',
-  settingShow: true,
 } satisfies DeepPartial<Preferences>['copyright'];
 
 export {

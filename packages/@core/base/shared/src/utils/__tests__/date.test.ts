@@ -11,6 +11,7 @@ import {
   isDate,
   isDayjsObject,
   setCurrentTimezone,
+  setShowTimezoneOffset,
 } from '../date';
 
 dayjs.extend(utc);
@@ -115,6 +116,40 @@ describe('dateUtils', () => {
       const tz = getSystemTimezone();
       expect(typeof tz).toBe('string');
       expect(tz).toMatch(/^[A-Z]+\/[A-Z_]+/i);
+    });
+  });
+
+  // ===============================
+  // showTimezoneOffset（helium customization）
+  // ===============================
+  describe('showTimezoneOffset', () => {
+    // 后端按前端当前时区返回的时刻文本
+    const zoned = '2026-09-21T01:58:27-04:00';
+
+    afterEach(() => {
+      setShowTimezoneOffset(0);
+    });
+
+    it('should strip offset suffix when disabled (否)', () => {
+      setShowTimezoneOffset(0);
+      expect(formatDateTime(zoned)).toBe('2026-09-21 01:58:27');
+    });
+
+    it('should keep original offset suffix when enabled (是)', () => {
+      setShowTimezoneOffset(1);
+      expect(formatDateTime(zoned)).toBe('2026-09-21 01:58:27-04:00');
+    });
+
+    it('should not append offset for date-only format even if enabled', () => {
+      setShowTimezoneOffset(1);
+      expect(formatDate(zoned)).toBe('2026-09-21');
+    });
+
+    it('should normalize Z suffix to +00:00 when enabled', () => {
+      setShowTimezoneOffset(1);
+      expect(formatDateTime('2026-09-21T01:58:27Z')).toBe(
+        '2026-09-21 01:58:27+00:00',
+      );
     });
   });
 

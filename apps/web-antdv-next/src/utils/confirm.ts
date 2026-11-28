@@ -1,0 +1,43 @@
+import type { VNode } from 'vue';
+
+import { h } from 'vue';
+
+import { confirm as vbenConfirm } from '@vben/common-ui';
+
+export interface ConfirmActionOptions {
+  /** 自定义内容 VNode，优先于 message 文本与 dangerTips（可承载交互控件） */
+  content?: VNode;
+  /** 红色小字警示（逐条展示在提示内容下方） */
+  dangerTips?: string[];
+  /** 标题，默认「提示」 */
+  title?: string;
+}
+
+/**
+ * 二次确认（确认走 resolve、取消走 reject，此处统一转为布尔）
+ * @param message 提示内容
+ * @param options 可选项：标题、红色警示文案、自定义内容 VNode
+ * @returns 是否确认
+ */
+export async function confirmAction(
+  message: string,
+  options: ConfirmActionOptions = {},
+): Promise<boolean> {
+  const { content: customContent, dangerTips, title } = options;
+  const content =
+    customContent ??
+    (dangerTips?.length
+      ? h('div', [
+          h('p', message),
+          ...dangerTips.map((tip) =>
+            h('p', { class: 'mt-1 text-destructive text-xs' }, tip),
+          ),
+        ])
+      : message);
+  try {
+    await vbenConfirm({ content, title });
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -3,7 +3,7 @@
   "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
   // workbench
   "workbench.list.smoothScrolling": true,
-  "workbench.startupEditor": "newUntitledFile",
+  "workbench.startupEditor": "none",
   "workbench.tree.indent": 10,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.closeOnFileDelete": true,
@@ -71,7 +71,7 @@
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[vue]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"

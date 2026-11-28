@@ -1,0 +1,12 @@
+{
+  "passwordSetting": {
+    "oldPassword": "旧密码",
+    "oldPasswordPlaceholder": "请输入旧密码",
+    "newPassword": "新密码",
+    "newPasswordPlaceholder": "请输入新密码",
+    "confirmPassword": "确认密码",
+    "confirmPasswordPlaceholder": "请再次输入新密码",
+    "passwordMismatch": "两次输入的密码不一致",
+    "success": "密码修改成功，请重新登录"
+  }
+}

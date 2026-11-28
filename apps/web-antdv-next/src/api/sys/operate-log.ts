@@ -1,0 +1,125 @@
+import type { AxiosResponse } from '@vben/request';
+
+import type { LogResultStatusEnumValue } from './login-log';
+
+import type { PageParam, PageResult } from '#/api/common';
+
+import { requestClient } from '#/api/request';
+import { parseFilenameFromDisposition, saveBlob } from '#/utils/download';
+
+export namespace SysOperateLogApi {
+  /** 列表查询条件 */
+  export interface ListQuery {
+    /** 分页参数 */
+    pageParam: PageParam;
+    /** 时间区间起 */
+    beginAt?: string;
+    /** 时间区间止 */
+    endAt?: string;
+    /** 业务类型 */
+    bizType?: string;
+    /** 行为 */
+    behavior?: string;
+    /** 业务号 */
+    bizNo?: string;
+    /** 用户ID数组（按用户多选查询） */
+    userIds?: string[];
+    /** 结果状态 */
+    resultStatus?: LogResultStatusEnumValue;
+  }
+
+  /** 批量导出请求（继承列表查询条件，不含分页参数） */
+  export interface ExportRequest extends Omit<ListQuery, 'pageParam'> {
+    /** 是否包含来源UA列；默认不包含 */
+    includeUserAgent?: boolean;
+  }
+
+  /** 值对象 */
+  export interface SysOperateLogDTO {
+    /** 主键ID */
+    id: string;
+    /** 创建时刻 */
+    createdAt: string;
+    /** 更新时刻 */
+    updatedAt: string;
+    /** 业务类型 */
+    bizType: string;
+    /** 行为 */
+    behavior: string;
+    /** 业务号 */
+    bizNo: string;
+    /** 操作内容 */
+    operation: string;
+    /** 额外业务信息 */
+    bizExtra: string;
+    /** 操作人 */
+    userNickname: string;
+    /** 操作人账号 */
+    userPin: string;
+    /** 用户类型编码 */
+    userTypeCode: string;
+    /** HTTP请求方法 */
+    requestMethod: string;
+    /** HTTP请求路径 */
+    requestPath: string;
+    /** 来源IP地址 */
+    visitorIp: string;
+    /** 来源UA */
+    visitorUserAgent: string;
+    /** IP地址归属地 */
+    visitorIpLocation: string;
+    /** 结果状态 */
+    resultStatus: LogResultStatusEnumValue;
+    /** 失败原因文本 */
+    failedMsg: null | string;
+  }
+}
+
+const API_PATH = '/v1/sys/operate-log';
+
+/**
+ * 分页查询
+ */
+async function getOperateLogList(data: SysOperateLogApi.ListQuery) {
+  return requestClient.post<PageResult<SysOperateLogApi.SysOperateLogDTO>>(
+    `${API_PATH}/list`,
+    data,
+  );
+}
+
+/**
+ * 详情
+ * @param id ID
+ */
+async function getOperateLogDetail(id: string) {
+  return requestClient.post<SysOperateLogApi.SysOperateLogDTO>(
+    `${API_PATH}/detail`,
+    { id },
+  );
+}
+
+/**
+ * 批量导出Excel（xlsx），并触发浏览器保存
+ * @param request 筛选条件 + 导出选项
+ */
+async function exportOperateLogExcel(request: SysOperateLogApi.ExportRequest) {
+  const response = await requestClient.download<AxiosResponse<Blob>>(
+    `${API_PATH}/export`,
+    {
+      data: request,
+      method: 'POST',
+      responseReturn: 'raw',
+      // 导出数据量可能较大，放宽超时
+      timeout: 120_000,
+    },
+  );
+  saveBlob(
+    response.data,
+    parseFilenameFromDisposition(
+      response.headers?.['content-disposition'],
+      '系统操作日志.xlsx',
+    ),
+  );
+}
+
+export { exportOperateLogExcel, getOperateLogDetail, getOperateLogList };

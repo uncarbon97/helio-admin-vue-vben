@@ -124,9 +124,10 @@ const customConfig: Linter.Config[] = [
       ],
     },
   },
-  // 后端模拟代码，不需要太多规则
+  // helium customization: 移除 apps/backend-mock glob（mock 工程已删除），仅保留 docs
+  // 文档代码，不需要太多规则
   {
-    files: ['apps/backend-mock/**/**', 'docs/**/**'],
+    files: ['docs/**/**'],
     rules: {
       'no-console': 'off',
     },

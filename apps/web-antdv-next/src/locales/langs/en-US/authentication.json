@@ -1,0 +1,5 @@
+{
+  "captchaRefresh": "Click to refresh",
+  "tenantCode": "Tenant Code",
+  "tenantCodeTip": "Enter the tenant code, default is 0000"
+}

@@ -1,69 +1,93 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
-import type { BasicOption } from '@vben/types';
+import type { Recordable } from '@vben/types';
 
-import { computed, markRaw } from 'vue';
+import type { AuthApi, UiConfigApi } from '#/api';
 
-import { AuthenticationLogin, SliderCaptcha, z } from '@vben/common-ui';
+import { computed, h, onBeforeUnmount, onMounted, ref } from 'vue';
+
+import { AuthenticationLogin, z } from '@vben/common-ui';
+import { createIconifyIcon } from '@vben/icons';
 import { $t } from '@vben/locales';
 
+import { getLoginChallengeApi, getLoginUIConfigApi } from '#/api';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
-const MOCK_USER_OPTIONS: BasicOption[] = [
-  {
-    label: 'Super',
-    value: 'vben',
-  },
-  {
-    label: 'Admin',
-    value: 'admin',
-  },
-  {
-    label: 'User',
-    value: 'jack',
-  },
-];
+// 登录验证码
+// OCR 类型展示图形验证码；验证码一次性消费，登录失败或点击图片后刷新
+const loginChallenge = ref<AuthApi.LoginChallenge>();
+const loginRef = ref<InstanceType<typeof AuthenticationLogin>>();
 
+// 离线图标集（ant-design）内的刷新图标，内网可用
+const RefreshIcon = createIconifyIcon('ant-design:redo-outlined');
+
+const hasOcrChallenge = computed(
+  () =>
+    !!loginChallenge.value?.captchaId &&
+    (loginChallenge.value?.type === 'OCR'),
+);
+
+// 验证码有效期倒计时 —— 按 validSeconds 计时，超时后覆盖蒙层，需手动点击刷新
+const captchaExpired = ref(false);
+let captchaTimer: ReturnType<typeof setTimeout> | undefined;
+
+// 租户相关UI配置
+const tenantUIConfig = ref<UiConfigApi.LoginUIConfig>();
+
+const showTenantCodeInput = computed(
+  () => tenantUIConfig.value?.showTenantCodeInputFlag === true,
+);
+
+function clearCaptchaTimer() {
+  if (captchaTimer) {
+    clearTimeout(captchaTimer);
+    captchaTimer = undefined;
+  }
+}
+
+async function refreshChallenge() {
+  clearCaptchaTimer();
+  captchaExpired.value = false;
+  loginChallenge.value = await getLoginChallengeApi();
+  loginRef.value?.getFormApi().setFieldValue('captchaAnswer', '');
+
+  const validSeconds = loginChallenge.value?.validSeconds ?? 0;
+  if (hasOcrChallenge.value && validSeconds > 0) {
+    captchaTimer = setTimeout(
+      () => (captchaExpired.value = true),
+      validSeconds * 1000,
+    );
+  }
+}
+
+onBeforeUnmount(clearCaptchaTimer);
+
+// helium customization: 移除上游 mock 账号下拉选择器（MOCK_USER_OPTIONS）及其自动填充逻辑，仅保留账号/密码表单；
+// 移除上游滑块拖动组件，改用后端图形验证码挑战
 const formSchema = computed((): VbenFormSchema[] => {
-  return [
-    {
-      component: 'VbenSelect',
+  const schemas: VbenFormSchema[] = [];
+
+  // helium customization: 后端下发开关控制是否显示租户编码输入框（登录时随表单提交 tenantCode）
+  if (showTenantCodeInput.value) {
+    schemas.push({
+      component: 'VbenInput',
       componentProps: {
-        options: MOCK_USER_OPTIONS,
-        placeholder: $t('authentication.selectAccount'),
+        placeholder: $t('authentication.tenantCodeTip'),
       },
-      fieldName: 'selectAccount',
-      label: $t('authentication.selectAccount'),
-      rules: z
-        .string()
-        .min(1, { message: $t('authentication.selectAccount') })
-        .optional()
-        .default('vben'),
-    },
+      fieldName: 'tenantCode',
+      label: $t('authentication.tenantCode'),
+    });
+  }
+
+  schemas.push(
     {
       component: 'VbenInput',
       componentProps: {
         placeholder: $t('authentication.usernameTip'),
-      },
-      dependencies: {
-        trigger(values, form) {
-          if (values.selectAccount) {
-            const findUser = MOCK_USER_OPTIONS.find(
-              (item) => item.value === values.selectAccount,
-            );
-            if (findUser) {
-              form.setValues({
-                password: '123456',
-                username: findUser.value,
-              });
-            }
-          }
-        },
-        triggerFields: ['selectAccount'],
       },
       fieldName: 'username',
       label: $t('authentication.username'),
@@ -78,21 +102,80 @@ const formSchema = computed((): VbenFormSchema[] => {
       label: $t('authentication.password'),
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
     },
-    {
-      component: markRaw(SliderCaptcha),
-      fieldName: 'captcha',
-      rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
-      }),
-    },
-  ];
+  );
+
+  if (hasOcrChallenge.value) {
+    schemas.push({
+      component: 'VbenInput',
+      componentProps: {
+        placeholder: $t('authentication.code'),
+      },
+      fieldName: 'captchaAnswer',
+      label: $t('authentication.code'),
+      rules: z.string().min(1, { message: $t('authentication.codeTip', [4]) }),
+      suffix: () =>
+        h('div', { class: 'relative' }, [
+          h('img', {
+            alt: 'captcha',
+            class: 'h-9 w-[200px] cursor-pointer rounded-sm',
+            onClick: () => refreshChallenge(),
+            src: `${loginChallenge.value?.captchaImageEncoded}`,
+          }),
+          captchaExpired.value
+            ? h(
+                'div',
+                {
+                  class:
+                    'absolute inset-0 z-10 flex cursor-pointer items-center justify-center gap-1 rounded-sm bg-black/60 text-xs text-white backdrop-blur-[1px]',
+                  onClick: () => refreshChallenge(),
+                },
+                [
+                  h(RefreshIcon, { class: 'size-4' }),
+                  $t('authentication.captchaRefresh'),
+                ],
+              )
+            : null,
+        ]),
+    });
+  }
+
+  return schemas;
+});
+
+async function handleSubmit(values: Recordable<any>) {
+  try {
+    await authStore.authLogin({
+      ...values,
+      captchaId: loginChallenge.value?.captchaId,
+    });
+  } catch {
+    // 验证码为一次性，登录失败后刷新
+    await refreshChallenge();
+  }
+}
+
+onMounted(() => {
+  refreshChallenge();
+  // 拉取租户相关UI配置，决定是否渲染租户编码输入框
+  getLoginUIConfigApi()
+    .then((config) => {
+      tenantUIConfig.value = config;
+    })
+    .catch(() => {});
 });
 </script>
 
 <template>
+  <!-- helium customization: 隐藏忘记密码/手机号登录/扫码登录/第三方登录/注册入口 -->
   <AuthenticationLogin
+    ref="loginRef"
     :form-schema="formSchema"
     :loading="authStore.loginLoading"
-    @submit="authStore.authLogin"
+    :show-code-login="false"
+    :show-forget-password="false"
+    :show-qrcode-login="false"
+    :show-register="false"
+    :show-third-party-login="false"
+    @submit="handleSubmit"
   />
 </template>

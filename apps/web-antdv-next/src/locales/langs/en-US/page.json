@@ -9,7 +9,11 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "analytics": "Analytics",
-    "workspace": "Workspace"
+    "workbench": {
+      "title": "Home",
+      "greeting": "Welcome back, {name}",
+      "welcome": "Thanks for using this admin console",
+      "hint": "Use the sidebar menu to get started."
+    }
   }
 }

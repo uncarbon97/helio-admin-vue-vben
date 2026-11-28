@@ -6,9 +6,11 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
 import { accessRoutes, coreRouteNames } from '#/router/routes';
+import { CHANGE_PWD_PATH } from '#/router/constants';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
+import { YesOrNoEnum } from '#/api';
 
 /**
  * 通用守卫配置
@@ -85,6 +87,14 @@ function setupAccessGuard(router: Router) {
       return to;
     }
 
+    // helium customization: pwdMustChange 时强制跳转修改密码页
+    if (
+      userStore.userInfo?.pwdMustChange === YesOrNoEnum.YES &&
+      to.path !== CHANGE_PWD_PATH
+    ) {
+      return { path: CHANGE_PWD_PATH, replace: true };
+    }
+
     // 是否已经生成过动态路由
     if (accessStore.isAccessChecked) {
       return true;
@@ -104,7 +114,15 @@ function setupAccessGuard(router: Router) {
     });
 
     // 保存菜单信息和路由信息
-    accessStore.setAccessMenus(accessibleMenus);
+    // helium customization: 侧边栏顶部固定「首页」入口（backend 模式菜单只来自后端，需前端注入）
+    const HOME_MENU = {
+      // helium customization: 离线环境，图标改用本地打包的 ant-design 集
+      icon: 'ant-design:dashboard-outlined',
+      name: '首页',
+      order: -1,
+      path: '/dashboard/workbench',
+    };
+    accessStore.setAccessMenus([HOME_MENU, ...accessibleMenus]);
     accessStore.setAccessRoutes(accessibleRoutes);
     accessStore.setIsAccessChecked(true);
     const redirectPath = (from.query.redirect ??

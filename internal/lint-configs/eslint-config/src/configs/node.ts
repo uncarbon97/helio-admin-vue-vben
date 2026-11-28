@@ -54,7 +54,8 @@ export async function node(): Promise<Linter.Config[]> {
       },
     },
     {
-      files: ['apps/backend-mock/**/**', 'docs/**/**'],
+      // helium customization: 移除 apps/backend-mock glob（mock 工程已删除）
+      files: ['docs/**/**'],
       rules: {
         'n/no-extraneous-import': 'off',
         'n/prefer-global/buffer': 'off',

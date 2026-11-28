@@ -10,8 +10,9 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'antdv-next';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { getPermissionsApi, getUserInfoApi, loginApi, logoutApi, YesOrNoEnum } from '#/api';
 import { $t } from '#/locales';
+import { CHANGE_PWD_PATH } from '#/router/constants';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
@@ -33,30 +34,43 @@ export const useAuthStore = defineStore('auth', () => {
     let userInfo: null | UserInfo = null;
     try {
       loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
+      // helium customization: 消费后端登录返回的 token；角色/权限码登录后从 /v1/auth/permissions 统一重取（与切换租户后同源）；用户资料拉取改为容错（失败不阻塞登录）
+      const { token } = await loginApi({
+        captchaAnswer: params.captchaAnswer,
+        captchaId: params.captchaId,
+        pin: params.pin ?? params.username,
+        pwd: params.pwd ?? params.password,
+        tenantCode: params.tenantCode,
+      });
 
-      // 如果成功获取到 accessToken
-      if (accessToken) {
-        accessStore.setAccessToken(accessToken);
+      // 如果成功获取到 token
+      if (token) {
+        accessStore.setAccessToken(token);
 
-        // 获取用户信息并存储到 accessStore 中
-        const [fetchUserInfoResult, accessCodes] = await Promise.all([
-          fetchUserInfo(),
-          getAccessCodesApi(),
-        ]);
+        // 拉取用户资料，失败不阻塞登录
+        try {
+          userInfo = await fetchUserInfo();
+        } catch {
+          userInfo = null;
+        }
 
-        userInfo = fetchUserInfoResult;
-
-        userStore.setUserInfo(userInfo);
-        accessStore.setAccessCodes(accessCodes);
+        // helium customization: 放在 fetchUserInfo 之后，避免被 setUserInfo 内部的 setUserRoles 覆盖；拉取失败不阻塞登录
+        try {
+          await refreshSessionPermissions();
+        } catch {
+          // 忽略：沿用旧权限码，下次登录/切换租户时重试
+        }
 
         if (accessStore.loginExpired) {
           accessStore.setLoginExpired(false);
         } else {
+          // helium customization: pwdMustChange 时登录后直达强制修改密码页
           onSuccess
             ? await onSuccess?.()
             : await router.push(
-                userInfo.homePath || preferences.app.defaultHomePath,
+                userInfo?.pwdMustChange === YesOrNoEnum.YES
+                  ? CHANGE_PWD_PATH
+                  : userInfo?.homePath || preferences.app.defaultHomePath,
               );
         }
 
@@ -78,10 +92,14 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout(redirect: boolean = true) {
-    try {
-      await logoutApi();
-    } catch {
-      // 不做任何处理
+    // helium customization: 401 触发的 doReAuthenticate 会先清 token 再调 logout；
+    // 无 token 时跳过登出接口，避免 401→logout→401 无限递归
+    if (accessStore.accessToken) {
+      try {
+        await logoutApi();
+      } catch {
+        // 不做任何处理
+      }
     }
     resetAllStores();
     accessStore.setLoginExpired(false);
@@ -110,6 +128,17 @@ export const useAuthStore = defineStore('auth', () => {
     return userInfo;
   }
 
+  /**
+   * 重取当前会话角色与权限码
+   * 登录后、切换租户后统一入口，保持单一来源
+   */
+  async function refreshSessionPermissions() {
+    const { roles = [], permissions = [] } =
+      (await getPermissionsApi()) ?? {};
+    accessStore.setAccessCodes(permissions);
+    userStore.setUserRoles(roles);
+  }
+
   function $reset() {
     loginLoading.value = false;
   }
@@ -120,5 +149,6 @@ export const useAuthStore = defineStore('auth', () => {
     fetchUserInfo,
     loginLoading,
     logout,
+    refreshSessionPermissions,
   };
 });

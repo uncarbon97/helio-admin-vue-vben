@@ -1,157 +1,79 @@
-<div align="center">
-  <a href="https://github.com/anncwb/vue-vben-admin">
-    <img alt="VbenAdmin Logo" width="215" src="https://unpkg.com/@vbenjs/static-source@0.1.7/source/logo-v1.webp">
-  </a>
-  <br>
-  <br>
+# Helium Admin UI
 
-[![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
+基于 [vue-vben-admin](https://github.com/vbenjs/vue-vben-admin) **5.x** 二次开发的管理前端，Helium 全家桶的前端成员。
 
-  <h1>Vue Vben Admin</h1>
-</div>
+- 技术栈：Vue 3 + Vite + TypeScript + Ant Design Vue（antdv-next）+ pnpm monorepo + Turborepo
+- 唯一业务子工程：`apps/web-antdv-next`，对接后端 `admin-api`（`/admin/v1/**`），不含上游 Mock 后端
+- 后端权限模式：路由与按钮权限完全由后端菜单树下发
+- 多租户、国际化（语言 / 时区随请求头传后端）、离线内网友好（无 CDN 外链）
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vbenjs_vue-vben-admin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vbenjs_vue-vben-admin) [![codeql](https://github.com/vbenjs/vue-vben-admin/actions/workflows/codeql.yml/badge.svg)](https://github.com/vbenjs/vue-vben-admin/actions/workflows/codeql.yml) [![build](https://github.com/vbenjs/vue-vben-admin/actions/workflows/build.yml/badge.svg)](https://github.com/vbenjs/vue-vben-admin/actions/workflows/build.yml) [![ci](https://github.com/vbenjs/vue-vben-admin/actions/workflows/ci.yml/badge.svg)](https://github.com/vbenjs/vue-vben-admin/actions/workflows/ci.yml) [![deploy](https://github.com/vbenjs/vue-vben-admin/actions/workflows/deploy.yml/badge.svg)](https://github.com/vbenjs/vue-vben-admin/actions/workflows/deploy.yml)
+📖 完整文档：[文档站 · 管理前端](https://helium.uncarbon.cc/admin-ui/)
 
-**English** | [中文](./README.zh-CN.md) | [日本語](./README.ja-JP.md)
+## 快速启动
 
-## Introduction
-
-Vue Vben Admin is a free and open source middle and back-end template. Using the latest `vue3`, `vite`, `TypeScript` and other mainstream technology development, the out-of-the-box middle and back-end front-end solutions can also be used for learning reference.
-
-## Upgrade Notice
-
-This is the latest version, 5.0, and it is not compatible with previous versions. If you are starting a new project, it is recommended to use the latest version. If you wish to view the old version, please use the [v2 branch](https://github.com/vbenjs/vue-vben-admin/tree/v2).
-
-## Features
-
-- **Latest Technology Stack**: Developed with cutting-edge front-end technologies like Vue 3 and Vite
-- **TypeScript**: A language for application-scale JavaScript
-- **Themes**: Multiple theme colors available with customizable options
-- **Internationalization**: Comprehensive built-in internationalization support
-- **Permissions**: Built-in solution for dynamic route-based permission generation
-
-## Preview
-
-- [Vben Admin](https://vben.pro/) - Full version Chinese site
-
-Test Account: vben/123456
-
-<div align="center">
-  <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview1.png">
-  <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
-  <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
-</div>
-
-### Use Gitpod
-
-Open the project in Gitpod (free online dev environment for GitHub) and start coding immediately.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vbenjs/vue-vben-admin)
-
-## Documentation
-
-[Document](https://doc.vben.pro/)
-
-## Install and Use
-
-1. Get the project code
+前置：Node.js `^24`、pnpm `>= 11`，后端已启动并监听 `7003`。
 
 ```bash
-git clone https://github.com/vbenjs/vue-vben-admin.git
-```
-
-2. Install dependencies
-
-```bash
-cd vue-vben-admin
-npm i -g corepack
+corepack enable        # 让 pnpm 版本自动对齐 packageManager 字段
 pnpm install
+pnpm dev               # 唯一子工程 apps/web-antdv-next
 ```
 
-3. Run
+打开 `http://localhost:5999/`（端口由 `apps/web-antdv-next/.env.development` 的 `VITE_PORT=5999` 决定）。
+
+### 接口地址
 
 ```bash
-pnpm dev
+# apps/web-antdv-next/.env.development
+VITE_GLOB_API_URL=http://127.0.0.1:7003/admin
 ```
 
-4. Build
+注意末尾的 `/admin`：`src/api/**` 里的路径一律写成 `/v1/sys/role/list` 这种**不带 `/admin`** 的形式，两边都带会变成 `/admin/admin/v1/...` 直接 404。
 
-```bash
-pnpm build
+### 首次登录
+
+账号 `admin` / 密码 `admin`；验证码默认为后端 OCR 图形验证码，点击图片刷新。租户编码输入框是否显示由后端 `ui-config` 接口决定。
+
+> ⚠️ 上线前务必修改 admin 密码。
+
+## 目录速览
+
+```text
+apps/web-antdv-next/src/
+├── adapter/      vben 适配层：form / vxe-table 渲染器
+├── api/          接口层（按后端业务域分包）
+├── components/   通用业务组件
+├── locales/      国际化文案（zh-CN / en-US）
+├── router/       路由（core / fixed + 后端动态下发）
+├── store/        状态存储
+└── views/        Vue 视图（sys / tenant / file / dashboard / _core）
 ```
 
-## Change Log
+业务页面模板以 `src/views/sys/role/` 为蓝本（列表页 + `data.ts` + `modules/form.vue`），新增页面推荐用 `helium-codegen` 生成，详见[新增业务页面](https://helium.uncarbon.cc/admin-ui/add-page/)。
 
-[CHANGELOG](https://github.com/vbenjs/vue-vben-admin/releases)
+## 相对上游 Vben5 的改动
 
-## How to Contribute
+所有改动处均带 `// helium customization: <说明>` 注释，变更清单见 [HELIUM_CUSTOMIZATION.MD](./HELIUM_CUSTOMIZATION.MD)。
 
-You are very welcome to join! [Raise an issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) or submit a Pull Request.
+## 推荐 VSCode 插件
 
-**Pull Request Process:**
+仓库已内置推荐清单（`.vscode/extensions.json`），打开工程时 VSCode 会提示安装。推荐：
 
-1. Fork the code
-2. Create your branch: `git checkout -b feat/xxxx`
-3. Submit your changes: `git commit -am 'feat(function): add xxxxx'`
-4. Push your branch: `git push origin feat/xxxx`
-5. Submit `pull request`
+| 插件 | 用途 |
+| --- | --- |
+| [Vue - Official (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) | Vue 3 语言支持 |
+| [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) / [oxlint](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) | 代码检查 |
+| [i18n Ally](https://marketplace.visualstudio.com/items?itemName=Lokalise.i18n-ally) | 国际化：内联翻译提示、缺失 key 检查，配合 `src/locales/langs/**` 使用 |
+| [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) | Tailwind 类名补全 |
+| [Iconify IntelliSense](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) | 图标预览（本仓库仅注册 `ant-design` 集） |
+| [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) | `.env*` 语法高亮 |
+| [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) | 样式检查 |
+| [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) | YAML 支持 |
+| [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) | 拼写检查 |
+| [CSS Variables](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-css-variables) | CSS 变量提示 |
+| [pnpm Catalog Lens](https://marketplace.visualstudio.com/items?itemName=antfu.pnpm-catalog-lens) | 在 `package.json` 中显示 catalog 版本 |
 
-## Git Contribution Submission Specification
+## 文档
 
-Reference [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) specification ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
-
-- `feat` Add new features
-- `fix` Fix the problem/BUG
-- `style` The code style is related and does not affect the running result
-- `perf` Optimization/performance improvement
-- `refactor` Refactor
-- `revert` Undo edit
-- `test` Test related
-- `docs` Documentation/notes
-- `chore` Dependency update/scaffolding configuration modification etc.
-- `ci` Continuous integration
-- `types` Type definition file changes
-
-## Browser Support
-
-Tailwind CSS v4.0 is designed for Safari 16.4+, Chrome 111+, and Firefox 128+
-
-Support modern browsers, not IE
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: |
-| last 2 versions | last 2 versions | last 2 versions | last 2 versions |
-
-## Maintainer
-
-[@Vben](https://github.com/anncwb)
-
-## Star History
-
-[![Star History Chart](https://star-history.dera.page/svg?repos=vbenjs/vue-vben-admin&type=Date)](https://star-history.dera.page/#vbenjs/vue-vben-admin&Date)
-
-## Donate
-
-If you think this project is helpful to you, you can help the author buy a cup of coffee to show your support!
-
-![donate](https://unpkg.com/@vbenjs/static-source@0.1.7/source/sponsor.png)
-
-<a style="display: block;width: 100px;height: 50px;line-height: 50px; color: #fff;text-align: center; background: #408aee;border-radius: 4px;" href="https://www.paypal.com/paypalme/cvvben">Paypal Me</a>
-
-## Contributors
-
-<a href="https://openomy.app/github/vbenjs/vue-vben-admin" target="_blank" style="display: block; width: 100%;" align="center">
-  <img src="https://openomy.app/svg?repo=vbenjs/vue-vben-admin&chart=bubble&latestMonth=3" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
- </a>
-
-<a href="https://github.com/vbenjs/vue-vben-admin/graphs/contributors">
-  <img alt="Contributors" src="https://contrib.rocks/image?repo=vbenjs/vue-vben-admin" />
-</a>
-
-## Discord
-
-- [Github Discussions](https://github.com/anncwb/vue-vben-admin/discussions)
-
-## License
-
-[MIT © Vben-2020](./LICENSE)
+- [快速启动](https://helium.uncarbon.cc/admin-ui/quick-start/) · [工程结构](https://helium.uncarbon.cc/admin-ui/project-structure/) · [新增业务页面](https://helium.uncarbon.cc/admin-ui/add-page/)
+- [vue-vben-admin 官方文档](https://doc.vben.pro/)

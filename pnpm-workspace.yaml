@@ -10,8 +10,7 @@ packages:
   - packages/business/*
   - apps/*
   - scripts/*
-  - docs
-  - playground
+  # helium customization: 移除上游 docs / playground 工作区条目（对应目录已删除）
 
 publicHoistPattern:
   - lefthook
@@ -49,6 +48,7 @@ catalog:
   '@eslint-community/eslint-plugin-eslint-comments': ^4.8.1
   '@eslint/js': ^10.0.1
   '@faker-js/faker': ^10.6.0
+  '@iconify-json/ant-design': ^1.2.9
   '@iconify/json': ^2.2.546
   '@iconify/tailwind4': ^1.2.3
   '@iconify/vue': ^5.0.4

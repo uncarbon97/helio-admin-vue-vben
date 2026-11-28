@@ -159,7 +159,8 @@
     },
     "timezone": {
       "setTimezone": "Set Timezone",
-      "setSuccess": "Timezone set successfully"
+      "setSuccess": "Timezone set successfully",
+      "showOffset": "Show timezone offset"
     }
   }
 }

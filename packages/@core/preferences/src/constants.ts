@@ -1,5 +1,7 @@
 import type { BuiltinThemeType, TimezoneOption } from '@vben-core/typings';
 
+import { getTimezoneOffsetMinutes } from '@vben-core/shared/utils';
+
 interface BuiltinThemePreset {
   color: string;
   darkPrimaryColor?: string;
@@ -81,33 +83,29 @@ const BUILT_IN_THEME_PRESETS: BuiltinThemePreset[] = [
 /**
  * 时区选项
  */
+// helium customization: 偏移量用 dayjs 时区数据按当前日期计算，自动兼容夏令时/冬令时（如纽约夏令时 UTC-4、冬令时 UTC-5），不依赖浏览器 Intl
+const formatOffset = (offsetMinutes: number) => {
+  const sign = offsetMinutes >= 0 ? '+' : '-';
+  const abs = Math.abs(offsetMinutes);
+  const hours = String(Math.floor(abs / 60)).padStart(2, '0');
+  const minutes = String(abs % 60).padStart(2, '0');
+  return `UTC${sign}${hours}:${minutes}`;
+};
+
+const buildTimezoneOption = (timezone: string): TimezoneOption => {
+  const offsetMinutes = getTimezoneOffsetMinutes(timezone);
+  return {
+    offset: offsetMinutes / 60,
+    label: `${timezone}(${formatOffset(offsetMinutes)})`,
+    timezone,
+  };
+};
+
+// helium customization: 时区仅保留北京（首选）/纽约，其余上游演示项移除
 const DEFAULT_TIME_ZONE_OPTIONS: TimezoneOption[] = [
-  {
-    offset: -5,
-    timezone: 'America/New_York',
-    label: 'America/New_York(GMT-5)',
-  },
-  {
-    offset: 0,
-    timezone: 'Europe/London',
-    label: 'Europe/London(GMT0)',
-  },
-  {
-    offset: 8,
-    timezone: 'Asia/Shanghai',
-    label: 'Asia/Shanghai(GMT+8)',
-  },
-  {
-    offset: 9,
-    timezone: 'Asia/Tokyo',
-    label: 'Asia/Tokyo(GMT+9)',
-  },
-  {
-    offset: 9,
-    timezone: 'Asia/Seoul',
-    label: 'Asia/Seoul(GMT+9)',
-  },
-];
+  'Asia/Shanghai',
+  'America/New_York',
+].map((timezone) => buildTimezoneOption(timezone));
 
 export const COLOR_PRESETS = [...BUILT_IN_THEME_PRESETS].slice(0, 7);
 

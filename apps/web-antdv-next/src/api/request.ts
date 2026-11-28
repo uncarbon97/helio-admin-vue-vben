@@ -4,7 +4,6 @@
 import type { RequestClientOptions } from '@vben/request';
 
 import { useAppConfig } from '@vben/hooks';
-import { i18n } from '@vben/locales';
 import { preferences } from '@vben/preferences';
 import {
   authenticateResponseInterceptor,
@@ -12,13 +11,11 @@ import {
   errorMessageResponseInterceptor,
   RequestClient,
 } from '@vben/request';
-import { useAccessStore } from '@vben/stores';
+import { useAccessStore, useTimezoneStore } from '@vben/stores';
 
 import { message } from 'antdv-next';
 
 import { useAuthStore } from '#/store';
-
-import { refreshTokenApi } from './core';
 
 const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
@@ -48,13 +45,10 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
 
   /**
    * 刷新token逻辑
+   * helium customization: 后端无刷新token接口，此处保留占位（enableRefreshToken 默认关闭，不会调用）
    */
   async function doRefreshToken() {
-    const accessStore = useAccessStore();
-    const resp = await refreshTokenApi();
-    const newToken = resp.data;
-    accessStore.setAccessToken(newToken);
-    return newToken;
+    return '';
   }
 
   function formatToken(token: null | string) {
@@ -67,18 +61,22 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
       const accessStore = useAccessStore();
 
       config.headers.Authorization = formatToken(accessStore.accessToken);
-      config.headers['Accept-Language'] =
-        i18n.global.locale.value || preferences.app.locale;
+      config.headers['Accept-Language'] = preferences.app.locale;
+      // helium customization: 后端 i18n 请求头：语言(zh-CN/en-US) + IANA 时区 ID，每次请求现取值，右上角切换后即时生效
+      config.headers['X-i18n-Lang'] = preferences.app.locale;
+      config.headers['X-i18n-Timezone'] = useTimezoneStore().timezone;
       return config;
     },
   });
 
+  // helium customization: 对齐后端统一响应体 { success, code, msg, data }：成功判定改判 success===true
   // 处理返回的响应数据格式
+  // 后端响应体: { success: boolean, code: string, msg: string, data: any }
   client.addResponseInterceptor(
     defaultResponseInterceptor({
-      codeField: 'code',
+      codeField: 'success',
       dataField: 'data',
-      successCode: 0,
+      successCode: (success: any) => success === true,
     }),
   );
 
@@ -97,9 +95,14 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   client.addResponseInterceptor(
     errorMessageResponseInterceptor((msg: string, error) => {
       // 这里可以根据业务进行定制,你可以拿到 error 内的信息进行定制化处理，根据不同的 code 做不同的提示，而不是直接使用 message.error 提示 msg
-      // 当前mock接口返回的错误字段是 error 或者 message
+      // helium customization: 后端响应体错误字段为 msg
       const responseData = error?.response?.data ?? {};
-      const errorMessage = responseData?.error ?? responseData?.message ?? '';
+      // helium customization: 入参校验失败(Z00406)时，data 内携带具体字段与原因，优先提示
+      if (responseData?.code === 'Z00406' && responseData?.data?.message) {
+        message.error(responseData.data.message);
+        return;
+      }
+      const errorMessage = responseData?.msg ?? '';
       // 如果没有错误信息，则会根据状态码进行提示
       message.error(errorMessage || msg);
     }),

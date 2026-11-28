@@ -7,7 +7,6 @@ import {
   ArrowDown,
   ArrowUp,
   CornerDownLeft,
-  MdiKeyboardEsc,
   Search,
 } from '@vben/icons';
 import { $t } from '@vben/locales';
@@ -141,7 +140,8 @@ defineExpose({
             {{ $t('ui.widgets.search.navigate') }}
           </div>
           <div class="flex items-center">
-            <MdiKeyboardEsc class="mr-1 size-3" />
+            <!-- helium customization: 离线环境，ant-design 无键盘按键图标，改用文字 Esc（原 mdi:keyboard-esc 需请求 api.iconify.design） -->
+            <span class="mr-1 font-mono leading-none">Esc</span>
             {{ $t('ui.widgets.search.close') }}
           </div>
         </div>

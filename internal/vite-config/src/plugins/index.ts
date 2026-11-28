@@ -25,13 +25,13 @@ import {
 } from './css-layer';
 import { viteDayjsPlugin } from './dayjs';
 import { viteExtraAppConfigPlugin } from './extra-app-config';
-import { viteFormFieldSlotMigrationWarningPlugin } from './form-field-slot-migration-warning';
+// helium customization: 移除 viteFormFieldSlotMigrationWarningPlugin 的 import / 条件加载块（表单插槽迁移已全部完成，dev serve 无条件告警只剩噪音）
 import { viteHtmlPlugin } from './html';
 import { viteImportMapPlugin } from './importmap';
 import { viteInjectAppLoadingPlugin } from './inject-app-loading';
 import { viteMetadataPlugin } from './inject-metadata';
 import { viteLicensePlugin } from './license';
-import { viteNitroMockPlugin } from './nitro-mock';
+// helium customization: 移除 viteNitroMockPlugin 的 import / 选项字段 / 条件加载块（mock 服务废弃）
 import { vitePrintPlugin } from './print';
 import { viteTailwindReferencePlugin } from './tailwind-reference';
 import { viteVxeTableImportsPlugin } from './vxe-table';
@@ -118,8 +118,6 @@ async function loadApplicationPlugins(
     importmapOptions,
     injectAppLoading,
     license,
-    nitroMock,
-    nitroMockOptions,
     print,
     printInfoMap,
     pwa,
@@ -162,20 +160,9 @@ async function loadApplicationPlugins(
       },
     },
     {
-      condition: !isBuild,
-      plugins: () => [viteFormFieldSlotMigrationWarningPlugin()],
-    },
-    {
       condition: vxeTableLazyImport,
       plugins: () => [viteVxeTableImportsPlugin()],
     },
-    {
-      condition: nitroMock,
-      plugins: async () => {
-        return [await viteNitroMockPlugin(nitroMockOptions)];
-      },
-    },
-
     {
       condition: injectAppLoading,
       plugins: async () => [await viteInjectAppLoadingPlugin(!!isBuild, env)],
